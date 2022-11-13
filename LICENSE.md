@@ -1,3 +1,6 @@
+Copyright 2022 by Richard A. Layton
+
+
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 

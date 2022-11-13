@@ -1,0 +1,7 @@
+template:
+  params:
+    bootswatch: spacelab
+
+navbar:
+  title: powernotation
+  type:  default

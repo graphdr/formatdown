@@ -1,0 +1,26 @@
+Package: formatdown
+Title: Formatting Tools for R Markdown Documents
+Version: 0.1.0.9001
+Language: en-US
+Authors@R: c(
+    person("Richard", "Layton", email="graphdoctor@gmail.com", role=c("aut", "cre"))
+    )
+Description: Provides a small set of tools for common formatting tasks when 
+    writing documents in R markdown or Quarto markdown. Works with outputs in 
+    html, pdf, docx and possibly others. 
+Depends: R (>= 3.5.0)
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: TRUE
+LazyDataCompression: bzip2
+RoxygenNote: 7.2.1
+Imports:
+    checkmate, 
+    data.table
+Suggests: 
+    knitr,
+    rmarkdown, 
+    tinytest
+VignetteBuilder: knitr
+URL: https://github.com/graphdr/powernotation
+BugReports: https://github.com/graphdr/powernotation/issues
