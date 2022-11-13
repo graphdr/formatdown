@@ -11,8 +11,8 @@ navbar:
     - text: Vignettes
       menu:
 
-    - text: Format powers of ten
-      href: articles/format_powers_of_ten.html
+      - text: Format powers of ten
+        href: articles/format_powers_of_ten.html
 
     - text: Reference
       href: reference/index.html
