@@ -60,7 +60,8 @@ format_power(101100, sig_dig = 4, engr_notation = FALSE)
 
 In an Rmd output, this string prints as: $1.011\times10^{5}$. Because
 the output in all cases is type character, the `\` symbol in the LaTeX
-product symbol `\times` has to be escaped, that is, `\\times`.
+product symbol `\times` is escaped, that is, the function yields
+`\\times`.
 
 ## Installation
 
