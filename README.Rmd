@@ -68,7 +68,7 @@ In an Rmd output, this string prints as: `r format_power(101100, sig_dig = 4)`. 
 format_power(101100, sig_dig = 4, engr_notation = FALSE)
 ```
 
-In an Rmd output, this string prints as: `r format_power(101100, 4, engr_notation = FALSE)`. Because the output in all cases is type character, the `\` symbol in the LaTeX product symbol `\times` has to be escaped, that is, `\\times`. 
+In an Rmd output, this string prints as: `r format_power(101100, 4, engr_notation = FALSE)`. Because the output in all cases is type character, the `\` symbol in the LaTeX product symbol `\times` is escaped, that is, the function yields `\\times`. 
 
 
 
