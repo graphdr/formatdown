@@ -2,7 +2,7 @@ url: https://graphdr.github.io/formatdown/
 
 template:
   bootstrap: 5
-  bootswatch: yeti
+  bootswatch: litera
 
 navbar:
   title: ~
