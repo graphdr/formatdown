@@ -2,7 +2,7 @@ url: https://graphdr.github.io/formatdown/
 
 template:
   bootstrap: 5
-  bootswatch: spacelab
+  bootswatch: pulse
 
 navbar:
   title: ~
@@ -22,10 +22,6 @@ navbar:
 
 reference:
 
-  - title    : Package
-    contents :
-    - formatdown-package
-
   - title    : Functions
     contents :
     - starts_with("format_")
@@ -33,6 +29,11 @@ reference:
   - title    : Prepared data
     contents :
     - density
+
+  - title    : Package
+    contents :
+    - formatdown-package
+
 
 news:
   cran_dates: false
