@@ -10,7 +10,6 @@ navbar:
 
     - text: Vignettes
       menu:
-
       - text: Format powers of ten
         href: articles/format_powers_of_ten.html
 
