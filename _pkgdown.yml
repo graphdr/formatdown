@@ -1,7 +1,46 @@
+url: https://graphdr.github.io/formatdown/
+
 template:
-  params:
-    bootswatch: spacelab
+  bootstrap: 5
+  bootswatch: spacelab
 
 navbar:
-  title: powernotation
-  type:  default
+  title: ~
+  left:
+
+    - text: Vignettes
+      menu:
+
+      - text: Format powers of ten
+        href: articles/format_powers_of_ten.html
+
+    - text: Reference
+      href: reference/index.html
+
+    - text: News
+      href: news/index.html
+
+reference:
+
+  - title    : Package
+    contents :
+    - formatdown-package
+
+  - title    : Functions
+    contents :
+    - starts_with("format_")
+
+  - title    : Prepared data
+    contents :
+    - density
+
+news:
+  cran_dates: false
+
+authors:
+  Richard Layton:
+    href: https://github.com/graphdr/
+
+
+
+
