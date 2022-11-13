@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://graphdr.github.io/formatdown/404.html</loc>
   </url>
   <url>
-    <loc>/articles/Format_powers_of_ten.html</loc>
+    <loc>https://graphdr.github.io/formatdown/articles/format_powers_of_ten.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://graphdr.github.io/formatdown/articles/index.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://graphdr.github.io/formatdown/authors.html</loc>
   </url>
   <url>
-    <loc>/CONDUCT.html</loc>
+    <loc>https://graphdr.github.io/formatdown/CONDUCT.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://graphdr.github.io/formatdown/index.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://graphdr.github.io/formatdown/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://graphdr.github.io/formatdown/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/density.html</loc>
+    <loc>https://graphdr.github.io/formatdown/reference/density.html</loc>
   </url>
   <url>
-    <loc>/reference/formatdown-package.html</loc>
+    <loc>https://graphdr.github.io/formatdown/reference/formatdown-package.html</loc>
   </url>
   <url>
-    <loc>/reference/format_power.html</loc>
+    <loc>https://graphdr.github.io/formatdown/reference/format_power.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://graphdr.github.io/formatdown/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/powernotation-package.html</loc>
+    <loc>https://graphdr.github.io/formatdown/reference/powernotation-package.html</loc>
   </url>
 </urlset>
