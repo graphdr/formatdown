@@ -3,9 +3,9 @@
 #' Air density at room temperature. A data frame to illustrate features of
 #' the \code{format_power()}.
 #'
-#' @usage data(density)
+#' @usage data(density, package = "formatdown")
 #'
-#' @format A data frame with columns:
+#' @format A data frame with 5 rows and 6 columns:
 #' \describe{
 #'  \item{date}{A date variable.}
 #'  \item{trial}{A character variable.}
