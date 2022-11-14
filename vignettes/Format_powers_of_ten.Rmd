@@ -1,6 +1,5 @@
 ---
 title: "Format powers of ten"
-date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
     fig_caption: yes
