@@ -9,4 +9,4 @@ Provides a small set of tools for common formatting tasks when writing
 documents in R markdown or Quarto markdown. Works with outputs in html,
 pdf, docx and possibly others.
 }
-\concept{package}
+\keyword{internal}

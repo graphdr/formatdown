@@ -28,7 +28,7 @@ NULL
 #'
 #'
 #'
-#' @keyword internal
+#' @keywords internal
 #'
 #'
 #'
