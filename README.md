@@ -1,7 +1,9 @@
 
 <!-- Edit README.Rmd (not README.md) -->
 
-## formatdown <img src="man/figures/logo.png" align="right" />
+<br>
+
+# formatdown <img src="man/figures/logo.png" align="right" />
 
 Formatting tools for R markdown documents.
 

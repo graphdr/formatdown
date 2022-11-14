@@ -7,32 +7,22 @@ template:
 navbar:
   title: ~
   left:
-
     - text: Vignettes
       menu:
       - text: Format powers of ten
         href: articles/format_powers_of_ten.html
-
     - text: Reference
       href: reference/index.html
-
     - text: News
       href: news/index.html
 
 reference:
-
   - title    : Functions
     contents :
     - starts_with("format_")
-
   - title    : Prepared data
     contents :
     - density
-
-  - title    : Package
-    contents :
-    - formatdown-package
-
 
 news:
   cran_dates: false
