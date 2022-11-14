@@ -28,7 +28,7 @@ NULL
 #'
 #'
 #'
-#' @family package
+#' @keyword internal
 #'
 #'
 #'
