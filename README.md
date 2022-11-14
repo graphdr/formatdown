@@ -3,7 +3,7 @@
 
 <br>
 
-# formatdown <img src="man/figures/logo.png" align="right" width="50" />
+# formatdown <img src="man/figures/logo.png" align="right" width="30" />
 
 Formatting tools for R markdown documents.
 
