@@ -1,6 +1,5 @@
 ---
 title: "Format powers of ten"
-author: "Richard Layton"
 date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
