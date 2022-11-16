@@ -153,7 +153,7 @@ number of significant digits. Default is 3.</p></li>
 <li><p><strong>format</strong>   Possible values are “engr” (engineering
 notation) and “sci” (scientific notation). Default is “engr”.</p></li>
 <li><p><strong>limits</strong>   Numeric vector of length two, default
-<code>c(0.1, 1000)</code>, specifying the range <span class="math inline">\(p\leq{a}&lt;q\)</span> over which number <span class="math inline">\(a\)</span> is printed without power-or-ten
+<code>c(0.1, 1000)</code>, specifying the range <span class="math inline">\(p\leq{a}&lt;q\)</span> over which number <span class="math inline">\(a\)</span> is printed without power-of-ten
 notation.</p></li>
 </ul>
 <p>If you are writing your own script to follow along, we use these
@@ -164,15 +164,18 @@ packages in this vignette:</p>
 <p><em>Equivalent usage.</em>   The first two arguments do not have to
 be named if the argument order is maintained.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Arguments named</span></span>
-<span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">6.0221E+23</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Numerical value</span></span>
+<span><span class="va">avogadro</span> <span class="op">&lt;-</span> <span class="fl">6.0221E+23</span></span>
+<span></span>
+<span><span class="co"># Arguments named</span></span>
+<span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">avogadro</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "$602\\times{10}^{21}$"</span></span>
 <span></span>
 <span><span class="co"># Arguments unnamed</span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="fl">6.0221E+23</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">avogadro</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Implicit use of default argument </span></span>
-<span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="fl">6.0221E+23</span><span class="op">)</span></span>
+<span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">avogadro</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Demonstrate equivalence</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
@@ -185,9 +188,9 @@ be named if the argument order is maintained.</p>
 </h2>
 <p><em>Scalar.</em>   Use with inline R code.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="fl">101100</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$101\\times{10}^{3}$"</span></span></code></pre></div>
-<p>which, in an Rmd or qmd document, is rendered as <span class="math inline">\(101\times{10}^{3}\)</span>.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">avogadro</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "$602\\times{10}^{21}$"</span></span></code></pre></div>
+<p>which, in an Rmd or qmd document, is rendered as <span class="math inline">\(602\times{10}^{21}\)</span>.</p>
 <p><br><em>Vector.</em>  </p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.2222e-6</span>, <span class="fl">2.3333e-5</span>, <span class="fl">3.4444e-4</span>, <span class="fl">4.1111e-3</span>, <span class="fl">5.2222e-2</span>, <span class="fl">6.3333e-1</span>,</span>
