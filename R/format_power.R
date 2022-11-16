@@ -57,18 +57,18 @@ format_power <- function(x,
     )
   )
 
-  # Check argument types
-  # not a"Date" class
+  # Check argument types, x not "Date" class
   checkmate::assert_disjunct(class(x), c("Date", "POSIXct", "POSIXt"))
-  # numeric, length 1 or more
-  checkmate::qassert(x, "n+") # length at least one, numeric
-
-  # Convert vector to data.table for processing
-  DT <- copy(data.frame(x))
-  setDT(DT)
-
-  # Confirm the input could be coerced to a data frame
-  checkmate::qassert(DT, "d+")
+  # length at least one, numeric
+  checkmate::qassert(x, "n+")
+  # numeric, not missing, length 1
+  checkmate::qassert(digits, "N1")
+  # character, not missing, length 1
+  checkmate::qassert(format, "S1")
+  # element of a set
+  checkmate::assert_choice(format, c("engr", "sci"))
+  # numeric, not missing, length 2
+  checkmate::qassert(limits, "N2")
 
   # Indicate these are not unbound symbols. (R CMD check Note)
   exponent <- NULL
@@ -77,17 +77,15 @@ format_power <- function(x,
 
   # Do the work
 
-  # Choose divisor: scientific or engineeringnotation
-  if (format == "engr") {
-    exp_divisor <- 3
-  } else if (format == "sci") {
-    exp_divisor <- 1
-  } else {
-    stop(paste(
-      "Format not recognized.\n",
-      "* Try `formt = \"engr\"` of `format = \"sci\"`.\n *"
-    ))
-  }
+  # Convert vector to data.table for processing
+  DT <- copy(data.frame(x))
+  setDT(DT)
+
+  # Choose divisor: scientific or engineering notation
+  exp_divisor<- fcase(
+    format == "engr", 3,
+    format == "sci",  1
+  )
 
   # Create coeff and exponent
   DT[, exponent := floor(floor(log10(abs(x))) / exp_divisor) * exp_divisor]

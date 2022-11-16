@@ -10,6 +10,8 @@ Formatting tools for R markdown documents.
 [![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![License:
 mit](https://img.shields.io/badge/license-mit-blue.svg)](https://cran.r-project.org/web/licenses/mit)
+[![Codecov test
+coverage](https://codecov.io/gh/graphdr/formatdown/branch/main/graph/badge.svg)](https://app.codecov.io/gh/graphdr/formatdown?branch=main)
 <!-- badges: end -->
 
 Provides a small set of tools for formatting tasks when writing

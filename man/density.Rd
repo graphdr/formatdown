@@ -5,7 +5,7 @@
 \alias{density}
 \title{Ideal gas sample data frame}
 \format{
-A data frame with 5 rows and 6 columns:
+A data frame with 5 rows and 7 columns:
 \describe{
  \item{date}{A date variable.}
  \item{trial}{A character variable.}

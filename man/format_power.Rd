@@ -41,7 +41,7 @@ Given a number, a numerical vector, or a numerical column from a data frame,
 \code{format_power()} converts the numbers to character strings of the form,
 \code{"$a\\\\times{10}^{n}$"}, where \code{a} is the coefficient and \code{n}
 is the exponent. The string includes markup delimiters \code{$...$} for
-rendering the result as an inline equation in R Markdown of Quarto Markdown
+rendering the result as an inline equation in R Markdown or Quarto Markdown
 document. The user can specify the number of significant digits, scientific
 or engineering format, and the range over which decimal notation is enforced.
 }

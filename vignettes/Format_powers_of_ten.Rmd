@@ -77,7 +77,7 @@ where `a` is the coefficient and `n` is the exponent. The user can specify the n
 
 - **format** &nbsp; Possible values are "engr" (engineering notation) and "sci" (scientific notation). Default is "engr". 
 
-- **limits** &nbsp; Numeric vector of length two, default `c(0.1, 1000)`,  specifying the range $p\leq{a}<q$ over which number $a$ is printed without power-or-ten notation. 
+- **limits** &nbsp; Numeric vector of length two, default `c(0.1, 1000)`,  specifying the range $p\leq{a}<q$ over which number $a$ is printed without power-of-ten notation. 
 
 
 If you are writing your own script to follow along, we use these packages in this vignette:
@@ -90,14 +90,17 @@ library("data.table")
 *Equivalent usage.*  &nbsp;  The first two arguments do not have to be named if the argument order is maintained. 
 
 ```{r}
+# Numerical value
+avogadro <- 6.0221E+23
+
 # Arguments named
-(x <- format_power(x = 6.0221E+23, digits = 3))
+(x <- format_power(x = avogadro, digits = 3))
 
 # Arguments unnamed
-y <- format_power(6.0221E+23, 3)
+y <- format_power(avogadro, 3)
 
 # Implicit use of default argument 
-z <- format_power(6.0221E+23)
+z <- format_power(avogadro)
 
 # Demonstrate equivalence
 all.equal(x, y)
@@ -114,10 +117,10 @@ all.equal(x, z)
 *Scalar.* &nbsp;  Use with inline R code.  
 
 ```{r}
-format_power(101100)
+format_power(avogadro)
 ```
 
-which, in an Rmd or qmd document, is rendered as `r format_power(101100)`. 
+which, in an Rmd or qmd document, is rendered as `r format_power(avogadro)`. 
 
 <br>*Vector.* &nbsp;  
 

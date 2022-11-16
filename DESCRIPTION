@@ -19,8 +19,9 @@ Imports:
     data.table, 
     wrapr
 Suggests: 
+    covr,
     knitr,
-    rmarkdown, 
+    rmarkdown,
     tinytest
 VignetteBuilder: knitr
 URL: https://github.com/graphdr/formatdown/
