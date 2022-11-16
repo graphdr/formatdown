@@ -12,6 +12,7 @@ Formatting tools for R markdown documents.
 mit](https://img.shields.io/badge/license-mit-blue.svg)](https://cran.r-project.org/web/licenses/mit)
 [![Codecov test
 coverage](https://codecov.io/gh/graphdr/formatdown/branch/main/graph/badge.svg)](https://app.codecov.io/gh/graphdr/formatdown?branch=main)
+[![R-CMD-check](https://github.com/graphdr/formatdown/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/graphdr/formatdown/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 Provides a small set of tools for formatting tasks when writing
