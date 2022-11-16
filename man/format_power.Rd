@@ -4,45 +4,46 @@
 \alias{format_power}
 \title{Format powers of ten}
 \usage{
-format_power(
-  x,
-  sig_dig = 3,
-  ...,
-  engr_notation = TRUE,
-  disable_exponent = c(0.1, 1000)
-)
+format_power(x, digits = 3, ..., format = "engr", limits = c(0.1, 1000))
 }
 \arguments{
-\item{x}{Numerical vector to be formatted.}
+\item{x}{Numeric vector to be formatted.}
 
-\item{sig_dig}{Scalar integer, number of significant digits, default 3.}
+\item{digits}{Numeric scalar, nonzero positive integer to specify the
+number of significant digits in the output coefficient.}
 
 \item{...}{Not used, force later arguments to be used by name.}
 
-\item{engr_notation}{Logical, default TRUE. Places decimal points such that
-exponents are multiples of three. If FALSE, result has one digit to
-the left of the decimal point.}
+\item{format}{Character. Possible values are "engr" (engineering notation)
+and "sci" (scientific notation). Use by name.}
 
-\item{disable_exponent}{Numeric vector of length two with the lower and
-upper limits over which scientific notation is disabled, default
-c(0.1, 1000).}
+\item{limits}{Numeric vector, length two, specifying the range over which
+power of ten notation is disabled and numbers are represented
+in decimal notation. Use by name.}
 }
 \value{
 A character vector with the following properties:
 \itemize{
-    \item Math powers of ten notation substituted for computer notation.
-    \item Delimited with \code{$...$} for output as a mathematical
-          expression to R Markdown or Quarto Markdown document.
+    \item Numbers within the \code{limits} range represented in decimal
+          notation; all others represented in powers of ten notation.
+    \item Elements delimited with \code{$...$} for rendering as
+          inline math in an R Markdown or Quarto Markdown document.
 }
 }
 \description{
-Format a numerical vector as a character string with power of ten notation
-in mathematical form or engineering form.
+Convert the elements of a numerical vector to character strings in which
+the numbers are formatted using powers-of-ten notation in scientific or
+engineering form and delimited for rendering as inline equations in an
+R Markdown document.
 }
 \details{
-In engineering notation, exponents are multiples of three. Compatible with
-many of the output formats of R Markdown and Quarto Markdown. Can be applied
-to the numerical columns of a data frame via \code{lapply()}.
+Given a number, a numerical vector, or a numerical column from a data frame,
+\code{format_power()} converts the numbers to character strings of the form,
+\code{"$a\\\\times{10}^{n}$"}, where \code{a} is the coefficient and \code{n}
+is the exponent. The string includes markup delimiters \code{$...$} for
+rendering the result as an inline equation in R Markdown of Quarto Markdown
+document. The user can specify the number of significant digits, scientific
+or engineering format, and the range over which decimal notation is enforced.
 }
 \examples{
 # Scalar value
@@ -57,13 +58,13 @@ format_power(x)
 format_power(x[1], 3)
 format_power(x[1], 4)
 
-# Compare notation type
-format_power(x[3], engr_notation = TRUE)
-format_power(x[3], engr_notation = FALSE)
+# Compare format type
+format_power(x[3], format = "engr")
+format_power(x[3], format = "sci")
 
-# Compare disabled exponents limits
-format_power(x[6], disable_exponent = c(0.1, 1000))
-format_power(x[6], disable_exponent = c(1, 1000))
+# Compare change to limits
+format_power(x[6], limits = c(0.1, 1000))
+format_power(x[6], limits = c(1, 1000))
 
 # Apply to columns of a data frame (data.table syntax)
 y <- x[1:6]

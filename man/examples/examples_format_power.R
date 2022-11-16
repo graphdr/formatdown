@@ -10,13 +10,13 @@ format_power(x)
 format_power(x[1], 3)
 format_power(x[1], 4)
 
-# Compare notation type
-format_power(x[3], engr_notation = TRUE)
-format_power(x[3], engr_notation = FALSE)
+# Compare format type
+format_power(x[3], format = "engr")
+format_power(x[3], format = "sci")
 
-# Compare disabled exponents limits
-format_power(x[6], disable_exponent = c(0.1, 1000))
-format_power(x[6], disable_exponent = c(1, 1000))
+# Compare change to limits
+format_power(x[6], limits = c(0.1, 1000))
+format_power(x[6], limits = c(1, 1000))
 
 # Apply to columns of a data frame (data.table syntax)
 y <- x[1:6]

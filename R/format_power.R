@@ -1,28 +1,35 @@
 
 #' Format powers of ten
 #'
-#' Format a numerical vector as a character string with power of ten notation
-#' in mathematical form or engineering form.
+#' Convert the elements of a numerical vector to character strings in which
+#' the numbers are formatted using powers-of-ten notation in scientific or
+#' engineering form and delimited for rendering as inline equations in an
+#' R Markdown document.
 #'
-#' In engineering notation, exponents are multiples of three. Compatible with
-#' many of the output formats of R Markdown and Quarto Markdown. Can be applied
-#' to the numerical columns of a data frame via \code{lapply()}.
+#' Given a number, a numerical vector, or a numerical column from a data frame,
+#' \code{format_power()} converts the numbers to character strings of the form,
+#' \code{"$a\\\\times{10}^{n}$"}, where \code{a} is the coefficient and \code{n}
+#' is the exponent. The string includes markup delimiters \code{$...$} for
+#' rendering the result as an inline equation in R Markdown or Quarto Markdown
+#' document. The user can specify the number of significant digits, scientific
+#' or engineering format, and the range over which decimal notation is enforced.
 #'
-#' @param x Numerical vector to be formatted.
-#' @param sig_dig Scalar integer, number of significant digits, default 3.
+#' @param x Numeric vector to be formatted.
+#' @param digits Numeric scalar, nonzero positive integer to specify the
+#'        number of significant digits in the output coefficient.
 #' @param ... Not used, force later arguments to be used by name.
-#' @param engr_notation Logical, default TRUE. Places decimal points such that
-#'        exponents are multiples of three. If FALSE, result has one digit to
-#'        the left of the decimal point.
-#' @param disable_exponent Numeric vector of length two with the lower and
-#'        upper limits over which scientific notation is disabled, default
-#'        c(0.1, 1000).
+#' @param format Character. Possible values are "engr" (engineering notation)
+#'        and "sci" (scientific notation). Use by name.
+#' @param limits Numeric vector, length two, specifying the range over which
+#'        power of ten notation is disabled and numbers are represented
+#'        in decimal notation. Use by name.
 #'
 #' @return A character vector with the following properties:
 #' \itemize{
-#'     \item Math powers of ten notation substituted for computer notation.
-#'     \item Delimited with \code{$...$} for output as a mathematical
-#'           expression to R Markdown or Quarto Markdown document.
+#'     \item Numbers within the \code{limits} range represented in decimal
+#'           notation; all others represented in powers of ten notation.
+#'     \item Elements delimited with \code{$...$} for rendering as
+#'           inline math in an R Markdown or Quarto Markdown document.
 #' }
 #'
 #'
@@ -36,54 +43,83 @@
 #'
 #'
 format_power <- function(x,
-                         sig_dig = 3,
+                         digits = 3,
                          ...,
-                         engr_notation = TRUE,
-                         disable_exponent = c(0.1, 1000)) {
+                         format = "engr",
+                         limits = c(0.1, 1000)) {
 
-    # Convert vector to data.table for processing
-    DT <- copy(data.frame(x))
-    setDT(DT)
+  # Arguments after dots must be named
+  wrapr::stop_if_dot_args(
+    substitute(list(...)),
+    paste(
+      "Arguments after ... must be named.\n",
+      "* Did you forget to write `format = ` or `limits = `?\n *"
+    )
+  )
 
-    # Correct for R CMD check "no visible global function definition"
-    exponent <- NULL
-    mantissa <- NULL
-    value <- NULL
+  # Check argument types
+  # not a"Date" class
+  checkmate::assert_disjunct(class(x), c("Date", "POSIXct", "POSIXt"))
+  # numeric, length 1 or more
+  checkmate::qassert(x, "n+") # length at least one, numeric
 
-    # Option flags
-    exp_divisor <- fifelse(isTRUE(engr_notation), 3, 1)
+  # Convert vector to data.table for processing
+  DT <- copy(data.frame(x))
+  setDT(DT)
 
-    # Create mantissa and exponent
-    DT[, exponent := floor(floor(log10(abs(x))) / exp_divisor) * exp_divisor]
-    DT[, mantissa := formatC(signif(x / (10^exponent), digits = sig_dig),
-                             format = "fg",
-                             digits = sig_dig,
-                             flag = "#")]
+  # Confirm the input could be coerced to a data frame
+  checkmate::qassert(DT, "d+")
 
-    # Omit decimal at the end of a mantissa, if any
-    DT[mantissa %like% "[:.:]$", mantissa := sub("[:.:]", "", mantissa)]
+  # Indicate these are not unbound symbols. (R CMD check Note)
+  exponent <- NULL
+  coeff <- NULL
+  value <- NULL
 
-    # Construct output character
-    DT[, value := fifelse(
-        abs(x) %between% disable_exponent,
-        # Disabled-exponent values
-        formatC(signif(x, digits = sig_dig),
-                format = "fg",
-                digits = sig_dig,
-                flag = "#"),
-        # Power of ten values
-        paste0(mantissa, "\\times", "10^{", exponent, "}")
-    )]
+  # Do the work
 
-    # Omit decimal at the end of value, if any
-    DT[value %like% "[:.:]$", value := sub("[:.:]", "", value)]
+  # Choose divisor: scientific or engineeringnotation
+  if (format == "engr") {
+    exp_divisor <- 3
+  } else if (format == "sci") {
+    exp_divisor <- 1
+  } else {
+    stop(paste(
+      "Format not recognized.\n",
+      "* Try `formt = \"engr\"` of `format = \"sci\"`.\n *"
+    ))
+  }
 
-    # Surround with $$ for math printout
-    DT[, value := paste0("$", value, "$")]
+  # Create coeff and exponent
+  DT[, exponent := floor(floor(log10(abs(x))) / exp_divisor) * exp_divisor]
+  DT[, coeff := formatC(signif(x / (10^exponent), digits = digits),
+                           format = "fg",
+                           digits = digits,
+                           flag = "#")]
 
-    # # Convert to vector output
-    DT <- DT[, (value)]
+  # Omit decimal at the end of a coeff, if any
+  DT[coeff %like% "[:.:]$", coeff := sub("[:.:]", "", coeff)]
 
-    # enable printing (see data.table FAQ 2.23)
-    DT[]
+  # Construct output character
+  DT[, value := fifelse(
+    abs(x) %between% limits,
+    # Disabled-exponent values
+    formatC(signif(x, digits = digits),
+            format = "fg",
+            digits = digits,
+            flag = "#"),
+    # Power of ten values
+    paste0(coeff, "\\times", "{10}^{", exponent, "}")
+  )]
+
+  # Omit decimal at the end of value, if any
+  DT[value %like% "[:.:]$", value := sub("[:.:]", "", value)]
+
+  # Surround with $$ for math printout
+  DT[, value := paste0("$", value, "$")]
+
+  # # Convert to vector output
+  DT <- DT[, (value)]
+
+  # enable printing (see data.table FAQ 2.23)
+  DT[]
 }

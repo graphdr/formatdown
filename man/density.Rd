@@ -9,6 +9,7 @@ A data frame with 5 rows and 6 columns:
 \describe{
  \item{date}{A date variable.}
  \item{trial}{A character variable.}
+ \item{humidity}{A factor variable.}
  \item{T_K}{Numeric air temperature in Kelvin.}
  \item{p_Pa}{Numeric air pressure in Pascals.}
  \item{R}{Numeric gas constant in J/(kg K)}

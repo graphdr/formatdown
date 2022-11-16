@@ -8,64 +8,52 @@ always_allow_html: true
 
 <!-- Edit README.Rmd (not README.md) -->
 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library("formatdown")
+library("data.table")
+
+# data.table printout
+options(
+  datatable.print.nrows = 15,
+  datatable.print.topn = 3,
+  datatable.print.class = TRUE
+)
+```
 
 # formatdown  <img src="man/figures/logo.png" align="right">
 
 Formatting tools for R markdown documents. 
 
-Provides a small set of tools for common formatting tasks when writing documents in R Markdown or Quarto Markdown. Works with outputs in html, pdf, docx and possibly others. Currently only one function, though I plan to include additional functions as needed to support repetitive formatting tasks as they arise in my projects, e.g. my blog (.qmd files) or R package vignettes (.Rmd files). 
+<!-- badges: start -->
+[![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![License: mit](https://img.shields.io/badge/license-mit-blue.svg)](https://cran.r-project.org/web/licenses/mit)
+<!-- badges: end -->
 
-*Format powers of ten.* &nbsp; Convert a numerical vector in E-notation (*mEn*) to a character vector in base-10 power notation $(m \times 10^n)$, where $m$ is the *significand* (or *coefficient*) in decimal form and $n$ is the *exponent* [@Kahan:2002]. 
-
-- In *E-notation* form and  *scientific* form, the exponent is an integer and the significand usually lies in the range $1 \leq m < 10$. 
-- In *engineering* form, the exponent is an *integer multiple of three* and  the resulting significand lies in the range $1 \leq m < 1000$.
-
-
-```{r}
-#| include: false
-library("formatdown")
-x <- 101100
-```
-
-For example, suppose we have a pressure reading `r paste0("$p =$", format_power(x, 4))` kPa. In the three types of notation mentioned, the value would be rendered as follows: 
-
-| Type        | Rendered as                                     | 
-|:------------|------------------------------------------------:|
-| E-notation  | `r formatC(x, format = "E")` Pa                 |
-| scientific  | `r format_power(x, 4, engr_notation = FALSE)` Pa|
-| engineering | `r format_power(x, 4)` Pa                       |
-
-
-
-
-
+Provides a small set of tools for formatting tasks when writing documents in R Markdown or Quarto Markdown. Works with outputs in html, pdf, docx and possibly others. 
 
 
 ## Usage
 
+**`format_power()`** &nbsp; Convert the elements of a numerical vector to character strings in which the numbers are formatted using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations in an R Markdown document.
+
 ```{r}
 library("formatdown")
+
+# Scientific notation
+format_power(101100, digits = 4, format = "sci")
+
+# Engineering notation
+format_power(101100, digits = 4, format = "engr")
 ```
 
+which, in an Rmd or qmd document, are rendered as 
 
-### `format_power()`
-
-Operates on a numerical vector to produce a character vector with each element delimited by `$...$` to render as in-line mathematics in R markdown and Quarto markdown documents. 
-
-```{r}
-#| collapse: true
-format_power(101100, sig_dig = 4)
-```
-
-In an Rmd output, this string prints as: `r format_power(101100, sig_dig = 4)`. We can switch to scientific notation by resetting the engineering notation flag.
-
-```{r}
-#| collapse: true
-format_power(101100, sig_dig = 4, engr_notation = FALSE)
-```
-
-In an Rmd output, this string prints as: `r format_power(101100, 4, engr_notation = FALSE)`. Because the output in all cases is type character, the `\` symbol in the LaTeX product symbol `\times` is escaped, that is, the function yields `\\times`. 
-
+- Scientific notation: `r format_power(101100, 4, format = "sci")`. 
+- Engineering notation: `r format_power(101100, digits = 4)`
 
 
 
@@ -74,10 +62,9 @@ In an Rmd output, this string prints as: `r format_power(101100, 4, engr_notatio
 
 ## Installation
 
-Not yet available from CRAN.  The development version can be installed from GitHub.   
+Not yet submitted to CRAN.  The development version can be installed from GitHub.   
 
-```{r}
-#| eval: false
+```r
 install.packages("devtools")
 devtools::install_github("graphdr/formatdown")
 ```
@@ -131,5 +118,3 @@ Conduct](CONDUCT.html).
 
 
 
-
-## References

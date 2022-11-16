@@ -1,17 +1,10 @@
 
-
-
-#' @importFrom checkmate assert_data_frame assert_int qassert
-#' @importFrom checkmate assert_subset assert_names
+#' @importFrom checkmate assert_disjunct qassert
 #'
-#' @importFrom data.table setkey setkeyv setcolorder setnames setorderv setorder
-#' @importFrom data.table fcase fifelse copy as.data.table shift
-#' @importFrom data.table setDF setDT
-#' @importFrom data.table %chin% %like% .SD .N := %between%
+#' @importFrom data.table copy setDT fifelse
+#' @importFrom data.table := .SD %like% %between%
 #'
-#' @importFrom stats na.omit reorder
-
-
+#' @importFrom wrapr stop_if_dot_args %?%
 NULL
 
 
@@ -33,11 +26,3 @@ NULL
 #'
 #'
 NULL
-
-
-# bind names due to NSE notes in R CMD check
-if (getRversion() >= "2.15.1") {
-  utils::globalVariables(c(
-    "."
-  ))
-}
