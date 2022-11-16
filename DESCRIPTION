@@ -1,6 +1,6 @@
 Package: formatdown
 Title: Formatting Tools for R Markdown Documents
-Version: 0.1.0.9001
+Version: 0.1.1
 Language: en-US
 Authors@R: c(
     person("Richard", "Layton", email="graphdoctor@gmail.com", role=c("aut", "cre"))

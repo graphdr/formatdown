@@ -7,7 +7,7 @@
 <!-- DEV 900x development -->
 
 
-## formatdown 0.1.0.9001 (2022-11)
+## formatdown 0.1.1 (2022-11)
 
 - Initial development version
 
