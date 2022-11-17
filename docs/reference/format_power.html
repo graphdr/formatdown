@@ -66,7 +66,7 @@ R Markdown document.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span>, format <span class="op">=</span> <span class="st">"engr"</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span>, format <span class="op">=</span> <span class="st">"engr"</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -86,21 +86,22 @@ number of significant digits in the output coefficient.</p></dd>
 
 <dt>format</dt>
 <dd><p>Character. Possible values are "engr" (engineering notation)
-and "sci" (scientific notation). Use by name.</p></dd>
+and "sci" (scientific notation). Use argument  by name.</p></dd>
 
 
-<dt>limits</dt>
-<dd><p>Numeric vector, length two, specifying the range over which
-power of ten notation is disabled and numbers are represented
-in decimal notation. Use by name.</p></dd>
+<dt>omit_power</dt>
+<dd><p>Numeric vector <code>c(p, q)</code> specifying the range of
+exponents over which power of ten notation is omitted, where
+<code>p &lt;= q</code>. If NULL all numbers are formatted in powers of ten
+notation. Use argument by name.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A character vector with the following properties:</p><ul><li><p>Numbers within the <code>limits</code> range represented in decimal
-          notation; all others represented in powers of ten notation.</p></li>
+<p>A character vector with the following properties:</p><ul><li><p>Numbers represented in powers of ten notation except for those
+          with exponents in the range specified in <code>omit_power</code></p></li>
 <li><p>Elements delimited with <code>$...$</code> for rendering as
           inline math in an R Markdown or Quarto Markdown document.</p></li>
 </ul></div>
@@ -110,9 +111,16 @@ in decimal notation. Use by name.</p></dd>
 <code>format_power()</code> converts the numbers to character strings of the form,
 <code>"$a\\times{10}^{n}$"</code>, where <code>a</code> is the coefficient and <code>n</code>
 is the exponent. The string includes markup delimiters <code>$...$</code> for
-rendering the result as an inline equation in R Markdown or Quarto Markdown
-document. The user can specify the number of significant digits, scientific
-or engineering format, and the range over which decimal notation is enforced.</p>
+rendering as an inline equation in R Markdown or Quarto Markdown
+document. The user can specify the number of significant digits and scientific
+or engineering format.</p>
+<p>Powers-of-ten notation is omitted over a range of exponents via
+<code>omit_power</code> such that numbers are converted to character strings of
+the form, <code>"$a$"</code>, where <code>a</code> is the number in decimal notation.
+The default <code>omit_power = c(-1, 2)</code> formats numbers such as 0.123, 1.23,
+12.3, and 123 in decimal form. To cancel these exceptions and convert all
+numbers to powers-of-ten notation, set the <code>omit_power</code> argument to
+NULL.</p>
     </div>
 
     <div class="section level2">
@@ -143,11 +151,15 @@ or engineering format, and the range over which decimal notation is enforced.</p
 <span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, format <span class="op">=</span> <span class="st">"sci"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$3.44\\times{10}^{-4}$"</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Compare change to limits</span></span></span>
-<span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Compare omit_power range</span></span></span>
+<span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$0.633$"</span>
-<span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$633\\times{10}^{-3}$"</span>
+<span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$81.1$"</span>
+<span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$81.1\\times{10}^{0}$"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Apply to columns of a data frame (data.table syntax)</span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span></span>
