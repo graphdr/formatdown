@@ -12,24 +12,24 @@ test_format_power<- function() {
 
   # Equivalent usage, named, unnamed, default
   ans <- "$602\\times{10}^{21}$"
-  expect_equal(ans, format_power(x = avogadro, digits = 3))
-  expect_equal(ans, format_power(avogadro, 3))
-  expect_equal(ans, format_power(avogadro))
+  expect_equal(format_power(x = avogadro, digits = 3), ans)
+  expect_equal(format_power(avogadro, 3), ans)
+  expect_equal(format_power(avogadro), ans)
 
   # Significant digits
   ans <- "$602.2\\times{10}^{21}$"
-  expect_equal(ans, format_power(avogadro, 4))
+  expect_equal(format_power(avogadro, 4), ans)
 
   # Scientific format
   ans <- "$6.02\\times{10}^{23}$"
-  expect_equal(ans, format_power(avogadro, format = "sci"))
+  expect_equal(format_power(avogadro, format = "sci"), ans)
 
   # Limits
   x <- 0.633
   ans <- "$0.633$"
-  expect_equal(ans, format_power(x, limits = c(0.1, 1000)))
+  expect_equal(format_power(x, limits = c(0.1, 1000)), ans)
   ans <- "$633\\times{10}^{-3}$"
-  expect_equal(ans, format_power(x, limits = c(1, 1000)))
+  expect_equal(format_power(x, limits = c(1, 1000)), ans)
 
   # Data frame,one column as vector
   x <- density[, (p_Pa)]
@@ -38,7 +38,7 @@ test_format_power<- function() {
            "$101.1\\times{10}^{3}$",
            "$101.0\\times{10}^{3}$",
            "$101.1\\times{10}^{3}$")
-  expect_equal(ans, format_power(x, 4))
+  expect_equal(format_power(x, 4), ans)
 
   # Data frame, selected column in place
   ans <- data.table(wrapr::build_frame(
@@ -52,7 +52,7 @@ test_format_power<- function() {
   cols_we_want <- c("p_Pa")
   DT <- DT[, (cols_we_want) := lapply(.SD, function(x) format_power(x, 4)),
            .SDcols = cols_we_want]
-  expect_equal(ans, DT)
+  expect_equal(DT, ans)
 
   # Errors for incorrect x argument
   expect_error(format_power(x = density))

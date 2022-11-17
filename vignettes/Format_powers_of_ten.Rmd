@@ -5,7 +5,6 @@ output:
     fig_caption: yes
 link-citations: yes
 bibliography: ../inst/REFERENCES.bib
-csl: ../inst/information-science-and-technology.csl
 vignette: >
   %\VignetteIndexEntry{Format powers of ten}
   %\VignetteEngine{knitr::rmarkdown}
@@ -28,21 +27,21 @@ options(
 )
 ```
 
-The notation we use to represent large and small numbers depends on the communications context. In a computer script, for example, we might encode Avogadro's number $(N_A)$ as `6.0221*10^23`. A computer printout of this number would typically use E-notation, as in `6.0221E+23`.
+The notation we use to represent large and small numbers depends on the communications context. In a computer script, for example, we might encode Avogadro's number as `6.0221*10^23`. A computer printout of this number would typically use E-notation, as in `6.0221E+23`.
 
-In professional technical communications, however, computer syntax should be avoided---the asterisk (`*`) and carat (`^`) in `6.0221*10^23` encode computer *instructions*, not *mathematics.* And while E-notation (`6.0221E+23`) has currency in some discourse communities, the general convention in technical communications is to format large and small numbers using powers-of-ten notation of the form, 
+In professional technical communications, however, computer syntax should be avoided---the asterisk (`*`) and carat (`^`) in `6.0221*10^23` *encode  instructions* to a computer rather than *communicating mathematics* to a  reader. And while E-notation (`6.0221E+23`) has currency in some discourse communities, the general convention in technical communications is to format large and small numbers using powers-of-ten notation of the form, 
 
 $$
 a \times 10^n, 
 $$
 
-The $\times$ multiplication symbol is a convention in powers-of-ten notation even though it is usually avoided in other contexts. Two forms of this notation are in common use [@Chase:2021, 63--67]: 
+The $\times$ multiplication symbol, often avoided in other contexts, is conventional syntax in powers-of-ten notation [@Chase:2021, 63--67]. Moreover, power-of-tens notation has two formulations: *scientific notation* and *engineering notation*.
 
-- *Scientific notation* &nbsp; where $n$ is an integer and $a$ is any real number such that $1\leq{a}<10$, for example, $N_A =$ `r format_power(6.0221E+23, 5, format = "sci")`
+- *Scientific.* &nbsp; $n$ is an integer and $a \in \mathbb{R}\  |\ 1\leq{a}<10$. For example, $N_A =$ `r format_power(6.0221E+23, 4, format = "sci")`
 
-- *Engineering notation* &nbsp; where $n$ is a multiple of 3 and $a$ is any real number such that $1\leq{a}<1000$, as in $N_A =$ `r format_power(6.0221E+23, 5)`
+- *Engineering.* &nbsp; $n$ is a multiple of 3 and $a \in \mathbb{R}\  |\ 1\leq{a}<1000$. For example, $N_A =$ `r format_power(6.0221E+23, 4)`
 
-When exponents are in the neighborhood of zero, for example, $n \in \{-1, 0, 1, 2\}$, decimal notation may be preferred.  Thus decimal values 0.1234, 1.234, 12.34, and 123.4 will often be printed as-is. The limits of this set can be adjusted to suit one's audience and rhetorical goals. 
+When exponents are in the neighborhood of zero, for example, $n \in \{-1, 0, 1, 2\}$, decimal notation may be preferred.  Thus decimal values 0.1234, 1.234, 12.34, and 123.4 will often be printed as-is. The range of this set is usually adjusted to suit one's audience and rhetorical goals. 
 
 ## Markup
 
@@ -99,7 +98,7 @@ avogadro <- 6.0221E+23
 # Arguments unnamed
 y <- format_power(avogadro, 3)
 
-# Implicit use of default argument 
+# Implicit use of default argument
 z <- format_power(avogadro)
 
 # Demonstrate equivalence
@@ -125,8 +124,10 @@ which, in an Rmd or qmd document, is rendered as `r format_power(avogadro)`.
 <br>*Vector.* &nbsp;  
 
 ```{r}
-x <- c(1.2222e-6, 2.3333e-5, 3.4444e-4, 4.1111e-3, 5.2222e-2, 6.3333e-1,
-       7.4444e+0, 8.1111e+1, 9.2222e+2, 1.3333e+3, 2.4444e+4, 3.1111e+5, 4.2222e+6)
+x <- c(
+  1.2222e-6, 2.3333e-5, 3.4444e-4, 4.1111e-3, 5.2222e-2, 6.3333e-1,
+  7.4444e+0, 8.1111e+1, 9.2222e+2, 1.3333e+3, 2.4444e+4, 3.1111e+5, 4.2222e+6
+)
 format_power(x)
 ```
 
@@ -173,8 +174,10 @@ To compare the effects across many orders of magnitude, we treat the example vec
 
 ```{r}
 # Format using defaults and convert to a data frame
-DT <- data.table(scientific = format_power(x, format = "sci"), 
-                 engineering = format_power(x))
+DT <- data.table(
+  scientific = format_power(x, format = "sci"),
+  engineering = format_power(x)
+)
 knitr::kable(DT, align = "rr")
 ```
 
@@ -195,7 +198,7 @@ knitr::kable(density, align = "ccrrr")
 Treating a column as a vector, 
 
 ```{r}
-# Copy to avoid "by reference" changes to density  
+# Copy to avoid "by reference" changes to density
 DT <- copy(density)
 
 # Format as a vector
@@ -207,7 +210,7 @@ is rendered as `r format_power(DT$p_Pa, digits = 4)`.
 Treating a column within a data frame, 
 
 ```{r}
-# Copy to avoid "by reference" changes to density  
+# Copy to avoid "by reference" changes to density
 DT <- copy(density)
 
 # Format one column, retain all columns
@@ -225,13 +228,13 @@ knitr::kable(DT, align = "r")
 Using `lapply()` to select and treat multiple columns from a data frame, 
 
 ```{r}
-# Copy to avoid "by reference" changes to density 
+# Copy to avoid "by reference" changes to density
 DT <- copy(density)
 
 # Identify columns to format
 cols_we_want <- c("T_K", "p_Pa", "density")
 
-# Select and format.  
+# Select and format.
 DT <- DT[, lapply(.SD, function(x) format_power(x, 4)), .SDcols = cols_we_want]
 DT[]
 ```
@@ -246,7 +249,7 @@ knitr::kable(DT, align = "r")
 Repeat, but retain all columns,  
 
 ```{r}
-# Copy to avoid "by reference" changes to density 
+# Copy to avoid "by reference" changes to density
 DT <- copy(density)
 
 # Identify columns to format
@@ -267,7 +270,7 @@ knitr::kable(DT, align = "ccrrr")
 If different columns should be reported with different significant digits, treat the columns separately. 
 
 ```{r}
-# Copy to avoid "by reference" changes to density 
+# Copy to avoid "by reference" changes to density
 DT <- copy(density)
 
 # Format selected columns, retain all columns with signif digits = 5

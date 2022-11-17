@@ -11,7 +11,7 @@ R version 4.1.1
 
 R version 4.2.1
 
-* Debian Linux, R-release, GCC
+* Fedora Linux, R-devel, clang, gfortran
 * Ubuntu Linux 20.04.1 LTS, R-release, GCC
 * Windows Server 2022, R-release, 32/64 bit
 

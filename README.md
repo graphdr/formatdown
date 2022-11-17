@@ -7,12 +7,12 @@ Formatting tools for R markdown documents.
 
 <!-- badges: start -->
 
-[![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![License:
-mit](https://img.shields.io/badge/license-mit-blue.svg)](https://cran.r-project.org/web/licenses/mit)
+[![R-CMD-check](https://github.com/graphdr/formatdown/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/graphdr/formatdown/actions/workflows/check-standard.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/graphdr/formatdown/branch/main/graph/badge.svg)](https://app.codecov.io/gh/graphdr/formatdown?branch=main)
-[![R-CMD-check](https://github.com/graphdr/formatdown/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/graphdr/formatdown/actions/workflows/check-standard.yaml)
+[![License:
+mit](https://img.shields.io/badge/license-mit-blue.svg)](https://cran.r-project.org/web/licenses/mit)
+[![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 Provides a small set of tools for formatting tasks when writing
@@ -21,14 +21,18 @@ pdf, docx and possibly others.
 
 ## Usage
 
+``` r
+# Packages
+library("formatdown")
+library("data.table")
+```
+
 **`format_power()`**   Convert the elements of a numerical vector to
 character strings in which the numbers are formatted using powers-of-ten
 notation in scientific or engineering form and delimited for rendering
 as inline equations in an R Markdown document.
 
 ``` r
-library("formatdown")
-
 # Scientific notation
 format_power(101100, digits = 4, format = "sci")
 #> [1] "$1.011\\times{10}^{5}$"

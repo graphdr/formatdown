@@ -57,7 +57,7 @@ format_power <- function(x,
     )
   )
 
-  # Check argument types, x not "Date" class
+  # Check argument types, not "Date" class
   checkmate::assert_disjunct(class(x), c("Date", "POSIXct", "POSIXt"))
   # length at least one, numeric
   checkmate::qassert(x, "n+")
@@ -70,54 +70,86 @@ format_power <- function(x,
   # numeric, not missing, length 2
   checkmate::qassert(limits, "N2")
 
-  # Indicate these are not unbound symbols. (R CMD check Note)
+  # Indicate these are not unbound symbols (R CMD check Note)
+  char_coeff <- NULL
   exponent <- NULL
   coeff <- NULL
   value <- NULL
 
-  # Do the work
+
+
+  # ----- Initial processing
 
   # Convert vector to data.table for processing
   DT <- copy(data.frame(x))
   setDT(DT)
 
-  # Choose divisor: scientific or engineering notation
-  exp_divisor<- fcase(
+  # Exponent multiple for scientific or engineering notation
+  exp_multiple <- fcase(
     format == "engr", 3,
     format == "sci",  1
   )
 
-  # Create coeff and exponent
-  DT[, exponent := floor(floor(log10(abs(x))) / exp_divisor) * exp_divisor]
-  DT[, coeff := formatC(signif(x / (10^exponent), digits = digits),
-                           format = "fg",
-                           digits = digits,
-                           flag = "#")]
+  # Initialize variables
+  DT[, c("exponent", "coeff") := NA_real_]
+  DT[, c("value", "char_coeff") := NA_character_]
 
-  # Omit decimal at the end of a coeff, if any
-  DT[coeff %like% "[:.:]$", coeff := sub("[:.:]", "", coeff)]
+  # Indices to rows for decimal and powers-of-ten notation
+  decimal <- abs(DT$x) %between% limits
+  pow_10  <- !decimal
 
-  # Construct output character
-  DT[, value := fifelse(
-    abs(x) %between% limits,
-    # Disabled-exponent values
-    formatC(signif(x, digits = digits),
-            format = "fg",
-            digits = digits,
-            flag = "#"),
-    # Power of ten values
-    paste0(coeff, "\\times", "{10}^{", exponent, "}")
-  )]
 
-  # Omit decimal at the end of value, if any
-  DT[value %like% "[:.:]$", value := sub("[:.:]", "", value)]
 
-  # Surround with $$ for math printout
+  # ----- Rows with numbers in decimal notation
+
+  # Create the character value to significant digits
+  DT[decimal, value := formatC(x, format = "fg", digits = digits, flag = "#")]
+
+  # Remove trailing decimal point created by formatC() if any
+  DT[decimal] <- omit_trailing_decimal(DT[decimal], "value")
+
+
+
+  # ----- Rows with numbers in powers-of-ten notation
+
+  # Determine numerical coefficient and exponent
+  DT[pow_10, exponent := exp_multiple * floor(log10(abs(x)) / exp_multiple)]
+  DT[pow_10, coeff := x / 10^exponent]
+
+  # Create the character coefficient to significant digits
+  DT[pow_10, char_coeff := formatC(coeff, format = "fg", digits = digits, flag = "#")]
+
+  # Remove trailing decimal point created by formatC() if any
+  DT[pow_10] <- omit_trailing_decimal(DT[pow_10], "char_coeff")
+
+  # Construct powers-of-ten character string
+  DT[pow_10, value := paste0(char_coeff, "\\times", "{10}^{", exponent, "}")]
+
+
+
+  # ----- Complete the conversion for all value strings
+
+  # Surround with $...$ for math printout
   DT[, value := paste0("$", value, "$")]
 
-  # # Convert to vector output
+  # Convert to vector output
   DT <- DT[, (value)]
 
   # enable printing (see data.table FAQ 2.23)
   DT[]
+}
+
+
+
+# ---------------------------------------------------
+# Internal functions
+
+# Remove trailing decimal point, if any, introduced by formatC()
+omit_trailing_decimal <- function(DT, col_name) {
+
+  # Logical. Identify rows with trailing decimal points
+  rows_we_want <- DT[, get(col_name)] %like% "[:.:]$"
+
+  # Delete trailing decimal points if any
+  DT[rows_we_want, (col_name) := sub("[:.:]", "", get(col_name))]
 }

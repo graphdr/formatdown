@@ -1,8 +1,7 @@
 
 #' @importFrom checkmate qassert assert_disjunct assert_choice
 #'
-#' @importFrom data.table copy setDT fifelse fcase
-#' @importFrom data.table := .SD %like% %between%
+#' @importFrom data.table copy setDT fcase :=  %like% %between%
 #'
 #' @importFrom wrapr stop_if_dot_args %?%
 NULL
