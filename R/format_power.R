@@ -10,24 +10,33 @@
 #' \code{format_power()} converts the numbers to character strings of the form,
 #' \code{"$a\\\\times{10}^{n}$"}, where \code{a} is the coefficient and \code{n}
 #' is the exponent. The string includes markup delimiters \code{$...$} for
-#' rendering the result as an inline equation in R Markdown or Quarto Markdown
-#' document. The user can specify the number of significant digits, scientific
-#' or engineering format, and the range over which decimal notation is enforced.
+#' rendering as an inline equation in R Markdown or Quarto Markdown
+#' document. The user can specify the number of significant digits and scientific
+#' or engineering format.
+#'
+#' Powers-of-ten notation is omitted over a range of exponents via
+#' \code{omit_power} such that numbers are converted to character strings of
+#' the form, \code{"$a$"}, where \code{a} is the number in decimal notation.
+#' The default \code{omit_power = c(-1, 2)} formats numbers such as 0.123, 1.23,
+#' 12.3, and 123 in decimal form. To cancel these exceptions and convert all
+#' numbers to powers-of-ten notation, set the \code{omit_power} argument to
+#' NULL.
 #'
 #' @param x Numeric vector to be formatted.
 #' @param digits Numeric scalar, nonzero positive integer to specify the
 #'        number of significant digits in the output coefficient.
 #' @param ... Not used, force later arguments to be used by name.
 #' @param format Character. Possible values are "engr" (engineering notation)
-#'        and "sci" (scientific notation). Use by name.
-#' @param limits Numeric vector, length two, specifying the range over which
-#'        power of ten notation is disabled and numbers are represented
-#'        in decimal notation. Use by name.
+#'        and "sci" (scientific notation). Use argument  by name.
+#' @param omit_power Numeric vector \code{c(p, q)} specifying the range of
+#'        exponents over which power of ten notation is omitted, where
+#'        \code{p <= q}. If NULL all numbers are formatted in powers of ten
+#'        notation. Use argument by name.
 #'
 #' @return A character vector with the following properties:
 #' \itemize{
-#'     \item Numbers within the \code{limits} range represented in decimal
-#'           notation; all others represented in powers of ten notation.
+#'     \item Numbers represented in powers of ten notation except for those
+#'           with exponents in the range specified in \code{omit_power}
 #'     \item Elements delimited with \code{$...$} for rendering as
 #'           inline math in an R Markdown or Quarto Markdown document.
 #' }
@@ -46,29 +55,46 @@ format_power <- function(x,
                          digits = 3,
                          ...,
                          format = "engr",
-                         limits = c(0.1, 1000)) {
+                         omit_power = c(-1, 2)) {
 
   # Arguments after dots must be named
   wrapr::stop_if_dot_args(
     substitute(list(...)),
     paste(
       "Arguments after ... must be named.\n",
-      "* Did you forget to write `format = ` or `limits = `?\n *"
+      "* Did you forget to write `format = ` or `omit_power = `?\n *"
     )
   )
 
-  # Check argument types, not "Date" class
+  # set omit_power to handle NULL or NA case
+  if (sum(isTRUE(is.null(omit_power))) > 0 | sum(isTRUE(is.na(omit_power))) > 0 ) {
+   # Assign equal fractional values and no integer exponents
+   # can lie on this range
+    omit_power <- c(0.1, 0.1)
+    }
+
+  # x: not "Date" class
   checkmate::assert_disjunct(class(x), c("Date", "POSIXct", "POSIXt"))
-  # length at least one, numeric
+
+  # x: length at least one, numeric
   checkmate::qassert(x, "n+")
-  # numeric, not missing, length 1
+
+  # digits: numeric, not missing, length 1
   checkmate::qassert(digits, "N1")
-  # character, not missing, length 1
+
+  # format: character, not missing, length 1
   checkmate::qassert(format, "S1")
-  # element of a set
+
+  # format: element of a set
   checkmate::assert_choice(format, c("engr", "sci"))
-  # numeric, not missing, length 2
-  checkmate::qassert(limits, "N2")
+
+  # omit_power: numeric, not missing, length 2
+  checkmate::qassert(omit_power, "N2")
+
+  # omit_power: range (p, q) requirement p <= q
+  if (!isTRUE(all(omit_power == cummax(omit_power)))) {
+    stop("In `omit_power = c(p, q)`, `p` must be less than or equal to `q`.")
+  }
 
   # Indicate these are not unbound symbols (R CMD check Note)
   char_coeff <- NULL
@@ -84,19 +110,16 @@ format_power <- function(x,
   DT <- copy(data.frame(x))
   setDT(DT)
 
+  # Indices to rows, separating decimal from exponential notation
+  DT[, exponent := floor(log10(abs(x)))]
+  decimal <- DT$exponent %between% omit_power
+  pow_10  <- !decimal
+
   # Exponent multiple for scientific or engineering notation
   exp_multiple <- fcase(
     format == "engr", 3,
     format == "sci",  1
   )
-
-  # Initialize variables
-  DT[, c("exponent", "coeff") := NA_real_]
-  DT[, c("value", "char_coeff") := NA_character_]
-
-  # Indices to rows for decimal and powers-of-ten notation
-  decimal <- abs(DT$x) %between% limits
-  pow_10  <- !decimal
 
 
 
@@ -142,7 +165,7 @@ format_power <- function(x,
 
 
 # ---------------------------------------------------
-# Internal functions
+# Appendix: Internal functions
 
 # Remove trailing decimal point, if any, introduced by formatC()
 omit_trailing_decimal <- function(DT, col_name) {

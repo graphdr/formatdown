@@ -14,9 +14,11 @@ format_power(x[1], 4)
 format_power(x[3], format = "engr")
 format_power(x[3], format = "sci")
 
-# Compare change to limits
-format_power(x[6], limits = c(0.1, 1000))
-format_power(x[6], limits = c(1, 1000))
+# Compare omit_power range
+format_power(x[6], omit_power = c(-1, 2))
+format_power(x[6], omit_power = c(0, 2))
+format_power(x[8])
+format_power(x[8], omit_power = NULL)
 
 # Apply to columns of a data frame (data.table syntax)
 y <- x[1:6]

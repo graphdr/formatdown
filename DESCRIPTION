@@ -2,9 +2,7 @@ Package: formatdown
 Title: Formatting Tools for R Markdown Documents
 Version: 0.1.1
 Language: en-US
-Authors@R: person("Richard", "Layton", 
-    email="graphdoctor@gmail.com", 
-    role=c("aut", "cre"))
+Authors@R: person("Richard", "Layton", email="graphdoctor@gmail.com", role=c("aut", "cre"))
 Description: Provides a small set of tools for common formatting tasks when 
     writing documents in R markdown or Quarto markdown. 
 Depends: R (>= 3.5.0)

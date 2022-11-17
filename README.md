@@ -90,3 +90,19 @@ as.data.frame(test_results)
 
 Participation in this open source project is subject to a [Code of
 Conduct](CONDUCT.html).
+
+## Software credits
+
+- [R](https://www.r-project.org/) and
+  [RStudio](https://www.rstudio.com/) for the working environment
+- [wrapr](https://CRAN.R-project.org/package=wrapr),
+  [checkmate](https://CRAN.R-project.org/package=checkmate), and
+  [tinytest](https://CRAN.R-project.org/package=tinytest) for
+  programming tools
+- [devtools](https://CRAN.R-project.org/package=devtools) and
+  [pkgdown](https://CRAN.R-project.org/package=pkgdown) for package
+  building
+- [rmarkdown](https://CRAN.R-project.org/package=rmarkdown) and
+  [knitr](https://CRAN.R-project.org/package=knitr) for authoring tools
+- [data.table](https://CRAN.R-project.org/package=data.table) for its
+  programmable syntax

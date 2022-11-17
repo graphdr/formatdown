@@ -3,7 +3,6 @@ title: "Format powers of ten"
 output:
   rmarkdown::html_vignette:
     fig_caption: yes
-link-citations: yes
 bibliography: ../inst/REFERENCES.bib
 vignette: >
   %\VignetteIndexEntry{Format powers of ten}
@@ -37,15 +36,15 @@ $$
 
 The $\times$ multiplication symbol, often avoided in other contexts, is conventional syntax in powers-of-ten notation [@Chase:2021, 63--67]. Moreover, power-of-tens notation has two formulations: *scientific notation* and *engineering notation*.
 
-- *Scientific.* &nbsp; $n$ is an integer and $a \in \mathbb{R}\  |\ 1\leq{a}<10$. For example, $N_A =$ `r format_power(6.0221E+23, 4, format = "sci")`
+- *Scientific.* &nbsp; $n$ is an integer and $a \in \mathbb{R}: 1\leq{|a|}<10$. For example, `r format_power(6.0221E+23, 4, format = "sci")`
 
-- *Engineering.* &nbsp; $n$ is a multiple of 3 and $a \in \mathbb{R}\  |\ 1\leq{a}<1000$. For example, $N_A =$ `r format_power(6.0221E+23, 4)`
+- *Engineering.* &nbsp; $n$ is a multiple of 3 and $a \in \mathbb{R}: 1\leq{|a|}<1000$. For example, `r format_power(6.0221E+23, 4)`
 
 When exponents are in the neighborhood of zero, for example, $n \in \{-1, 0, 1, 2\}$, decimal notation may be preferred.  Thus decimal values 0.1234, 1.234, 12.34, and 123.4 will often be printed as-is. The range of this set is usually adjusted to suit one's audience and rhetorical goals. 
 
 ## Markup
 
-In R Markdown [@rmd:2022] and Quarto Markdown [@qmd:2022], we use an inline equation markup delimited by `$...$` to create a math expression in the output document. For example, the markup for Avogadro's number is given by, 
+In R Markdown and Quarto Markdown, we use an inline equation markup delimited by `$...$` to create a math expression in the output document. For example, the markup for Avogadro's number is given by, 
 
         $N_A = 6.0221\times{10}^{23}$
 
@@ -58,15 +57,17 @@ which requires the backward slash `\` to be "escaped", hence the product symbol 
 
 
 
-
-
 ## `format_power()`
 
 Given a number, a numerical vector, or a numerical column from a data frame, `format_power()` converts the numbers to character strings of the form, 
 
         "$a\\times{10}^{n}$"
  
-where `a` is the coefficient and `n` is the exponent. The user can specify the number of significant digits, scientific or engineering format, and the range over which decimal notation is enforced. 
+where `a` is the coefficient and `n` is the exponent. The user can specify the number of significant digits and scientific or engineering format. Over the range defined for decimal notation, the numbers are converted to character strings of the form 
+
+        "$a$"
+
+where `a` is the number in decimal notation to the specified number of significant digits. 
  
 *Arguments.*
 
@@ -76,8 +77,7 @@ where `a` is the coefficient and `n` is the exponent. The user can specify the n
 
 - **format** &nbsp; Possible values are "engr" (engineering notation) and "sci" (scientific notation). Default is "engr". 
 
-- **limits** &nbsp; Numeric vector of length two, default `c(0.1, 1000)`,  specifying the range $p\leq{a}<q$ over which number $a$ is printed without power-of-ten notation. 
-
+- **omit_power** &nbsp; Numeric vector of length two, default `c(-1, 2)`. The range of exponents over which power of ten notation is omitted and numbers are formatted in decimal form. 
 
 If you are writing your own script to follow along, we use these packages in this vignette:
 
@@ -158,17 +158,26 @@ are rendered as
 - `r format_power(x[3], format = "engr")`
 
 
-<br>*Limits.* &nbsp; Argument, if included, must be named.   
+<br>*Other_than* &nbsp; Argument, if included, must be named.   
 
 ```{r}
-format_power(x[6], limits = c(0.1, 1000))
-format_power(x[6], limits = c(1, 1000))
+format_power(x[6], omit_power = c(-1, 3))
+format_power(x[6], omit_power = c(0, 3))
 ```
 
 are rendered as 
 
-- `r format_power(x[6], limits = c(0.1, 1000))`
-- `r format_power(x[6], limits = c(1, 1000))`
+- `r format_power(x[6], omit_power = c(-1, 3))`
+- `r format_power(x[6], omit_power = c(0, 3))`
+
+
+```{r}
+format_power(x[6], omit_power = c(1, 1))
+```
+
+
+
+
 
 To compare the effects across many orders of magnitude, we treat the example vector but convert it to a one-column data frame for display, rendered using using `knitr::kable()`, 
 
@@ -180,6 +189,22 @@ DT <- data.table(
 )
 knitr::kable(DT, align = "rr")
 ```
+
+Repeat but with all numbers of powers-of-ten notation. 
+
+```{r}
+# Omit all decimal notations
+DT <- data.table(
+  scientific = format_power(x, format = "sci", omit_power = NULL),
+  engineering = format_power(x, omit_power = NULL)
+)
+knitr::kable(DT, align = "rr")
+```
+
+
+
+
+
 
 
 <br>*Data frame.* &nbsp; Using `density`, a data frame included with formatdown that contains columns of class Date, character, factor, numeric, and integer.
@@ -316,7 +341,11 @@ format_power(x)
 
 
 
+
 ## References
+
+<div id="refs"></div>
+
 
 
 
