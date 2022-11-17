@@ -90,39 +90,47 @@
     
 <p>The notation we use to represent large and small numbers depends on
 the communications context. In a computer script, for example, we might
-encode Avogadro’s number <span class="math inline">\((N_A)\)</span> as
-<code>6.0221*10^23</code>. A computer printout of this number would
-typically use E-notation, as in <code>6.0221E+23</code>.</p>
+encode Avogadro’s number as <code>6.0221*10^23</code>. A computer
+printout of this number would typically use E-notation, as in
+<code>6.0221E+23</code>.</p>
 <p>In professional technical communications, however, computer syntax
 should be avoided—the asterisk (<code>*</code>) and carat
-(<code>^</code>) in <code>6.0221*10^23</code> encode computer
-<em>instructions</em>, not <em>mathematics.</em> And while E-notation
+(<code>^</code>) in <code>6.0221*10^23</code> <em>encode
+instructions</em> to a computer rather than <em>communicating
+mathematics</em> to a reader. And while E-notation
 (<code>6.0221E+23</code>) has currency in some discourse communities,
 the general convention in technical communications is to format large
 and small numbers using powers-of-ten notation of the form,</p>
 <p><span class="math display">\[
 a \times 10^n,
 \]</span></p>
-<p>The <span class="math inline">\(\times\)</span> multiplication symbol
-is a convention in powers-of-ten notation even though it is usually
-avoided in other contexts. Two forms of this notation are in common use
-<span class="citation">(<a href="#ref-Chase:2021" role="doc-biblioref">Chase, 2021, pp. 63–67</a>)</span>:</p>
+<p>The <span class="math inline">\(\times\)</span> multiplication
+symbol, often avoided in other contexts, is conventional syntax in
+powers-of-ten notation <span class="citation">(<a href="#ref-Chase:2021" role="doc-biblioref">Chase 2021, 63–67</a>)</span>. Moreover,
+power-of-tens notation has two formulations: <em>scientific
+notation</em> and <em>engineering notation</em>.</p>
 <ul>
-<li><p><em>Scientific notation</em>   where <span class="math inline">\(n\)</span> is an integer and <span class="math inline">\(a\)</span> is any real number such that <span class="math inline">\(1\leq{a}&lt;10\)</span>, for example, <span class="math inline">\(N_A =\)</span> <span class="math inline">\(6.0221\times{10}^{23}\)</span></p></li>
-<li><p><em>Engineering notation</em>   where <span class="math inline">\(n\)</span> is a multiple of 3 and <span class="math inline">\(a\)</span> is any real number such that <span class="math inline">\(1\leq{a}&lt;1000\)</span>, as in <span class="math inline">\(N_A =\)</span> <span class="math inline">\(602.21\times{10}^{21}\)</span></p></li>
+<li><p><em>Scientific.</em>   <span class="math inline">\(n\)</span> is
+an integer and <span class="math inline">\(a \in \mathbb{R}\  |\
+1\leq{a}&lt;10\)</span>. For example, <span class="math inline">\(N_A
+=\)</span> <span class="math inline">\(6.022\times{10}^{23}\)</span></p></li>
+<li><p><em>Engineering.</em>   <span class="math inline">\(n\)</span> is
+a multiple of 3 and <span class="math inline">\(a \in \mathbb{R}\  |\
+1\leq{a}&lt;1000\)</span>. For example, <span class="math inline">\(N_A
+=\)</span> <span class="math inline">\(602.2\times{10}^{21}\)</span></p></li>
 </ul>
 <p>When exponents are in the neighborhood of zero, for example, <span class="math inline">\(n \in \{-1, 0, 1, 2\}\)</span>, decimal notation
 may be preferred. Thus decimal values 0.1234, 1.234, 12.34, and 123.4
-will often be printed as-is. The limits of this set can be adjusted to
-suit one’s audience and rhetorical goals.</p>
+will often be printed as-is. The range of this set is usually adjusted
+to suit one’s audience and rhetorical goals.</p>
 <div class="section level2">
 <h2 id="markup">Markup<a class="anchor" aria-label="anchor" href="#markup"></a>
 </h2>
-<p>In R Markdown <span class="citation">(<a href="#ref-rmd:2022" role="doc-biblioref">Allaire et al., 2022</a>)</span> and Quarto
-Markdown <span class="citation">(<a href="#ref-qmd:2022" role="doc-biblioref">Allaire, 2022</a>)</span>, we use an inline
-equation markup delimited by <code>$...$</code> to create a math
-expression in the output document. For example, the markup for
-Avogadro’s number is given by,</p>
+<p>In R Markdown <span class="citation">(<a href="#ref-rmd:2022" role="doc-biblioref">Allaire et al. 2022</a>)</span> and Quarto Markdown
+<span class="citation">(<a href="#ref-qmd:2022" role="doc-biblioref">Allaire 2022</a>)</span>, we use an inline equation
+markup delimited by <code>$...$</code> to create a math expression in
+the output document. For example, the markup for Avogadro’s number is
+given by,</p>
 <pre><code>    $N_A = 6.0221\times{10}^{23}$</code></pre>
 <p>which yields <span class="math inline">\(N_A = 6.0221 \times
 10^{23}\)</span> in the document. To <em>program</em> the markup,
@@ -174,7 +182,7 @@ be named if the argument order is maintained.</p>
 <span><span class="co"># Arguments unnamed</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">avogadro</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Implicit use of default argument </span></span>
+<span><span class="co"># Implicit use of default argument</span></span>
 <span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">avogadro</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Demonstrate equivalence</span></span>
@@ -193,8 +201,10 @@ be named if the argument order is maintained.</p>
 <p>which, in an Rmd or qmd document, is rendered as <span class="math inline">\(602\times{10}^{21}\)</span>.</p>
 <p><br><em>Vector.</em>  </p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.2222e-6</span>, <span class="fl">2.3333e-5</span>, <span class="fl">3.4444e-4</span>, <span class="fl">4.1111e-3</span>, <span class="fl">5.2222e-2</span>, <span class="fl">6.3333e-1</span>,</span>
-<span>       <span class="fl">7.4444e+0</span>, <span class="fl">8.1111e+1</span>, <span class="fl">9.2222e+2</span>, <span class="fl">1.3333e+3</span>, <span class="fl">2.4444e+4</span>, <span class="fl">3.1111e+5</span>, <span class="fl">4.2222e+6</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="fl">1.2222e-6</span>, <span class="fl">2.3333e-5</span>, <span class="fl">3.4444e-4</span>, <span class="fl">4.1111e-3</span>, <span class="fl">5.2222e-2</span>, <span class="fl">6.3333e-1</span>,</span>
+<span>  <span class="fl">7.4444e+0</span>, <span class="fl">8.1111e+1</span>, <span class="fl">9.2222e+2</span>, <span class="fl">1.3333e+3</span>, <span class="fl">2.4444e+4</span>, <span class="fl">3.1111e+5</span>, <span class="fl">4.2222e+6</span></span>
+<span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "$1.22\\times{10}^{-6}$" "$23.3\\times{10}^{-6}$" "$344\\times{10}^{-6}$" </span></span>
 <span><span class="co">#&gt;  [4] "$4.11\\times{10}^{-3}$" "$52.2\\times{10}^{-3}$" "$0.633$"               </span></span>
@@ -241,8 +251,10 @@ example vector but convert it to a one-column data frame for display,
 rendered using using <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code>,</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Format using defaults and convert to a data frame</span></span>
-<span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>scientific <span class="op">=</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"sci"</span><span class="op">)</span>, </span>
-<span>                 engineering <span class="op">=</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span></span>
+<span>  scientific <span class="op">=</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"sci"</span><span class="op">)</span>,</span>
+<span>  engineering <span class="op">=</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>, align <span class="op">=</span> <span class="st">"rr"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -377,7 +389,7 @@ factor, numeric, and integer.</p>
 </table>
 <p>Treating a column as a vector,</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Copy to avoid "by reference" changes to density  </span></span>
+<code class="sourceCode R"><span><span class="co"># Copy to avoid "by reference" changes to density</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Format as a vector</span></span>
@@ -387,7 +399,7 @@ factor, numeric, and integer.</p>
 <p>is rendered as <span class="math inline">\(101.1\times{10}^{3}\)</span>, <span class="math inline">\(101.0\times{10}^{3}\)</span>, <span class="math inline">\(101.1\times{10}^{3}\)</span>, <span class="math inline">\(101.0\times{10}^{3}\)</span>, <span class="math inline">\(101.1\times{10}^{3}\)</span>.</p>
 <p>Treating a column within a data frame,</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Copy to avoid "by reference" changes to density  </span></span>
+<code class="sourceCode R"><span><span class="co"># Copy to avoid "by reference" changes to density</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Format one column, retain all columns</span></span>
@@ -471,22 +483,22 @@ factor, numeric, and integer.</p>
 <p>Using <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> to select and treat multiple columns from
 a data frame,</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Copy to avoid "by reference" changes to density </span></span>
+<code class="sourceCode R"><span><span class="co"># Copy to avoid "by reference" changes to density</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Identify columns to format</span></span>
 <span><span class="va">cols_we_want</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T_K"</span>, <span class="st">"p_Pa"</span>, <span class="st">"density"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Select and format.  </span></span>
+<span><span class="co"># Select and format.</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="va">DT</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">.SD</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>, .SDcols <span class="op">=</span> <span class="va">cols_we_want</span><span class="op">]</span></span>
 <span><span class="va">DT</span><span class="op">[</span><span class="op">]</span></span>
 <span><span class="co">#&gt;        T_K                   p_Pa density</span></span>
 <span><span class="co">#&gt;     &lt;char&gt;                 &lt;char&gt;  &lt;char&gt;</span></span>
-<span><span class="co">#&gt; 1: $294.0$ $101.1\\times{10}^{3}$ $1.198$</span></span>
-<span><span class="co">#&gt; 2: $294.2$ $101.0\\times{10}^{3}$ $1.196$</span></span>
+<span><span class="co">#&gt; 1: $294.1$ $101.1\\times{10}^{3}$ $1.198$</span></span>
+<span><span class="co">#&gt; 2: $294.1$ $101.0\\times{10}^{3}$ $1.196$</span></span>
 <span><span class="co">#&gt; 3: $294.6$ $101.1\\times{10}^{3}$ $1.196$</span></span>
 <span><span class="co">#&gt; 4: $293.4$ $101.0\\times{10}^{3}$ $1.200$</span></span>
-<span><span class="co">#&gt; 5: $293.8$ $101.1\\times{10}^{3}$ $1.199$</span></span></code></pre></div>
+<span><span class="co">#&gt; 5: $293.9$ $101.1\\times{10}^{3}$ $1.199$</span></span></code></pre></div>
 <p>is rendered as</p>
 <table class="table">
 <thead><tr class="header">
@@ -496,12 +508,12 @@ a data frame,</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="right"><span class="math inline">\(294.0\)</span></td>
+<td align="right"><span class="math inline">\(294.1\)</span></td>
 <td align="right"><span class="math inline">\(101.1\times{10}^{3}\)</span></td>
 <td align="right"><span class="math inline">\(1.198\)</span></td>
 </tr>
 <tr class="even">
-<td align="right"><span class="math inline">\(294.2\)</span></td>
+<td align="right"><span class="math inline">\(294.1\)</span></td>
 <td align="right"><span class="math inline">\(101.0\times{10}^{3}\)</span></td>
 <td align="right"><span class="math inline">\(1.196\)</span></td>
 </tr>
@@ -516,7 +528,7 @@ a data frame,</p>
 <td align="right"><span class="math inline">\(1.200\)</span></td>
 </tr>
 <tr class="odd">
-<td align="right"><span class="math inline">\(293.8\)</span></td>
+<td align="right"><span class="math inline">\(293.9\)</span></td>
 <td align="right"><span class="math inline">\(101.1\times{10}^{3}\)</span></td>
 <td align="right"><span class="math inline">\(1.199\)</span></td>
 </tr>
@@ -524,7 +536,7 @@ a data frame,</p>
 </table>
 <p>Repeat, but retain all columns,</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Copy to avoid "by reference" changes to density </span></span>
+<code class="sourceCode R"><span><span class="co"># Copy to avoid "by reference" changes to density</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Identify columns to format</span></span>
@@ -535,11 +547,11 @@ a data frame,</p>
 <span><span class="va">DT</span><span class="op">[</span><span class="op">]</span></span>
 <span><span class="co">#&gt;          date  trial humidity     T_K                   p_Pa     R density</span></span>
 <span><span class="co">#&gt;        &lt;Date&gt; &lt;char&gt;   &lt;fctr&gt;  &lt;char&gt;                 &lt;char&gt; &lt;int&gt;  &lt;char&gt;</span></span>
-<span><span class="co">#&gt; 1: 2018-06-12      a      low $294.0$ $101.1\\times{10}^{3}$   287 $1.198$</span></span>
-<span><span class="co">#&gt; 2: 2018-06-13      b     high $294.2$ $101.0\\times{10}^{3}$   287 $1.196$</span></span>
+<span><span class="co">#&gt; 1: 2018-06-12      a      low $294.1$ $101.1\\times{10}^{3}$   287 $1.198$</span></span>
+<span><span class="co">#&gt; 2: 2018-06-13      b     high $294.1$ $101.0\\times{10}^{3}$   287 $1.196$</span></span>
 <span><span class="co">#&gt; 3: 2018-06-14      c   medium $294.6$ $101.1\\times{10}^{3}$   287 $1.196$</span></span>
 <span><span class="co">#&gt; 4: 2018-06-15      d      low $293.4$ $101.0\\times{10}^{3}$   287 $1.200$</span></span>
-<span><span class="co">#&gt; 5: 2018-06-16      e     high $293.8$ $101.1\\times{10}^{3}$   287 $1.199$</span></span></code></pre></div>
+<span><span class="co">#&gt; 5: 2018-06-16      e     high $293.9$ $101.1\\times{10}^{3}$   287 $1.199$</span></span></code></pre></div>
 <p>is rendered as</p>
 <table class="table">
 <colgroup>
@@ -565,7 +577,7 @@ a data frame,</p>
 <td align="center">2018-06-12</td>
 <td align="center">a</td>
 <td align="right">low</td>
-<td align="right"><span class="math inline">\(294.0\)</span></td>
+<td align="right"><span class="math inline">\(294.1\)</span></td>
 <td align="right"><span class="math inline">\(101.1\times{10}^{3}\)</span></td>
 <td align="center">287</td>
 <td align="center"><span class="math inline">\(1.198\)</span></td>
@@ -574,7 +586,7 @@ a data frame,</p>
 <td align="center">2018-06-13</td>
 <td align="center">b</td>
 <td align="right">high</td>
-<td align="right"><span class="math inline">\(294.2\)</span></td>
+<td align="right"><span class="math inline">\(294.1\)</span></td>
 <td align="right"><span class="math inline">\(101.0\times{10}^{3}\)</span></td>
 <td align="center">287</td>
 <td align="center"><span class="math inline">\(1.196\)</span></td>
@@ -601,7 +613,7 @@ a data frame,</p>
 <td align="center">2018-06-16</td>
 <td align="center">e</td>
 <td align="right">high</td>
-<td align="right"><span class="math inline">\(293.8\)</span></td>
+<td align="right"><span class="math inline">\(293.9\)</span></td>
 <td align="right"><span class="math inline">\(101.1\times{10}^{3}\)</span></td>
 <td align="center">287</td>
 <td align="center"><span class="math inline">\(1.199\)</span></td>
@@ -611,7 +623,7 @@ a data frame,</p>
 <p>If different columns should be reported with different significant
 digits, treat the columns separately.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Copy to avoid "by reference" changes to density </span></span>
+<code class="sourceCode R"><span><span class="co"># Copy to avoid "by reference" changes to density</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Format selected columns, retain all columns with signif digits = 5</span></span>
@@ -716,16 +728,16 @@ objects produces errors. For example, “Date” class.</p>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-qmd:2022" class="csl-entry">
-Allaire, J. (2022). <em>Markdown basics</em>. RStudio, PBC. <a href="https://quarto.org/docs/authoring/markdown-basics.html/" class="external-link">https://quarto.org/docs/authoring/markdown-basics.html/</a>
+Allaire, JJ. 2022. <em>Markdown Basics</em>. RStudio, PBC. <a href="https://quarto.org/docs/authoring/markdown-basics.html/" class="external-link">https://quarto.org/docs/authoring/markdown-basics.html/</a>.
 </div>
 <div id="ref-rmd:2022" class="csl-entry">
-Allaire, J., Xie, Y., McPherson, J., et al. (2022). <em>Markdown
-basics</em>. RStudio, PBC. <a href="https://rmarkdown.rstudio.com/authoring_basics.html/" class="external-link">https://rmarkdown.rstudio.com/authoring_basics.html/</a>
+Allaire, JJ, Yihui Xie, Jonathan McPherson, et al. 2022. <em>Markdown
+Basics</em>. RStudio, PBC. <a href="https://rmarkdown.rstudio.com/authoring_basics.html/" class="external-link">https://rmarkdown.rstudio.com/authoring_basics.html/</a>.
 </div>
 <div id="ref-Chase:2021" class="csl-entry">
-Chase, M. (2021). <em><span>Technical Mathematics</span></em>. <a href="https://openoregon.pressbooks.pub/techmath/chapter/module-11-scientific-notation/" class="external-link">https://openoregon.pressbooks.pub/techmath/chapter/module-11-scientific-notation/</a>
+Chase, Morgan. 2021. <em><span>Technical Mathematics</span></em>. <a href="https://openoregon.pressbooks.pub/techmath/chapter/module-11-scientific-notation/" class="external-link">https://openoregon.pressbooks.pub/techmath/chapter/module-11-scientific-notation/</a>.
 </div>
 </div>
 </div>
