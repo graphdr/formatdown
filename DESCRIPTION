@@ -1,10 +1,13 @@
 Package: formatdown
-Title: Formatting Tools for R Markdown Documents
+Title: Formatting Tools for 'rmarkdown' Documents
 Version: 0.1.1
 Language: en-US
 Authors@R: person("Richard", "Layton", email="graphdoctor@gmail.com", role=c("aut", "cre"))
-Description: Provides a small set of tools for common formatting tasks when 
-    writing documents in R markdown or Quarto markdown. 
+Description: Provides a small set of tools for formatting tasks when creating 
+    documents in 'rmarkdown' or 'quarto'. Convert the elements of a numerical 
+    vector to character strings in which the numbers are formatted using 
+    powers-of-ten notation in scientific or engineering form and delimited for 
+    rendering as inline equations.
 Depends: R (>= 3.5.0)
 License: MIT + file LICENSE
 Encoding: UTF-8

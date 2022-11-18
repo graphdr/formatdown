@@ -1,3 +1,8 @@
+## Purpose
+
+Responding to corrections from initial submission. 
+
+
 ## R CMD check results
 
 For platforms:

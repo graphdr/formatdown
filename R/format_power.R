@@ -57,6 +57,10 @@ format_power <- function(x,
                          format = "engr",
                          omit_power = c(-1, 2)) {
 
+  # On exit, reset user's options values
+  user_digits <- getOption("digits")
+  on.exit(options(digits = user_digits))
+
   # Arguments after dots must be named
   wrapr::stop_if_dot_args(
     substitute(list(...)),
