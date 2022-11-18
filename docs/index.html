@@ -111,8 +111,11 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Not yet submitted to CRAN. The development version can be installed from GitHub.</p>
+<p>Install from CRAN.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"formatdown"</span><span class="op">)</span></span></code></pre></div>
+<p>The development version can be installed from GitHub.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"graphdr/formatdown"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -141,18 +144,18 @@
 <li>Use the GitHub <a href="https://github.com/graphdr/formatdown/issues" class="external-link"> Issues</a> page.</li>
 <li>Please run the package unit tests and report the results with your bug report. Any user can run the package tests by installing the <em>tinytest</em> package and running:</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Detailed test results</span></span>
 <span><span class="va">test_results</span> <span class="op">&lt;-</span> <span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/test_package.html" class="external-link">test_package</a></span><span class="op">(</span><span class="st">"formatdown"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">test_results</span><span class="op">)</span></span></code></pre></div>
-<p>Participation in this open source project is subject to a <a href="CONDUCT.html">Code of Conduct</a>.</p>
+<p>Participation in this open source project is subject to a <a href="https://graphdr.github.io/formatdown/CONDUCT.html">Code of Conduct</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="software-credits">Software credits<a class="anchor" aria-label="anchor" href="#software-credits"></a>
 </h2>
 <ul>
 <li>
-<a href="https://www.r-project.org/" class="external-link">R</a> and <a href="https://www.rstudio.com/" class="external-link">RStudio</a> for the working environment</li>
+<a href="https://www.r-project.org/" class="external-link">R</a> and <a href="https://posit.co/" class="external-link">RStudio</a> for the working environment</li>
 <li>
 <a href="https://CRAN.R-project.org/package=wrapr" class="external-link">wrapr</a>, <a href="https://CRAN.R-project.org/package=checkmate" class="external-link">checkmate</a>, and <a href="https://CRAN.R-project.org/package=tinytest" class="external-link">tinytest</a> for programming tools</li>
 <li>
@@ -199,9 +202,10 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://cran.r-project.org/package=formatdown" class="external-link"><img src="https://www.r-pkg.org/badges/version/formatdown"></a></li>
 <li><a href="https://github.com/graphdr/formatdown/actions/workflows/check-standard.yaml" class="external-link"><img src="https://github.com/graphdr/formatdown/actions/workflows/check-standard.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://app.codecov.io/gh/graphdr/formatdown?branch=main" class="external-link"><img src="https://codecov.io/gh/graphdr/formatdown/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://cran.r-project.org/web/licenses/mit" class="external-link"><img src="https://img.shields.io/badge/license-mit-blue.svg" alt="License: mit"></a></li>
+<li><a href="https://graphdr.github.io/formatdown/LICENSE.html"><img src="https://img.shields.io/badge/license-mit-blue.svg" alt="License: mit"></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle"></a></li>
 </ul>
 </div>
