@@ -1,9 +1,6 @@
 ---
 title: "Format powers of ten"
-output:
-  rmarkdown::html_vignette:
-    fig_caption: yes
-bibliography: ../inst/REFERENCES.bib
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Format powers of ten}
   %\VignetteEngine{knitr::rmarkdown}
@@ -26,21 +23,21 @@ options(
 )
 ```
 
-The notation we use to represent large and small numbers depends on the communications context. In a computer script, for example, we might encode Avogadro's number as `6.0221*10^23`. A computer printout of this number would typically use E-notation, as in `6.0221E+23`.
+The notation we use to represent large and small numbers depends on the context of our communications. In a computer script, for example, we might encode Avogadro's number as `6.0221*10^23`. A computer printout of this number would typically use E-notation, as in `6.0221E+23`.
 
-In professional technical communications, however, computer syntax should be avoided---the asterisk (`*`) and carat (`^`) in `6.0221*10^23` *encode  instructions* to a computer rather than *communicating mathematics* to a  reader. And while E-notation (`6.0221E+23`) has currency in some discourse communities, the general convention in technical communications is to format large and small numbers using powers-of-ten notation of the form, 
+In professional technical communications, however, computer syntax should be avoided---the asterisk (`*`) and carat (`^`) in `6.0221*10^23` communicate   *instructions to a computer*, not *mathematics to a reader*. And while E-notation (`6.0221E+23`) has currency in some discourse communities, the general convention in technical communications is to format large and small numbers using powers-of-ten notation of the form, 
 
 $$
 a \times 10^n, 
 $$
 
-The $\times$ multiplication symbol, often avoided in other contexts, is conventional syntax in powers-of-ten notation [@Chase:2021, 63--67]. Moreover, power-of-tens notation has two formulations: *scientific notation* and *engineering notation*.
+The $\times$ multiplication symbol, often avoided in other contexts, is conventional syntax in powers-of-ten notation. Also, the notation has two forms in general use: *scientific* and *engineering* (Chase 2021, 63–67).
 
-- *Scientific.* &nbsp; $n$ is an integer and $a \in \mathbb{R}: 1\leq{|a|}<10$. For example, `r format_power(6.0221E+23, 4, format = "sci")`
+- *Scientific.* &nbsp; $n$ is an integer and $a \in Re: 1\leq{|a|}<10$. For example, `r format_power(6.0221E+23, 4, format = "sci")`
 
-- *Engineering.* &nbsp; $n$ is a multiple of 3 and $a \in \mathbb{R}: 1\leq{|a|}<1000$. For example, `r format_power(6.0221E+23, 4)`
+- *Engineering.* &nbsp; $n$ is a multiple of 3 and $a \in Re: 1\leq{|a|}<1000$. For example, `r format_power(6.0221E+23, 4)`
 
-When exponents are in the neighborhood of zero, for example, $n \in \{-1, 0, 1, 2\}$, decimal notation may be preferred.  Thus decimal values 0.1234, 1.234, 12.34, and 123.4 will often be printed as-is. The range of this set is usually adjusted to suit one's audience and rhetorical goals. 
+*Exceptions.* &nbsp; When exponents are in the neighborhood of zero, for example, $n \in \{-1, 0, 1, 2\}$, decimal notation may be preferred to power of ten notation. Decimal values such as 0.1234, 1.234, 12.34, and 123.4 might be printed as-is. The range of exponents to include in this set is discretionary. 
 
 ## Markup
 
@@ -61,11 +58,11 @@ which requires the backward slash `\` to be "escaped", hence the product symbol 
 
 Given a number, a numerical vector, or a numerical column from a data frame, `format_power()` converts the numbers to character strings of the form, 
 
-        "$a\\times{10}^{n}$"
+        "$a\\times{10}^{n}$" 
  
-where `a` is the coefficient and `n` is the exponent. The user can specify the number of significant digits and scientific or engineering format. Over the range defined for decimal notation, the numbers are converted to character strings of the form 
+where `a` is the coefficient and `n` is the exponent. The user can specify the number of significant digits and scientific or engineering format. Unless otherwise specified, numbers with exponents in the neighborhood of zero are excluded from power of ten notation and are converted to character strings of the form, 
 
-        "$a$"
+        "$a$" 
 
 where `a` is the number in decimal notation to the specified number of significant digits. 
  
@@ -77,7 +74,7 @@ where `a` is the number in decimal notation to the specified number of significa
 
 - **format** &nbsp; Possible values are "engr" (engineering notation) and "sci" (scientific notation). Default is "engr". 
 
-- **omit_power** &nbsp; Numeric vector of length two, default `c(-1, 2)`. The range of exponents over which power of ten notation is omitted and numbers are formatted in decimal form. 
+- **omit_power** &nbsp; Numeric vector of length two (or NULL). Determines the range of exponents excluded from power-of-ten notation. Default is `c(-1, 2)`. 
 
 If you are writing your own script to follow along, we use these packages in this vignette:
 
@@ -111,9 +108,9 @@ all.equal(x, z)
 
 
 
-## Examples
+## Scalar
 
-*Scalar.* &nbsp;  Use with inline R code.  
+Use with inline R code.  
 
 ```{r}
 format_power(avogadro)
@@ -121,7 +118,11 @@ format_power(avogadro)
 
 which, in an Rmd or qmd document, is rendered as `r format_power(avogadro)`. 
 
-<br>*Vector.* &nbsp;  
+
+
+
+
+## Vector 
 
 ```{r}
 x <- c(
@@ -133,7 +134,14 @@ format_power(x)
 
 is rendered as `r format_power(x)[1:3]`, etc.  
 
-<br>*Significant digits.* &nbsp; Argument does not have to be named. 
+
+
+
+
+
+## Significant digits
+
+Argument does not have to be named. 
 
 ```{r}
 format_power(x[1], 3)
@@ -145,7 +153,14 @@ are rendered as
 - `r format_power(x[1], 3)`
 - `r format_power(x[1], 4)`
 
-<br>*Format.* &nbsp; Argument, if included, must be named. 
+
+
+
+
+
+## Format
+
+Argument, if included, must be named. 
 
 ```{r}
 format_power(x[3], format = "sci")
@@ -157,8 +172,24 @@ are rendered as
 - `r format_power(x[3], format = "sci")`
 - `r format_power(x[3], format = "engr")`
 
+To compare the effects across many orders of magnitude, we format the example vector twice, placing the results side by side in a data frame for comparison, rendered using `knitr::kable()`, 
 
-<br>*Other_than* &nbsp; Argument, if included, must be named.   
+```{r}
+# Compare two formats
+DT <- data.table(
+  scientific  = format_power(x, format = "sci"),
+  engineering = format_power(x)
+)
+knitr::kable(DT, align = "rr")
+```
+
+
+
+
+
+## Exceptions
+
+`omit_power` argument, if included, must be named.   
 
 ```{r}
 format_power(x[6], omit_power = c(-1, 3))
@@ -170,30 +201,10 @@ are rendered as
 - `r format_power(x[6], omit_power = c(-1, 3))`
 - `r format_power(x[6], omit_power = c(0, 3))`
 
+`omit_power = NULL` removes the exceptions and all numbers are rendered in the selected power-of-ten notation.  
 
 ```{r}
-format_power(x[6], omit_power = c(1, 1))
-```
-
-
-
-
-
-To compare the effects across many orders of magnitude, we treat the example vector but convert it to a one-column data frame for display, rendered using using `knitr::kable()`, 
-
-```{r}
-# Format using defaults and convert to a data frame
-DT <- data.table(
-  scientific = format_power(x, format = "sci"),
-  engineering = format_power(x)
-)
-knitr::kable(DT, align = "rr")
-```
-
-Repeat but with all numbers of powers-of-ten notation. 
-
-```{r}
-# Omit all decimal notations
+# Omit no values from power-of-ten notation
 DT <- data.table(
   scientific = format_power(x, format = "sci", omit_power = NULL),
   engineering = format_power(x, omit_power = NULL)
@@ -207,7 +218,9 @@ knitr::kable(DT, align = "rr")
 
 
 
-<br>*Data frame.* &nbsp; Using `density`, a data frame included with formatdown that contains columns of class Date, character, factor, numeric, and integer.
+## Data frame
+
+Using `density`, a data frame included with formatdown that contains columns of class Date, character, factor, numeric, and integer.
 
 ```{r}
 density
@@ -314,7 +327,16 @@ is rendered as
 knitr::kable(DT, align = "ccrrr")
 ```
 
-*Non-numeric input.* &nbsp; Applying the function to non-numeric objects produces errors. For example, "Date" class. 
+
+
+
+
+
+
+
+## Non-numeric input
+
+Applying the function to non-numeric objects produces errors. For example, "Date" class. 
 
 ```{r}
 #| error: true
@@ -344,7 +366,7 @@ format_power(x)
 
 ## References
 
-<div id="refs"></div>
+Chase, Morgan. 2021. *Technical Mathematics.* https://openoregon.pressbooks.pub/techmath/chapter/module-11-scientific-notation/.
 
 
 

@@ -7,11 +7,12 @@ Formatting tools for R markdown documents.
 
 <!-- badges: start -->
 
+[![](https://www.r-pkg.org/badges/version/formatdown)](https://cran.r-project.org/package=formatdown)
 [![R-CMD-check](https://github.com/graphdr/formatdown/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/graphdr/formatdown/actions/workflows/check-standard.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/graphdr/formatdown/branch/main/graph/badge.svg)](https://app.codecov.io/gh/graphdr/formatdown?branch=main)
 [![License:
-mit](https://img.shields.io/badge/license-mit-blue.svg)](https://cran.r-project.org/web/licenses/mit)
+mit](https://img.shields.io/badge/license-mit-blue.svg)](https://graphdr.github.io/formatdown/LICENSE.html)
 [![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
@@ -49,8 +50,13 @@ which, in an Rmd or qmd document, are rendered as
 
 ## Installation
 
-Not yet submitted to CRAN. The development version can be installed from
-GitHub.
+Install from CRAN.
+
+``` r
+install.packages("formatdown")
+```
+
+The development version can be installed from GitHub.
 
 ``` r
 install.packages("devtools")
@@ -89,12 +95,12 @@ as.data.frame(test_results)
 ```
 
 Participation in this open source project is subject to a [Code of
-Conduct](CONDUCT.html).
+Conduct](https://graphdr.github.io/formatdown/CONDUCT.html).
 
 ## Software credits
 
-- [R](https://www.r-project.org/) and
-  [RStudio](https://www.rstudio.com/) for the working environment
+- [R](https://www.r-project.org/) and [RStudio](https://posit.co/) for
+  the working environment
 - [wrapr](https://CRAN.R-project.org/package=wrapr),
   [checkmate](https://CRAN.R-project.org/package=checkmate), and
   [tinytest](https://CRAN.R-project.org/package=tinytest) for
