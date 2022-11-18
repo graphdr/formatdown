@@ -10,6 +10,7 @@
 ^cran-comments\.md$
 ^data-raw$
 ^docs$
+^holding
 ^formatdown\.Rproj$
 ^pkgdown$
 ^README\.html$
