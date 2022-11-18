@@ -19,3 +19,4 @@
 ^LICENSE\.md$
 ^\.github$
 ^\.github/workflows$
+^CRAN-SUBMISSION$
