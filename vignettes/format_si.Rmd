@@ -1,0 +1,28 @@
+---
+title: "Format SI"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Format SI}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library("formatdown")
+library("data.table")
+
+# data.table printout
+options(
+  datatable.print.nrows = 15,
+  datatable.print.topn = 3,
+  datatable.print.class = TRUE
+)
+```
+
+
+A branch to try a branch and attempt to replace power of ten with 
+greek symbols. 
