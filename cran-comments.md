@@ -8,19 +8,19 @@ For platforms:
 
         0 errors | 0 warnings | 0 notes
 
-## OK plus Maintainer NOTE
+## Maintainer NOTE
 
 For platforms;
 
 - Ubuntu Linux 20.04.1 LTS, R-release, GCC 
 - Fedora Linux, R-devel, clang, gfortran
- 
+        
         * checking CRAN incoming feasibility ... [6s/23s] NOTE
         Maintainer: ‘Richard Layton <graphdoctor@gmail.com>’
         
         New submission
 
-## OK plus HTML validation NOTE
+## HTML `tidy` NOTE
 
 For platforms:
 
