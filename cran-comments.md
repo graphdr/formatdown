@@ -13,8 +13,8 @@ For platforms:
 For platforms;
 
 - Ubuntu Linux 20.04.1 LTS, R-release, GCC 
-- Fedora Linux, R-devel, clang, gfortran
-        
+- Fedora Linux, R-devel, clang, gfortran     
+
         * checking CRAN incoming feasibility ... [6s/23s] NOTE
         Maintainer: ‘Richard Layton <graphdoctor@gmail.com>’
         
