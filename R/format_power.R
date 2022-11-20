@@ -41,8 +41,8 @@
 #'        notation. Use argument by name.
 #' @param delim Character vector (length 1 or 2) defining the delimiters for
 #'        marking up inline math.
-#'        Possible values include \code{c("$")} or
-#'        \code{c("\\\\(")}, both of which create appropriate left and right
+#'        Possible values include \code{"$"} or
+#'        \code{"\\\\("}, both of which create appropriate left and right
 #'        delimiters. Alternatively, left and right can be defined
 #'        explicitly, e.g., \code{c("$", "$")} or \code{c("\\\\(", "\\\\)")}.
 #'        Custom delimiters can be assigned to suit the markup environment. Use
