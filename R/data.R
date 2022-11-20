@@ -1,36 +1,41 @@
-#' Air as an ideal gas
+#' Air density measurements
 #'
-#' Air density at room temperature. A data frame to illustrate features of
-#' the \code{format_power()}.
+#' A data.table of air properties at room temperature, simulating multiple
+#' measurements at approximately steady state,
 #'
 #' @usage data(density, package = "formatdown")
 #'
 #' @format A data frame with 5 rows and 7 columns:
 #' \describe{
-#'  \item{date}{A date variable.}
-#'  \item{trial}{A character variable.}
-#'  \item{humidity}{A factor variable.}
-#'  \item{T_K}{Numeric air temperature in Kelvin.}
-#'  \item{p_Pa}{Numeric air pressure in Pascals.}
-#'  \item{R}{Numeric gas constant in J/(kg K)}
-#'  \item{density}{Numeric air density in kg/m^3}
+#'  \item{date}{Date, R class "Date", format \code{YYYY-MM-DD}.}
+#'  \item{trial}{Character, label a--e.}
+#'  \item{humidity}{Factor, low, medium, or high.}
+#'  \item{T_K}{Numeric, temperature, units K.}
+#'  \item{p_Pa}{Numeric, atmospheric pressure, units Pa.}
+#'  \item{R}{Integer, gas constant, units
+#'           J kg\eqn{^{-1}}{^{-1}}K\eqn{^{-1}}{^{-1}}.}
+#'  \item{density}{Numeric, calculated air density, units
+#'        kg/m\eqn{^{3}}{^3}.}
 #' }
 "density"
 
 
 #' Water properties
 #'
-#' Properties of water at different temperatures. A data frame to illustrate
-#' features of the \code{format_power()}.
+#' A data.table with properties of water at different temperatures.
 #'
 #' @usage data(water, package = "formatdown")
 #'
+#' @source Excerpt from the R hydraulics package,
+#'         \url{https://CRAN.R-project.org/package=hydraulics}
+#'
 #' @format A data frame with 5 rows and 5 columns:
 #' \describe{
-#'  \item{temperature}{Numeric. K.}
-#'  \item{density}{Numeric. kg/m^3.}
-#'  \item{specific_weight}{Numeric. }
-#'  \item{viscosity}{Numeric. Pa-s.}
-#'  \item{bulk_modulus}{Numeric. Pa.}
+#'  \item{temperature}{Numeric, temperature, units K.}
+#'  \item{density}{Numeric, density, units kg/m\eqn{^{3}}{^3}.}
+#'  \item{specific_weight}{Numeric, specific weight, units
+#'        N/m\eqn{^{3}}{^3}.}
+#'  \item{viscosity}{Numeric, dynamic viscosity, units Pa-s.}
+#'  \item{bulk_modulus}{Numeric, bulk modulus, units Pa.}
 #' }
 "water"

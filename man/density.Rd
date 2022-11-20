@@ -3,24 +3,26 @@
 \docType{data}
 \name{density}
 \alias{density}
-\title{Ideal gas sample data frame}
+\title{Air density measurements}
 \format{
 A data frame with 5 rows and 7 columns:
 \describe{
- \item{date}{A date variable.}
- \item{trial}{A character variable.}
- \item{humidity}{A factor variable.}
- \item{T_K}{Numeric air temperature in Kelvin.}
- \item{p_Pa}{Numeric air pressure in Pascals.}
- \item{R}{Numeric gas constant in J/(kg K)}
- \item{density}{Numeric air density in kg/m^3}
+ \item{date}{Date, R class "Date", format \code{YYYY-MM-DD}.}
+ \item{trial}{Character, label a--e.}
+ \item{humidity}{Factor, low, medium, or high.}
+ \item{T_K}{Numeric, temperature, units K.}
+ \item{p_Pa}{Numeric, atmospheric pressure, units Pa.}
+ \item{R}{Integer, gas constant, units
+          J kg\eqn{^{-1}}{^{-1}}K\eqn{^{-1}}{^{-1}}.}
+ \item{density}{Numeric, calculated air density, units
+       kg/m\eqn{^{3}}{^3}.}
 }
 }
 \usage{
 data(density, package = "formatdown")
 }
 \description{
-Air density at room temperature. A data frame to illustrate features of
-the \code{format_power()}.
+A data.table of air properties at room temperature, simulating multiple
+measurements at approximately steady state,
 }
 \keyword{datasets}
