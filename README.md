@@ -74,9 +74,7 @@ To contribute to formatdown,
 - Please clone this repo locally.  
 - Commit your contribution on a separate branch.
 - If you submit a function, please use the *checkmate* package to
-  include runtime argument checks and the *tinytest* package to write
-  unit tests for your code. Save tests in the `inst/tinytest/`
-  directory.
+  include runtime argument checks.
 
 To provide feedback or report a bug,
 
