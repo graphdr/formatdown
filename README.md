@@ -16,7 +16,7 @@ coverage](https://codecov.io/gh/graphdr/formatdown/branch/main/graph/badge.svg)]
 
 Provides a small set of tools for formatting tasks when writing
 documents in R Markdown or Quarto Markdown. Works with outputs in html,
-pdf, docx and possibly others.
+pdf, and docx (and possibly others).
 
 ## Usage
 
@@ -74,9 +74,7 @@ To contribute to formatdown,
 - Please clone this repo locally.  
 - Commit your contribution on a separate branch.
 - If you submit a function, please use the *checkmate* package to
-  include runtime argument checks and the *tinytest* package to write
-  unit tests for your code. Save tests in the `inst/tinytest/`
-  directory.
+  include runtime argument checks.
 
 To provide feedback or report a bug,
 
