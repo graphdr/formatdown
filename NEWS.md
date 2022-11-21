@@ -10,8 +10,8 @@
 
 2022-xx-xx
 
-- Add `delim` argument to `format_power()` 
 - Add `water` data set, an excerpt from the `hydraulics` package 
+- Add `delim` argument to `format_power()` 
 
 ## formatdown 0.1.1
 
