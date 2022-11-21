@@ -1,6 +1,6 @@
 Package: formatdown
 Title: Formatting Tools for 'rmarkdown' Documents
-Version: 0.1.1
+Version: 0.1.1.9001
 Language: en-US
 Authors@R: person("Richard", "Layton", email="graphdoctor@gmail.com", role=c("aut", "cre"))
 Description: Provides a small set of tools for formatting tasks when creating 
@@ -24,5 +24,7 @@ Suggests:
     rmarkdown,
     tinytest
 VignetteBuilder: knitr
-URL: https://github.com/graphdr/formatdown/
+URL: https://github.com/graphdr/formatdown/, 
+     https://graphdr.github.io/formatdown/, 
+     https://CRAN.R-project.org/package=formatdown
 BugReports: https://github.com/graphdr/formatdown/issues
