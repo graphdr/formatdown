@@ -65,6 +65,11 @@ test_format_power<- function() {
            .SDcols = cols_we_want]
   expect_equal(DT, ans)
 
+  # Different delimiters
+  # x   <- avogadro
+  # ans <- "\\(602.2\\times{10}^{21}\\)"
+  # expect_equal(format_power(x, 4, delim = "\\("), ans)
+
   # Errors for incorrect x argument
   expect_error(format_power(x = density))
   expect_error(format_power(x = density$date))

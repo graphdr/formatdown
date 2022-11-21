@@ -109,6 +109,7 @@ To contribute to formatdown,
 - If you submit a function, please use the *checkmate* package to
   include runtime argument checks.
 
+
 To provide feedback or report a bug,
 
 - Use the GitHub <a href="https://github.com/graphdr/formatdown/issues">
