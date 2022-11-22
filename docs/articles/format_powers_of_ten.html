@@ -97,10 +97,10 @@ printout of this number would typically use E-notation, as in
 should be avoided—the asterisk (<code>*</code>) and carat
 (<code>^</code>) in <code>6.0221*10^23</code> communicate
 <em>instructions to a computer</em>, not <em>syntactical
-mathematics</em>. And while E-notation (<code>6.0221E+23</code>) has
-currency in some discourse communities, the general convention in
-technical communications is to format large and small numbers using
-powers-of-ten notation of the form,</p>
+mathematics</em>. And while scientific E-notation
+(<code>6.0221E+23</code>) has currency in some discourse communities,
+the general convention in technical communications is to format large
+and small numbers using powers-of-ten notation of the form,</p>
 <p><span class="math display">\[
 a \times 10^n,
 \]</span></p>
@@ -122,6 +122,22 @@ zero, for example, <span class="math inline">\(n \in \{-1, 0, 1,
 notation. Decimal values such as 0.1234, 1.234, 12.34, and 123.4 might
 be printed as-is. The range of exponents to include in this set is
 discretionary.</p>
+<p><em>Notes on syntax.</em>   We have to distinguish between computer
+syntax, math syntax, and markup syntax.</p>
+<ul>
+<li><p>Anyone who has written a line of code involving multiplication is
+familiar with the asterisk as the multiplication operator, e.g.,
+<code>x = a * b</code> or <code>y = a * (b + c)</code>. In written
+mathematics, however, these expressions are written without
+multiplication symbols, that is, <span class="math inline">\(x=ab\)</span> and <span class="math inline">\(y=a(b+c)\)</span>. Moreover, mathematically the
+asterisk has a completely different meaning—it represents the
+<em>convolution</em> operation between two functions, as in <span class="math inline">\(\left(f * g \right)(t)\)</span>.</p></li>
+<li><p>The carat symbol (<code>^</code>), to the best of my knowledge,
+is a programming operator only; mathematically it has no
+meaning.</p></li>
+<li><p>In our markup language, <code>\times</code> is the product symbol
+and <code>^</code> indicates a superscript or exponent.</p></li>
+</ul>
 <div class="section level2">
 <h2 id="markup">Markup<a class="anchor" aria-label="anchor" href="#markup"></a>
 </h2>
@@ -346,7 +362,7 @@ for comparison, rendered using <code><a href="https://rdrr.io/pkg/knitr/man/kabl
 </table>
 </div>
 <div class="section level2">
-<h2 id="set-exceptions">Set exceptions<a class="anchor" aria-label="anchor" href="#set-exceptions"></a>
+<h2 id="omit-power-notation">Omit power notation<a class="anchor" aria-label="anchor" href="#omit-power-notation"></a>
 </h2>
 <p><code>omit_power</code> argument, if included, must be named.
 Suppose, for example, we want the value 0.0678 to be rendered without
@@ -365,8 +381,8 @@ argument).</p>
 <li><span class="math inline">\(0.0678\)</span></li>
 <li><span class="math inline">\(6.78 \times 10^{-2}\)</span></li>
 </ul>
-<p><code>omit_power = NULL</code> removes the exceptions and all numbers
-are rendered in the selected power-of-ten notation.</p>
+<p><code>omit_power = NULL</code> removes the exceptions and formats all
+numbers in power-of-ten notation.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Omit no values from power-of-ten notation</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span></span>
@@ -842,35 +858,27 @@ digits, treat the columns separately.</p>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="va">DT</span><span class="op">[</span>, <span class="op">(</span><span class="va">cols_we_want</span><span class="op">)</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">.SD</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>, .SDcols <span class="op">=</span> <span class="va">cols_we_want</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co"># Individually format one column with signif digits = 4</span></span>
-<span><span class="va">DT</span><span class="op">$</span><span class="va">p_Pa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">DT</span><span class="op">$</span><span class="va">pressure</span>, <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">DT</span><span class="op">$</span><span class="va">pressure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">DT</span><span class="op">$</span><span class="va">pressure</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">DT</span><span class="op">[</span><span class="op">]</span></span>
-<span><span class="co">#&gt;          date  trial humidity temperature pressure     R  density</span></span>
-<span><span class="co">#&gt;        &lt;Date&gt; &lt;char&gt;   &lt;fctr&gt;      &lt;char&gt;    &lt;num&gt; &lt;int&gt;   &lt;char&gt;</span></span>
-<span><span class="co">#&gt; 1: 2018-06-12      a      low    $294.10$   101100   287 $1.1980$</span></span>
-<span><span class="co">#&gt; 2: 2018-06-13      b     high    $294.10$   101000   287 $1.1960$</span></span>
-<span><span class="co">#&gt; 3: 2018-06-14      c   medium    $294.60$   101100   287 $1.1960$</span></span>
-<span><span class="co">#&gt; 4: 2018-06-15      d      low    $293.40$   101000   287 $1.2000$</span></span>
-<span><span class="co">#&gt; 5: 2018-06-16      e     high    $293.90$   101100   287 $1.1990$</span></span>
-<span><span class="co">#&gt;                      p_Pa</span></span>
-<span><span class="co">#&gt;                    &lt;char&gt;</span></span>
-<span><span class="co">#&gt; 1: $101.1 \\times 10^{3}$</span></span>
-<span><span class="co">#&gt; 2: $101.0 \\times 10^{3}$</span></span>
-<span><span class="co">#&gt; 3: $101.1 \\times 10^{3}$</span></span>
-<span><span class="co">#&gt; 4: $101.0 \\times 10^{3}$</span></span>
-<span><span class="co">#&gt; 5: $101.1 \\times 10^{3}$</span></span>
+<span><span class="co">#&gt;          date  trial humidity temperature               pressure     R  density</span></span>
+<span><span class="co">#&gt;        &lt;Date&gt; &lt;char&gt;   &lt;fctr&gt;      &lt;char&gt;                 &lt;char&gt; &lt;int&gt;   &lt;char&gt;</span></span>
+<span><span class="co">#&gt; 1: 2018-06-12      a      low    $294.10$ $101.1 \\times 10^{3}$   287 $1.1980$</span></span>
+<span><span class="co">#&gt; 2: 2018-06-13      b     high    $294.10$ $101.0 \\times 10^{3}$   287 $1.1960$</span></span>
+<span><span class="co">#&gt; 3: 2018-06-14      c   medium    $294.60$ $101.1 \\times 10^{3}$   287 $1.1960$</span></span>
+<span><span class="co">#&gt; 4: 2018-06-15      d      low    $293.40$ $101.0 \\times 10^{3}$   287 $1.2000$</span></span>
+<span><span class="co">#&gt; 5: 2018-06-16      e     high    $293.90$ $101.1 \\times 10^{3}$   287 $1.1990$</span></span>
 <span></span>
 <span><span class="co"># Render in document</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>, align <span class="op">=</span> <span class="st">"ccrrr"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="13%">
-<col width="8%">
-<col width="10%">
-<col width="13%">
-<col width="10%">
-<col width="5%">
+<col width="15%">
+<col width="9%">
 <col width="11%">
-<col width="25%">
+<col width="15%">
+<col width="28%">
+<col width="6%">
+<col width="12%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">date</th>
@@ -880,7 +888,6 @@ digits, treat the columns separately.</p>
 <th align="right">pressure</th>
 <th align="center">R</th>
 <th align="center">density</th>
-<th align="right">p_Pa</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -888,55 +895,50 @@ digits, treat the columns separately.</p>
 <td align="center">a</td>
 <td align="right">low</td>
 <td align="right"><span class="math inline">\(294.10\)</span></td>
-<td align="right">101100</td>
-<td align="center">287</td>
-<td align="center"><span class="math inline">\(1.1980\)</span></td>
 <td align="right"><span class="math inline">\(101.1 \times
 10^{3}\)</span></td>
+<td align="center">287</td>
+<td align="center"><span class="math inline">\(1.1980\)</span></td>
 </tr>
 <tr class="even">
 <td align="center">2018-06-13</td>
 <td align="center">b</td>
 <td align="right">high</td>
 <td align="right"><span class="math inline">\(294.10\)</span></td>
-<td align="right">101000</td>
-<td align="center">287</td>
-<td align="center"><span class="math inline">\(1.1960\)</span></td>
 <td align="right"><span class="math inline">\(101.0 \times
 10^{3}\)</span></td>
+<td align="center">287</td>
+<td align="center"><span class="math inline">\(1.1960\)</span></td>
 </tr>
 <tr class="odd">
 <td align="center">2018-06-14</td>
 <td align="center">c</td>
 <td align="right">medium</td>
 <td align="right"><span class="math inline">\(294.60\)</span></td>
-<td align="right">101100</td>
-<td align="center">287</td>
-<td align="center"><span class="math inline">\(1.1960\)</span></td>
 <td align="right"><span class="math inline">\(101.1 \times
 10^{3}\)</span></td>
+<td align="center">287</td>
+<td align="center"><span class="math inline">\(1.1960\)</span></td>
 </tr>
 <tr class="even">
 <td align="center">2018-06-15</td>
 <td align="center">d</td>
 <td align="right">low</td>
 <td align="right"><span class="math inline">\(293.40\)</span></td>
-<td align="right">101000</td>
-<td align="center">287</td>
-<td align="center"><span class="math inline">\(1.2000\)</span></td>
 <td align="right"><span class="math inline">\(101.0 \times
 10^{3}\)</span></td>
+<td align="center">287</td>
+<td align="center"><span class="math inline">\(1.2000\)</span></td>
 </tr>
 <tr class="odd">
 <td align="center">2018-06-16</td>
 <td align="center">e</td>
 <td align="right">high</td>
 <td align="right"><span class="math inline">\(293.90\)</span></td>
-<td align="right">101100</td>
-<td align="center">287</td>
-<td align="center"><span class="math inline">\(1.1990\)</span></td>
 <td align="right"><span class="math inline">\(101.1 \times
 10^{3}\)</span></td>
+<td align="center">287</td>
+<td align="center"><span class="math inline">\(1.1990\)</span></td>
 </tr>
 </tbody>
 </table>
