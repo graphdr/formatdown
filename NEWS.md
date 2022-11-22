@@ -10,10 +10,10 @@
 
 2022-11-22
 
-- Add `water` data set, an excerpt from the `hydraulics` package. 
+- Add `atmosphere`, `metals`, `air`, and `water` data sets. 
 - Fixed a bug to remove extra spaces added by `formatC()`. 
 - Add `delim` argument to `format_power()`.
-- Add `air` data set, delete `density`. 
+- Delete `density` data set. 
 
 ## formatdown 0.1.1
 

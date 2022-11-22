@@ -5,24 +5,24 @@
 \alias{air}
 \title{Air density measurements}
 \format{
-A data frame with 5 rows and 7 columns:
+Classes data.table and data.frame:	5 observations of 7 variables:
 \describe{
  \item{date}{Date, R class "Date", format \code{YYYY-MM-DD}.}
- \item{trial}{Character, label a--e.}
+ \item{trial}{Character, label a through e.}
  \item{humidity}{Factor, low, medium, or high.}
- \item{temperature}{Numeric, units K.}
- \item{pressure}{Numeric, atmospheric pressure, units Pa.}
- \item{R}{Integer, gas constant, units
-          J kg\eqn{^{-1}}{^{-1}}K\eqn{^{-1}}{^{-1}}.}
- \item{density}{Numeric, calculated air density, units
-       kg/m\eqn{^{3}}{^3}.}
+ \item{temperature}{Numeric, [K] }
+ \item{pressure}{Numeric, atmospheric pressure [Pa] }
+ \item{R}{Integer, gas constant
+          [J kg\eqn{^{-1}}{^{-1}}K\eqn{^{-1}}{^{-1}}] }
+ \item{density}{Numeric, calculated air density
+       [kg m\eqn{^{-3}}{^{-13}}] }
 }
 }
 \usage{
 data(air, package = "formatdown")
 }
 \description{
-A data.table of air properties at room temperature, simulating multiple
+A table of air properties at room temperature, simulating multiple
 measurements at approximately steady state,
 }
 \keyword{datasets}

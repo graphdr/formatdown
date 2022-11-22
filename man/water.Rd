@@ -5,14 +5,14 @@
 \alias{water}
 \title{Water properties}
 \format{
-A data frame with 5 rows and 5 columns:
+Classes data.table and data.frame:	5 observations of 5 variables:
 \describe{
- \item{temperature}{Numeric, temperature, units K.}
- \item{density}{Numeric, density, units kg/m\eqn{^{3}}{^3}.}
- \item{specific_weight}{Numeric, specific weight, units
-       N/m\eqn{^{3}}{^3}.}
- \item{viscosity}{Numeric, dynamic viscosity, units Pa-s.}
- \item{bulk_modulus}{Numeric, bulk modulus, units Pa.}
+ \item{temperature}{Numeric, temperature [K] }
+ \item{density}{Numeric, density  [kg m\eqn{^{-3}}{^{-3}}] }
+ \item{specific_weight}{Numeric, specific weight
+       [N m\eqn{^{-3}}{^{-3}}] }
+ \item{viscosity}{Numeric, dynamic viscosity  [Pa-s] }
+ \item{bulk_modulus}{Numeric, bulk modulus  [Pa] }
 }
 }
 \source{
@@ -23,6 +23,6 @@ Excerpt from the R hydraulics package,
 data(water, package = "formatdown")
 }
 \description{
-A data.table with properties of water at different temperatures.
+A table with properties of water at different temperatures.
 }
 \keyword{datasets}
