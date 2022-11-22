@@ -10,7 +10,7 @@ format_power(
   ...,
   format = "engr",
   omit_power = c(-1, 2),
-  delim = "\\\\("
+  delim = "$"
 )
 }
 \arguments{
@@ -54,25 +54,23 @@ R Markdown document.
 \details{
 Given a number, a numerical vector, or a numerical column from a data frame,
 \code{format_power()} converts the numbers to character strings of the form,
-\code{"\\\\(a\\\\times{10}^{n}\\\\)"}, where \code{a} is the coefficient and
-\code{n}
-is the exponent. The string includes markup delimiters \code{\\\\(...\\\\)}
-for
-rendering as an inline equation in R Markdown or Quarto Markdown
-document. The user can specify the number of significant digits and scientific
-or engineering format.
+\code{"$a \\\\times 10^{n}$"}, where \code{a} is the coefficient and
+\code{n} is the exponent. The string includes markup delimiters \code{$...$}
+for rendering as an inline equation in R Markdown or Quarto Markdown
+document. The user can specify the number of significant digits and
+scientific or engineering format.
 
 Powers-of-ten notation is omitted over a range of exponents via
 \code{omit_power} such that numbers are converted to character strings of
-the form, \code{"\\\\(a\\\\)"}, where \code{a} is the number in decimal notation.
+the form, \code{"$a$"}, where \code{a} is the number in decimal notation.
 The default \code{omit_power = c(-1, 2)} formats numbers such as 0.123, 1.23,
 12.3, and 123 in decimal form. To cancel these exceptions and convert all
 numbers to powers-of-ten notation, set the \code{omit_power} argument to
 NULL.
 
 Delimiters for inline math markup can be edited if necessary. If the default
-argument fails, the \code{"$"} alternative is available. If using a custom
-delimiter to suit the markup environment, be sure to escape all special
+argument fails, the \code{"\\\\("} alternative is available. If using a
+custom delimiter to suit the markup environment, be sure to escape all special
 symbols.
 }
 \examples{

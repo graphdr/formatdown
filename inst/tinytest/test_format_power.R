@@ -12,77 +12,77 @@ test_format_power<- function() {
 
   # Equivalent usage, named, unnamed, default
   x   <- avogadro
-  ans <- "\\(602\\times{10}^{21}\\)"
+  ans <- "$602 \\times 10^{21}$"
   expect_equal(format_power(x = x, digits = 3), ans)
   expect_equal(format_power(x, 3), ans)
   expect_equal(format_power(x), ans)
 
   # Significant digits
   x   <- avogadro
-  ans <- "\\(602.2\\times{10}^{21}\\)"
+  ans <- "$602.2 \\times 10^{21}$"
   expect_equal(format_power(x, 4), ans)
 
   # Scientific format
   x   <- avogadro
-  ans <- "\\(6.02\\times{10}^{23}\\)"
+  ans <- "$6.02 \\times 10^{23}$"
   expect_equal(format_power(x, format = "sci"), ans)
 
   # Ignore exponents
   x   <- 0.633
-  ans <- "\\(0.633\\)"
+  ans <- "$0.633$"
   expect_equal(format_power(x, omit_power = c(-1, 2)), ans)
 
   x   <- 0.633
-  ans <- "\\(633\\times{10}^{-3}\\)"
+  ans <- "$633 \\times 10^{-3}$"
   expect_equal(format_power(x, omit_power = c(0, 2)), ans)
 
   x   <- 633
-  ans <- "\\(633\\times{10}^{0}\\)"
+  ans <- "$633 \\times 10^{0}$"
   expect_equal(format_power(x, omit_power = c(0, 0)), ans)
   expect_equal(format_power(x, omit_power = NA), ans)
   expect_equal(format_power(x, omit_power = NULL), ans)
 
   # Delimiter options
   x   <- avogadro
-  ans <- "$602\\times{10}^{21}$"
+  ans <- "$602 \\times 10^{21}$"
   expect_equal(format_power(x, delim = "$"), ans)
   expect_equal(format_power(x, delim = c("$", "$")), ans)
 
-  ans <- "\\(602\\times{10}^{21}\\)"
+  ans <- "\\(602 \\times 10^{21}\\)"
   expect_equal(format_power(x, delim = "\\("), ans)
   expect_equal(format_power(x, delim = c("\\(", "\\)")), ans)
 
-  ans <- "\\[602\\times{10}^{21}\\]"
+  ans <- "\\[602 \\times 10^{21}\\]"
   expect_equal(format_power(x, delim = c("\\[", "\\]")), ans)
 
   # Data frame,one column as vector
-  x   <- density[, (p_Pa)]
-  ans <- c("\\(101.1\\times{10}^{3}\\)",
-           "\\(101.0\\times{10}^{3}\\)",
-           "\\(101.1\\times{10}^{3}\\)",
-           "\\(101.0\\times{10}^{3}\\)",
-           "\\(101.1\\times{10}^{3}\\)")
+  x   <- air[, (pressure)]
+  ans <- c("$101.1 \\times 10^{3}$",
+           "$101.0 \\times 10^{3}$",
+           "$101.1 \\times 10^{3}$",
+           "$101.0 \\times 10^{3}$",
+           "$101.1 \\times 10^{3}$")
   expect_equal(format_power(x, 4), ans)
 
   # Data frame, selected column in place
-  DT  <- density[, .(trial, p_Pa)]
+  DT  <- air[, .(trial, pressure)]
   ans <- data.table(wrapr::build_frame(
-    "trial"  , "p_Pa"                   |
-      "a"    , "\\(101.1\\times{10}^{3}\\)" |
-      "b"    , "\\(101.0\\times{10}^{3}\\)" |
-      "c"    , "\\(101.1\\times{10}^{3}\\)" |
-      "d"    , "\\(101.0\\times{10}^{3}\\)" |
-      "e"    , "\\(101.1\\times{10}^{3}\\)" ))
-  cols_we_want <- c("p_Pa")
+    "trial"  , "pressure"               |
+      "a"    , "$101.1 \\times 10^{3}$" |
+      "b"    , "$101.0 \\times 10^{3}$" |
+      "c"    , "$101.1 \\times 10^{3}$" |
+      "d"    , "$101.0 \\times 10^{3}$" |
+      "e"    , "$101.1 \\times 10^{3}$" ))
+  cols_we_want <- c("pressure")
   DT <- DT[, (cols_we_want) := lapply(.SD, function(x) format_power(x, 4)),
            .SDcols = cols_we_want]
   expect_equal(DT, ans)
 
   # Errors for incorrect x argument
-  expect_error(format_power(x = density))
-  expect_error(format_power(x = density$date))
-  expect_error(format_power(x = density$trial))
-  expect_error(format_power(x = density$humidity))
+  expect_error(format_power(x = air))
+  expect_error(format_power(x = air$date))
+  expect_error(format_power(x = air$trial))
+  expect_error(format_power(x = air$humidity))
   expect_error(format_power(x = c(TRUE, FALSE)))
   expect_error(format_power(x = NA))
   expect_error(format_power(x = NULL))

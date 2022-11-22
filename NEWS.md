@@ -6,12 +6,13 @@
 <!-- PATCH version backwards-compatible bug fixes -->
 <!-- DEV 900x development -->
 
-## formatdown 0.1.1.9001 (dev)
+## formatdown 0.1.1.9002 (dev)
 
 2022-11-22
 
-- Add `water` data set, an excerpt from the `hydraulics` package 
-- Add `delim` argument to `format_power()`. Change default delimiters to `"\\("` and `"\\)"`
+- Add `water` data set, an excerpt from the `hydraulics` package. 
+- Add `air` data set, delete `density`. 
+- Add `delim` argument to `format_power()`.
 
 ## formatdown 0.1.1
 

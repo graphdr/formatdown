@@ -4,21 +4,21 @@
 #' A data.table of air properties at room temperature, simulating multiple
 #' measurements at approximately steady state,
 #'
-#' @usage data(density, package = "formatdown")
+#' @usage data(air, package = "formatdown")
 #'
 #' @format A data frame with 5 rows and 7 columns:
 #' \describe{
 #'  \item{date}{Date, R class "Date", format \code{YYYY-MM-DD}.}
 #'  \item{trial}{Character, label a--e.}
 #'  \item{humidity}{Factor, low, medium, or high.}
-#'  \item{T_K}{Numeric, temperature, units K.}
-#'  \item{p_Pa}{Numeric, atmospheric pressure, units Pa.}
+#'  \item{temperature}{Numeric, units K.}
+#'  \item{pressure}{Numeric, atmospheric pressure, units Pa.}
 #'  \item{R}{Integer, gas constant, units
 #'           J kg\eqn{^{-1}}{^{-1}}K\eqn{^{-1}}{^{-1}}.}
 #'  \item{density}{Numeric, calculated air density, units
 #'        kg/m\eqn{^{3}}{^3}.}
 #' }
-"density"
+"air"
 
 
 

@@ -8,25 +8,23 @@
 #'
 #' Given a number, a numerical vector, or a numerical column from a data frame,
 #' \code{format_power()} converts the numbers to character strings of the form,
-#' \code{"\\\\(a\\\\times{10}^{n}\\\\)"}, where \code{a} is the coefficient and
-#' \code{n}
-#' is the exponent. The string includes markup delimiters \code{\\\\(...\\\\)}
-#' for
-#' rendering as an inline equation in R Markdown or Quarto Markdown
-#' document. The user can specify the number of significant digits and scientific
-#' or engineering format.
+#' \code{"$a \\\\times 10^{n}$"}, where \code{a} is the coefficient and
+#' \code{n} is the exponent. The string includes markup delimiters \code{$...$}
+#' for rendering as an inline equation in R Markdown or Quarto Markdown
+#' document. The user can specify the number of significant digits and
+#' scientific or engineering format.
 #'
 #' Powers-of-ten notation is omitted over a range of exponents via
 #' \code{omit_power} such that numbers are converted to character strings of
-#' the form, \code{"\\\\(a\\\\)"}, where \code{a} is the number in decimal notation.
+#' the form, \code{"$a$"}, where \code{a} is the number in decimal notation.
 #' The default \code{omit_power = c(-1, 2)} formats numbers such as 0.123, 1.23,
 #' 12.3, and 123 in decimal form. To cancel these exceptions and convert all
 #' numbers to powers-of-ten notation, set the \code{omit_power} argument to
 #' NULL.
 #'
 #' Delimiters for inline math markup can be edited if necessary. If the default
-#' argument fails, the \code{"$"} alternative is available. If using a custom
-#' delimiter to suit the markup environment, be sure to escape all special
+#' argument fails, the \code{"\\\\("} alternative is available. If using a
+#' custom delimiter to suit the markup environment, be sure to escape all special
 #' symbols.
 #'
 #' @param x Numeric vector to be formatted.
@@ -69,7 +67,7 @@ format_power <- function(x,
                          ...,
                          format = "engr",
                          omit_power = c(-1, 2),
-                         delim = "\\(") {
+                         delim = "$") {
 
   # On exit, reset user's options values
   user_digits <- getOption("digits")
@@ -153,6 +151,9 @@ format_power <- function(x,
   # Remove trailing decimal point created by formatC() if any
   DT[decimal] <- omit_trailing_decimal(DT[decimal], "value")
 
+  # Add braces (superfluous, but clarifies markup)
+  # DT[decimal, value := paste0("{", value, "}")]
+
 
 
   # ----- Rows with numbers in powers-of-ten notation
@@ -168,8 +169,8 @@ format_power <- function(x,
   DT[pow_10] <- omit_trailing_decimal(DT[pow_10], "char_coeff")
 
   # Construct powers-of-ten character string
-  DT[pow_10, value := paste0(char_coeff, "\\times", "{10}^{", exponent, "}")]
-
+  # DT[pow_10, value := paste0("{", char_coeff, "}\\times", "{10}^{", exponent, "}")]
+  DT[pow_10, value := paste0(char_coeff, " \\times ", "10^{", exponent, "}")]
 
 
   # ----- Complete the conversion for all value strings
