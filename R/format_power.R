@@ -30,8 +30,8 @@
 #' symbols.
 #'
 #' @param x Numeric vector to be formatted.
-#' @param digits Numeric scalar, nonzero positive integer to specify the
-#'        number of significant digits in the output coefficient.
+#' @param digits Numeric scalar, nonzero positive integer between 1 and 20 to
+#'        specify the number of significant digits in the output coefficient.
 #' @param ... Not used, force later arguments to be used by name.
 #' @param format Character. Possible values are "engr" (engineering notation)
 #'        and "sci" (scientific notation). Use argument  by name.
@@ -40,12 +40,11 @@
 #'        \code{p <= q}. If NULL all numbers are formatted in powers of ten
 #'        notation. Use argument by name.
 #' @param delim Character vector (length 1 or 2) defining the delimiters for
-#'        marking up inline math.
-#'        Possible values include \code{"$"} or
+#'        marking up inline math. Possible values include \code{"$"} or
 #'        \code{"\\\\("}, both of which create appropriate left and right
-#'        delimiters. Alternatively, left and right can be defined
-#'        explicitly, e.g., \code{c("$", "$")} or \code{c("\\\\(", "\\\\)")}.
-#'        Custom delimiters can be assigned to suit the markup environment. Use
+#'        delimiters. Alternatively, left and right can be defined explicitly,
+#'        e.g., \code{c("$", "$")} or \code{c("\\\\(", "\\\\)")}. Custom
+#'        delimiters can be assigned to suit the markup environment. Use
 #'        argument by name.
 #'
 #' @return A character vector with the following properties:
@@ -87,35 +86,37 @@ format_power <- function(x,
 
   # set omit_power to handle NULL or NA case
   if (sum(isTRUE(is.null(omit_power))) > 0 | sum(isTRUE(is.na(omit_power))) > 0 ) {
-   # Assign equal fractional values and no integer exponents
-   # can lie on this range
+   # Assign equal fractional values and
+   # no integer exponents can lie on this range
     omit_power <- c(0.1, 0.1)
     }
 
   # x: not "Date" class
   checkmate::assert_disjunct(class(x), c("Date", "POSIXct", "POSIXt"))
-
   # x: length at least one, numeric
   checkmate::qassert(x, "n+")
 
   # digits: numeric, not missing, length 1
   checkmate::qassert(digits, "N1")
-
-  # ========== digits between 1 and 20?
+  # digits: between 1 and 20
+  checkmate::assert_choice(digits, choices = c(1:20))
 
   # format: character, not missing, length 1
   checkmate::qassert(format, "S1")
-
   # format: element of a set
-  checkmate::assert_choice(format, c("engr", "sci"))
+  checkmate::assert_choice(format, choices = c("engr", "sci"))
 
   # omit_power: numeric, not missing, length 2
   checkmate::qassert(omit_power, "N2")
-
   # omit_power: range (p, q) requirement p <= q
   if (!isTRUE(all(omit_power == cummax(omit_power)))) {
     stop("In `omit_power = c(p, q)`, `p` must be less than or equal to `q`.")
   }
+
+  # delim, character, not missing, length 1 or 2, not empty
+  qassert(delim, "S+")
+  assert_true(!"" %in% delim)
+  assert_true(length(delim) <= 2)
 
   # Indicate these are not unbound symbols (R CMD check Note)
   char_coeff <- NULL
@@ -173,8 +174,16 @@ format_power <- function(x,
 
   # ----- Complete the conversion for all value strings
 
-  # Surround with $...$ for math printout
-  DT[, value := paste0("$", value, "$")]
+  # Surround with math delimiters
+  if (length(delim) == 1) {
+    if (delim == "\\(" | delim == "\\)") {
+      DT[, value := paste0("\\(", value, "\\)")]
+    } else {
+      DT[, value := paste0(delim, value, delim)]
+    }
+  } else {
+    DT[, value := paste0(delim[1], value, delim[2])]
+  }
 
   # Convert to vector output
   DT <- DT[, (value)]

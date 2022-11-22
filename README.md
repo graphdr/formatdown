@@ -23,7 +23,6 @@ pdf, and docx (and possibly others).
 ``` r
 # Packages
 library("formatdown")
-library("data.table")
 ```
 
 **`format_power()`**   Convert the elements of a numerical vector to
@@ -34,11 +33,11 @@ as inline equations in an R Markdown document.
 ``` r
 # Scientific notation
 format_power(101100, digits = 4, format = "sci")
-#> [1] "$1.011\\times{10}^{5}$"
+#> [1] "\\(1.011\\times{10}^{5}\\)"
 
 # Engineering notation
 format_power(101100, digits = 4, format = "engr")
-#> [1] "$101.1\\times{10}^{3}$"
+#> [1] "\\(101.1\\times{10}^{3}\\)"
 ```
 
 which, in an Rmd or qmd document, are rendered as

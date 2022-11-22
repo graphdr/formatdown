@@ -25,7 +25,7 @@ options(
 
 The notation we use to represent large and small numbers depends on the context of our communications. In a computer script, for example, we might encode Avogadro's number as `6.0221*10^23`. A computer printout of this number would typically use E-notation, as in `6.0221E+23`.
 
-In professional technical communications, however, computer syntax should be avoided---the asterisk (`*`) and carat (`^`) in `6.0221*10^23` communicate   *instructions to a computer*, not *mathematics to a reader*. And while E-notation (`6.0221E+23`) has currency in some discourse communities, the general convention in technical communications is to format large and small numbers using powers-of-ten notation of the form, 
+In professional technical communications, however, computer syntax should be avoided---the asterisk (`*`) and carat (`^`) in `6.0221*10^23` communicate   *instructions to a computer*, not *syntactical mathematics*. And while E-notation (`6.0221E+23`) has currency in some discourse communities, the general convention in technical communications is to format large and small numbers using powers-of-ten notation of the form, 
 
 $$
 a \times 10^n, 
@@ -41,15 +41,15 @@ The $\times$ multiplication symbol, often avoided in other contexts, is conventi
 
 ## Markup
 
-In R Markdown and Quarto Markdown, we use an inline equation markup delimited by `$...$` to create a math expression in the output document. For example, the markup for Avogadro's number is given by, 
+In R Markdown and Quarto Markdown, we use an inline equation markup delimited by `\( ... \)` to create a math expression in the output document (`$ ... $` is also an option). For example, the markup for Avogadro's number is given by, 
 
-        $N_A = 6.0221\times{10}^{23}$
+        \(N_A = 6.0221\times{10}^{23}\)
 
-which yields $N_A = 6.0221 \times 10^{23}$ in the document. To *program* the markup, however, we enclose the markup as a character string, that is, 
+which yields \(N_A = 6.0221 \times 10^{23}\) in the document. To *program* the markup, however, we enclose the markup as a character string, that is, 
 
-        "$N_A = 6.0221\\times{10}^{23}$"
+        "\\(N_A = 6.0221\\times{10}^{23}\\)"
 
-which requires the backward slash `\` to be "escaped", hence the product symbol is denoted `\\times`. This is the form of the output produced by `format_power()`. 
+which requires the backward slashes `\` to be "escaped", hence the product symbol is `\\times` and the left and right math delimiters are `\\(` and `\\)`. This is the form of the output produced by `format_power()`. 
 
 
 
@@ -58,11 +58,11 @@ which requires the backward slash `\` to be "escaped", hence the product symbol 
 
 Given a number, a numerical vector, or a numerical column from a data frame, `format_power()` converts the numbers to character strings of the form, 
 
-        "$a\\times{10}^{n}$" 
+        "\\(a\\times{10}^{n}\\)" 
  
 where `a` is the coefficient and `n` is the exponent. The user can specify the number of significant digits and scientific or engineering format. Unless otherwise specified, numbers with exponents in the neighborhood of zero are excluded from power of ten notation and are converted to character strings of the form, 
 
-        "$a$" 
+        "\\(a\\)" 
 
 where `a` is the number in decimal notation to the specified number of significant digits. 
  
@@ -75,6 +75,8 @@ where `a` is the number in decimal notation to the specified number of significa
 - **format** &nbsp; Possible values are "engr" (engineering notation) and "sci" (scientific notation). Default is "engr". 
 
 - **omit_power** &nbsp; Numeric vector of length two (or NULL). Determines the range of exponents excluded from power-of-ten notation. Default is `c(-1, 2)`. 
+
+- **delim** &nbsp; Character vector of length one or two defining the math markup delimiters. Possible values include `"$"` or `"\\("`, both of which create appropriate left and right delimiters. Custom delimiters can be assigned.
 
 If you are writing your own script to follow along, we use these packages in this vignette:
 
@@ -186,8 +188,7 @@ knitr::kable(DT, align = "rr")
 
 
 
-
-## Exceptions
+## Set or remove exceptions
 
 `omit_power` argument, if included, must be named.   
 
@@ -214,6 +215,33 @@ knitr::kable(DT, align = "rr")
 
 
 
+
+
+## Delimiters
+
+`delim` argument, if included, must be named. 
+
+```{r}
+format_power(x[1], delim = "\\(")
+format_power(x[1], delim = c("\\(", "\\)"))
+```
+
+are both rendered as 
+
+- `r format_power(x[1], delim = "\\(")`
+
+In most output documents, the `$ ... $` delimiters yield the same results. 
+
+```{r}
+format_power(x[1], delim = "$")
+format_power(x[1], delim = c("$", "$"))
+```
+
+are both rendered as 
+
+- `r format_power(x[1], delim = "$")`
+
+I encountered one instance in which the `$ ... $` delimiters did not produce the desired output---using `kableExtra::kbl()` to create a table in a `.qmd` output document. Switching the delimiters to `\\( ... \\)` fixed the problem, per the recommendation of the MathJax consortium  (Cervone, 2018). 
 
 
 
@@ -366,8 +394,7 @@ format_power(x)
 
 ## References
 
-Chase, Morgan. 2021. *Technical Mathematics.* https://openoregon.pressbooks.pub/techmath/chapter/module-11-scientific-notation/.
+Davide Cervone (2018) MathJax: TeX and LaTeX math delimiters,   https://docs.mathjax.org/en/v2.7-latest/tex.html#tex-and-latex-math-delimiters. 
 
-
-
+Morgan Chase (2021) *Technical Mathematics,*  https://openoregon.pressbooks.pub/techmath/chapter/module-11-scientific-notation/.
 

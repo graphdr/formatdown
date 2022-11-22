@@ -16,8 +16,8 @@ format_power(
 \arguments{
 \item{x}{Numeric vector to be formatted.}
 
-\item{digits}{Numeric scalar, nonzero positive integer to specify the
-number of significant digits in the output coefficient.}
+\item{digits}{Numeric scalar, nonzero positive integer between 1 and 20 to
+specify the number of significant digits in the output coefficient.}
 
 \item{...}{Not used, force later arguments to be used by name.}
 
@@ -30,12 +30,11 @@ exponents over which power of ten notation is omitted, where
 notation. Use argument by name.}
 
 \item{delim}{Character vector (length 1 or 2) defining the delimiters for
-marking up inline math.
-Possible values include \code{"$"} or
+marking up inline math. Possible values include \code{"$"} or
 \code{"\\\\("}, both of which create appropriate left and right
-delimiters. Alternatively, left and right can be defined
-explicitly, e.g., \code{c("$", "$")} or \code{c("\\\\(", "\\\\)")}.
-Custom delimiters can be assigned to suit the markup environment. Use
+delimiters. Alternatively, left and right can be defined explicitly,
+e.g., \code{c("$", "$")} or \code{c("\\\\(", "\\\\)")}. Custom
+delimiters can be assigned to suit the markup environment. Use
 argument by name.}
 }
 \value{

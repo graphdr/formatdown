@@ -3,6 +3,7 @@
 export(format_power)
 importFrom(checkmate,assert_choice)
 importFrom(checkmate,assert_disjunct)
+importFrom(checkmate,assert_true)
 importFrom(checkmate,qassert)
 importFrom(data.table,"%between%")
 importFrom(data.table,"%like%")

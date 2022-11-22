@@ -44,7 +44,6 @@ Provides a small set of tools for formatting tasks when writing documents in R M
 ```{r}
 # Packages
 library("formatdown")
-library("data.table")
 ```
 
 **`format_power()`** &nbsp; Convert the elements of a numerical vector to character strings in which the numbers are formatted using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations in an R Markdown document.
