@@ -69,6 +69,8 @@ format_power <- function(x,
                          omit_power = c(-1, 2),
                          delim = "$") {
 
+  # ----- Programming overhead
+
   # On exit, reset user's options values
   user_digits <- getOption("digits")
   on.exit(options(digits = user_digits))
@@ -148,11 +150,8 @@ format_power <- function(x,
   # Create the character value to significant digits
   DT[decimal, value := formatC(x, format = "fg", digits = digits, flag = "#")]
 
-  # Remove trailing decimal point created by formatC() if any
-  DT[decimal] <- omit_trailing_decimal(DT[decimal], "value")
-
-  # Add braces (superfluous, but clarifies markup)
-  # DT[decimal, value := paste0("{", value, "}")]
+  # Remove trailing decimal point and spaces created by formatC() if any
+  DT[decimal] <- omit_formatC_extras(DT[decimal], "value")
 
 
 
@@ -165,12 +164,12 @@ format_power <- function(x,
   # Create the character coefficient to significant digits
   DT[pow_10, char_coeff := formatC(coeff, format = "fg", digits = digits, flag = "#")]
 
-  # Remove trailing decimal point created by formatC() if any
-  DT[pow_10] <- omit_trailing_decimal(DT[pow_10], "char_coeff")
+  # Remove trailing decimal point and spaces created by formatC() if any
+  DT[pow_10] <- omit_formatC_extras(DT[pow_10], "char_coeff")
 
   # Construct powers-of-ten character string
-  # DT[pow_10, value := paste0("{", char_coeff, "}\\times", "{10}^{", exponent, "}")]
   DT[pow_10, value := paste0(char_coeff, " \\times ", "10^{", exponent, "}")]
+
 
 
   # ----- Complete the conversion for all value strings
@@ -198,12 +197,18 @@ format_power <- function(x,
 # ---------------------------------------------------
 # Appendix: Internal functions
 
-# Remove trailing decimal point, if any, introduced by formatC()
-omit_trailing_decimal <- function(DT, col_name) {
+# Remove trailing decimal point and spaces, if any, added by formatC()
+omit_formatC_extras <- function(DT, col_name) {
 
   # Logical. Identify rows with trailing decimal points
   rows_we_want <- DT[, get(col_name)] %like% "[:.:]$"
 
   # Delete trailing decimal points if any
   DT[rows_we_want, (col_name) := sub("[:.:]", "", get(col_name))]
+
+  # Trim space added by formatC if any
+  DT[, (col_name) := trimws(get(col_name), which = "both")]
+
+  # enable printing (see data.table FAQ 2.23)
+  DT[]
 }

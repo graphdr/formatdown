@@ -13,6 +13,7 @@
 - Add `water` data set, an excerpt from the `hydraulics` package. 
 - Add `air` data set, delete `density`. 
 - Add `delim` argument to `format_power()`.
+- Fixed a bug, extra spaces added by `formatC()` have to be removed
 
 ## formatdown 0.1.1
 

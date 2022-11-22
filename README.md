@@ -3,7 +3,7 @@
 
 # formatdown <img src="man/figures/logo.png" align="right">
 
-Formatting tools for R markdown documents.
+Formatting Tools for ‘rmarkdown’ Documents
 
 <!-- badges: start -->
 
@@ -14,9 +14,11 @@ coverage](https://codecov.io/gh/graphdr/formatdown/branch/main/graph/badge.svg)]
 [![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-Provides a small set of tools for formatting tasks when writing
-documents in R Markdown or Quarto Markdown. Works with outputs in html,
-pdf, and docx (and possibly others).
+Provides a small set of tools for formatting tasks when creating
+documents in ‘rmarkdown’ or ‘quarto’. Convert the elements of a
+numerical vector to character strings in which the numbers are formatted
+using powers-of-ten notation in scientific or engineering form and
+delimited for rendering as inline equations.
 
 ## Usage
 
@@ -33,17 +35,41 @@ as inline equations in an R Markdown document.
 ``` r
 # Scientific notation
 format_power(101100, digits = 4, format = "sci")
-#> [1] "\\(1.011\\times{10}^{5}\\)"
+#> [1] "$1.011 \\times 10^{5}$"
 
 # Engineering notation
 format_power(101100, digits = 4, format = "engr")
-#> [1] "\\(101.1\\times{10}^{3}\\)"
+#> [1] "$101.1 \\times 10^{3}$"
 ```
 
-which, in an Rmd or qmd document, are rendered as
+which, in an Rmd or qmd document, are rendered using inline math as
 
-- Scientific notation: $1.011\times{10}^{5}$.
-- Engineering notation: $101.1\times{10}^{3}$
+- Scientific notation: $1.011 \times 10^{5}$.
+- Engineering notation: $101.1 \times 10^{3}$
+
+Apply to columns of a data frame via `lapply()` using default 3
+significant digits and default engineering notation.
+
+``` r
+# Create a data.table
+viscosity    <- 1.0E-6 * c(1.734, 1.312, 1.021, 0.8172, 0.6714)
+bulk_modulus <- 1.0E+9 * c(2.021, 2.102, 2.183, 2.254, 2.281)
+properties   <- data.table(viscosity, bulk_modulus)
+
+# Format
+properties <- properties[, lapply(.SD, function(x) format_power(x))]
+
+# Render in document
+knitr::kable(properties, align = "r")
+```
+
+|             viscosity |         bulk_modulus |
+|----------------------:|---------------------:|
+| $1.73 \times 10^{-6}$ | $2.02 \times 10^{9}$ |
+| $1.31 \times 10^{-6}$ | $2.10 \times 10^{9}$ |
+| $1.02 \times 10^{-6}$ | $2.18 \times 10^{9}$ |
+|  $817 \times 10^{-9}$ | $2.25 \times 10^{9}$ |
+|  $671 \times 10^{-9}$ | $2.28 \times 10^{9}$ |
 
 ## Installation
 

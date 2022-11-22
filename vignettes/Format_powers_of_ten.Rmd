@@ -25,7 +25,7 @@ options(
 
 The notation we use to represent large and small numbers depends on the context of our communications. In a computer script, for example, we might encode Avogadro's number as `6.0221*10^23`. A computer printout of this number would typically use E-notation, as in `6.0221E+23`.
 
-In professional technical communications, however, computer syntax should be avoided---the asterisk (`*`) and carat (`^`) in `6.0221*10^23` communicate   *instructions to a computer*, not *syntactical mathematics*. And while E-notation (`6.0221E+23`) has currency in some discourse communities, the general convention in technical communications is to format large and small numbers using powers-of-ten notation of the form, 
+In professional technical communications, however, computer syntax should be avoided---the asterisk (`*`) and carat (`^`) in `6.0221*10^23` communicate   *instructions to a computer*, not *syntactical mathematics*. And while scientific E-notation (`6.0221E+23`) has currency in some discourse communities, the general convention in technical communications is to format large and small numbers using powers-of-ten notation of the form, 
 
 $$
 a \times 10^n, 
@@ -38,6 +38,21 @@ The $\times$ multiplication symbol, often avoided in other contexts, is conventi
 - *Engineering.* &nbsp; $n$ is a multiple of 3 and $a \in Re: 1\leq{|a|}<1000$. For example, `r format_power(6.0221E+23, 4)`
 
 *Exceptions.* &nbsp; When exponents are in the neighborhood of zero, for example, $n \in \{-1, 0, 1, 2\}$, decimal notation may be preferred to power of ten notation. Decimal values such as 0.1234, 1.234, 12.34, and 123.4 might be printed as-is. The range of exponents to include in this set is discretionary. 
+
+*Notes on syntax.* &nbsp; We have to distinguish between computer syntax, math syntax, and markup syntax. 
+
+- Anyone who has written a line of code involving multiplication is familiar with the asterisk as the multiplication operator, e.g., `x = a * b` or `y = a * (b + c)`. In written mathematics, however, these expressions are written without multiplication symbols, that is, $x=ab$ and $y=a(b+c)$. Moreover, mathematically the asterisk has a completely different meaning---it represents the *convolution* operation between two functions, as in $\left(f * g \right)(t)$. 
+
+- The carat symbol (`^`), to the best of my knowledge, is a programming operator only; mathematically it has no meaning. 
+
+- In our markup language, `\times` is the product symbol and `^` indicates a superscript or exponent. 
+
+
+
+
+
+
+
 
 ## Markup
 
@@ -188,7 +203,7 @@ knitr::kable(DT, align = "rr")
 
 
 
-## Set exceptions
+## Omit power notation
 
 `omit_power` argument, if included, must be named. Suppose, for example, we want the value 0.0678 to be rendered without powers-of-ten notation. The exponent for this number in scientific notation is $-2$, as in `r format_power(0.0678, format = "sci")`. If this exponent is within the range set by `omit_power`, the number is rendered without power-of-ten notation (overriding the `format` argument). 
 
@@ -202,7 +217,7 @@ are rendered as
 - `r format_power(0.0678, format = "sci", omit_power = c(-2, 2))`
 - `r format_power(0.0678, format = "sci", omit_power = c(-1, 2))`
 
-`omit_power = NULL` removes the exceptions and all numbers are rendered in the selected power-of-ten notation.  
+`omit_power = NULL` removes the exceptions and formats all numbers in  power-of-ten notation.  
 
 ```{r}
 # Omit no values from power-of-ten notation
@@ -333,7 +348,7 @@ cols_we_want <- c("temperature", "density")
 DT <- DT[, (cols_we_want) := lapply(.SD, function(x) format_power(x, 5)), .SDcols = cols_we_want]
 
 # Individually format one column with signif digits = 4
-DT$p_Pa <- format_power(DT$pressure, 4)
+DT$pressure <- format_power(DT$pressure, 4)
 DT[]
 
 # Render in document

@@ -78,6 +78,18 @@ test_format_power<- function() {
            .SDcols = cols_we_want]
   expect_equal(DT, ans)
 
+  # Spaces inserted by formatC are trimmed. In this test, the first number
+  # has four characters (the decimal point is a character); formatC() adds
+  # spaces to store "800" as " 800". format_power) removes the extra spaces.
+  x <- 1.0E-6 * c(1.02, 0.8)
+  ans <- c("$1.02 \\times 10^{-6}$", "$800 \\times 10^{-9}$")
+  expect_equal(format_power(x), ans)
+
+  # Negative number are OK
+  x <- -1.0E-6 * c(1.02, 0.8)
+  ans <- c("$-1.02 \\times 10^{-6}$", "$-800 \\times 10^{-9}$")
+  expect_equal(format_power(x), ans)
+
   # Errors for incorrect x argument
   expect_error(format_power(x = air))
   expect_error(format_power(x = air$date))
