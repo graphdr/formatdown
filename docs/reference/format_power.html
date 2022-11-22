@@ -16,7 +16,7 @@ R Markdown document."><meta property="og:image" content="https://graphdr.github.
     
     <a class="navbar-brand me-2" href="../index.html">formatdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,7 @@ R Markdown document.</p>
 <span>  <span class="va">...</span>,</span>
 <span>  format <span class="op">=</span> <span class="st">"engr"</span>,</span>
 <span>  omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span>  delim <span class="op">=</span> <span class="st">"\\("</span></span>
+<span>  delim <span class="op">=</span> <span class="st">"$"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -125,23 +125,21 @@ argument by name.</p></dd>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Given a number, a numerical vector, or a numerical column from a data frame,
 <code>format_power()</code> converts the numbers to character strings of the form,
-<code>"\\(a\\times{10}^{n}\\)"</code>, where <code>a</code> is the coefficient and
-<code>n</code>
-is the exponent. The string includes markup delimiters <code>\\(...\\)</code>
-for
-rendering as an inline equation in R Markdown or Quarto Markdown
-document. The user can specify the number of significant digits and scientific
-or engineering format.</p>
+<code>"$a \\times 10^{n}$"</code>, where <code>a</code> is the coefficient and
+<code>n</code> is the exponent. The string includes markup delimiters <code>$...$</code>
+for rendering as an inline equation in R Markdown or Quarto Markdown
+document. The user can specify the number of significant digits and
+scientific or engineering format.</p>
 <p>Powers-of-ten notation is omitted over a range of exponents via
 <code>omit_power</code> such that numbers are converted to character strings of
-the form, <code>"\\(a\\)"</code>, where <code>a</code> is the number in decimal notation.
+the form, <code>"$a$"</code>, where <code>a</code> is the number in decimal notation.
 The default <code>omit_power = c(-1, 2)</code> formats numbers such as 0.123, 1.23,
 12.3, and 123 in decimal form. To cancel these exceptions and convert all
 numbers to powers-of-ten notation, set the <code>omit_power</code> argument to
 NULL.</p>
 <p>Delimiters for inline math markup can be edited if necessary. If the default
-argument fails, the <code>"$"</code> alternative is available. If using a custom
-delimiter to suit the markup environment, be sure to escape all special
+argument fails, the <code>"\\("</code> alternative is available. If using a
+custom delimiter to suit the markup environment, be sure to escape all special
 symbols.</p>
     </div>
 
@@ -149,54 +147,52 @@ symbols.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Scalar value</span></span></span>
 <span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="fl">101100</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\\(101\\times{10}^{3}\\)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$101 \\times 10^{3}$"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Vector value</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.2222e-6</span>, <span class="fl">2.3333e-5</span>, <span class="fl">3.4444e-4</span>, <span class="fl">4.1111e-3</span>, <span class="fl">5.2222e-2</span>, <span class="fl">6.3333e-1</span>,</span></span>
 <span class="r-in"><span>       <span class="fl">7.4444e+0</span>, <span class="fl">8.1111e+1</span>, <span class="fl">9.2222e+2</span>, <span class="fl">1.3333e+3</span>, <span class="fl">2.4444e+4</span>, <span class="fl">3.1111e+5</span>, <span class="fl">4.2222e+6</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "\\(1.22\\times{10}^{-6}\\)" "\\(23.3\\times{10}^{-6}\\)"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "\\(344\\times{10}^{-6}\\)"  "\\(4.11\\times{10}^{-3}\\)"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "\\(52.2\\times{10}^{-3}\\)" "\\(0.633\\)"               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "\\(7.44\\)"                 "\\(81.1\\)"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "\\(922\\)"                  "\\(1.33\\times{10}^{3}\\)" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "\\(24.4\\times{10}^{3}\\)"  "\\(311\\times{10}^{3}\\)"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "\\(4.22\\times{10}^{6}\\)" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "$1.22 \\times 10^{-6}$" "$23.3 \\times 10^{-6}$" "$344 \\times 10^{-6}$" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "$4.11 \\times 10^{-3}$" "$52.2 \\times 10^{-3}$" "$0.633$"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "$7.44$"                 "$81.1$"                 "$922$"                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "$1.33 \\times 10^{3}$"  "$24.4 \\times 10^{3}$"  "$311 \\times 10^{3}$"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "$4.22 \\times 10^{6}$" </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Compare significant digits</span></span></span>
 <span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\\(1.22\\times{10}^{-6}\\)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$1.22 \\times 10^{-6}$"</span>
 <span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\\(1.222\\times{10}^{-6}\\)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$1.222 \\times 10^{-6}$"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Compare format type</span></span></span>
 <span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, format <span class="op">=</span> <span class="st">"engr"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\\(344\\times{10}^{-6}\\)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$344 \\times 10^{-6}$"</span>
 <span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, format <span class="op">=</span> <span class="st">"sci"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\\(3.44\\times{10}^{-4}\\)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$3.44 \\times 10^{-4}$"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Compare omit_power range</span></span></span>
 <span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\\(0.633\\)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$0.633$"</span>
 <span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\\(633\\times{10}^{-3}\\)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$633 \\times 10^{-3}$"</span>
 <span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\\(81.1\\)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$81.1$"</span>
 <span class="r-in"><span><span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\\(81.1\\times{10}^{0}\\)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$81.1 \\times 10^{0}$"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Apply to columns of a data frame (data.table syntax)</span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fl">8</span><span class="op">:</span><span class="fl">13</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">z</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">DT</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">.SD</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             y                         z</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: \\(1.22\\times{10}^{-6}\\)                \\(81.1\\)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: \\(23.3\\times{10}^{-6}\\)                 \\(922\\)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:  \\(344\\times{10}^{-6}\\) \\(1.33\\times{10}^{3}\\)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4: \\(4.11\\times{10}^{-3}\\) \\(24.4\\times{10}^{3}\\)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5: \\(52.2\\times{10}^{-3}\\)  \\(311\\times{10}^{3}\\)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6:                \\(0.633\\) \\(4.22\\times{10}^{6}\\)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         y                     z</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: $1.22 \\times 10^{-6}$                $81.1$</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: $23.3 \\times 10^{-6}$                 $922$</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:  $344 \\times 10^{-6}$ $1.33 \\times 10^{3}$</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4: $4.11 \\times 10^{-3}$ $24.4 \\times 10^{3}$</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5: $52.2 \\times 10^{-3}$  $311 \\times 10^{3}$</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:                $0.633$ $4.22 \\times 10^{6}$</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
