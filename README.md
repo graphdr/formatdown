@@ -25,6 +25,8 @@ delimited for rendering as inline equations.
 ``` r
 # Packages
 library("formatdown")
+library("data.table")
+library("knitr")
 ```
 
 **`format_power()`**   Convert the elements of a numerical vector to
@@ -52,15 +54,15 @@ significant digits and default engineering notation.
 
 ``` r
 # Create a data.table
-viscosity    <- 1.0E-6 * c(1.734, 1.312, 1.021, 0.8172, 0.6714)
+viscosity <- 1.0E-6 * c(1.734, 1.312, 1.021, 0.8172, 0.6714)
 bulk_modulus <- 1.0E+9 * c(2.021, 2.102, 2.183, 2.254, 2.281)
-properties   <- data.table(viscosity, bulk_modulus)
+properties <- data.table(viscosity, bulk_modulus)
 
-# Format
+# Format all columns
 properties <- properties[, lapply(.SD, function(x) format_power(x))]
 
 # Render in document
-knitr::kable(properties, align = "r")
+kable(properties, align = "r")
 ```
 
 |             viscosity |         bulk_modulus |

@@ -208,7 +208,4 @@ omit_formatC_extras <- function(DT, col_name) {
 
   # Trim space added by formatC if any
   DT[, (col_name) := trimws(get(col_name), which = "both")]
-
-  # enable printing (see data.table FAQ 2.23)
-  DT[]
 }
