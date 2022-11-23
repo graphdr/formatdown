@@ -3,9 +3,9 @@
 \docType{data}
 \name{water}
 \alias{water}
-\title{Water properties}
+\title{Properties of water}
 \format{
-Classes data.table and data.frame:	5 observations of 5 variables:
+Classes data.table and data.frame:	11 observations of 5 variables:
 \describe{
  \item{temp}{Numeric, temperature [K] }
  \item{dens}{Numeric, density  [kg m\eqn{^{-3}}{^{-3}}] }
@@ -15,13 +15,15 @@ Classes data.table and data.frame:	5 observations of 5 variables:
 }
 }
 \source{
-Excerpt from the R hydraulics package,
-        \url{https://CRAN.R-project.org/package=hydraulics}
+E. Maurer E and I. Embry (2022) \emph{hydraulics: Basic Pipe and
+Open Channel Hydraulics}, R package ver. 0.6.0,
+\url{https://edm44.github.io/hydraulics/}.
 }
 \usage{
 data(water, package = "formatdown")
 }
 \description{
-A table with properties of water at different temperatures.
+Table of water properties at atmospheric pressure as a function of
+temperature.
 }
 \keyword{datasets}

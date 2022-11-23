@@ -5,7 +5,7 @@
 \alias{metals}
 \title{Properties of metals}
 \format{
-Classes data.table and data.frame:	5 observations of  5 variables:
+Classes data.table and data.frame:	6 observations of  5 variables:
 \describe{
  \item{metal}{Character, name of material}
  \item{dens}{Numeric, density [kg m\eqn{^{-3}}{^{-3}}] }
@@ -14,10 +14,16 @@ Classes data.table and data.frame:	5 observations of  5 variables:
  \item{elast_mod}{Numeric, modulus of elasticity [Pa] }
 }
 }
+\source{
+\emph{Marks' Standard Handbook for Mechanical Engineers 9/e} (1987)
+        E.A. Avallone and T. Baumeister (ed.),
+        "Basic Properties of Several Metals",
+        pp. 6-11,  McGraw-Hill, NY.
+}
 \usage{
 data(metals, package = "formatdown")
 }
 \description{
-A table of basic properties of several metals
+Table of mechanical and thermal properties of selected metals.
 }
 \keyword{datasets}

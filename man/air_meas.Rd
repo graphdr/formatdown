@@ -7,23 +7,24 @@
 \format{
 Classes data.table and data.frame:	5 observations of 7 variables:
 \describe{
- \item{date}{Date, R class "Date", format \code{YYYY-MM-DD}.}
- \item{trial}{Character, label a through e.}
- \item{humid}{Factor, low, med, or high.}
- \item{temp}{Numeric, [K] }
- \item{pres}{Numeric, atmospheric pressure [Pa] }
- \item{sp_gas}{Numeric, specific gas constant, ideal gas constant in mass form
-          [J kg\eqn{^{-1}}{^{-1}}K\eqn{^{-1}}{^{-1}}] }
-
+ \item{date}{"Date" class format "YYYY-MM-DD".}
+ \item{trial}{Character, label "a" through "e".}
+ \item{humid}{Factor, humidity, "low", "med", or "high."}
+ \item{temp}{Numeric, measured temperature [K].}
+ \item{pres}{Numeric, measured atmospheric pressure [Pa].}
+ \item{sp_gas}{Numeric, specific gas constant in mass form \eqn{R_{sp}},
+       ideal gas reference value,
+       [J kg\eqn{^{-1}}{^{-1}}K\eqn{^{-1}}{^{-1}}].}
  \item{dens}{Numeric, calculated air density
-       [kg m\eqn{^{-3}}{^{-13}}] }
+       \eqn{\rho} = \eqn{p}\eqn{R_{sp}^{-1}}{^{-1}}\eqn{T^{-1}}{^{-1}}
+       [kg m\eqn{^{-3}}{^{-3}}].}
 }
 }
 \usage{
 data(air_meas, package = "formatdown")
 }
 \description{
-A table of air properties at room temperature, simulating multiple
-measurements at approximately steady state,
+Table of air properties at room temperature and pressure, simulating
+multiple measurements at approximately steady state,
 }
 \keyword{datasets}

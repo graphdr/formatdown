@@ -23,7 +23,7 @@ reference:
   - title    : Prepared data
     contents :
     - air_meas
-    - atmosphere
+    - atmos
     - metals
     - water
 
