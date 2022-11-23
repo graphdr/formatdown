@@ -3,7 +3,7 @@
 
 # formatdown <img src="man/figures/logo.png" align="right">
 
-Formatting Tools for ‘rmarkdown’ Documents
+Formatting Tools for *rmarkdown* Documents
 
 <!-- badges: start -->
 
@@ -15,7 +15,7 @@ coverage](https://codecov.io/gh/graphdr/formatdown/branch/main/graph/badge.svg)]
 <!-- badges: end -->
 
 Provides a small set of tools for formatting tasks when creating
-documents in ‘rmarkdown’ or ‘quarto’. Convert the elements of a
+documents in *rmarkdown* or *quarto.* Convert the elements of a
 numerical vector to character strings in which the numbers are formatted
 using powers-of-ten notation in scientific or engineering form and
 delimited for rendering as inline equations.
@@ -32,7 +32,7 @@ library("knitr")
 **`format_power()`**   Convert the elements of a numerical vector to
 character strings in which the numbers are formatted using powers-of-ten
 notation in scientific or engineering form and delimited for rendering
-as inline equations in an R Markdown document.
+as inline equations in an *rmarkdown* document.
 
 ``` r
 # Scientific notation
@@ -44,34 +44,34 @@ format_power(101100, digits = 4, format = "engr")
 #> [1] "$101.1 \\times 10^{3}$"
 ```
 
-which, in an Rmd or qmd document, are rendered using inline math as
+which, in an *.Rmd* or *.qmd* document, are rendered using inline math
+as
 
 - Scientific notation: $1.011 \times 10^{5}$.
 - Engineering notation: $101.1 \times 10^{3}$
 
-Apply to columns of a data frame via `lapply()` using default 3
-significant digits and default engineering notation.
+Here we format two columns from the `water` data frame included with
+*formatdown* using `lapply()` and the default 3 significant digits and
+engineering notation.
 
 ``` r
-# Create a data.table
-viscosity <- 1.0E-6 * c(1.734, 1.312, 1.021, 0.8172, 0.6714)
-bulk_modulus <- 1.0E+9 * c(2.021, 2.102, 2.183, 2.254, 2.281)
-properties <- data.table(viscosity, bulk_modulus)
+# Extract two columns
+properties <- water[, .(visc, bulk_mod)]
 
 # Format all columns
 properties <- properties[, lapply(.SD, function(x) format_power(x))]
 
 # Render in document
-kable(properties, align = "r")
+kable(properties, align = "r", col.names = c("Viscosity [Pa-s]", "Bulk modulus [Pa]"))
 ```
 
-|             viscosity |         bulk_modulus |
+|    Viscosity \[Pa-s\] |  Bulk modulus \[Pa\] |
 |----------------------:|---------------------:|
 | $1.73 \times 10^{-6}$ | $2.02 \times 10^{9}$ |
 | $1.31 \times 10^{-6}$ | $2.10 \times 10^{9}$ |
 | $1.02 \times 10^{-6}$ | $2.18 \times 10^{9}$ |
 |  $817 \times 10^{-9}$ | $2.25 \times 10^{9}$ |
-|  $671 \times 10^{-9}$ | $2.28 \times 10^{9}$ |
+|  $670 \times 10^{-9}$ | $2.28 \times 10^{9}$ |
 
 ## Installation
 
