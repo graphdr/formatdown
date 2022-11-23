@@ -56,7 +56,7 @@ test_format_power<- function() {
   expect_equal(format_power(x, delim = c("\\[", "\\]")), ans)
 
   # Data frame,one column as vector
-  x   <- air[, (pressure)]
+  x   <- air_meas[, (pres)]
   ans <- c("$101.1 \\times 10^{3}$",
            "$101.0 \\times 10^{3}$",
            "$101.1 \\times 10^{3}$",
@@ -65,15 +65,15 @@ test_format_power<- function() {
   expect_equal(format_power(x, 4), ans)
 
   # Data frame, selected column in place
-  DT  <- air[, .(trial, pressure)]
+  DT  <- air_meas[, .(trial, pres)]
   ans <- data.table(wrapr::build_frame(
-    "trial"  , "pressure"               |
+    "trial"  , "pres"               |
       "a"    , "$101.1 \\times 10^{3}$" |
       "b"    , "$101.0 \\times 10^{3}$" |
       "c"    , "$101.1 \\times 10^{3}$" |
       "d"    , "$101.0 \\times 10^{3}$" |
       "e"    , "$101.1 \\times 10^{3}$" ))
-  cols_we_want <- c("pressure")
+  cols_we_want <- c("pres")
   DT <- DT[, (cols_we_want) := lapply(.SD, function(x) format_power(x, 4)),
            .SDcols = cols_we_want]
   expect_equal(DT, ans)
@@ -91,10 +91,10 @@ test_format_power<- function() {
   expect_equal(format_power(x), ans)
 
   # Errors for incorrect x argument
-  expect_error(format_power(x = air))
-  expect_error(format_power(x = air$date))
-  expect_error(format_power(x = air$trial))
-  expect_error(format_power(x = air$humidity))
+  expect_error(format_power(x = air_meas))
+  expect_error(format_power(x = air_meas$date))
+  expect_error(format_power(x = air_meas$trial))
+  expect_error(format_power(x = air_meas$humid))
   expect_error(format_power(x = c(TRUE, FALSE)))
   expect_error(format_power(x = NA))
   expect_error(format_power(x = NULL))

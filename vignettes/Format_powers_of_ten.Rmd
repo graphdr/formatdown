@@ -12,10 +12,9 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-library("formatdown")
-library("data.table")
 
-# data.table printout
+library("formatdown")
+
 options(
   datatable.print.nrows = 15,
   datatable.print.topn = 3,
@@ -98,6 +97,7 @@ If you are writing your own script to follow along, we use these packages in thi
 ```{r}
 library("formatdown")
 library("data.table")
+library("knitr")
 ```
 
 *Equivalent usage.*  &nbsp;  The first two arguments do not have to be named if the argument order is maintained. 
@@ -197,7 +197,7 @@ DT <- data.table(
   scientific  = format_power(x, format = "sci"),
   engineering = format_power(x)
 )
-knitr::kable(DT, align = "rr")
+kable(DT, align = "rr")
 ```
 
 
@@ -225,7 +225,7 @@ DT <- data.table(
   scientific = format_power(x, format = "sci", omit_power = NULL),
   engineering = format_power(x, omit_power = NULL)
 )
-knitr::kable(DT, align = "rr")
+kable(DT, align = "rr")
 ```
 
 
@@ -267,92 +267,92 @@ are both rendered as
 
 ## Data frame
 
-Using `air`, a data frame included with formatdown that contains columns of class Date, character, factor, numeric, and integer.
+Using `air_meas`, a data frame included with formatdown that contains columns of class Date, character, factor, numeric, and integer.
 
 ```{r}
 # Included with formatdown
-air
+air_meas
 
 # Render in document
-knitr::kable(air, align = "r")
+kable(air_meas, align = "r")
 ```
 
 Treating a column as a vector, 
 
 ```{r}
-# Copy to avoid "by reference" changes to air
-DT <- copy(air)
+# Copy to avoid "by reference" changes to air_meas
+DT <- copy(air_meas)
 
 # Format as a vector
-format_power(DT$pressure, digits = 4)
+format_power(DT$pres, digits = 4)
 ```
 
-is rendered as `r format_power(DT$pressure, digits = 4)`. 
+is rendered as `r format_power(DT$pres, digits = 4)`. 
 
 Treating a column within a data frame, 
 
 ```{r}
-# Copy to avoid "by reference" changes to air
-DT <- copy(air)
+# Copy to avoid "by reference" changes to air_meas
+DT <- copy(air_meas)
 
 # Format one column, retain all columns
-DT$pressure <- format_power(DT$pressure, digits = 4)
+DT$pres <- format_power(DT$pres, digits = 4)
 DT[]
 
 # Render in document
-knitr::kable(DT, align = "r")
+kable(DT, align = "r")
 ```
 
 Using `lapply()` to select and treat multiple columns from a data frame, 
 
 ```{r}
-# Copy to avoid "by reference" changes to air
-DT <- copy(air)
+# Copy to avoid "by reference" changes to air_meas
+DT <- copy(air_meas)
 
 # Identify columns to format
-cols_we_want <- c("temperature", "pressure", "density")
+cols_we_want <- c("temp", "pres", "dens")
 
 # Select and format.
 DT <- DT[, lapply(.SD, function(x) format_power(x, 4)), .SDcols = cols_we_want]
 DT[]
 
 # Render in document
-knitr::kable(DT, align = "r")
+kable(DT, align = "r")
 ```
 
 Repeat, but retain all columns,  
 
 ```{r}
-# Copy to avoid "by reference" changes to air
-DT <- copy(air)
+# Copy to avoid "by reference" changes to air_meas
+DT <- copy(air_meas)
 
 # Identify columns to format
-cols_we_want <- c("temperature", "pressure", "density")
+cols_we_want <- c("temp", "pres", "dens")
 
 # Format selected columns, retain all columns
 DT <- DT[, (cols_we_want) := lapply(.SD, function(x) format_power(x, 4)), .SDcols = cols_we_want]
 DT[]
 
 # Render in document
-knitr::kable(DT, align = "ccrrr")
+kable(DT, align = "r")
 ```
 
 If different columns should be reported with different significant digits, treat the columns separately. 
 
 ```{r}
-# Copy to avoid "by reference" changes to air
-DT <- copy(air)
+# Copy to avoid "by reference" changes to air_meas
+DT <- copy(air_meas)
 
 # Format selected columns, retain all columns with signif digits = 5
-cols_we_want <- c("temperature", "density")
+cols_we_want <- c("temp", "dens")
 DT <- DT[, (cols_we_want) := lapply(.SD, function(x) format_power(x, 5)), .SDcols = cols_we_want]
 
 # Individually format one column with signif digits = 4
-DT$pressure <- format_power(DT$pressure, 4)
+DT$pres <- format_power(DT$pres, 4)
 DT[]
 
 # Render in document
-knitr::kable(DT, align = "ccrrr")
+kable(DT, align = "r")
 ```
 
 
@@ -368,7 +368,7 @@ Applying the function to non-numeric objects produces errors. For example, "Date
 
 ```{r}
 #| error: true
-x <- air$date
+x <- air_meas$date
 format_power(x)
 ```
 
@@ -376,7 +376,7 @@ Error on "character" class,
 
 ```{r}
 #| error: true
-x <- air$trial
+x <- air_meas$trial
 format_power(x)
 ```
 
@@ -384,7 +384,7 @@ Error on "factor" class,
 
 ```{r}
 #| error: true
-x <- air$humidity
+x <- air_meas$humid
 format_power(x)
 ```
 

@@ -7,11 +7,11 @@
 \format{
 Classes data.table and data.frame: 10 observations of 5 variables:
 \describe{
- \item{altitude}{Numeric    [m] }
- \item{temperature}{Numeric [K] }
- \item{pressure}{Numeric    [Pa] }
- \item{density}{Numeric     [kg m\eqn{^{-3}}{^{-13}}] }
- \item{speed_sound}{Numeric [m/s] }
+ \item{alt}{Numeric, altitude [m]   }
+ \item{temp}{Numeric, air temperature [K]   }
+ \item{pres}{Numeric, atmospheric pressure [Pa]  }
+ \item{dens}{Numeric, air density [kg m\eqn{^{-3}}{^{-13}}] }
+ \item{spd_snd}{Numeric, speed of sound [m/s] }
 }
 }
 \usage{

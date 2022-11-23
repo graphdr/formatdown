@@ -7,12 +7,11 @@
 \format{
 Classes data.table and data.frame:	5 observations of 5 variables:
 \describe{
- \item{temperature}{Numeric, temperature [K] }
- \item{density}{Numeric, density  [kg m\eqn{^{-3}}{^{-3}}] }
- \item{specific_weight}{Numeric, specific weight
-       [N m\eqn{^{-3}}{^{-3}}] }
- \item{viscosity}{Numeric, dynamic viscosity  [Pa-s] }
- \item{bulk_modulus}{Numeric, bulk modulus  [Pa] }
+ \item{temp}{Numeric, temperature [K] }
+ \item{dens}{Numeric, density  [kg m\eqn{^{-3}}{^{-3}}] }
+ \item{sp_wt}{Numeric, specific weight [N m\eqn{^{-3}}{^{-3}}] }
+ \item{visc}{Numeric, dynamic viscosity  [Pa-s] }
+ \item{bulk_mod}{Numeric, bulk modulus  [Pa] }
 }
 }
 \source{

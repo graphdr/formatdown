@@ -7,11 +7,11 @@
 \format{
 Classes data.table and data.frame:	5 observations of  5 variables:
 \describe{
- \item{material}{Character}
- \item{rho}{Numeric, density [kg m\eqn{^{-3}}{^{-3}}] }
- \item{alpha}{Numeric, coefficient of thermal expansion [m m\eqn{^{-1}}{^{-1}}K\eqn{^{-1}}{^{-1}}] }
- \item{k}{Numeric, thermal conductivity [W m\eqn{^{-1}}{^{-1}}K\eqn{^{-1}}{^{-1}}] }
- \item{E}{Numeric, modulus of elasticity [Pa] }
+ \item{metal}{Character, name of material}
+ \item{dens}{Numeric, density [kg m\eqn{^{-3}}{^{-3}}] }
+ \item{thrm_exp}{Numeric, coefficient of thermal expansion [m m\eqn{^{-1}}{^{-1}}K\eqn{^{-1}}{^{-1}}] }
+ \item{thrm_cond}{Numeric, thermal conductivity [W m\eqn{^{-1}}{^{-1}}K\eqn{^{-1}}{^{-1}}] }
+ \item{elast_mod}{Numeric, modulus of elasticity [Pa] }
 }
 }
 \usage{
