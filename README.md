@@ -67,11 +67,17 @@ kable(properties, align = "r", col.names = c("Viscosity [Pa-s]", "Bulk modulus [
 
 |    Viscosity \[Pa-s\] |  Bulk modulus \[Pa\] |
 |----------------------:|---------------------:|
-| $1.73 \times 10^{-6}$ | $2.02 \times 10^{9}$ |
-| $1.31 \times 10^{-6}$ | $2.10 \times 10^{9}$ |
-| $1.02 \times 10^{-6}$ | $2.18 \times 10^{9}$ |
-|  $817 \times 10^{-9}$ | $2.25 \times 10^{9}$ |
-|  $670 \times 10^{-9}$ | $2.28 \times 10^{9}$ |
+| $1.73 \times 10^{-3}$ | $2.02 \times 10^{9}$ |
+| $1.31 \times 10^{-3}$ | $2.10 \times 10^{9}$ |
+| $1.02 \times 10^{-3}$ | $2.18 \times 10^{9}$ |
+|  $817 \times 10^{-6}$ | $2.25 \times 10^{9}$ |
+|  $670 \times 10^{-6}$ | $2.28 \times 10^{9}$ |
+|  $560 \times 10^{-6}$ | $2.29 \times 10^{9}$ |
+|  $478 \times 10^{-6}$ | $2.28 \times 10^{9}$ |
+|  $414 \times 10^{-6}$ | $2.25 \times 10^{9}$ |
+|  $363 \times 10^{-6}$ | $2.20 \times 10^{9}$ |
+|  $323 \times 10^{-6}$ | $2.14 \times 10^{9}$ |
+|  $290 \times 10^{-6}$ | $2.07 \times 10^{9}$ |
 
 ## Installation
 

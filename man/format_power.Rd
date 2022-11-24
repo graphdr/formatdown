@@ -9,6 +9,7 @@ format_power(
   digits = 3,
   ...,
   format = "engr",
+  set_power = NULL,
   omit_power = c(-1, 2),
   delim = "$"
 )
@@ -23,6 +24,9 @@ specify the number of significant digits in the output coefficient.}
 
 \item{format}{Character. Possible values are "engr" (engineering notation)
 and "sci" (scientific notation). Use argument  by name.}
+
+\item{set_power}{Numeric scalar, integer-ish. Assigned constant exponent
+that overrides \code{format}. Default NULL makes no notation changes.}
 
 \item{omit_power}{Numeric vector \code{c(p, q)} specifying the range of
 exponents over which power of ten notation is omitted, where

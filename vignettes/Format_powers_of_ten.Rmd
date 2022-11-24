@@ -88,6 +88,8 @@ where `a` is the number in decimal notation to the specified number of significa
 
 - **format** &nbsp; Possible values are "engr" (engineering notation) and "sci" (scientific notation). Default is "engr". 
 
+- **set_power** &nbsp; Default NULL. Can be logical or numerical. A number is used as the assigned fixed power-of-ten, overriding scientific or engineering formatting. TRUE selects the maximum exponent present after formatting; FALSE makes no change in notation. 
+
 - **omit_power** &nbsp; Numeric vector of length two (or NULL). Determines the range of exponents excluded from power-of-ten notation. Default is `c(-1, 2)`. 
 
 - **delim** &nbsp; Character vector of length one or two defining the math markup delimiters. Possible values include `"$"` or `"\\("`, both of which create appropriate left and right delimiters. Custom delimiters can be assigned if required by one's TeX processor. 
@@ -175,6 +177,8 @@ are rendered as
 
 
 
+
+
 ## Format
 
 Argument, if included, must be named. 
@@ -203,6 +207,45 @@ kable(DT, align = "rr")
 
 
 
+
+
+
+
+
+## Set power notation
+
+
+```{r}
+DT <- copy(water)
+DT <- DT[, .(temp = temp - 273.15, visc)]
+DT[, ver1 := format_power(visc, 4)]
+DT[, ver2 := format_power(visc, 4, set_power = -3)]
+
+knitr::kable(DT, align = "r", col.names = c("Temperature [C]", 
+                                            "Viscosity [Pa s]", 
+                                            "engineering notation", 
+                                            "with fixed exponent"))
+```
+
+
+```{r}
+DT <- copy(atmos)
+DT <- DT[, .(alt = alt / 1000, dens)]
+DT[, ver1 := format_power(dens, 4)]
+DT[, ver2 := format_power(dens, 4, set_power = -3)]
+
+kable(DT, align = "r", col.names = c("Altitude [km]", 
+                                     "Density [kg/m$^3$]", 
+                                     "engineering notation", 
+                                     "with fixed exponent"))
+```
+
+
+
+
+
+
+
 ## Omit power notation
 
 `omit_power` argument, if included, must be named. Suppose, for example, we want the value 0.0678 to be rendered without powers-of-ten notation. The exponent for this number in scientific notation is $-2$, as in `r format_power(0.0678, format = "sci")`. If this exponent is within the range set by `omit_power`, the number is rendered without power-of-ten notation (overriding the `format` argument). 
@@ -222,7 +265,7 @@ are rendered as
 ```{r}
 # Omit no values from power-of-ten notation
 DT <- data.table(
-  scientific = format_power(x, format = "sci", omit_power = NULL),
+  scientific  = format_power(x, format = "sci", omit_power = NULL),
   engineering = format_power(x, omit_power = NULL)
 )
 kable(DT, align = "rr")

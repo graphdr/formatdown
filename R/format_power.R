@@ -33,6 +33,8 @@
 #' @param ... Not used, force later arguments to be used by name.
 #' @param format Character. Possible values are "engr" (engineering notation)
 #'        and "sci" (scientific notation). Use argument  by name.
+#' @param set_power Numeric scalar, integer-ish. Assigned constant exponent
+#'        that overrides \code{format}. Default NULL makes no notation changes.
 #' @param omit_power Numeric vector \code{c(p, q)} specifying the range of
 #'        exponents over which power of ten notation is omitted, where
 #'        \code{p <= q}. If NULL all numbers are formatted in powers of ten
@@ -66,6 +68,7 @@ format_power <- function(x,
                          digits = 3,
                          ...,
                          format = "engr",
+                         set_power = NULL,
                          omit_power = c(-1, 2),
                          delim = "$") {
 
@@ -83,6 +86,9 @@ format_power <- function(x,
       "* Did you forget to write `format = ` or `omit_power = `?\n *"
     )
   )
+
+  # Default for NULL argument values using wrapr coalesce
+  set_power <- set_power %?% NA_real_
 
   # set omit_power to handle NULL or NA case
   if (sum(isTRUE(is.null(omit_power))) > 0 | sum(isTRUE(is.na(omit_power))) > 0 ) {
@@ -106,6 +112,9 @@ format_power <- function(x,
   # format: element of a set
   checkmate::assert_choice(format, choices = c("engr", "sci"))
 
+  # set_power is integer-ish, length 1 (can be NA)
+  checkmate::qassert(set_power, "x1")
+
   # omit_power: numeric, not missing, length 2
   checkmate::qassert(omit_power, "N2")
   # omit_power: range (p, q) requirement p <= q
@@ -119,10 +128,15 @@ format_power <- function(x,
   assert_true(length(delim) <= 2)
 
   # Indicate these are not unbound symbols (R CMD check Note)
+  raw_exponent<- NULL
   char_coeff <- NULL
   exponent <- NULL
   coeff <- NULL
   value <- NULL
+
+
+
+
 
 
 
@@ -157,11 +171,19 @@ format_power <- function(x,
 
   # ----- Rows with numbers in powers-of-ten notation
 
-  # Determine numerical coefficient and exponent
-  DT[pow_10, exponent := exp_multiple * floor(log10(abs(x)) / exp_multiple)]
+  # Determine exponent
+  if (isTRUE(!is.na(set_power))) {
+    # User-supplied exponent
+    DT[pow_10, exponent := floor(set_power)]
+  } else {
+    # Round to multiple of 1 (scientific) or 3 (engineering)
+    DT[pow_10, exponent := exp_multiple * floor( log10(abs(x)) / exp_multiple )]
+  }
+
+  # Use exponent to determine coefficient
   DT[pow_10, coeff := x / 10^exponent]
 
-  # Create the character coefficient to significant digits
+  # Create character coefficient to significant digits
   DT[pow_10, char_coeff := formatC(coeff, format = "fg", digits = digits, flag = "#")]
 
   # Remove trailing decimal point and spaces created by formatC() if any
