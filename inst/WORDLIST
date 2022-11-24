@@ -11,6 +11,7 @@ Maurer
 McGraw
 RStudio
 Rmd
+Temperatue
 YYYY
 delim
 dev
@@ -24,5 +25,6 @@ qmd
 repo
 rmarkdown
 tinytest
+unformatted
 ver
 wrapr

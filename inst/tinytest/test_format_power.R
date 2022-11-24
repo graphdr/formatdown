@@ -12,47 +12,62 @@ test_format_power<- function() {
 
   # Equivalent usage, named, unnamed, default
   x   <- avogadro
-  ans <- "$602 \\times 10^{21}$"
-  expect_equal(format_power(x = x, digits = 3), ans)
-  expect_equal(format_power(x, 3), ans)
+  ans <- "$602.2 \\times 10^{21}$"
+  expect_equal(format_power(x = x, digits = 4), ans)
+  expect_equal(format_power(x, 4), ans)
   expect_equal(format_power(x), ans)
 
   # Significant digits
   x   <- avogadro
-  ans <- "$602.2 \\times 10^{21}$"
-  expect_equal(format_power(x, 4), ans)
+  ans <- "$602 \\times 10^{21}$"
+  expect_equal(format_power(x, 3), ans)
 
   # Scientific format
   x   <- avogadro
-  ans <- "$6.02 \\times 10^{23}$"
+  ans <- "$6.022 \\times 10^{23}$"
   expect_equal(format_power(x, format = "sci"), ans)
+
+  # Set power
+  x   <- avogadro
+  ans <- "$0.6022 \\times 10^{24}$"
+  expect_equal(format_power(x, set_power = 24, format = "engr"), ans)
+  expect_equal(format_power(x, set_power = 24, format = "sci"), ans)
+  expect_equal(format_power(x, set_power = 24L), ans)
+
+  x   <- 0.633
+  ans <- "$6.33 \\times 10^{-1}$"
+  expect_equal(format_power(x, 3, set_power = -1, omit_power = NULL), ans)
+  ans <- "$0.633$"
+  expect_equal(format_power(x, 3, set_power = -1, omit_power = c(-1, 2)), ans)
+  expect_equal(format_power(x, 3, set_power = NA), ans)
+  expect_equal(format_power(x, 3, set_power = NULL), ans)
 
   # Ignore exponents
   x   <- 0.633
   ans <- "$0.633$"
-  expect_equal(format_power(x, omit_power = c(-1, 2)), ans)
+  expect_equal(format_power(x, 3, omit_power = c(-1, 2)), ans)
 
   x   <- 0.633
   ans <- "$633 \\times 10^{-3}$"
-  expect_equal(format_power(x, omit_power = c(0, 2)), ans)
+  expect_equal(format_power(x, 3, omit_power = c(0, 2)), ans)
 
   x   <- 633
   ans <- "$633 \\times 10^{0}$"
-  expect_equal(format_power(x, omit_power = c(0, 0)), ans)
-  expect_equal(format_power(x, omit_power = NA), ans)
-  expect_equal(format_power(x, omit_power = NULL), ans)
+  expect_equal(format_power(x, 3, omit_power = c(0, 0)), ans)
+  expect_equal(format_power(x, 3, omit_power = NA), ans)
+  expect_equal(format_power(x, 3, omit_power = NULL), ans)
 
   # Delimiter options
   x   <- avogadro
-  ans <- "$602 \\times 10^{21}$"
+  ans <- "$602.2 \\times 10^{21}$"
   expect_equal(format_power(x, delim = "$"), ans)
   expect_equal(format_power(x, delim = c("$", "$")), ans)
 
-  ans <- "\\(602 \\times 10^{21}\\)"
+  ans <- "\\(602.2 \\times 10^{21}\\)"
   expect_equal(format_power(x, delim = "\\("), ans)
   expect_equal(format_power(x, delim = c("\\(", "\\)")), ans)
 
-  ans <- "\\[602 \\times 10^{21}\\]"
+  ans <- "\\[602.2 \\times 10^{21}\\]"
   expect_equal(format_power(x, delim = c("\\[", "\\]")), ans)
 
   # Data frame,one column as vector
@@ -62,7 +77,7 @@ test_format_power<- function() {
            "$101.1 \\times 10^{3}$",
            "$101.0 \\times 10^{3}$",
            "$101.1 \\times 10^{3}$")
-  expect_equal(format_power(x, 4), ans)
+  expect_equal(format_power(x), ans)
 
   # Data frame, selected column in place
   DT  <- air_meas[, .(trial, pres)]
@@ -74,21 +89,21 @@ test_format_power<- function() {
       "d"    , "$101.0 \\times 10^{3}$" |
       "e"    , "$101.1 \\times 10^{3}$" ))
   cols_we_want <- c("pres")
-  DT <- DT[, (cols_we_want) := lapply(.SD, function(x) format_power(x, 4)),
+  DT <- DT[, (cols_we_want) := lapply(.SD, function(x) format_power(x)),
            .SDcols = cols_we_want]
   expect_equal(DT, ans)
 
   # Spaces inserted by formatC are trimmed. In this test, the first number
   # has four characters (the decimal point is a character); formatC() adds
-  # spaces to store "800" as " 800". format_power) removes the extra spaces.
+  # spaces to store "800" as " 800". format_power() removes the extra spaces.
   x <- 1.0E-6 * c(1.02, 0.8)
   ans <- c("$1.02 \\times 10^{-6}$", "$800 \\times 10^{-9}$")
-  expect_equal(format_power(x), ans)
+  expect_equal(format_power(x, 3), ans)
 
   # Negative number are OK
   x <- -1.0E-6 * c(1.02, 0.8)
   ans <- c("$-1.02 \\times 10^{-6}$", "$-800 \\times 10^{-9}$")
-  expect_equal(format_power(x), ans)
+  expect_equal(format_power(x, 3), ans)
 
   # Errors for incorrect x argument
   expect_error(format_power(x = air_meas))
@@ -112,6 +127,13 @@ test_format_power<- function() {
   expect_error(format_power(avogadro, format = TRUE))
   expect_error(format_power(avogadro, format = 3))
   expect_error(format_power(avogadro, format = c("engr", "sci")))
+
+  # Errors for incorrect set_power argument
+  expect_error(format_power(avogadro, set_power = TRUE))
+  expect_error(format_power(avogadro, set_power = c(1, 2)))
+  expect_error(format_power(avogadro, set_power = "1"))
+  expect_error(format_power(avogadro, set_power = as.Date(2020-11-24)))
+  expect_error(format_power(avogadro, set_power = as.factor(1)))
 
   # Errors for incorrect omit_power argument
   expect_error(format_power(avogadro, omit_power = 1))

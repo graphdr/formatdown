@@ -84,13 +84,13 @@ where `a` is the number in decimal notation to the specified number of significa
 
 - **x** &nbsp; Numerical vector to be formatted. Can be a scalar, a vector, or a column from a data frame. 
 
-- **digits** &nbsp; Positive nonzero integer to specify the number of significant digits. Default is 3. 
+- **digits** &nbsp; Positive nonzero integer to specify the number of significant digits. Default is 4. 
 
 - **format** &nbsp; Possible values are "engr" (engineering notation) and "sci" (scientific notation). Default is "engr". 
 
-- **set_power** &nbsp; Default NULL. Can be logical or numerical. A number is used as the assigned fixed power-of-ten, overriding scientific or engineering formatting. TRUE selects the maximum exponent present after formatting; FALSE makes no change in notation. 
+- **omit_power** &nbsp; Numeric vector of length two (or NULL). Determines the range of exponents excluded from power-of-ten notation. Default is `c(-1, 2)`.
 
-- **omit_power** &nbsp; Numeric vector of length two (or NULL). Determines the range of exponents excluded from power-of-ten notation. Default is `c(-1, 2)`. 
+- **set_power** &nbsp; Integer assigned as the fixed power-of-ten, overriding scientific or engineering formatting. Default NULL. 
 
 - **delim** &nbsp; Character vector of length one or two defining the math markup delimiters. Possible values include `"$"` or `"\\("`, both of which create appropriate left and right delimiters. Custom delimiters can be assigned if required by one's TeX processor. 
 
@@ -109,10 +109,10 @@ library("knitr")
 avogadro <- 6.0221E+23
 
 # Arguments named
-(x <- format_power(x = avogadro, digits = 3))
+(x <- format_power(x = avogadro, digits = 4))
 
 # Arguments unnamed
-y <- format_power(avogadro, 3)
+y <- format_power(avogadro, 4)
 
 # Implicit use of default argument
 z <- format_power(avogadro)
@@ -181,29 +181,61 @@ are rendered as
 
 ## Format
 
-Argument, if included, must be named. 
+`format` argument default value is "engr". If included, argument must be named. 
 
 ```{r}
+format_power(x[3])
 format_power(x[3], format = "sci")
-format_power(x[3], format = "engr")
 ```
 
 are rendered as 
 
+- `r format_power(x[3])`
 - `r format_power(x[3], format = "sci")`
-- `r format_power(x[3], format = "engr")`
 
 To compare the effects across many orders of magnitude, we format the example vector twice, placing the results side by side in a data frame for comparison, rendered using `knitr::kable()`, 
 
 ```{r}
 # Compare two formats
 DT <- data.table(
-  scientific  = format_power(x, format = "sci"),
-  engineering = format_power(x)
+  scientific  = format_power(x, 3, format = "sci"),
+  engineering = format_power(x, 3)
 )
-kable(DT, align = "rr")
+knitr::kable(DT, align = "r", col.names = c("scientific notation", "engineering notation"))
 ```
 
+The values displayed without powers-of-ten notation are in the range set by the `omit_power` argument, described in the next section. 
+
+
+
+
+
+## Omit power notation
+
+`omit_power` argument, if included, must be named. 
+
+Suppose, for example, we want the value 0.0678 to be rendered without powers-of-ten notation. The exponent for this number in scientific notation is $-2$, as in `r format_power(0.0678, format = "sci")`. If this exponent is within the range set by `omit_power`, the number is rendered without power-of-ten notation (overriding the `format` argument). 
+
+```{r}
+format_power(0.0678, 3, format = "sci", omit_power = c(-2, 2))
+format_power(0.0678, 3, format = "sci", omit_power = c(-1, 2))
+```
+
+are rendered as 
+
+- `r format_power(0.0678, 3, format = "sci", omit_power = c(-2, 2))`
+- `r format_power(0.0678, 3, format = "sci", omit_power = c(-1, 2))`
+
+`omit_power = NULL` removes the exceptions and formats all numbers in  power-of-ten notation.  
+
+```{r}
+# Omit no values from power-of-ten notation
+DT <- data.table(
+  scientific  = format_power(x, 3, format = "sci", omit_power = NULL),
+  engineering = format_power(x, 3, omit_power = NULL)
+)
+knitr::kable(DT, align = "r", col.names = c("scientific notation", "engineering notation"))
+```
 
 
 
@@ -214,33 +246,45 @@ kable(DT, align = "rr")
 
 ## Set power notation
 
+`set_power` argument, if included, must be named. 
+
+When values in a table column span a few orders of magnitude, an audience is often better served by setting the notation to a constant power of ten. In the example below, we show the tabulated values of the viscosity of water as a function of temperature (from the `water` data set included with *formatdown*). 
 
 ```{r}
+# Copy to avoid by-reference changes
 DT <- copy(water)
-DT <- DT[, .(temp = temp - 273.15, visc)]
-DT[, ver1 := format_power(visc, 4)]
-DT[, ver2 := format_power(visc, 4, set_power = -3)]
 
+# Convert temperature from K to C
+DT <- DT[, .(temp = round(temp - 273.15), visc)]
+
+# Create two columns to compare
+DT[, ver1 := format_power(visc, 3)]
+DT[, ver2 := format_power(visc, 3, set_power = -3)]
+```
+
+The first two columns are unformatted. The third column, in engineering format, includes exponents of $-3$ and $-6$. In the last column, we set the exponents to $-3$ throughout. 
+
+```{r}
 knitr::kable(DT, align = "r", col.names = c(
-  "Temperature [C]",
-  "Viscosity [Pa s]",
-  "engineering notation",
-  "with fixed exponent"
+  "Temperature [C]", "Viscosity [Pa s]", "engineering notation", "with fixed exponent"
 ))
 ```
 
+In the next example, we see that the `set_power` argument does not override the `omit_power` settings
 
 ```{r}
 DT <- copy(atmos)
 DT <- DT[, .(alt = alt / 1000, dens)]
-DT[, ver1 := format_power(dens, 4)]
-DT[, ver2 := format_power(dens, 4, set_power = -3)]
+DT[, ver1 := format_power(dens, 3)]
+DT[, ver2 := format_power(dens, 3, set_power = -3)]
+DT[, ver3 := format_power(dens, 3, set_power = -3, omit_power = NULL)]
 
 kable(DT, align = "r", col.names = c(
   "Altitude [km]",
   "Density [kg/m$^3$]",
   "engineering notation",
-  "with fixed exponent"
+  "with fixed exponent", 
+  "omit decimals"
 ))
 ```
 
@@ -250,30 +294,6 @@ kable(DT, align = "r", col.names = c(
 
 
 
-## Omit power notation
-
-`omit_power` argument, if included, must be named. Suppose, for example, we want the value 0.0678 to be rendered without powers-of-ten notation. The exponent for this number in scientific notation is $-2$, as in `r format_power(0.0678, format = "sci")`. If this exponent is within the range set by `omit_power`, the number is rendered without power-of-ten notation (overriding the `format` argument). 
-
-```{r}
-format_power(0.0678, format = "sci", omit_power = c(-2, 2))
-format_power(0.0678, format = "sci", omit_power = c(-1, 2))
-```
-
-are rendered as 
-
-- `r format_power(0.0678, format = "sci", omit_power = c(-2, 2))`
-- `r format_power(0.0678, format = "sci", omit_power = c(-1, 2))`
-
-`omit_power = NULL` removes the exceptions and formats all numbers in  power-of-ten notation.  
-
-```{r}
-# Omit no values from power-of-ten notation
-DT <- data.table(
-  scientific  = format_power(x, format = "sci", omit_power = NULL),
-  engineering = format_power(x, omit_power = NULL)
-)
-kable(DT, align = "rr")
-```
 
 
 
@@ -321,7 +341,7 @@ Using `air_meas`, a data frame included with formatdown that contains columns of
 air_meas
 
 # Render in document
-kable(air_meas, align = "r")
+knitr::kable(air_meas, align = "r")
 ```
 
 Treating a column as a vector, 
@@ -347,7 +367,7 @@ DT$pres <- format_power(DT$pres, digits = 4)
 DT[]
 
 # Render in document
-kable(DT, align = "r")
+knitr::kable(DT, align = "r")
 ```
 
 Using `lapply()` to select and treat multiple columns from a data frame, 
@@ -364,7 +384,7 @@ DT <- DT[, lapply(.SD, function(x) format_power(x, 4)), .SDcols = cols_we_want]
 DT[]
 
 # Render in document
-kable(DT, align = "r")
+knitr::kable(DT, align = "r")
 ```
 
 Repeat, but retain all columns,  
@@ -381,7 +401,7 @@ DT <- DT[, (cols_we_want) := lapply(.SD, function(x) format_power(x, 4)), .SDcol
 DT[]
 
 # Render in document
-kable(DT, align = "r")
+knitr::kable(DT, align = "r")
 ```
 
 If different columns should be reported with different significant digits, treat the columns separately. 
@@ -399,44 +419,56 @@ DT$pres <- format_power(DT$pres, 4)
 DT[]
 
 # Render in document
-kable(DT, align = "r")
+knitr::kable(DT, align = "r")
 ```
 
 
-
-
-
-
-
-
-## Non-numeric input
-
-Applying the function to non-numeric objects produces errors. For example, "Date" class. 
 
 ```{r}
-#| error: true
-x <- air_meas$date
-format_power(x)
+DT <- copy(atmos)
+
+# Round to appropriate decimal
+DT[, alt   := round(alt/1000, 0)]
+DT[, temp  := round(temp, 1)]
+DT[, pres  := round(pres, 0)]
+DT[, sound := round(sound, 1)]
+
+# Apply power of ten notation 
+DT[, dens  := format_power(dens, 3, format = "sci", set_power = -3, omit_power = c(-2, 2))]
+
+
+
+
+
+
+# Render in document
+knitr::kable(DT, align = "r", col.names = c(
+  "Altitude [km]", "Temperature [K]", "Pressure [Pa]", "Density [kg/m$^3$]", "Speed of sound [m/s]" ))
 ```
 
-Error on "character" class, 
+
 
 ```{r}
-#| error: true
-x <- air_meas$trial
-format_power(x)
+DT <- copy(atmos)
+
+# Round to appropriate decimal and add inline math markup
+DT[, alt   := format_decimal(alt/1000, 0)]
+DT[, temp  := format_decimal(temp, 1)]
+DT[, pres  := format_decimal(pres, 0, big_mark = ",")]
+DT[, sound := format_decimal(sound, 1)]
+
+# Apply power of ten notation 
+DT[, dens  := format_power(dens, 3, format = "sci", set_power = -3, omit_power = c(-2, 2))]
+
+
+
+
+
+
+# Render in document
+knitr::kable(DT, align = "r", col.names = c(
+  "Altitude [km]", "Temperature [K]", "Pressure [Pa]", "Density [kg/m$^3$]", "Speed of sound [m/s]" ))
 ```
-
-Error on "factor" class, 
-
-```{r}
-#| error: true
-x <- air_meas$humid
-format_power(x)
-```
-
-
-
 
 
 ## References

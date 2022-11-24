@@ -1,0 +1,145 @@
+---
+title: "Format decimals to match"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Format decimals to match}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+options(
+  datatable.print.nrows = 15,
+  datatable.print.topn = 3,
+  datatable.print.class = TRUE
+)
+```
+
+If we use `format_power()` to create powers-of-ten notation in a table, the font face and size of the inline math output is usually different from that of unformatted numbers. 
+
+The purpose of `format_decimal()` is to delimit such numbers to match the powers-of-ten numbers.  
+
+
+
+
+
+
+
+
+## Practice data table
+
+Using the `atmos` data set include with *formatdown* with various atmospheric properties as a function of height above sea level. 
+
+```{r}
+library("formatdown")
+library("data.table")
+
+DT <- copy(atmos)
+knitr::kable(DT, align = "r")
+```
+
+
+
+
+## Power-of-ten column 
+
+Of these variables, density best lends itself to powers-of-ten notation. For this range of values, I select a fixed exponent of $-4$. 
+
+```{r}
+# Apply power of ten notation 
+DT$dens <- format_power(DT$dens, digits = 3, set_power = -4)
+
+# Render in document
+knitr::kable(DT, align = "r")
+```
+
+The other numerical columns are OK except the font face and size doesn't match the density column. In this example, I the remaining columns one at a time. 
+
+
+
+
+
+
+## Integer column
+
+Changing the units of altitude to km, ensure zero decimal places. 
+
+```{r}
+DT$alt <- format_decimal(DT$alt / 1000, 0)
+
+# Render in document
+knitr::kable(DT, align = "r")
+```
+
+
+
+
+
+
+## Integer with big mark column
+
+The pressure column spans several orders of magnitude. I'll try formatting all but the last two rows as integers with a "big mark"  and the last two rows with two decimal places. 
+
+```{r}
+# Create a temporary formatted column
+DT[pres <= 10,              temp_pres := format_decimal(pres, 2)]
+DT[pres > 10 & pres <= 100, temp_pres := format_decimal(pres, 1)]
+DT[pres > 100,              temp_pres := format_decimal(pres, 0, big_mark = ",")]
+
+# Overwrite the original and delete the temporary column
+DT[, pres := temp_pres]
+DT[, temp_pres := NULL]
+
+# Render in document
+knitr::kable(DT, align = "r")
+```
+
+
+
+
+
+
+## Decimal columns
+
+The temperature and speed of sound columns can both be formatted to one decimal place. 
+```{r}
+cols_to_format <- c("temp", "sound")
+DT[, (cols_to_format) := lapply(.SD, function(x) format_decimal(x, 1)), .SDcols = cols_to_format]
+
+# Render in document
+knitr::kable(DT, align = "r")
+```
+
+
+
+
+
+
+## `knitr::kable()` options
+
+I use some `knitr::kable()` arguments to change the header and add a caption. 
+
+
+```{r}
+# Render in document
+knitr::kable(DT, 
+             align = "r", 
+             caption = "Table 1. Atmospheric varables as a function of altitude", 
+             col.names = c("Altitude [km]", 
+                           "Temperature [K]", 
+                           "Pressure [Pa]", 
+                           "Density [kg/m$^3$]", 
+                           "Speed of sound [m/s]"))
+```
+
+
+
+
+
+
+

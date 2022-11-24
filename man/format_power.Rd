@@ -6,32 +6,32 @@
 \usage{
 format_power(
   x,
-  digits = 3,
+  digits = 4,
   ...,
   format = "engr",
-  set_power = NULL,
   omit_power = c(-1, 2),
+  set_power = NULL,
   delim = "$"
 )
 }
 \arguments{
 \item{x}{Numeric vector to be formatted.}
 
-\item{digits}{Numeric scalar, nonzero positive integer between 1 and 20 to
-specify the number of significant digits in the output coefficient.}
+\item{digits}{Numeric scalar, significant digits in coefficient,
+integer between 1 and 20.}
 
 \item{...}{Not used, force later arguments to be used by name.}
 
 \item{format}{Character. Possible values are "engr" (engineering notation)
 and "sci" (scientific notation). Use argument  by name.}
 
-\item{set_power}{Numeric scalar, integer-ish. Assigned constant exponent
-that overrides \code{format}. Default NULL makes no notation changes.}
-
 \item{omit_power}{Numeric vector \code{c(p, q)} specifying the range of
 exponents over which power of ten notation is omitted, where
 \code{p <= q}. If NULL all numbers are formatted in powers of ten
 notation. Use argument by name.}
+
+\item{set_power}{Numeric scalar integer. Assigned exponent
+that overrides \code{format}. Default NULL makes no notation changes.}
 
 \item{delim}{Character vector (length 1 or 2) defining the delimiters for
 marking up inline math. Possible values include \code{"$"} or
@@ -94,6 +94,11 @@ format_power(x[1], 4)
 format_power(x[3], format = "engr")
 format_power(x[3], format = "sci")
 
+# Compare set_power results
+format_power(x[3], set_power = -5)
+format_power(x[3], set_power = -4)
+format_power(x[3], set_power = -3)
+
 # Compare omit_power range
 format_power(x[6], omit_power = c(-1, 2))
 format_power(x[6], omit_power = c(0, 2))
@@ -105,5 +110,9 @@ y <- x[1:6]
 z <- x[8:13]
 DT <- data.table::data.table(y, z)
 DT[, lapply(.SD, function(x) format_power(x))]
+}
+\seealso{
+Other format_*: 
+\code{\link{format_decimal}()}
 }
 \concept{format_*}

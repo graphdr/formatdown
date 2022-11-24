@@ -34,7 +34,7 @@ Formatting Tools for *rmarkdown* Documents
 [![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-Provides a small set of tools for formatting tasks when creating documents in *rmarkdown* or *quarto.* Convert the elements of a numerical vector to character strings in which the numbers are formatted using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations. 
+Provides a small set of tools for formatting tasks when creating documents in *rmarkdown* or *quarto.* Convert the elements of a numerical vector to character strings in which the numbers are formatted in decimal notation or using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations. 
 
 
 
@@ -48,7 +48,15 @@ library("data.table")
 library("knitr")
 ```
 
-**`format_power()`** &nbsp; Convert the elements of a numerical vector to character strings in which the numbers are formatted using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations in an *rmarkdown* document.
+**`format_power()`** 
+
+: Convert the elements of a numerical vector to character strings in which the numbers are formatted using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations in an *rmarkdown* document. The `digits` argument sets the number of significant digits. 
+
+**`format_decimal()`**
+
+: Similar to above, but in decimal notation. The `digits` argument sets the number of  decimal places. 
+
+*Scalar values*, typically rendered inline:
 
 ```{r}
 # Scientific notation
@@ -56,24 +64,37 @@ format_power(101100, digits = 4, format = "sci")
 
 # Engineering notation
 format_power(101100, digits = 4, format = "engr")
+
+# Decimal notation
+format_decimal(101100, digits = 0, big_mark = ",")
 ```
 
 which, in an *.Rmd* or *.qmd* document, are rendered using inline math as  
 
 - Scientific notation: `r format_power(101100, 4, format = "sci")`. 
 - Engineering notation: `r format_power(101100, digits = 4)`
+- Decimal notation: `r format_decimal(101100, digits = 0, big_mark = ",")`. 
 
-Here we format two columns from the `water` data frame included with *formatdown* using `lapply()` and the default 3 significant digits and engineering notation. 
+*Data frame*, typically rendered as a table. We independently format three columns from the `water` data frame included with *formatdown*. 
 
 ```{r}
-# Extract two columns
-properties <- water[, .(visc, bulk_mod)]
+# Extract three columns
+properties <- water[, .(temp, visc, bulk_mod)]
 
-# Format all columns
-properties <- properties[, lapply(.SD, function(x) format_power(x))]
+# Decimal notation 
+properties[, temp := format_decimal(temp, 1)]
+
+# Power-of-ten notation with fixed exponent
+properties[, visc := format_power(visc, set_power = -3)]
+
+# Power-of-ten notation with 3 significant figures
+properties[, bulk_mod := format_power(bulk_mod, 3)]
 
 # Render in document
-kable(properties, align = "r", col.names = c("Viscosity [Pa-s]", "Bulk modulus [Pa]"))
+knitr::kable(properties, 
+             align = "r",  
+             caption = "Table 1: Properties of water as a function of temperature.", 
+             col.names = c("Temperatue [K]", "Viscosity [Pa-s]", "Bulk modulus [Pa]"))
 ```
 
 

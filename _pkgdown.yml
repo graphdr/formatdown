@@ -11,6 +11,8 @@ navbar:
       menu:
       - text: Format powers of ten
         href: articles/format_powers_of_ten.html
+      - text: Format decimals to match
+        href: articles/format_decimals_to_match.html
     - text: Reference
       href: reference/index.html
     - text: News

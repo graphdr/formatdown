@@ -28,17 +28,17 @@
 #' symbols.
 #'
 #' @param x Numeric vector to be formatted.
-#' @param digits Numeric scalar, nonzero positive integer between 1 and 20 to
-#'        specify the number of significant digits in the output coefficient.
+#' @param digits Numeric scalar, significant digits in coefficient,
+#'        integer between 1 and 20.
 #' @param ... Not used, force later arguments to be used by name.
 #' @param format Character. Possible values are "engr" (engineering notation)
 #'        and "sci" (scientific notation). Use argument  by name.
-#' @param set_power Numeric scalar, integer-ish. Assigned constant exponent
-#'        that overrides \code{format}. Default NULL makes no notation changes.
 #' @param omit_power Numeric vector \code{c(p, q)} specifying the range of
 #'        exponents over which power of ten notation is omitted, where
 #'        \code{p <= q}. If NULL all numbers are formatted in powers of ten
 #'        notation. Use argument by name.
+#' @param set_power Numeric scalar integer. Assigned exponent
+#'        that overrides \code{format}. Default NULL makes no notation changes.
 #' @param delim Character vector (length 1 or 2) defining the delimiters for
 #'        marking up inline math. Possible values include \code{"$"} or
 #'        \code{"\\\\("}, both of which create appropriate left and right
@@ -65,11 +65,11 @@
 #'
 #'
 format_power <- function(x,
-                         digits = 3,
+                         digits = 4,
                          ...,
                          format = "engr",
-                         set_power = NULL,
                          omit_power = c(-1, 2),
+                         set_power = NULL,
                          delim = "$") {
 
   # ----- Programming overhead
@@ -83,7 +83,7 @@ format_power <- function(x,
     substitute(list(...)),
     paste(
       "Arguments after ... must be named.\n",
-      "* Did you forget to write `format = ` or `omit_power = `?\n *"
+      "* Did you forget to write `format = ` or `omit_power = `? etc.\n *"
     )
   )
 
@@ -92,10 +92,10 @@ format_power <- function(x,
 
   # set omit_power to handle NULL or NA case
   if (sum(isTRUE(is.null(omit_power))) > 0 | sum(isTRUE(is.na(omit_power))) > 0 ) {
-   # Assign equal fractional values and
-   # no integer exponents can lie on this range
+    # Assign equal fractional values and
+    # no integer exponents can lie on this range
     omit_power <- c(0.1, 0.1)
-    }
+  }
 
   # x: not "Date" class
   checkmate::assert_disjunct(class(x), c("Date", "POSIXct", "POSIXt"))
@@ -112,8 +112,8 @@ format_power <- function(x,
   # format: element of a set
   checkmate::assert_choice(format, choices = c("engr", "sci"))
 
-  # set_power is integer-ish, length 1 (can be NA)
-  checkmate::qassert(set_power, "x1")
+  # set_power is number, length 1 (can be NA)
+  checkmate::qassert(set_power, "n1")
 
   # omit_power: numeric, not missing, length 2
   checkmate::qassert(omit_power, "N2")
@@ -128,15 +128,10 @@ format_power <- function(x,
   assert_true(length(delim) <= 2)
 
   # Indicate these are not unbound symbols (R CMD check Note)
-  raw_exponent<- NULL
   char_coeff <- NULL
   exponent <- NULL
   coeff <- NULL
   value <- NULL
-
-
-
-
 
 
 
@@ -147,7 +142,11 @@ format_power <- function(x,
   setDT(DT)
 
   # Indices to rows, separating decimal from exponential notation
-  DT[, exponent := floor(log10(abs(x)))]
+  # Set exponent to 0 if x close to zero
+  DT[, exponent := fifelse(
+    abs(x) > .Machine$double.eps,
+    log10(abs(x)),
+    0)]
   decimal <- DT$exponent %between% omit_power
   pow_10  <- !decimal
 
@@ -165,7 +164,8 @@ format_power <- function(x,
   DT[decimal, value := formatC(x, format = "fg", digits = digits, flag = "#")]
 
   # Remove trailing decimal point and spaces created by formatC() if any
-  DT[decimal] <- omit_formatC_extras(DT[decimal], "value")
+  # (see utils.R)
+  DT[decimal] <- omit_formatC_extras(DT[decimal], col_name = "value")
 
 
 
@@ -177,7 +177,12 @@ format_power <- function(x,
     DT[pow_10, exponent := floor(set_power)]
   } else {
     # Round to multiple of 1 (scientific) or 3 (engineering)
-    DT[pow_10, exponent := exp_multiple * floor( log10(abs(x)) / exp_multiple )]
+    # Set exponent to 0 if x close to zero
+    DT[pow_10, exponent := fifelse(
+      abs(x) > .Machine$double.eps,
+      exp_multiple * floor(log10(abs(x)) / exp_multiple),
+      0
+    )]
   }
 
   # Use exponent to determine coefficient
@@ -187,7 +192,8 @@ format_power <- function(x,
   DT[pow_10, char_coeff := formatC(coeff, format = "fg", digits = digits, flag = "#")]
 
   # Remove trailing decimal point and spaces created by formatC() if any
-  DT[pow_10] <- omit_formatC_extras(DT[pow_10], "char_coeff")
+  # (see utils.R)
+  DT[pow_10] <- omit_formatC_extras(DT[pow_10], col_name = "char_coeff")
 
   # Construct powers-of-ten character string
   DT[pow_10, value := paste0(char_coeff, " \\times ", "10^{", exponent, "}")]
@@ -196,38 +202,12 @@ format_power <- function(x,
 
   # ----- Complete the conversion for all value strings
 
-  # Surround with math delimiters
-  if (length(delim) == 1) {
-    if (delim == "\\(" | delim == "\\)") {
-      DT[, value := paste0("\\(", value, "\\)")]
-    } else {
-      DT[, value := paste0(delim, value, delim)]
-    }
-  } else {
-    DT[, value := paste0(delim[1], value, delim[2])]
-  }
+  # Surround with math delimiters (see utils.R)
+  DT <- add_delim(DT, col_name = "value", delim = delim)
 
   # Convert to vector output
   DT <- DT[, (value)]
 
   # enable printing (see data.table FAQ 2.23)
   DT[]
-}
-
-
-
-# ---------------------------------------------------
-# Appendix: Internal functions
-
-# Remove trailing decimal point and spaces, if any, added by formatC()
-omit_formatC_extras <- function(DT, col_name) {
-
-  # Logical. Identify rows with trailing decimal points
-  rows_we_want <- DT[, get(col_name)] %like% "[:.:]$"
-
-  # Delete trailing decimal points if any
-  DT[rows_we_want, (col_name) := sub("[:.:]", "", get(col_name))]
-
-  # Trim space added by formatC if any
-  DT[, (col_name) := trimws(get(col_name), which = "both")]
 }

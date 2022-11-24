@@ -17,8 +17,8 @@ coverage](https://codecov.io/gh/graphdr/formatdown/branch/main/graph/badge.svg)]
 Provides a small set of tools for formatting tasks when creating
 documents in *rmarkdown* or *quarto.* Convert the elements of a
 numerical vector to character strings in which the numbers are formatted
-using powers-of-ten notation in scientific or engineering form and
-delimited for rendering as inline equations.
+in decimal notation or using powers-of-ten notation in scientific or
+engineering form and delimited for rendering as inline equations.
 
 ## Usage
 
@@ -29,10 +29,18 @@ library("data.table")
 library("knitr")
 ```
 
-**`format_power()`**   Convert the elements of a numerical vector to
-character strings in which the numbers are formatted using powers-of-ten
-notation in scientific or engineering form and delimited for rendering
-as inline equations in an *rmarkdown* document.
+**`format_power()`**  
+Convert the elements of a numerical vector to character strings in which
+the numbers are formatted using powers-of-ten notation in scientific or
+engineering form and delimited for rendering as inline equations in an
+*rmarkdown* document. The `digits` argument sets the number of
+significant digits.
+
+**`format_decimal()`**  
+Similar to above, but in decimal notation. The `digits` argument sets
+the number of decimal places.
+
+*Scalar values*, typically rendered inline:
 
 ``` r
 # Scientific notation
@@ -42,6 +50,10 @@ format_power(101100, digits = 4, format = "sci")
 # Engineering notation
 format_power(101100, digits = 4, format = "engr")
 #> [1] "$101.1 \\times 10^{3}$"
+
+# Decimal notation
+format_decimal(101100, digits = 0, big_mark = ",")
+#> [1] "$101,100$"
 ```
 
 which, in an *.Rmd* or *.qmd* document, are rendered using inline math
@@ -49,35 +61,46 @@ as
 
 - Scientific notation: $1.011 \times 10^{5}$.
 - Engineering notation: $101.1 \times 10^{3}$
+- Decimal notation: $101,100$.
 
-Here we format two columns from the `water` data frame included with
-*formatdown* using `lapply()` and the default 3 significant digits and
-engineering notation.
+*Data frame*, typically rendered as a table. We independently format
+three columns from the `water` data frame included with *formatdown*.
 
 ``` r
-# Extract two columns
-properties <- water[, .(visc, bulk_mod)]
+# Extract three columns
+properties <- water[, .(temp, visc, bulk_mod)]
 
-# Format all columns
-properties <- properties[, lapply(.SD, function(x) format_power(x))]
+# Decimal notation 
+properties[, temp := format_decimal(temp, 1)]
+
+# Power-of-ten notation with fixed exponent
+properties[, visc := format_power(visc, set_power = -3)]
+
+# Power-of-ten notation with 3 significant figures
+properties[, bulk_mod := format_power(bulk_mod, 3)]
 
 # Render in document
-kable(properties, align = "r", col.names = c("Viscosity [Pa-s]", "Bulk modulus [Pa]"))
+knitr::kable(properties, 
+             align = "r",  
+             caption = "Table 1: Properties of water as a function of temperature.", 
+             col.names = c("Temperatue [K]", "Viscosity [Pa-s]", "Bulk modulus [Pa]"))
 ```
 
-|    Viscosity \[Pa-s\] |  Bulk modulus \[Pa\] |
-|----------------------:|---------------------:|
-| $1.73 \times 10^{-3}$ | $2.02 \times 10^{9}$ |
-| $1.31 \times 10^{-3}$ | $2.10 \times 10^{9}$ |
-| $1.02 \times 10^{-3}$ | $2.18 \times 10^{9}$ |
-|  $817 \times 10^{-6}$ | $2.25 \times 10^{9}$ |
-|  $670 \times 10^{-6}$ | $2.28 \times 10^{9}$ |
-|  $560 \times 10^{-6}$ | $2.29 \times 10^{9}$ |
-|  $478 \times 10^{-6}$ | $2.28 \times 10^{9}$ |
-|  $414 \times 10^{-6}$ | $2.25 \times 10^{9}$ |
-|  $363 \times 10^{-6}$ | $2.20 \times 10^{9}$ |
-|  $323 \times 10^{-6}$ | $2.14 \times 10^{9}$ |
-|  $290 \times 10^{-6}$ | $2.07 \times 10^{9}$ |
+| Temperatue \[K\] |      Viscosity \[Pa-s\] |  Bulk modulus \[Pa\] |
+|-----------------:|------------------------:|---------------------:|
+|          $273.1$ |  $1.734 \times 10^{-3}$ | $2.02 \times 10^{9}$ |
+|          $283.1$ |  $1.310 \times 10^{-3}$ | $2.10 \times 10^{9}$ |
+|          $293.1$ |  $1.021 \times 10^{-3}$ | $2.18 \times 10^{9}$ |
+|          $303.1$ | $0.8174 \times 10^{-3}$ | $2.25 \times 10^{9}$ |
+|          $313.1$ | $0.6699 \times 10^{-3}$ | $2.28 \times 10^{9}$ |
+|          $323.1$ | $0.5605 \times 10^{-3}$ | $2.29 \times 10^{9}$ |
+|          $333.1$ | $0.4776 \times 10^{-3}$ | $2.28 \times 10^{9}$ |
+|          $343.1$ | $0.4135 \times 10^{-3}$ | $2.25 \times 10^{9}$ |
+|          $353.1$ | $0.3631 \times 10^{-3}$ | $2.20 \times 10^{9}$ |
+|          $363.1$ | $0.3229 \times 10^{-3}$ | $2.14 \times 10^{9}$ |
+|          $373.1$ | $0.2902 \times 10^{-3}$ | $2.07 \times 10^{9}$ |
+
+Table 1: Properties of water as a function of temperature.
 
 ## Installation
 
