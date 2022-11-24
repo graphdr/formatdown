@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">formatdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -178,6 +178,11 @@ scalar, a vector, or a column from a data frame.</p></li>
 number of significant digits. Default is 3.</p></li>
 <li><p><strong>format</strong>   Possible values are “engr” (engineering
 notation) and “sci” (scientific notation). Default is “engr”.</p></li>
+<li><p><strong>set_power</strong>   Default NULL. Can be logical or
+numerical. A number is used as the assigned fixed power-of-ten,
+overriding scientific or engineering formatting. TRUE selects the
+maximum exponent present after formatting; FALSE makes no change in
+notation.</p></li>
 <li><p><strong>omit_power</strong>   Numeric vector of length two (or
 NULL). Determines the range of exponents excluded from power-of-ten
 notation. Default is <code>c(-1, 2)</code>.</p></li>
@@ -363,6 +368,222 @@ for comparison, rendered using <code><a href="https://rdrr.io/pkg/knitr/man/kabl
 </table>
 </div>
 <div class="section level2">
+<h2 id="set-power-notation">Set power notation<a class="anchor" aria-label="anchor" href="#set-power-notation"></a>
+</h2>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">water</span><span class="op">)</span></span>
+<span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="va">DT</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span>temp <span class="op">=</span> <span class="va">temp</span> <span class="op">-</span> <span class="fl">273.15</span>, <span class="va">visc</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">ver1</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">visc</span>, <span class="fl">4</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">ver2</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">visc</span>, <span class="fl">4</span>, set_power <span class="op">=</span> <span class="op">-</span><span class="fl">3</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>, align <span class="op">=</span> <span class="st">"r"</span>, col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Temperature [C]"</span>,</span>
+<span>  <span class="st">"Viscosity [Pa s]"</span>,</span>
+<span>  <span class="st">"engineering notation"</span>,</span>
+<span>  <span class="st">"with fixed exponent"</span></span>
+<span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="20%">
+<col width="21%">
+<col width="28%">
+<col width="30%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">Temperature [C]</th>
+<th align="right">Viscosity [Pa s]</th>
+<th align="right">engineering notation</th>
+<th align="right">with fixed exponent</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right">0.0017336</td>
+<td align="right"><span class="math inline">\(1.734 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(1.734 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">0.0013105</td>
+<td align="right"><span class="math inline">\(1.310 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(1.310 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">20</td>
+<td align="right">0.0010212</td>
+<td align="right"><span class="math inline">\(1.021 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(1.021 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">30</td>
+<td align="right">0.0008174</td>
+<td align="right"><span class="math inline">\(817.4 \times
+10^{-6}\)</span></td>
+<td align="right"><span class="math inline">\(0.8174 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">40</td>
+<td align="right">0.0006699</td>
+<td align="right"><span class="math inline">\(669.9 \times
+10^{-6}\)</span></td>
+<td align="right"><span class="math inline">\(0.6699 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">50</td>
+<td align="right">0.0005605</td>
+<td align="right"><span class="math inline">\(560.5 \times
+10^{-6}\)</span></td>
+<td align="right"><span class="math inline">\(0.5605 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">60</td>
+<td align="right">0.0004776</td>
+<td align="right"><span class="math inline">\(477.6 \times
+10^{-6}\)</span></td>
+<td align="right"><span class="math inline">\(0.4776 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">70</td>
+<td align="right">0.0004135</td>
+<td align="right"><span class="math inline">\(413.5 \times
+10^{-6}\)</span></td>
+<td align="right"><span class="math inline">\(0.4135 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">80</td>
+<td align="right">0.0003631</td>
+<td align="right"><span class="math inline">\(363.1 \times
+10^{-6}\)</span></td>
+<td align="right"><span class="math inline">\(0.3631 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">90</td>
+<td align="right">0.0003229</td>
+<td align="right"><span class="math inline">\(322.9 \times
+10^{-6}\)</span></td>
+<td align="right"><span class="math inline">\(0.3229 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">100</td>
+<td align="right">0.0002902</td>
+<td align="right"><span class="math inline">\(290.2 \times
+10^{-6}\)</span></td>
+<td align="right"><span class="math inline">\(0.2902 \times
+10^{-3}\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">atmos</span><span class="op">)</span></span>
+<span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="va">DT</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span>alt <span class="op">=</span> <span class="va">alt</span> <span class="op">/</span> <span class="fl">1000</span>, <span class="va">dens</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">ver1</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">dens</span>, <span class="fl">4</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">ver2</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">dens</span>, <span class="fl">4</span>, set_power <span class="op">=</span> <span class="op">-</span><span class="fl">3</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>, align <span class="op">=</span> <span class="st">"r"</span>, col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Altitude [km]"</span>,</span>
+<span>  <span class="st">"Density [kg/m$^3$]"</span>,</span>
+<span>  <span class="st">"engineering notation"</span>,</span>
+<span>  <span class="st">"with fixed exponent"</span></span>
+<span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="17%">
+<col width="23%">
+<col width="28%">
+<col width="30%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">Altitude [km]</th>
+<th align="right">Density [kg/m<span class="math inline">\(^3\)</span>]</th>
+<th align="right">engineering notation</th>
+<th align="right">with fixed exponent</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right">1.23e+00</td>
+<td align="right"><span class="math inline">\(1.230\)</span></td>
+<td align="right"><span class="math inline">\(1.230\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">4.14e-01</td>
+<td align="right"><span class="math inline">\(0.4140\)</span></td>
+<td align="right"><span class="math inline">\(0.4140\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">20</td>
+<td align="right">8.89e-02</td>
+<td align="right"><span class="math inline">\(88.90 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(88.90 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">30</td>
+<td align="right">1.84e-02</td>
+<td align="right"><span class="math inline">\(18.40 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(18.40 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">40</td>
+<td align="right">4.00e-03</td>
+<td align="right"><span class="math inline">\(4.000 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(4.000 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">50</td>
+<td align="right">1.03e-03</td>
+<td align="right"><span class="math inline">\(1.030 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(1.030 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">60</td>
+<td align="right">3.10e-04</td>
+<td align="right"><span class="math inline">\(310.0 \times
+10^{-6}\)</span></td>
+<td align="right"><span class="math inline">\(0.3100 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">70</td>
+<td align="right">8.28e-05</td>
+<td align="right"><span class="math inline">\(82.80 \times
+10^{-6}\)</span></td>
+<td align="right"><span class="math inline">\(0.08280 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">80</td>
+<td align="right">1.85e-05</td>
+<td align="right"><span class="math inline">\(18.50 \times
+10^{-6}\)</span></td>
+<td align="right"><span class="math inline">\(0.01850 \times
+10^{-3}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
 <h2 id="omit-power-notation">Omit power notation<a class="anchor" aria-label="anchor" href="#omit-power-notation"></a>
 </h2>
 <p><code>omit_power</code> argument, if included, must be named.
@@ -372,7 +593,7 @@ notation is <span class="math inline">\(-2\)</span>, as in <span class="math inl
 within the range set by <code>omit_power</code>, the number is rendered
 without power-of-ten notation (overriding the <code>format</code>
 argument).</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="fl">0.0678</span>, format <span class="op">=</span> <span class="st">"sci"</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "$0.0678$"</span></span>
 <span><span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="fl">0.0678</span>, format <span class="op">=</span> <span class="st">"sci"</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
@@ -384,10 +605,10 @@ argument).</p>
 </ul>
 <p><code>omit_power = NULL</code> removes the exceptions and formats all
 numbers in power-of-ten notation.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Omit no values from power-of-ten notation</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span></span>
-<span>  scientific <span class="op">=</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"sci"</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,</span>
+<span>  scientific  <span class="op">=</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"sci"</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,</span>
 <span>  engineering <span class="op">=</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>, align <span class="op">=</span> <span class="st">"rr"</span><span class="op">)</span></span></code></pre></div>
@@ -482,7 +703,7 @@ numbers in power-of-ten notation.</p>
 <h2 id="delimiters">Delimiters<a class="anchor" aria-label="anchor" href="#delimiters"></a>
 </h2>
 <p><code>delim</code> argument, if included, must be named.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Equivalent usage</span></span>
 <span><span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, delim <span class="op">=</span> <span class="st">"$"</span><span class="op">)</span></span>
@@ -502,7 +723,7 @@ delimiters did not produce the desired output—using
 output document. Switching the delimiters to <code>\\( ... \\)</code>
 fixed the problem, per the recommendation of the MathJax consortium
 (Cervone, 2018).</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, delim <span class="op">=</span> <span class="st">"\\("</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "\\(1.22 \\times 10^{-6}\\)"</span></span>
 <span><span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, delim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"\\("</span>, <span class="st">"\\)"</span><span class="op">)</span><span class="op">)</span></span>
@@ -518,7 +739,7 @@ fixed the problem, per the recommendation of the MathJax consortium
 <p>Using <code>air_meas</code>, a data frame included with formatdown
 that contains columns of class Date, character, factor, numeric, and
 integer.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Included with formatdown</span></span>
 <span><span class="va">air_meas</span></span>
 <span><span class="co">#&gt;          date  trial  humid  temp   pres sp_gas  dens</span></span>
@@ -590,7 +811,7 @@ integer.</p>
 </tbody>
 </table>
 <p>Treating a column as a vector,</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Copy to avoid "by reference" changes to air_meas</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">air_meas</span><span class="op">)</span></span>
 <span></span>
@@ -605,7 +826,7 @@ integer.</p>
 10^{3}\)</span>, <span class="math inline">\(101.1 \times
 10^{3}\)</span>.</p>
 <p>Treating a column within a data frame,</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Copy to avoid "by reference" changes to air_meas</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">air_meas</span><span class="op">)</span></span>
 <span></span>
@@ -687,7 +908,7 @@ integer.</p>
 </table>
 <p>Using <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> to select and treat multiple columns from
 a data frame,</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Copy to avoid "by reference" changes to air_meas</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">air_meas</span><span class="op">)</span></span>
 <span></span>
@@ -747,7 +968,7 @@ a data frame,</p>
 </tbody>
 </table>
 <p>Repeat, but retain all columns,</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Copy to avoid "by reference" changes to air_meas</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">air_meas</span><span class="op">)</span></span>
 <span></span>
@@ -841,7 +1062,7 @@ a data frame,</p>
 </table>
 <p>If different columns should be reported with different significant
 digits, treat the columns separately.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Copy to avoid "by reference" changes to air_meas</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">air_meas</span><span class="op">)</span></span>
 <span></span>
@@ -940,17 +1161,17 @@ digits, treat the columns separately.</p>
 </h2>
 <p>Applying the function to non-numeric objects produces errors. For
 example, “Date” class.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">air_meas</span><span class="op">$</span><span class="va">date</span></span>
 <span><span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in format_power(x): Assertion on 'class(x)' failed: Must be disjunct from {'Date','POSIXct','POSIXt'}, but has elements {'Date'}.</span></span></code></pre></div>
 <p>Error on “character” class,</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">air_meas</span><span class="op">$</span><span class="va">trial</span></span>
 <span><span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in format_power(x): Assertion on 'x' failed. Must be of class 'numeric', not 'character'.</span></span></code></pre></div>
 <p>Error on “factor” class,</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">air_meas</span><span class="op">$</span><span class="va">humid</span></span>
 <span><span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in format_power(x): Assertion on 'x' failed. Must be of class 'numeric', not 'factor'.</span></span></code></pre></div>

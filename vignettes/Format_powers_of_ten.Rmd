@@ -221,10 +221,12 @@ DT <- DT[, .(temp = temp - 273.15, visc)]
 DT[, ver1 := format_power(visc, 4)]
 DT[, ver2 := format_power(visc, 4, set_power = -3)]
 
-knitr::kable(DT, align = "r", col.names = c("Temperature [C]", 
-                                            "Viscosity [Pa s]", 
-                                            "engineering notation", 
-                                            "with fixed exponent"))
+knitr::kable(DT, align = "r", col.names = c(
+  "Temperature [C]",
+  "Viscosity [Pa s]",
+  "engineering notation",
+  "with fixed exponent"
+))
 ```
 
 
@@ -234,10 +236,12 @@ DT <- DT[, .(alt = alt / 1000, dens)]
 DT[, ver1 := format_power(dens, 4)]
 DT[, ver2 := format_power(dens, 4, set_power = -3)]
 
-kable(DT, align = "r", col.names = c("Altitude [km]", 
-                                     "Density [kg/m$^3$]", 
-                                     "engineering notation", 
-                                     "with fixed exponent"))
+kable(DT, align = "r", col.names = c(
+  "Altitude [km]",
+  "Density [kg/m$^3$]",
+  "engineering notation",
+  "with fixed exponent"
+))
 ```
 
 
