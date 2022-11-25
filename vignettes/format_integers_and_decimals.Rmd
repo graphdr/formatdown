@@ -1,8 +1,8 @@
 ---
-title: "Format decimals to match"
+title: "Format integers and decimals"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Format decimals to match}
+  %\VignetteIndexEntry{Format integers and decimals}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -20,13 +20,9 @@ options(
 )
 ```
 
-If we use `format_power()` to create powers-of-ten notation in a table, the font face and size of the inline math output is usually different from that of unformatted numbers. 
+If we use `format_power()` to create powers-of-ten notation in a table, the  font face and size of these values do not necessarily match that of unformatted numbers. 
 
-The purpose of `format_decimal()` is to delimit such numbers to match the powers-of-ten numbers.  
-
-
-
-
+The purpose of `format_decimal()` is to surround decimal numbers and integers with inline math delimiters to match the powers-of-ten font face and size in rendering an 'rmarkdown' output document. 
 
 
 
