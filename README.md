@@ -3,7 +3,7 @@
 
 # formatdown <img src="man/figures/logo.png" align="right">
 
-Formatting Tools for *rmarkdown* Documents
+Formatting Tools for R Markdown Documents
 
 <!-- badges: start -->
 
@@ -15,7 +15,7 @@ coverage](https://codecov.io/gh/graphdr/formatdown/branch/main/graph/badge.svg)]
 <!-- badges: end -->
 
 Provides a small set of tools for formatting tasks when creating
-documents in *rmarkdown* or *quarto.* Convert the elements of a
+documents in R Markdown or Quarto Markdown. Convert the elements of a
 numerical vector to character strings in which the numbers are formatted
 in decimal notation or using powers-of-ten notation in scientific or
 engineering form and delimited for rendering as inline equations.
@@ -32,15 +32,15 @@ library("knitr")
 **`format_power()`**  
 Convert the elements of a numerical vector to character strings in which
 the numbers are formatted using powers-of-ten notation in scientific or
-engineering form and delimited for rendering as inline equations in an
-*rmarkdown* document. The `digits` argument sets the number of
-significant digits.
+engineering form and delimited for rendering as inline equations in
+`.Rmd` or `.qmd` markdown files. The `digits` argument sets the number
+of significant digits.
 
 **`format_decimal()`**  
 Similar to above, but in decimal notation. The `digits` argument sets
 the number of decimal places.
 
-*Scalar values*, typically rendered inline:
+*Scalar values.*   Typically rendered inline:
 
 ``` r
 # Scientific notation
@@ -56,15 +56,15 @@ format_decimal(101100, digits = 0, big_mark = ",")
 #> [1] "$101,100$"
 ```
 
-which, in an *.Rmd* or *.qmd* document, are rendered using inline math
-as
+which, in an `.Rmd` or `.qmd` output document, are rendered using inline
+math as
 
 - Scientific notation: $1.011 \times 10^{5}$.
 - Engineering notation: $101.1 \times 10^{3}$
 - Decimal notation: $101,100$.
 
-*Data frame*, typically rendered as a table. We independently format
-three columns from the `water` data frame included with *formatdown*.
+*Data frame*.   Typically rendered as a table. We independently format
+three columns from the `water` data frame included with `formatdown`.
 
 ``` r
 # Extract three columns
@@ -119,9 +119,8 @@ devtools::install_github("graphdr/formatdown")
 
 ## Requirements
 
-- <a href="https://www.r-project.org/" target="_blank">R</a> (\>= 3.5.0)
-- <a href="https://rdatatable.gitlab.io/data.table/"
-  target="_blank">data.table</a> (\>= 1.9.8)
+- [`R`](https://www.r-project.org/) (\>= 3.5.0)
+- [`data.table`](https://rdatatable.gitlab.io/data.table/) (\>= 1.9.8)
 
 ## Contributing
 
@@ -151,16 +150,17 @@ Conduct](https://graphdr.github.io/formatdown/CONDUCT.html).
 
 ## Software credits
 
-- [R](https://www.r-project.org/) and [RStudio](https://posit.co/) for
-  the working environment
-- [wrapr](https://CRAN.R-project.org/package=wrapr),
-  [checkmate](https://CRAN.R-project.org/package=checkmate), and
-  [tinytest](https://CRAN.R-project.org/package=tinytest) for
+- [`R`](https://www.r-project.org/) and [`RStudio`](https://posit.co/)
+  for the working environment  
+- [`rmarkdown`](https://CRAN.R-project.org/package=rmarkdown) and
+  [`knitr`](https://CRAN.R-project.org/package=knitr) for authoring
+  tools  
+- [`data.table`](https://CRAN.R-project.org/package=data.table) for its
+  programmable syntax  
+- [`wrapr`](https://CRAN.R-project.org/package=wrapr),
+  [`checkmate`](https://CRAN.R-project.org/package=checkmate), and
+  [`tinytest`](https://CRAN.R-project.org/package=tinytest) for
   programming tools
-- [devtools](https://CRAN.R-project.org/package=devtools) and
-  [pkgdown](https://CRAN.R-project.org/package=pkgdown) for package
+- [`devtools`](https://CRAN.R-project.org/package=devtools) and
+  [`pkgdown`](https://CRAN.R-project.org/package=pkgdown) for package
   building
-- [rmarkdown](https://CRAN.R-project.org/package=rmarkdown) and
-  [knitr](https://CRAN.R-project.org/package=knitr) for authoring tools
-- [data.table](https://CRAN.R-project.org/package=data.table) for its
-  programmable syntax

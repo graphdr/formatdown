@@ -46,24 +46,15 @@
 #'        e.g., \code{c("$", "$")} or \code{c("\\\\(", "\\\\)")}. Custom
 #'        delimiters can be assigned to suit the markup environment. Use
 #'        argument by name.
-#'
 #' @return A character vector with the following properties:
 #' \itemize{
 #'     \item Numbers represented in powers of ten notation except for those
 #'           with exponents in the range specified in \code{omit_power}
 #'     \item Elements delimited as inline math markup.
 #' }
-#'
-#'
 #' @family format_*
-#'
-#'
 #' @example man/examples/examples_format_power.R
-#'
-#'
 #' @export
-#'
-#'
 format_power <- function(x,
                          digits = 4,
                          ...,
@@ -72,7 +63,7 @@ format_power <- function(x,
                          set_power = NULL,
                          delim = "$") {
 
-  # ----- Programming overhead
+  # Overhead ----------------------------------------------------------------
 
   # On exit, reset user's options values
   user_digits <- getOption("digits")
@@ -97,92 +88,88 @@ format_power <- function(x,
     omit_power <- c(0.1, 0.1)
   }
 
-  # x: not "Date" class
-  checkmate::assert_disjunct(class(x), c("Date", "POSIXct", "POSIXt"))
-  # x: length at least one, numeric
-  checkmate::qassert(x, "n+")
-
-  # digits: numeric, not missing, length 1
-  checkmate::qassert(digits, "N1")
-  # digits: between 1 and 20
-  checkmate::assert_choice(digits, choices = c(1:20))
-
-  # format: character, not missing, length 1
-  checkmate::qassert(format, "S1")
-  # format: element of a set
-  checkmate::assert_choice(format, choices = c("engr", "sci"))
-
-  # set_power is number, length 1 (can be NA)
-  checkmate::qassert(set_power, "n1")
-
-  # omit_power: numeric, not missing, length 2
-  checkmate::qassert(omit_power, "N2")
-  # omit_power: range (p, q) requirement p <= q
-  if (!isTRUE(all(omit_power == cummax(omit_power)))) {
-    stop("In `omit_power = c(p, q)`, `p` must be less than or equal to `q`.")
-  }
-
-  # delim, character, not missing, length 1 or 2, not empty
-  qassert(delim, "S+")
-  assert_true(!"" %in% delim)
-  assert_true(length(delim) <= 2)
-
   # Indicate these are not unbound symbols (R CMD check Note)
   char_coeff <- NULL
   exponent <- NULL
   coeff <- NULL
   value <- NULL
 
+  # Argument checks ---------------------------------------------------------
 
+  # x: not "Date" class,length at least 1, numeric
+  checkmate::assert_disjunct(class(x), c("Date", "POSIXct", "POSIXt"))
+  checkmate::qassert(x, "n+")
 
-  # ----- Initial processing
+  # digits: numeric, not missing, length 1, between 1 and 20
+  checkmate::qassert(digits, "N1")
+  checkmate::assert_choice(digits, choices = c(1:20))
+
+  # format: character, not missing, length 1, element of set
+  checkmate::qassert(format, "S1")
+  checkmate::assert_choice(format, choices = c("engr", "sci"))
+
+  # set_power: numeric, length 1 (can be NA)
+  checkmate::qassert(set_power, "n1")
+
+  # omit_power: numeric, not missing, length 2, c(p, q) with p <= q
+  checkmate::qassert(omit_power, "N2")
+  if (!isTRUE(all(omit_power == cummax(omit_power)))) {
+    stop("In `omit_power = c(p, q)`, `p` must be less than or equal to `q`.")
+  }
+
+  # delim: character, not missing, length 1 or 2, not empty
+  checkmate::qassert(delim, "S+")
+  checkmate::assert_true(!"" %in% delim)
+  checkmate::assert_true(length(delim) <= 2)
+
+  # Initial processing ------------------------------------------------------
 
   # Convert vector to data.table for processing
-  DT <- copy(data.frame(x))
+  DT <- data.table::copy(data.frame(x))
   setDT(DT)
 
-  # Indices to rows, separating decimal from exponential notation
   # Set exponent to 0 if x close to zero
-  DT[, exponent := fifelse(
+  DT[, exponent := data.table::fifelse(
     abs(x) > .Machine$double.eps,
     log10(abs(x)),
     0)]
-  decimal <- DT$exponent %between% omit_power
-  pow_10  <- !decimal
+
+  # Obtain row indices to separate powers-of-ten from non-powers-of-ten
+  non_pow <- DT$exponent %between% omit_power
+  pow_10  <- !non_pow
 
   # Exponent multiple for scientific or engineering notation
-  exp_multiple <- fcase(
+  exp_multiple <- data.table::fcase(
     format == "engr", 3,
     format == "sci",  1
   )
 
-
-
-  # ----- Rows with numbers in decimal notation
+  # non_pow rows ------------------------------------------------------------
 
   # Create the character value to significant digits
-  DT[decimal, value := formatC(x, format = "fg", digits = digits, flag = "#")]
+  DT[non_pow, value := formatC(x, format = "fg", digits = digits, flag = "#")]
 
   # Remove trailing decimal point and spaces created by formatC() if any
   # (see utils.R)
-  DT[decimal] <- omit_formatC_extras(DT[decimal], col_name = "value")
+  DT[non_pow] <- omit_formatC_extras(DT[non_pow], col_name = "value")
 
-
-
-  # ----- Rows with numbers in powers-of-ten notation
+  # Power rows ------------------------------------------------------
 
   # Determine exponent
   if (isTRUE(!is.na(set_power))) {
+
     # User-supplied exponent
     DT[pow_10, exponent := floor(set_power)]
+
   } else {
+
     # Round to multiple of 1 (scientific) or 3 (engineering)
     # Set exponent to 0 if x close to zero
-    DT[pow_10, exponent := fifelse(
+    DT[pow_10, exponent := data.table::fifelse(
       abs(x) > .Machine$double.eps,
       exp_multiple * floor(log10(abs(x)) / exp_multiple),
-      0
-    )]
+      0)]
+
   }
 
   # Use exponent to determine coefficient
@@ -198,9 +185,7 @@ format_power <- function(x,
   # Construct powers-of-ten character string
   DT[pow_10, value := paste0(char_coeff, " \\times ", "10^{", exponent, "}")]
 
-
-
-  # ----- Complete the conversion for all value strings
+  # Output ------------------------------------------------------
 
   # Surround with math delimiters (see utils.R)
   DT <- add_delim(DT, col_name = "value", delim = delim)
@@ -210,4 +195,5 @@ format_power <- function(x,
 
   # enable printing (see data.table FAQ 2.23)
   DT[]
+  return(DT)
 }

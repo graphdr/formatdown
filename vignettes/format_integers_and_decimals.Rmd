@@ -22,7 +22,7 @@ options(
 
 If we use `format_power()` to create powers-of-ten notation in a table, the  font face and size of these values do not necessarily match that of unformatted numbers. 
 
-The purpose of `format_decimal()` is to surround decimal numbers and integers with inline math delimiters to match the powers-of-ten font face and size in rendering an 'rmarkdown' output document. 
+The purpose of `format_decimal()` is to surround decimal numbers and integers with inline math delimiters to match the powers-of-ten font face and size in rendering an R Markdown or Quarto Markdown output document. 
 
 
 
@@ -53,6 +53,7 @@ If you are writing your own script to follow along, we use these packages in thi
 ```{r}
 library("formatdown")
 library("data.table")
+library("knitr")
 ```
 
 
@@ -62,7 +63,7 @@ library("data.table")
 
 ## Practice data table
 
-Using the `atmos` data set include with *formatdown* with various atmospheric properties as a function of height above sea level. 
+Using the `atmos` data set include with `formatdown` with various atmospheric properties as a function of height above sea level. 
 
 ```{r}
 # Data set included with formatdown 
@@ -77,11 +78,11 @@ knitr::kable(DT, align = "r")
 
 ## Power-of-ten column 
 
-Of these variables, density best lends itself to powers-of-ten notation. For this range of values, a fixed exponent of $-4$ seems to work OK. 
+Of these variables, density best lends itself to powers-of-ten notation. For this range of values, a fixed exponent of $-3$ seems to work OK. 
 
 ```{r}
 # Apply power of ten notation to one column 
-DT$dens <- format_power(DT$dens, digits = 3, set_power = -4)
+DT$dens <- format_power(DT$dens, digits = 3, set_power = -3)
 
 # Render in document
 knitr::kable(DT, align = "r")
@@ -94,7 +95,7 @@ knitr::kable(DT, align = "r")
 
 ## Integer column
 
-I treat the altitude as an integer, convert from meters to kilometers, and format with zero decimal places. 
+I treat the altitude as an integer, convert from meters to kilometers, and format in integer form (zero decimal places). 
 
 ```{r}
 # Format one column as an integer 

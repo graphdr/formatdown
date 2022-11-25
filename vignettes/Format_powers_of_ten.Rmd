@@ -135,7 +135,7 @@ Use with inline R code.
 format_power(avogadro)
 ```
 
-which, in an Rmd or qmd document, is rendered as `r format_power(avogadro)`. 
+which, in an `.Rmd` or `.qmd` document, is rendered as `r format_power(avogadro)`. 
 
 
 
@@ -248,7 +248,7 @@ knitr::kable(DT, align = "r", col.names = c("scientific notation", "engineering 
 
 `set_power` argument, if included, must be named. 
 
-When values in a table column span a few orders of magnitude, an audience is often better served by setting the notation to a constant power of ten. In the example below, we show the tabulated values of the viscosity of water as a function of temperature (from the `water` data set included with *formatdown*). 
+When values in a table column span a few orders of magnitude, an audience is often better served by setting the notation to a constant power of ten. In the example below, we show the tabulated values of the viscosity of water as a function of temperature (from the `water` data set included with `formatdown`). 
 
 ```{r}
 # Copy to avoid by-reference changes
@@ -334,7 +334,7 @@ are both rendered as
 
 ## Data frame
 
-Using `air_meas`, a data frame included with formatdown that contains columns of class Date, character, factor, numeric, and integer.
+Using `air_meas`, a data frame included with `formatdown` that contains columns of class Date, character, factor, numeric, and integer.
 
 ```{r}
 # Included with formatdown
