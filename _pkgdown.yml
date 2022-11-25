@@ -21,7 +21,7 @@ navbar:
       href: news/index.html
 
 reference:
-  title: Reference
+  title: ~
   - title    : Functions
     desc     :  Functions exported by formatdown
     contents :
