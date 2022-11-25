@@ -6,15 +6,15 @@
 <!-- PATCH version backwards-compatible bug fixes -->
 <!-- DEV 900x development -->
 
-## formatdown 0.1.1.9006 (dev)
+## formatdown 0.1.1.9007 (dev)
 
-2022-11-24
+2022-11-25
 
-- Add `format_decimal()` and associated vignette.
-- Add `delim` and `set_power` arguments to `format_power()`.
-- Add data sets `air_meas`,`atmos`, `metals`, and `water`. 
+- Add arguments `delim` and `set_power` to `format_power()`.
 - Fixed a bug to remove extra spaces added by `formatC()`. 
-- Delete `density` data set. 
+- Add data sets `atmos`, `metals`, and `water`. 
+- Rename `density` data set to `air_meas`.
+- Add `format_decimal()` and vignette.
 
 ## formatdown 0.1.1
 
