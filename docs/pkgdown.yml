@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   format_integers_and_decimals: format_integers_and_decimals.html
   format_powers_of_ten: format_powers_of_ten.html
-last_built: 2022-11-25T01:22Z
+last_built: 2022-11-25T16:27Z
 urls:
   reference: https://graphdr.github.io/formatdown/reference
   article: https://graphdr.github.io/formatdown/articles

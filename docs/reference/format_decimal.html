@@ -14,7 +14,7 @@ rendering as inline equations in an R Markdown document."><meta property="og:ima
     
     <a class="navbar-brand me-2" href="../index.html">formatdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9007</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,7 +26,7 @@ rendering as inline equations in an R Markdown document."><meta property="og:ima
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-vignettes">Vignettes</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-vignettes">
     <a class="dropdown-item" href="../articles/format_powers_of_ten.html">Format powers of ten</a>
-    <a class="dropdown-item" href="../articles/format_integers_and_decimals.html">Format decimals to match</a>
+    <a class="dropdown-item" href="../articles/format_integers_and_decimals.html">Formatintegers and decimals</a>
   </div>
 </li>
 <li class="active nav-item">
@@ -124,11 +124,49 @@ symbols.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Scalar value</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Digits</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12300400.1234</span>, <span class="fl">456000</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">format_decimal</span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$12300400$" "$456000$"  </span>
+<span class="r-in"><span><span class="fu">format_decimal</span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$12300400.1$" "$456000.0$"  </span>
+<span class="r-in"><span><span class="fu">format_decimal</span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$12300400.12$" "$456000.00$"  </span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Big mark</span></span></span>
+<span class="r-in"><span><span class="fu">format_decimal</span><span class="op">(</span><span class="va">x</span>, <span class="fl">0</span>, big_mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$12,300,400$" "$456,000$"   </span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Inline math delimiters</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.654321</span>, <span class="fl">0.065432</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">format_decimal</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$1.6543$" "$0.0654$"</span>
+<span class="r-in"><span><span class="fu">format_decimal</span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, delim <span class="op">=</span> <span class="st">"$"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$1.654$" "$0.065$"</span>
+<span class="r-in"><span><span class="fu">format_decimal</span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, delim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"$"</span>, <span class="st">"$"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$1.654$" "$0.065$"</span>
+<span class="r-in"><span><span class="fu">format_decimal</span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, delim <span class="op">=</span> <span class="st">"\\("</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\\(1.654\\)" "\\(0.065\\)"</span>
+<span class="r-in"><span><span class="fu">format_decimal</span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, delim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"\\("</span>, <span class="st">"\\)"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\\(1.654\\)" "\\(0.065\\)"</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"></span>
+<span class="r-in"><span><span class="co"># LaTeX-style display equation delimiters</span></span></span>
+<span class="r-in"><span><span class="fu">format_decimal</span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, delim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"\\["</span>, <span class="st">"\\]"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "\\[1.654\\]" "\\[0.065\\]"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Apply to columns of a data frame (data.table syntax)</span></span></span>
+<span class="r-in"><span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="va">atmos</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">temp</span>, <span class="va">sound</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">DT</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">.SD</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">format_decimal</span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       temp   sound</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: $288.1$ $340.3$</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: $223.2$ $299.5$</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3: $216.7$ $295.1$</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4: $226.5$ $301.7$</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5: $250.3$ $317.2$</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6: $270.6$ $329.8$</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7: $247.0$ $315.1$</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8: $219.6$ $297.1$</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9: $198.6$ $282.5$</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
