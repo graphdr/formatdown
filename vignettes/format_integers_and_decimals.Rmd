@@ -27,15 +27,48 @@ The purpose of `format_decimal()` is to surround decimal numbers and integers wi
 
 
 
+
+
+
+## `format_decimal()`
+
+Given a number, a numerical vector, or a numerical column from a data frame, `format_decimal()` converts the numbers to character strings of the form, 
+
+        "$a$" 
+ 
+The user can specify the number of decimal places. 
+
+*Arguments.*
+
+- **x** &nbsp; Numerical vector to be formatted. Can be a scalar, a vector, or a column from a data frame. 
+
+- **digits** &nbsp; Positive integer to specify the number of decimal places.  Default is 4. Zero renders the number as an integer. 
+
+- **big_mark** &nbsp; Character. If not empty, used as mark between every three digits before the decimal point. Applied as the `big.mark` argument of `formatC()`.
+
+- **delim** &nbsp; Character vector of length one or two defining the math markup delimiters. Possible values include `"$"` or `"\\("`, both of which create appropriate left and right delimiters. Custom delimiters can be assigned if required by one's TeX processor. 
+
+If you are writing your own script to follow along, we use these packages in this vignette:
+
+```{r}
+library("formatdown")
+library("data.table")
+```
+
+
+
+
+
+
 ## Practice data table
 
 Using the `atmos` data set include with *formatdown* with various atmospheric properties as a function of height above sea level. 
 
 ```{r}
-library("formatdown")
-library("data.table")
-
+# Data set included with formatdown 
 DT <- copy(atmos)
+
+# Render in document
 knitr::kable(DT, align = "r")
 ```
 
@@ -44,17 +77,15 @@ knitr::kable(DT, align = "r")
 
 ## Power-of-ten column 
 
-Of these variables, density best lends itself to powers-of-ten notation. For this range of values, I select a fixed exponent of $-4$. 
+Of these variables, density best lends itself to powers-of-ten notation. For this range of values, a fixed exponent of $-4$ seems to work OK. 
 
 ```{r}
-# Apply power of ten notation 
+# Apply power of ten notation to one column 
 DT$dens <- format_power(DT$dens, digits = 3, set_power = -4)
 
 # Render in document
 knitr::kable(DT, align = "r")
 ```
-
-The other numerical columns are OK except the font face and size doesn't match the density column. In this example, I the remaining columns one at a time. 
 
 
 
@@ -63,9 +94,10 @@ The other numerical columns are OK except the font face and size doesn't match t
 
 ## Integer column
 
-Changing the units of altitude to km, ensure zero decimal places. 
+I treat the altitude as an integer, convert from meters to kilometers, and format with zero decimal places. 
 
 ```{r}
+# Format one column as an integer 
 DT$alt <- format_decimal(DT$alt / 1000, 0)
 
 # Render in document
@@ -77,19 +109,17 @@ knitr::kable(DT, align = "r")
 
 
 
-## Integer with big mark column
 
-The pressure column spans several orders of magnitude. I'll try formatting all but the last two rows as integers with a "big mark"  and the last two rows with two decimal places. 
+## Decimal columns
+
+The temperature and speed of sound columns can both be formatted to one decimal place. Use `lapply()` to format multiple columns in the same way. 
 
 ```{r}
-# Create a temporary formatted column
-DT[pres <= 10,              temp_pres := format_decimal(pres, 2)]
-DT[pres > 10 & pres <= 100, temp_pres := format_decimal(pres, 1)]
-DT[pres > 100,              temp_pres := format_decimal(pres, 0, big_mark = ",")]
+# Name the columns to be formatted
+cols_to_format <- c("temp", "sound")
 
-# Overwrite the original and delete the temporary column
-DT[, pres := temp_pres]
-DT[, temp_pres := NULL]
+# Use data.table .SD syntax with lapply() 
+DT[, (cols_to_format) := lapply(.SD, function(x) format_decimal(x, 1)), .SDcols = cols_to_format]
 
 # Render in document
 knitr::kable(DT, align = "r")
@@ -100,12 +130,23 @@ knitr::kable(DT, align = "r")
 
 
 
-## Decimal columns
+## Different formats in different ranges
 
-The temperature and speed of sound columns can both be formatted to one decimal place. 
+The pressure column spans several orders of magnitude. I format these numbers differently depending on the range they occupy. For numbers in the thousands, I add a "big mark" to make them easier to read. 
+
 ```{r}
-cols_to_format <- c("temp", "sound")
-DT[, (cols_to_format) := lapply(.SD, function(x) format_decimal(x, 1)), .SDcols = cols_to_format]
+# Hundreds and higher, integers. Create a temporary variable 
+DT[pres > 99, temp_pres := format_decimal(pres, 0, big_mark = ",")]
+
+# Units place or lower, 2 decimal places 
+DT[pres <= 10, temp_pres := format_decimal(pres, 2)]
+
+# In-between those two ranges, 1 decimal place 
+DT[pres > 10 & pres <= 99, temp_pres := format_decimal(pres, 1)]
+
+# Overwrite the original and delete the temporary column
+DT[, pres := temp_pres]
+DT[, temp_pres := NULL]
 
 # Render in document
 knitr::kable(DT, align = "r")
