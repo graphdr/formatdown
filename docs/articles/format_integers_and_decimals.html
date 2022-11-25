@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">formatdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,8 +94,8 @@ notation in a table, the font face and size of these values do not
 necessarily match that of unformatted numbers.</p>
 <p>The purpose of <code><a href="../reference/format_decimal.html">format_decimal()</a></code> is to surround decimal
 numbers and integers with inline math delimiters to match the
-powers-of-ten font face and size in rendering an ‘rmarkdown’ output
-document.</p>
+powers-of-ten font face and size in rendering an R Markdown or Quarto
+Markdown output document.</p>
 <div class="section level2">
 <h2 id="format_decimal">
 <code>format_decimal()</code><a class="anchor" aria-label="anchor" href="#format_decimal"></a>
@@ -125,14 +125,15 @@ by one’s TeX processor.</p></li>
 packages in this vignette:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/graphdr/formatdown/" class="external-link">"formatdown"</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://r-datatable.com" class="external-link">"data.table"</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://r-datatable.com" class="external-link">"data.table"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="practice-data-table">Practice data table<a class="anchor" aria-label="anchor" href="#practice-data-table"></a>
 </h2>
 <p>Using the <code>atmos</code> data set include with
-<em>formatdown</em> with various atmospheric properties as a function of
-height above sea level.</p>
+<code>formatdown</code> with various atmospheric properties as a
+function of height above sea level.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Data set included with formatdown </span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">atmos</span><span class="op">)</span></span>
@@ -218,10 +219,10 @@ height above sea level.</p>
 <h2 id="power-of-ten-column">Power-of-ten column<a class="anchor" aria-label="anchor" href="#power-of-ten-column"></a>
 </h2>
 <p>Of these variables, density best lends itself to powers-of-ten
-notation. For this range of values, a fixed exponent of <span class="math inline">\(-4\)</span> seems to work OK.</p>
+notation. For this range of values, a fixed exponent of <span class="math inline">\(-3\)</span> seems to work OK.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Apply power of ten notation to one column </span></span>
-<span><span class="va">DT</span><span class="op">$</span><span class="va">dens</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">DT</span><span class="op">$</span><span class="va">dens</span>, digits <span class="op">=</span> <span class="fl">3</span>, set_power <span class="op">=</span> <span class="op">-</span><span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">DT</span><span class="op">$</span><span class="va">dens</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">DT</span><span class="op">$</span><span class="va">dens</span>, digits <span class="op">=</span> <span class="fl">3</span>, set_power <span class="op">=</span> <span class="op">-</span><span class="fl">3</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Render in document</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>, align <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></span></code></pre></div>
@@ -252,56 +253,56 @@ notation. For this range of values, a fixed exponent of <span class="math inline
 <td align="right">20000</td>
 <td align="right">216.65</td>
 <td align="right">5529.00</td>
-<td align="right"><span class="math inline">\(889 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(88.9 \times
+10^{-3}\)</span></td>
 <td align="right">295.07</td>
 </tr>
 <tr class="even">
 <td align="right">30000</td>
 <td align="right">226.51</td>
 <td align="right">1197.00</td>
-<td align="right"><span class="math inline">\(184 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(18.4 \times
+10^{-3}\)</span></td>
 <td align="right">301.71</td>
 </tr>
 <tr class="odd">
 <td align="right">40000</td>
 <td align="right">250.35</td>
 <td align="right">287.00</td>
-<td align="right"><span class="math inline">\(40.0 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(4.00 \times
+10^{-3}\)</span></td>
 <td align="right">317.19</td>
 </tr>
 <tr class="even">
 <td align="right">50000</td>
 <td align="right">270.65</td>
 <td align="right">80.00</td>
-<td align="right"><span class="math inline">\(10.3 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(1.03 \times
+10^{-3}\)</span></td>
 <td align="right">329.80</td>
 </tr>
 <tr class="odd">
 <td align="right">60000</td>
 <td align="right">247.02</td>
 <td align="right">22.00</td>
-<td align="right"><span class="math inline">\(3.10 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(0.310 \times
+10^{-3}\)</span></td>
 <td align="right">315.07</td>
 </tr>
 <tr class="even">
 <td align="right">70000</td>
 <td align="right">219.59</td>
 <td align="right">5.22</td>
-<td align="right"><span class="math inline">\(0.828 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(0.0828 \times
+10^{-3}\)</span></td>
 <td align="right">297.06</td>
 </tr>
 <tr class="odd">
 <td align="right">80000</td>
 <td align="right">198.64</td>
 <td align="right">1.05</td>
-<td align="right"><span class="math inline">\(0.185 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(0.0185 \times
+10^{-3}\)</span></td>
 <td align="right">282.54</td>
 </tr>
 </tbody>
@@ -311,7 +312,7 @@ notation. For this range of values, a fixed exponent of <span class="math inline
 <h2 id="integer-column">Integer column<a class="anchor" aria-label="anchor" href="#integer-column"></a>
 </h2>
 <p>I treat the altitude as an integer, convert from meters to
-kilometers, and format with zero decimal places.</p>
+kilometers, and format in integer form (zero decimal places).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Format one column as an integer </span></span>
 <span><span class="va">DT</span><span class="op">$</span><span class="va">alt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_decimal.html">format_decimal</a></span><span class="op">(</span><span class="va">DT</span><span class="op">$</span><span class="va">alt</span> <span class="op">/</span> <span class="fl">1000</span>, <span class="fl">0</span><span class="op">)</span></span>
@@ -345,56 +346,56 @@ kilometers, and format with zero decimal places.</p>
 <td align="right"><span class="math inline">\(20\)</span></td>
 <td align="right">216.65</td>
 <td align="right">5529.00</td>
-<td align="right"><span class="math inline">\(889 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(88.9 \times
+10^{-3}\)</span></td>
 <td align="right">295.07</td>
 </tr>
 <tr class="even">
 <td align="right"><span class="math inline">\(30\)</span></td>
 <td align="right">226.51</td>
 <td align="right">1197.00</td>
-<td align="right"><span class="math inline">\(184 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(18.4 \times
+10^{-3}\)</span></td>
 <td align="right">301.71</td>
 </tr>
 <tr class="odd">
 <td align="right"><span class="math inline">\(40\)</span></td>
 <td align="right">250.35</td>
 <td align="right">287.00</td>
-<td align="right"><span class="math inline">\(40.0 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(4.00 \times
+10^{-3}\)</span></td>
 <td align="right">317.19</td>
 </tr>
 <tr class="even">
 <td align="right"><span class="math inline">\(50\)</span></td>
 <td align="right">270.65</td>
 <td align="right">80.00</td>
-<td align="right"><span class="math inline">\(10.3 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(1.03 \times
+10^{-3}\)</span></td>
 <td align="right">329.80</td>
 </tr>
 <tr class="odd">
 <td align="right"><span class="math inline">\(60\)</span></td>
 <td align="right">247.02</td>
 <td align="right">22.00</td>
-<td align="right"><span class="math inline">\(3.10 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(0.310 \times
+10^{-3}\)</span></td>
 <td align="right">315.07</td>
 </tr>
 <tr class="even">
 <td align="right"><span class="math inline">\(70\)</span></td>
 <td align="right">219.59</td>
 <td align="right">5.22</td>
-<td align="right"><span class="math inline">\(0.828 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(0.0828 \times
+10^{-3}\)</span></td>
 <td align="right">297.06</td>
 </tr>
 <tr class="odd">
 <td align="right"><span class="math inline">\(80\)</span></td>
 <td align="right">198.64</td>
 <td align="right">1.05</td>
-<td align="right"><span class="math inline">\(0.185 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(0.0185 \times
+10^{-3}\)</span></td>
 <td align="right">282.54</td>
 </tr>
 </tbody>
@@ -442,56 +443,56 @@ in the same way.</p>
 <td align="right"><span class="math inline">\(20\)</span></td>
 <td align="right"><span class="math inline">\(216.7\)</span></td>
 <td align="right">5529.00</td>
-<td align="right"><span class="math inline">\(889 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(88.9 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(295.1\)</span></td>
 </tr>
 <tr class="even">
 <td align="right"><span class="math inline">\(30\)</span></td>
 <td align="right"><span class="math inline">\(226.5\)</span></td>
 <td align="right">1197.00</td>
-<td align="right"><span class="math inline">\(184 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(18.4 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(301.7\)</span></td>
 </tr>
 <tr class="odd">
 <td align="right"><span class="math inline">\(40\)</span></td>
 <td align="right"><span class="math inline">\(250.3\)</span></td>
 <td align="right">287.00</td>
-<td align="right"><span class="math inline">\(40.0 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(4.00 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(317.2\)</span></td>
 </tr>
 <tr class="even">
 <td align="right"><span class="math inline">\(50\)</span></td>
 <td align="right"><span class="math inline">\(270.6\)</span></td>
 <td align="right">80.00</td>
-<td align="right"><span class="math inline">\(10.3 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(1.03 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(329.8\)</span></td>
 </tr>
 <tr class="odd">
 <td align="right"><span class="math inline">\(60\)</span></td>
 <td align="right"><span class="math inline">\(247.0\)</span></td>
 <td align="right">22.00</td>
-<td align="right"><span class="math inline">\(3.10 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(0.310 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(315.1\)</span></td>
 </tr>
 <tr class="even">
 <td align="right"><span class="math inline">\(70\)</span></td>
 <td align="right"><span class="math inline">\(219.6\)</span></td>
 <td align="right">5.22</td>
-<td align="right"><span class="math inline">\(0.828 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(0.0828 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(297.1\)</span></td>
 </tr>
 <tr class="odd">
 <td align="right"><span class="math inline">\(80\)</span></td>
 <td align="right"><span class="math inline">\(198.6\)</span></td>
 <td align="right">1.05</td>
-<td align="right"><span class="math inline">\(0.185 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(0.0185 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(282.5\)</span></td>
 </tr>
 </tbody>
@@ -546,56 +547,56 @@ the thousands, I add a “big mark” to make them easier to read.</p>
 <td align="right"><span class="math inline">\(20\)</span></td>
 <td align="right"><span class="math inline">\(216.7\)</span></td>
 <td align="right"><span class="math inline">\(5,529\)</span></td>
-<td align="right"><span class="math inline">\(889 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(88.9 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(295.1\)</span></td>
 </tr>
 <tr class="even">
 <td align="right"><span class="math inline">\(30\)</span></td>
 <td align="right"><span class="math inline">\(226.5\)</span></td>
 <td align="right"><span class="math inline">\(1,197\)</span></td>
-<td align="right"><span class="math inline">\(184 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(18.4 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(301.7\)</span></td>
 </tr>
 <tr class="odd">
 <td align="right"><span class="math inline">\(40\)</span></td>
 <td align="right"><span class="math inline">\(250.3\)</span></td>
 <td align="right"><span class="math inline">\(287\)</span></td>
-<td align="right"><span class="math inline">\(40.0 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(4.00 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(317.2\)</span></td>
 </tr>
 <tr class="even">
 <td align="right"><span class="math inline">\(50\)</span></td>
 <td align="right"><span class="math inline">\(270.6\)</span></td>
 <td align="right"><span class="math inline">\(80.0\)</span></td>
-<td align="right"><span class="math inline">\(10.3 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(1.03 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(329.8\)</span></td>
 </tr>
 <tr class="odd">
 <td align="right"><span class="math inline">\(60\)</span></td>
 <td align="right"><span class="math inline">\(247.0\)</span></td>
 <td align="right"><span class="math inline">\(22.0\)</span></td>
-<td align="right"><span class="math inline">\(3.10 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(0.310 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(315.1\)</span></td>
 </tr>
 <tr class="even">
 <td align="right"><span class="math inline">\(70\)</span></td>
 <td align="right"><span class="math inline">\(219.6\)</span></td>
 <td align="right"><span class="math inline">\(5.22\)</span></td>
-<td align="right"><span class="math inline">\(0.828 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(0.0828 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(297.1\)</span></td>
 </tr>
 <tr class="odd">
 <td align="right"><span class="math inline">\(80\)</span></td>
 <td align="right"><span class="math inline">\(198.6\)</span></td>
 <td align="right"><span class="math inline">\(1.05\)</span></td>
-<td align="right"><span class="math inline">\(0.185 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(0.0185 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(282.5\)</span></td>
 </tr>
 </tbody>
@@ -622,7 +623,7 @@ and add a caption.</p>
 altitude</caption>
 <colgroup>
 <col width="15%">
-<col width="18%">
+<col width="17%">
 <col width="15%">
 <col width="26%">
 <col width="23%">
@@ -653,56 +654,56 @@ altitude</caption>
 <td align="right"><span class="math inline">\(20\)</span></td>
 <td align="right"><span class="math inline">\(216.7\)</span></td>
 <td align="right"><span class="math inline">\(5,529\)</span></td>
-<td align="right"><span class="math inline">\(889 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(88.9 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(295.1\)</span></td>
 </tr>
 <tr class="even">
 <td align="right"><span class="math inline">\(30\)</span></td>
 <td align="right"><span class="math inline">\(226.5\)</span></td>
 <td align="right"><span class="math inline">\(1,197\)</span></td>
-<td align="right"><span class="math inline">\(184 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(18.4 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(301.7\)</span></td>
 </tr>
 <tr class="odd">
 <td align="right"><span class="math inline">\(40\)</span></td>
 <td align="right"><span class="math inline">\(250.3\)</span></td>
 <td align="right"><span class="math inline">\(287\)</span></td>
-<td align="right"><span class="math inline">\(40.0 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(4.00 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(317.2\)</span></td>
 </tr>
 <tr class="even">
 <td align="right"><span class="math inline">\(50\)</span></td>
 <td align="right"><span class="math inline">\(270.6\)</span></td>
 <td align="right"><span class="math inline">\(80.0\)</span></td>
-<td align="right"><span class="math inline">\(10.3 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(1.03 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(329.8\)</span></td>
 </tr>
 <tr class="odd">
 <td align="right"><span class="math inline">\(60\)</span></td>
 <td align="right"><span class="math inline">\(247.0\)</span></td>
 <td align="right"><span class="math inline">\(22.0\)</span></td>
-<td align="right"><span class="math inline">\(3.10 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(0.310 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(315.1\)</span></td>
 </tr>
 <tr class="even">
 <td align="right"><span class="math inline">\(70\)</span></td>
 <td align="right"><span class="math inline">\(219.6\)</span></td>
 <td align="right"><span class="math inline">\(5.22\)</span></td>
-<td align="right"><span class="math inline">\(0.828 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(0.0828 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(297.1\)</span></td>
 </tr>
 <tr class="odd">
 <td align="right"><span class="math inline">\(80\)</span></td>
 <td align="right"><span class="math inline">\(198.6\)</span></td>
 <td align="right"><span class="math inline">\(1.05\)</span></td>
-<td align="right"><span class="math inline">\(0.185 \times
-10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(0.0185 \times
+10^{-3}\)</span></td>
 <td align="right"><span class="math inline">\(282.5\)</span></td>
 </tr>
 </tbody>

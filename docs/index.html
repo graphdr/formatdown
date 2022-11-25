@@ -42,7 +42,7 @@
     
     <a class="navbar-brand me-2" href="index.html">formatdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,10 +88,10 @@
 <img src="logo.png" class="logo" alt=""><h1 id="formatdown-">formatdown <a class="anchor" aria-label="anchor" href="#formatdown-"></a>
 </h1>
 </div>
-<p>Formatting Tools for <em>rmarkdown</em> Documents</p>
+<p>Formatting Tools for R Markdown Documents</p>
 <!-- badges: start -->
 
-<p>Provides a small set of tools for formatting tasks when creating documents in <em>rmarkdown</em> or <em>quarto.</em> Convert the elements of a numerical vector to character strings in which the numbers are formatted in decimal notation or using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations.</p>
+<p>Provides a small set of tools for formatting tasks when creating documents in R Markdown or Quarto Markdown. Convert the elements of a numerical vector to character strings in which the numbers are formatted in decimal notation or using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations.</p>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
@@ -101,10 +101,10 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://r-datatable.com" class="external-link">"data.table"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span></code></pre></div>
 <p><strong><code><a href="reference/format_power.html">format_power()</a></code></strong><br>
-Convert the elements of a numerical vector to character strings in which the numbers are formatted using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations in an <em>rmarkdown</em> document. The <code>digits</code> argument sets the number of significant digits.</p>
+Convert the elements of a numerical vector to character strings in which the numbers are formatted using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations in <code>.Rmd</code> or <code>.qmd</code> markdown files. The <code>digits</code> argument sets the number of significant digits.</p>
 <p><strong><code><a href="reference/format_decimal.html">format_decimal()</a></code></strong><br>
 Similar to above, but in decimal notation. The <code>digits</code> argument sets the number of decimal places.</p>
-<p><em>Scalar values</em>, typically rendered inline:</p>
+<p><em>Scalar values.</em>   Typically rendered inline:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Scientific notation</span></span>
 <span><span class="fu"><a href="reference/format_power.html">format_power</a></span><span class="op">(</span><span class="fl">101100</span>, digits <span class="op">=</span> <span class="fl">4</span>, format <span class="op">=</span> <span class="st">"sci"</span><span class="op">)</span></span>
@@ -117,14 +117,14 @@ Similar to above, but in decimal notation. The <code>digits</code> argument sets
 <span><span class="co"># Decimal notation</span></span>
 <span><span class="fu"><a href="reference/format_decimal.html">format_decimal</a></span><span class="op">(</span><span class="fl">101100</span>, digits <span class="op">=</span> <span class="fl">0</span>, big_mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "$101,100$"</span></span></code></pre></div>
-<p>which, in an <em>.Rmd</em> or <em>.qmd</em> document, are rendered using inline math as</p>
+<p>which, in an <code>.Rmd</code> or <code>.qmd</code> output document, are rendered using inline math as</p>
 <ul>
 <li>Scientific notation: <span class="math inline">1.011 × 10<sup>5</sup></span>.</li>
 <li>Engineering notation: <span class="math inline">101.1 × 10<sup>3</sup></span>
 </li>
 <li>Decimal notation: <span class="math inline">101, 100</span>.</li>
 </ul>
-<p><em>Data frame</em>, typically rendered as a table. We independently format three columns from the <code>water</code> data frame included with <em>formatdown</em>.</p>
+<p><em>Data frame</em>.   Typically rendered as a table. We independently format three columns from the <code>water</code> data frame included with <code>formatdown</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Extract three columns</span></span>
 <span><span class="va">properties</span> <span class="op">&lt;-</span> <span class="va">water</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">temp</span>, <span class="va">visc</span>, <span class="va">bulk_mod</span><span class="op">)</span><span class="op">]</span></span>
@@ -225,9 +225,9 @@ Similar to above, but in decimal notation. The <code>digits</code> argument sets
 </h2>
 <ul>
 <li>
-<a href="https://www.r-project.org/" target="_blank" class="external-link">R</a> (&gt;= 3.5.0)</li>
+<a href="https://www.r-project.org/" class="external-link"><code>R</code></a> (&gt;= 3.5.0)</li>
 <li>
-<a href="https://rdatatable.gitlab.io/data.table/" target="_blank" class="external-link">data.table</a> (&gt;= 1.9.8)</li>
+<a href="https://rdatatable.gitlab.io/data.table/" class="external-link"><code>data.table</code></a> (&gt;= 1.9.8)</li>
 </ul>
 </div>
 <div class="section level2">
@@ -256,15 +256,18 @@ Similar to above, but in decimal notation. The <code>digits</code> argument sets
 </h2>
 <ul>
 <li>
-<a href="https://www.r-project.org/" class="external-link">R</a> and <a href="https://posit.co/" class="external-link">RStudio</a> for the working environment</li>
+<a href="https://www.r-project.org/" class="external-link"><code>R</code></a> and <a href="https://posit.co/" class="external-link"><code>RStudio</code></a> for the working environment<br>
+</li>
 <li>
-<a href="https://CRAN.R-project.org/package=wrapr" class="external-link">wrapr</a>, <a href="https://CRAN.R-project.org/package=checkmate" class="external-link">checkmate</a>, and <a href="https://CRAN.R-project.org/package=tinytest" class="external-link">tinytest</a> for programming tools</li>
+<a href="https://CRAN.R-project.org/package=rmarkdown" class="external-link"><code>rmarkdown</code></a> and <a href="https://CRAN.R-project.org/package=knitr" class="external-link"><code>knitr</code></a> for authoring tools<br>
+</li>
 <li>
-<a href="https://CRAN.R-project.org/package=devtools" class="external-link">devtools</a> and <a href="https://CRAN.R-project.org/package=pkgdown" class="external-link">pkgdown</a> for package building</li>
+<a href="https://CRAN.R-project.org/package=data.table" class="external-link"><code>data.table</code></a> for its programmable syntax<br>
+</li>
 <li>
-<a href="https://CRAN.R-project.org/package=rmarkdown" class="external-link">rmarkdown</a> and <a href="https://CRAN.R-project.org/package=knitr" class="external-link">knitr</a> for authoring tools</li>
+<a href="https://CRAN.R-project.org/package=wrapr" class="external-link"><code>wrapr</code></a>, <a href="https://CRAN.R-project.org/package=checkmate" class="external-link"><code>checkmate</code></a>, and <a href="https://CRAN.R-project.org/package=tinytest" class="external-link"><code>tinytest</code></a> for programming tools</li>
 <li>
-<a href="https://CRAN.R-project.org/package=data.table" class="external-link">data.table</a> for its programmable syntax</li>
+<a href="https://CRAN.R-project.org/package=devtools" class="external-link"><code>devtools</code></a> and <a href="https://CRAN.R-project.org/package=pkgdown" class="external-link"><code>pkgdown</code></a> for package building</li>
 </ul>
 </div>
 </div>
