@@ -42,7 +42,7 @@
     
     <a class="navbar-brand me-2" href="index.html">formatdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,6 +55,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-vignettes">Vignettes</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-vignettes">
     <a class="dropdown-item" href="articles/format_powers_of_ten.html">Format powers of ten</a>
+    <a class="dropdown-item" href="articles/format_integers_and_decimals.html">Format decimals to match</a>
   </div>
 </li>
 <li class="nav-item">
@@ -90,7 +91,7 @@
 <p>Formatting Tools for <em>rmarkdown</em> Documents</p>
 <!-- badges: start -->
 
-<p>Provides a small set of tools for formatting tasks when creating documents in <em>rmarkdown</em> or <em>quarto.</em> Convert the elements of a numerical vector to character strings in which the numbers are formatted using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations.</p>
+<p>Provides a small set of tools for formatting tasks when creating documents in <em>rmarkdown</em> or <em>quarto.</em> Convert the elements of a numerical vector to character strings in which the numbers are formatted in decimal notation or using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations.</p>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
@@ -99,7 +100,11 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/graphdr/formatdown/" class="external-link">"formatdown"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://r-datatable.com" class="external-link">"data.table"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span></code></pre></div>
-<p><strong><code><a href="reference/format_power.html">format_power()</a></code></strong>   Convert the elements of a numerical vector to character strings in which the numbers are formatted using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations in an <em>rmarkdown</em> document.</p>
+<p><strong><code><a href="reference/format_power.html">format_power()</a></code></strong><br>
+Convert the elements of a numerical vector to character strings in which the numbers are formatted using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations in an <em>rmarkdown</em> document. The <code>digits</code> argument sets the number of significant digits.</p>
+<p><strong><code><a href="reference/format_decimal.html">format_decimal()</a></code></strong><br>
+Similar to above, but in decimal notation. The <code>digits</code> argument sets the number of decimal places.</p>
+<p><em>Scalar values</em>, typically rendered inline:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Scientific notation</span></span>
 <span><span class="fu"><a href="reference/format_power.html">format_power</a></span><span class="op">(</span><span class="fl">101100</span>, digits <span class="op">=</span> <span class="fl">4</span>, format <span class="op">=</span> <span class="st">"sci"</span><span class="op">)</span></span>
@@ -107,75 +112,102 @@
 <span></span>
 <span><span class="co"># Engineering notation</span></span>
 <span><span class="fu"><a href="reference/format_power.html">format_power</a></span><span class="op">(</span><span class="fl">101100</span>, digits <span class="op">=</span> <span class="fl">4</span>, format <span class="op">=</span> <span class="st">"engr"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$101.1 \\times 10^{3}$"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "$101.1 \\times 10^{3}$"</span></span>
+<span></span>
+<span><span class="co"># Decimal notation</span></span>
+<span><span class="fu"><a href="reference/format_decimal.html">format_decimal</a></span><span class="op">(</span><span class="fl">101100</span>, digits <span class="op">=</span> <span class="fl">0</span>, big_mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "$101,100$"</span></span></code></pre></div>
 <p>which, in an <em>.Rmd</em> or <em>.qmd</em> document, are rendered using inline math as</p>
 <ul>
 <li>Scientific notation: <span class="math inline">1.011 × 10<sup>5</sup></span>.</li>
 <li>Engineering notation: <span class="math inline">101.1 × 10<sup>3</sup></span>
 </li>
+<li>Decimal notation: <span class="math inline">101, 100</span>.</li>
 </ul>
-<p>Here we format two columns from the <code>water</code> data frame included with <em>formatdown</em> using <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> and the default 3 significant digits and engineering notation.</p>
+<p><em>Data frame</em>, typically rendered as a table. We independently format three columns from the <code>water</code> data frame included with <em>formatdown</em>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Extract two columns</span></span>
-<span><span class="va">properties</span> <span class="op">&lt;-</span> <span class="va">water</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">visc</span>, <span class="va">bulk_mod</span><span class="op">)</span><span class="op">]</span></span>
+<code class="sourceCode R"><span><span class="co"># Extract three columns</span></span>
+<span><span class="va">properties</span> <span class="op">&lt;-</span> <span class="va">water</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">temp</span>, <span class="va">visc</span>, <span class="va">bulk_mod</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
-<span><span class="co"># Format all columns</span></span>
-<span><span class="va">properties</span> <span class="op">&lt;-</span> <span class="va">properties</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">.SD</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co"># Decimal notation </span></span>
+<span><span class="va">properties</span><span class="op">[</span>, <span class="va">temp</span> <span class="op">:=</span> <span class="fu"><a href="reference/format_decimal.html">format_decimal</a></span><span class="op">(</span><span class="va">temp</span>, <span class="fl">1</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Power-of-ten notation with fixed exponent</span></span>
+<span><span class="va">properties</span><span class="op">[</span>, <span class="va">visc</span> <span class="op">:=</span> <span class="fu"><a href="reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">visc</span>, set_power <span class="op">=</span> <span class="op">-</span><span class="fl">3</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Power-of-ten notation with 3 significant figures</span></span>
+<span><span class="va">properties</span><span class="op">[</span>, <span class="va">bulk_mod</span> <span class="op">:=</span> <span class="fu"><a href="reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">bulk_mod</span>, <span class="fl">3</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co"># Render in document</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">properties</span>, align <span class="op">=</span> <span class="st">"r"</span>, col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Viscosity [Pa-s]"</span>, <span class="st">"Bulk modulus [Pa]"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">properties</span>, </span>
+<span>             align <span class="op">=</span> <span class="st">"r"</span>,  </span>
+<span>             caption <span class="op">=</span> <span class="st">"Table 1: Properties of water as a function of temperature."</span>, </span>
+<span>             col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Temperatue [K]"</span>, <span class="st">"Viscosity [Pa-s]"</span>, <span class="st">"Bulk modulus [Pa]"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
+<th align="right">Temperatue [K]</th>
 <th align="right">Viscosity [Pa-s]</th>
 <th align="right">Bulk modulus [Pa]</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="right"><span class="math inline">1.73 × 10<sup>−3</sup></span></td>
+<td align="right"><span class="math inline">273.1</span></td>
+<td align="right"><span class="math inline">1.734 × 10<sup>−3</sup></span></td>
 <td align="right"><span class="math inline">2.02 × 10<sup>9</sup></span></td>
 </tr>
 <tr class="even">
-<td align="right"><span class="math inline">1.31 × 10<sup>−3</sup></span></td>
+<td align="right"><span class="math inline">283.1</span></td>
+<td align="right"><span class="math inline">1.310 × 10<sup>−3</sup></span></td>
 <td align="right"><span class="math inline">2.10 × 10<sup>9</sup></span></td>
 </tr>
 <tr class="odd">
-<td align="right"><span class="math inline">1.02 × 10<sup>−3</sup></span></td>
+<td align="right"><span class="math inline">293.1</span></td>
+<td align="right"><span class="math inline">1.021 × 10<sup>−3</sup></span></td>
 <td align="right"><span class="math inline">2.18 × 10<sup>9</sup></span></td>
 </tr>
 <tr class="even">
-<td align="right"><span class="math inline">817 × 10<sup>−6</sup></span></td>
+<td align="right"><span class="math inline">303.1</span></td>
+<td align="right"><span class="math inline">0.8174 × 10<sup>−3</sup></span></td>
 <td align="right"><span class="math inline">2.25 × 10<sup>9</sup></span></td>
 </tr>
 <tr class="odd">
-<td align="right"><span class="math inline">670 × 10<sup>−6</sup></span></td>
+<td align="right"><span class="math inline">313.1</span></td>
+<td align="right"><span class="math inline">0.6699 × 10<sup>−3</sup></span></td>
 <td align="right"><span class="math inline">2.28 × 10<sup>9</sup></span></td>
 </tr>
 <tr class="even">
-<td align="right"><span class="math inline">560 × 10<sup>−6</sup></span></td>
+<td align="right"><span class="math inline">323.1</span></td>
+<td align="right"><span class="math inline">0.5605 × 10<sup>−3</sup></span></td>
 <td align="right"><span class="math inline">2.29 × 10<sup>9</sup></span></td>
 </tr>
 <tr class="odd">
-<td align="right"><span class="math inline">478 × 10<sup>−6</sup></span></td>
+<td align="right"><span class="math inline">333.1</span></td>
+<td align="right"><span class="math inline">0.4776 × 10<sup>−3</sup></span></td>
 <td align="right"><span class="math inline">2.28 × 10<sup>9</sup></span></td>
 </tr>
 <tr class="even">
-<td align="right"><span class="math inline">414 × 10<sup>−6</sup></span></td>
+<td align="right"><span class="math inline">343.1</span></td>
+<td align="right"><span class="math inline">0.4135 × 10<sup>−3</sup></span></td>
 <td align="right"><span class="math inline">2.25 × 10<sup>9</sup></span></td>
 </tr>
 <tr class="odd">
-<td align="right"><span class="math inline">363 × 10<sup>−6</sup></span></td>
+<td align="right"><span class="math inline">353.1</span></td>
+<td align="right"><span class="math inline">0.3631 × 10<sup>−3</sup></span></td>
 <td align="right"><span class="math inline">2.20 × 10<sup>9</sup></span></td>
 </tr>
 <tr class="even">
-<td align="right"><span class="math inline">323 × 10<sup>−6</sup></span></td>
+<td align="right"><span class="math inline">363.1</span></td>
+<td align="right"><span class="math inline">0.3229 × 10<sup>−3</sup></span></td>
 <td align="right"><span class="math inline">2.14 × 10<sup>9</sup></span></td>
 </tr>
 <tr class="odd">
-<td align="right"><span class="math inline">290 × 10<sup>−6</sup></span></td>
+<td align="right"><span class="math inline">373.1</span></td>
+<td align="right"><span class="math inline">0.2902 × 10<sup>−3</sup></span></td>
 <td align="right"><span class="math inline">2.07 × 10<sup>9</sup></span></td>
 </tr>
 </tbody>
 </table>
+<p>Table 1: Properties of water as a function of temperature.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>

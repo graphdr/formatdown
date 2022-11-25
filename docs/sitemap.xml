@@ -4,6 +4,9 @@
     <loc>https://graphdr.github.io/formatdown/404.html</loc>
   </url>
   <url>
+    <loc>https://graphdr.github.io/formatdown/articles/format_integers_and_decimals.html</loc>
+  </url>
+  <url>
     <loc>https://graphdr.github.io/formatdown/articles/format_powers_of_ten.html</loc>
   </url>
   <url>
@@ -38,6 +41,9 @@
   </url>
   <url>
     <loc>https://graphdr.github.io/formatdown/reference/formatdown-package.html</loc>
+  </url>
+  <url>
+    <loc>https://graphdr.github.io/formatdown/reference/format_decimal.html</loc>
   </url>
   <url>
     <loc>https://graphdr.github.io/formatdown/reference/format_power.html</loc>
