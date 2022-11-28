@@ -47,7 +47,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-vignettes">Vignettes</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-vignettes">
     <a class="dropdown-item" href="../articles/format_powers_of_ten.html">Format powers of ten</a>
-    <a class="dropdown-item" href="../articles/format_integers_and_decimals.html">Formatintegers and decimals</a>
+    <a class="dropdown-item" href="../articles/format_integers_and_decimals.html">Format integers and decimals</a>
   </div>
 </li>
 <li class="nav-item">
@@ -135,7 +135,7 @@ packages in this vignette:</p>
 <code>formatdown</code> with various atmospheric properties as a
 function of height above sea level.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Data set included with formatdown </span></span>
+<code class="sourceCode R"><span><span class="co"># Data set included with formatdown</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">atmos</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Render in document</span></span>
@@ -221,7 +221,7 @@ function of height above sea level.</p>
 <p>Of these variables, density best lends itself to powers-of-ten
 notation. For this range of values, a fixed exponent of <span class="math inline">\(-3\)</span> seems to work OK.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Apply power of ten notation to one column </span></span>
+<code class="sourceCode R"><span><span class="co"># Apply power of ten notation to one column</span></span>
 <span><span class="va">DT</span><span class="op">$</span><span class="va">dens</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">DT</span><span class="op">$</span><span class="va">dens</span>, digits <span class="op">=</span> <span class="fl">3</span>, set_power <span class="op">=</span> <span class="op">-</span><span class="fl">3</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Render in document</span></span>
@@ -314,7 +314,7 @@ notation. For this range of values, a fixed exponent of <span class="math inline
 <p>I treat the altitude as an integer, convert from meters to
 kilometers, and format in integer form (zero decimal places).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Format one column as an integer </span></span>
+<code class="sourceCode R"><span><span class="co"># Format one column as an integer</span></span>
 <span><span class="va">DT</span><span class="op">$</span><span class="va">alt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_decimal.html">format_decimal</a></span><span class="op">(</span><span class="va">DT</span><span class="op">$</span><span class="va">alt</span> <span class="op">/</span> <span class="fl">1000</span>, <span class="fl">0</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Render in document</span></span>
@@ -411,7 +411,7 @@ in the same way.</p>
 <code class="sourceCode R"><span><span class="co"># Name the columns to be formatted</span></span>
 <span><span class="va">cols_to_format</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"temp"</span>, <span class="st">"sound"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Use data.table .SD syntax with lapply() </span></span>
+<span><span class="co"># Use data.table .SD syntax with lapply()</span></span>
 <span><span class="va">DT</span><span class="op">[</span>, <span class="op">(</span><span class="va">cols_to_format</span><span class="op">)</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">.SD</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../reference/format_decimal.html">format_decimal</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>, .SDcols <span class="op">=</span> <span class="va">cols_to_format</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co"># Render in document</span></span>
@@ -505,13 +505,13 @@ in the same way.</p>
 numbers differently depending on the range they occupy. For numbers in
 the thousands, I add a “big mark” to make them easier to read.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Hundreds and higher, integers. Create a temporary variable </span></span>
+<code class="sourceCode R"><span><span class="co"># Hundreds and higher, integers. Create a temporary variable</span></span>
 <span><span class="va">DT</span><span class="op">[</span><span class="va">pres</span> <span class="op">&gt;</span> <span class="fl">99</span>, <span class="va">temp_pres</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_decimal.html">format_decimal</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">0</span>, big_mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
-<span><span class="co"># Units place or lower, 2 decimal places </span></span>
+<span><span class="co"># Units place or lower, 2 decimal places</span></span>
 <span><span class="va">DT</span><span class="op">[</span><span class="va">pres</span> <span class="op">&lt;=</span> <span class="fl">10</span>, <span class="va">temp_pres</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_decimal.html">format_decimal</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">2</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
-<span><span class="co"># In-between those two ranges, 1 decimal place </span></span>
+<span><span class="co"># In-between those two ranges, 1 decimal place</span></span>
 <span><span class="va">DT</span><span class="op">[</span><span class="va">pres</span> <span class="op">&gt;</span> <span class="fl">10</span> <span class="op">&amp;</span> <span class="va">pres</span> <span class="op">&lt;=</span> <span class="fl">99</span>, <span class="va">temp_pres</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_decimal.html">format_decimal</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">1</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co"># Overwrite the original and delete the temporary column</span></span>
@@ -610,14 +610,17 @@ the thousands, I add a “big mark” to make them easier to read.</p>
 and add a caption.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Render in document</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>, </span>
-<span>             align <span class="op">=</span> <span class="st">"r"</span>, </span>
-<span>             caption <span class="op">=</span> <span class="st">"Table 1. Atmospheric varables as a function of altitude"</span>, </span>
-<span>             col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Altitude [km]"</span>, </span>
-<span>                           <span class="st">"Temperature [K]"</span>, </span>
-<span>                           <span class="st">"Pressure [Pa]"</span>, </span>
-<span>                           <span class="st">"Density [kg/m$^3$]"</span>, </span>
-<span>                           <span class="st">"Speed of sound [m/s]"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
+<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"Table 1. Atmospheric varables as a function of altitude"</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Altitude [km]"</span>,</span>
+<span>    <span class="st">"Temperature [K]"</span>,</span>
+<span>    <span class="st">"Pressure [Pa]"</span>,</span>
+<span>    <span class="st">"Density [kg/m$^3$]"</span>,</span>
+<span>    <span class="st">"Speed of sound [m/s]"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>Table 1. Atmospheric varables as a function of
 altitude</caption>
