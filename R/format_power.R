@@ -1,56 +1,52 @@
 
 #' Format powers of ten
 #'
-#' Convert the elements of a numerical vector to character strings in which
-#' the numbers are formatted using powers-of-ten notation in scientific or
-#' engineering form and delimited for rendering as inline equations in an
-#' R Markdown document.
+#' Convert the elements of a numerical vector to character strings in which the
+#' numbers are formatted using powers-of-ten notation in scientific or
+#' engineering form and delimited for rendering as inline equations in an R
+#' Markdown document.
 #'
 #' Given a number, a numerical vector, or a numerical column from a data frame,
-#' \code{format_power()} converts the numbers to character strings of the form,
-#' \code{"$a \\\\times 10^{n}$"}, where \code{a} is the coefficient and
-#' \code{n} is the exponent. The string includes markup delimiters \code{$...$}
-#' for rendering as an inline equation in R Markdown or Quarto Markdown
-#' document. The user can specify the number of significant digits and
-#' scientific or engineering format.
+#' `format_power()` converts the numbers to character strings of the form, `"$a
+#' \\times 10^{n}$"`, where `a` is the coefficient and `n` is the exponent. The
+#' string includes markup delimiters `$...$` for rendering as an inline equation
+#' in R Markdown or Quarto Markdown document. The user can specify the number of
+#' significant digits and scientific or engineering format.
 #'
-#' Powers-of-ten notation is omitted over a range of exponents via
-#' \code{omit_power} such that numbers are converted to character strings of
-#' the form, \code{"$a$"}, where \code{a} is the number in decimal notation.
-#' The default \code{omit_power = c(-1, 2)} formats numbers such as 0.123, 1.23,
-#' 12.3, and 123 in decimal form. To cancel these exceptions and convert all
-#' numbers to powers-of-ten notation, set the \code{omit_power} argument to
-#' NULL.
+#' Powers-of-ten notation is omitted over a range of exponents via `omit_power`
+#' such that numbers are converted to character strings of the form, `"$a$"`,
+#' where `a` is the number in decimal notation. The default `omit_power = c(-1,
+#' 2)` formats numbers such as 0.123, 1.23, 12.3, and 123 in decimal form. To
+#' cancel these exceptions and convert all numbers to powers-of-ten notation,
+#' set the `omit_power` argument to NULL.
 #'
 #' Delimiters for inline math markup can be edited if necessary. If the default
-#' argument fails, the \code{"\\\\("} alternative is available. If using a
-#' custom delimiter to suit the markup environment, be sure to escape all special
+#' argument fails, the `"\\("` alternative is available. If using a custom
+#' delimiter to suit the markup environment, be sure to escape all special
 #' symbols.
 #'
 #' @param x Numeric vector to be formatted.
-#' @param digits Numeric scalar, significant digits in coefficient,
-#'        integer between 1 and 20.
+#' @param digits Numeric scalar, significant digits in coefficient, integer
+#'   between 1 and 20.
 #' @param ... Not used, force later arguments to be used by name.
 #' @param format Character. Possible values are "engr" (engineering notation)
-#'        and "sci" (scientific notation). Use argument  by name.
-#' @param omit_power Numeric vector \code{c(p, q)} specifying the range of
-#'        exponents over which power of ten notation is omitted, where
-#'        \code{p <= q}. If NULL all numbers are formatted in powers of ten
-#'        notation. Use argument by name.
-#' @param set_power Numeric scalar integer. Assigned exponent
-#'        that overrides \code{format}. Default NULL makes no notation changes.
+#'   and "sci" (scientific notation). Use argument  by name.
+#' @param omit_power Numeric vector `c(p, q)` specifying the range of exponents
+#'   over which power of ten notation is omitted, where `p <= q`. If NULL all
+#'   numbers are formatted in powers of ten notation. Use argument by name.
+#' @param set_power Numeric scalar integer. Assigned exponent that overrides
+#'   `format`. Default NULL makes no notation changes.
 #' @param delim Character vector (length 1 or 2) defining the delimiters for
-#'        marking up inline math. Possible values include \code{"$"} or
-#'        \code{"\\\\("}, both of which create appropriate left and right
-#'        delimiters. Alternatively, left and right can be defined explicitly,
-#'        e.g., \code{c("$", "$")} or \code{c("\\\\(", "\\\\)")}. Custom
-#'        delimiters can be assigned to suit the markup environment. Use
-#'        argument by name.
+#'   marking up inline math. Possible values include `"$"` or `"\\("`, both of
+#'   which create appropriate left and right delimiters. Alternatively, left and
+#'   right can be defined explicitly in a character vector of length two, e.g.,
+#'   `c("$", "$")` or `c("\\(", "\\)")`. Custom delimiters can be assigned to
+#'   suit the markup environment. Use argument by name.
 #' @return A character vector with the following properties:
 #' \itemize{
-#'     \item Numbers represented in powers of ten notation except for those
-#'           with exponents in the range specified in \code{omit_power}
-#'     \item Elements delimited as inline math markup.
+#'   \item Numbers represented in powers of ten notation except for those
+#'           with exponents in the range specified in `omit_power`
+#'   \item Elements delimited as inline math markup.
 #' }
 #' @family format_*
 #' @example man/examples/examples_format_power.R
@@ -147,7 +143,10 @@ format_power <- function(x,
   # non_pow rows ------------------------------------------------------------
 
   # Create the character value to significant digits
-  DT[non_pow, value := formatC(x, format = "fg", digits = digits, flag = "#")]
+  DT[non_pow, value := formatC(x,
+                               format = "fg",
+                               digits = digits,
+                               flag = "#")]
 
   # Remove trailing decimal point and spaces created by formatC() if any
   # (see utils.R)
@@ -176,7 +175,10 @@ format_power <- function(x,
   DT[pow_10, coeff := x / 10^exponent]
 
   # Create character coefficient to significant digits
-  DT[pow_10, char_coeff := formatC(coeff, format = "fg", digits = digits, flag = "#")]
+  DT[pow_10, char_coeff := formatC(coeff,
+                                   format = "fg",
+                                   digits = digits,
+                                   flag = "#")]
 
   # Remove trailing decimal point and spaces created by formatC() if any
   # (see utils.R)

@@ -66,7 +66,7 @@ library("knitr")
 Using the `atmos` data set include with `formatdown` with various atmospheric properties as a function of height above sea level. 
 
 ```{r}
-# Data set included with formatdown 
+# Data set included with formatdown
 DT <- copy(atmos)
 
 # Render in document
@@ -81,7 +81,7 @@ knitr::kable(DT, align = "r")
 Of these variables, density best lends itself to powers-of-ten notation. For this range of values, a fixed exponent of $-3$ seems to work OK. 
 
 ```{r}
-# Apply power of ten notation to one column 
+# Apply power of ten notation to one column
 DT$dens <- format_power(DT$dens, digits = 3, set_power = -3)
 
 # Render in document
@@ -98,7 +98,7 @@ knitr::kable(DT, align = "r")
 I treat the altitude as an integer, convert from meters to kilometers, and format in integer form (zero decimal places). 
 
 ```{r}
-# Format one column as an integer 
+# Format one column as an integer
 DT$alt <- format_decimal(DT$alt / 1000, 0)
 
 # Render in document
@@ -119,7 +119,7 @@ The temperature and speed of sound columns can both be formatted to one decimal 
 # Name the columns to be formatted
 cols_to_format <- c("temp", "sound")
 
-# Use data.table .SD syntax with lapply() 
+# Use data.table .SD syntax with lapply()
 DT[, (cols_to_format) := lapply(.SD, function(x) format_decimal(x, 1)), .SDcols = cols_to_format]
 
 # Render in document
@@ -136,13 +136,13 @@ knitr::kable(DT, align = "r")
 The pressure column spans several orders of magnitude. I format these numbers differently depending on the range they occupy. For numbers in the thousands, I add a "big mark" to make them easier to read. 
 
 ```{r}
-# Hundreds and higher, integers. Create a temporary variable 
+# Hundreds and higher, integers. Create a temporary variable
 DT[pres > 99, temp_pres := format_decimal(pres, 0, big_mark = ",")]
 
-# Units place or lower, 2 decimal places 
+# Units place or lower, 2 decimal places
 DT[pres <= 10, temp_pres := format_decimal(pres, 2)]
 
-# In-between those two ranges, 1 decimal place 
+# In-between those two ranges, 1 decimal place
 DT[pres > 10 & pres <= 99, temp_pres := format_decimal(pres, 1)]
 
 # Overwrite the original and delete the temporary column
@@ -165,14 +165,17 @@ I use some `knitr::kable()` arguments to change the header and add a caption.
 
 ```{r}
 # Render in document
-knitr::kable(DT, 
-             align = "r", 
-             caption = "Table 1. Atmospheric varables as a function of altitude", 
-             col.names = c("Altitude [km]", 
-                           "Temperature [K]", 
-                           "Pressure [Pa]", 
-                           "Density [kg/m$^3$]", 
-                           "Speed of sound [m/s]"))
+knitr::kable(DT,
+  align = "r",
+  caption = "Table 1. Atmospheric varables as a function of altitude",
+  col.names = c(
+    "Altitude [km]",
+    "Temperature [K]",
+    "Pressure [Pa]",
+    "Density [kg/m$^3$]",
+    "Speed of sound [m/s]"
+  )
+)
 ```
 
 

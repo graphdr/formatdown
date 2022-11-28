@@ -1,0 +1,141 @@
+---
+title: "Format units"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Format units}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library("formatdown")
+
+options(
+  datatable.print.nrows = 15,
+  datatable.print.topn = 3,
+  datatable.print.class = TRUE
+)
+```
+
+## *Work in progress.*
+
+We can avoid the need for powers-of-ten notation by adjusting the measurement units assigned to a numerical vector. For example, we can convert `r format_power(101300)` Pa to 1013 hPa (a conventional measurement unit for atmospheric pressure) or 101.3 kPa if that better suits our rhetorical goals. 
+
+We use the `units` package for this feature. The `formatdown::format_units()` function is a wrapper for `units::as_units()`, allowing us to assign basic physical units to a numerical vector and performing unit conversions that transform the numerical value to match the new measurements units. 
+
+As a brief illustration, consider a pressure measurement of 101,300 Pa. 
+
+```{r}
+# Scalar value assigned a measurement unit
+x <- 101300
+units(x) <- "Pa"
+
+# Original value
+format_units(x, big_mark = ",")
+
+# Convert to hPa
+format_units(x, unit = "hPa")
+
+# Convert to psi
+format_units(x, digits = 3, unit = "psi")
+```
+
+These values are rendered using inline R code  in an `.Rmd` or `.qmd` output document as follows: 
+
+- Original pressure measurement: `r format_units(x, big_mark = ",")`
+
+- Convert measurement units: `r format_units(x, unit = "hPa")`
+
+- Convert measurement units: `r format_units(x, digits = 3, unit = "psi")`
+
+Like other `formatdown` functions, `format_units()` operates on a numerical vector to output a character vector for rendering in an R Markdown or Quarto Markdown document. Unlike `format_power()` however, `format_units()` does not apply inline math delimiters. 
+
+## `format_units()`
+
+Given a number, a numerical vector, or a numerical column from a data frame, `format_units()` converts the numbers to character strings of the form, 
+
+        "a [u]" 
+ 
+where `a` is the number and `u` is the measurement unit. The user can specify the number of significant digits.
+ 
+*Arguments.*
+
+- **x** &nbsp; Vector to be formatted, of class numeric or class units. Can be a scalar, a vector, or a column from a data frame.
+
+- **digits** &nbsp; Numeric scalar, a positive integer. Applied as the digits argument of `base::format()`. Enough decimal places are included such that the smallest magnitude value has this many significant digits.
+
+- **unit** &nbsp; Character scalar, units label compatible with `units`  package.
+
+- **unit_form** &nbsp; Character scalar, either "standard" (default) or "implicit" (for implicit exponents). In standard form (using computer syntax), the relationship between unit symbols or names is specified with arithmetic symbols for division `/`, multiplication `*`, and exponents `^`, e.g. density units are `[kg/m^3]`. In implicit exponents form, unit symbols are followed by a number representing an exponent and symbols are separated by a space, e.g., density units would be `[kg m-3]`
+
+- **big_mark** &nbsp; Character. If not empty, used as mark between every three digits before the decimal point. Applied as the `big.mark` argument of `base::format()`. Default is "".
+
+If you are writing your own script to follow along, we use these packages in this vignette:
+
+```{r}
+library(formatdown)
+library(data.table)
+suppressPackageStartupMessages(library(units))
+library(knitr)
+```
+
+
+## Scalar
+
+## Vector
+
+## Digits
+
+## Units
+
+## Units format
+
+
+
+
+
+
+
+
+## Data frame 
+
+Using the `atmos` data set include with `formatdown` with various atmospheric properties as a function of height above sea level. 
+
+```{r}
+# Data set included with formatdown
+DT <- copy(atmos)
+
+# Render in document
+knitr::kable(DT, align = "r")
+```
+
+Formatting one column at a time, assigning and converting units, and assigning significant digits ad-hoc. When numerical values in a column span a number of orders of magnitude, the number in the column with the smallest magnitude, e.g., pressure or density last row, is displayed with the number of significant digits specified by the `digits` argument. 
+
+```{r}
+units(DT$alt) <- "m"
+DT[, alt := format_units(alt, unit = "km")]
+
+units(DT$temp) <- "K"
+DT[, temp := format_units(temp, 3, unit = "deg_C")]
+
+units(DT$pres) <- "Pa"
+DT[, pres := format_units(pres, unit = "hPa")]
+
+units(DT$dens) <- "kg/m^3"
+DT[, dens := format_units(dens, unit = "g/m^3", unit_form = "implicit")]
+
+units(DT$sound) <- "m/s"
+DT[, sound := format_units(sound, 4)]
+
+knitr::kable(
+  DT,
+  align = "r",
+  col.names = c("Altitude", "Temperature", "Pressure", "Density", "Speed of sound")
+)
+```
+

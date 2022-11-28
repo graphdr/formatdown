@@ -15,6 +15,7 @@
 - Add data sets `atmos`, `metals`, and `water`. 
 - Rename `density` data set to `air_meas`.
 - Add `format_decimal()` and vignette.
+- Add `format_units()` and vignette. 
 
 ## formatdown 0.1.1
 

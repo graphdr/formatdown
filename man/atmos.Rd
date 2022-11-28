@@ -7,18 +7,18 @@
 \format{
 Classes data.table and data.frame: 9 observations of 5 variables:
 \describe{
- \item{alt}{Numeric, altitude [m]   }
- \item{temp}{Numeric, air temperature [K]   }
- \item{pres}{Numeric, atmospheric pressure [Pa]  }
- \item{dens}{Numeric, air density [kg m\eqn{^{-3}}{^{-13}}] }
- \item{sound}{Numeric, speed of sound [m/s] }
+\item{alt}{Numeric, altitude (m)}
+\item{temp}{Numeric, air temperature (K)}
+\item{pres}{Numeric, atmospheric pressure (Pa)}
+\item{dens}{Numeric, air density (kg m\eqn{^{-3}}{^{-13}})}
+\item{sound}{Numeric, speed of sound (m/s)}
 }
 }
 \source{
 \emph{Marks' Standard Handbook for Mechanical Engineers 9/e} (1987)
-        E.A. Avallone and T. Baumeister (ed.),
-        "Table 4.2.2 International Standard Atmosphere",
-        pp. 4-38,  McGraw-Hill, NY.
+E.A. Avallone and T. Baumeister (ed.),
+"Table 4.2.2 International Standard Atmosphere",
+pp. 4-38,  McGraw-Hill, NY.
 }
 \usage{
 data(atmos, package = "formatdown")

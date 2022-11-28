@@ -7,18 +7,19 @@
 \format{
 Classes data.table and data.frame:	6 observations of  5 variables:
 \describe{
- \item{metal}{Character, name of material}
- \item{dens}{Numeric, density [kg m\eqn{^{-3}}{^{-3}}] }
- \item{thrm_exp}{Numeric, coefficient of thermal expansion [m m\eqn{^{-1}}{^{-1}}K\eqn{^{-1}}{^{-1}}] }
- \item{thrm_cond}{Numeric, thermal conductivity [W m\eqn{^{-1}}{^{-1}}K\eqn{^{-1}}{^{-1}}] }
- \item{elast_mod}{Numeric, modulus of elasticity [Pa] }
+\item{metal}{Character, name of material}
+\item{dens}{Numeric, density (kg m\eqn{^{-3}}{^{-3}})}
+\item{thrm_exp}{Numeric, coefficient of thermal expansion
+(m m\eqn{^{-1}}{^{-1}}K\eqn{^{-1}}{^{-1}})}
+\item{thrm_cond}{Numeric, thermal conductivity (W m\eqn{^{-1}}{^{-1}}K\eqn{^{-1}}{^{-1}})}
+\item{elast_mod}{Numeric, modulus of elasticity (Pa)}
 }
 }
 \source{
 \emph{Marks' Standard Handbook for Mechanical Engineers 9/e} (1987)
-        E.A. Avallone and T. Baumeister (ed.),
-        "Basic Properties of Several Metals",
-        pp. 6-11,  McGraw-Hill, NY.
+E.A. Avallone and T. Baumeister (ed.),
+"Basic Properties of Several Metals",
+pp. 6-11,  McGraw-Hill, NY.
 }
 \usage{
 data(metals, package = "formatdown")

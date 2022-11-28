@@ -17,64 +17,58 @@ format_power(
 \arguments{
 \item{x}{Numeric vector to be formatted.}
 
-\item{digits}{Numeric scalar, significant digits in coefficient,
-integer between 1 and 20.}
+\item{digits}{Numeric scalar, significant digits in coefficient, integer
+between 1 and 20.}
 
 \item{...}{Not used, force later arguments to be used by name.}
 
 \item{format}{Character. Possible values are "engr" (engineering notation)
 and "sci" (scientific notation). Use argument  by name.}
 
-\item{omit_power}{Numeric vector \code{c(p, q)} specifying the range of
-exponents over which power of ten notation is omitted, where
-\code{p <= q}. If NULL all numbers are formatted in powers of ten
-notation. Use argument by name.}
+\item{omit_power}{Numeric vector \code{c(p, q)} specifying the range of exponents
+over which power of ten notation is omitted, where \code{p <= q}. If NULL all
+numbers are formatted in powers of ten notation. Use argument by name.}
 
-\item{set_power}{Numeric scalar integer. Assigned exponent
-that overrides \code{format}. Default NULL makes no notation changes.}
+\item{set_power}{Numeric scalar integer. Assigned exponent that overrides
+\code{format}. Default NULL makes no notation changes.}
 
 \item{delim}{Character vector (length 1 or 2) defining the delimiters for
-marking up inline math. Possible values include \code{"$"} or
-\code{"\\\\("}, both of which create appropriate left and right
-delimiters. Alternatively, left and right can be defined explicitly,
-e.g., \code{c("$", "$")} or \code{c("\\\\(", "\\\\)")}. Custom
-delimiters can be assigned to suit the markup environment. Use
-argument by name.}
+marking up inline math. Possible values include \code{"$"} or \code{"\\\\("}, both of
+which create appropriate left and right delimiters. Alternatively, left and
+right can be defined explicitly in a character vector of length two, e.g.,
+\code{c("$", "$")} or \code{c("\\\\(", "\\\\)")}. Custom delimiters can be assigned to
+suit the markup environment. Use argument by name.}
 }
 \value{
 A character vector with the following properties:
 \itemize{
-    \item Numbers represented in powers of ten notation except for those
-          with exponents in the range specified in \code{omit_power}
-    \item Elements delimited as inline math markup.
+\item Numbers represented in powers of ten notation except for those
+with exponents in the range specified in \code{omit_power}
+\item Elements delimited as inline math markup.
 }
 }
 \description{
-Convert the elements of a numerical vector to character strings in which
-the numbers are formatted using powers-of-ten notation in scientific or
-engineering form and delimited for rendering as inline equations in an
-R Markdown document.
+Convert the elements of a numerical vector to character strings in which the
+numbers are formatted using powers-of-ten notation in scientific or
+engineering form and delimited for rendering as inline equations in an R
+Markdown document.
 }
 \details{
 Given a number, a numerical vector, or a numerical column from a data frame,
-\code{format_power()} converts the numbers to character strings of the form,
-\code{"$a \\\\times 10^{n}$"}, where \code{a} is the coefficient and
-\code{n} is the exponent. The string includes markup delimiters \code{$...$}
-for rendering as an inline equation in R Markdown or Quarto Markdown
-document. The user can specify the number of significant digits and
-scientific or engineering format.
+\code{format_power()} converts the numbers to character strings of the form, \code{"$a \\\\times 10^{n}$"}, where \code{a} is the coefficient and \code{n} is the exponent. The
+string includes markup delimiters \verb{$...$} for rendering as an inline equation
+in R Markdown or Quarto Markdown document. The user can specify the number of
+significant digits and scientific or engineering format.
 
-Powers-of-ten notation is omitted over a range of exponents via
-\code{omit_power} such that numbers are converted to character strings of
-the form, \code{"$a$"}, where \code{a} is the number in decimal notation.
-The default \code{omit_power = c(-1, 2)} formats numbers such as 0.123, 1.23,
-12.3, and 123 in decimal form. To cancel these exceptions and convert all
-numbers to powers-of-ten notation, set the \code{omit_power} argument to
-NULL.
+Powers-of-ten notation is omitted over a range of exponents via \code{omit_power}
+such that numbers are converted to character strings of the form, \code{"$a$"},
+where \code{a} is the number in decimal notation. The default \code{omit_power = c(-1, 2)} formats numbers such as 0.123, 1.23, 12.3, and 123 in decimal form. To
+cancel these exceptions and convert all numbers to powers-of-ten notation,
+set the \code{omit_power} argument to NULL.
 
 Delimiters for inline math markup can be edited if necessary. If the default
-argument fails, the \code{"\\\\("} alternative is available. If using a
-custom delimiter to suit the markup environment, be sure to escape all special
+argument fails, the \code{"\\\\("} alternative is available. If using a custom
+delimiter to suit the markup environment, be sure to escape all special
 symbols.
 }
 \examples{
@@ -113,6 +107,7 @@ DT[, lapply(.SD, function(x) format_power(x))]
 }
 \seealso{
 Other format_*: 
-\code{\link{format_decimal}()}
+\code{\link{format_decimal}()},
+\code{\link{format_units}()}
 }
 \concept{format_*}

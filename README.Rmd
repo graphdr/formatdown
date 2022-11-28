@@ -81,7 +81,7 @@ which, in an `.Rmd` or `.qmd` output document, are rendered using inline math as
 # Extract three columns
 properties <- water[, .(temp, visc, bulk_mod)]
 
-# Decimal notation 
+# Decimal notation
 properties[, temp := format_decimal(temp, 1)]
 
 # Power-of-ten notation with fixed exponent
@@ -91,10 +91,11 @@ properties[, visc := format_power(visc, set_power = -3)]
 properties[, bulk_mod := format_power(bulk_mod, 3)]
 
 # Render in document
-knitr::kable(properties, 
-             align = "r",  
-             caption = "Table 1: Properties of water as a function of temperature.", 
-             col.names = c("Temperatue [K]", "Viscosity [Pa-s]", "Bulk modulus [Pa]"))
+knitr::kable(properties,
+  align = "r",
+  caption = "Table 1: Properties of water as a function of temperature.",
+  col.names = c("Temperatue [K]", "Viscosity [Pa-s]", "Bulk modulus [Pa]")
+)
 ```
 
 

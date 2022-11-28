@@ -9,44 +9,43 @@ format_decimal(x, digits = 4, ..., big_mark = NULL, delim = "$")
 \arguments{
 \item{x}{Numeric vector to be formatted.}
 
-\item{digits}{Numeric scalar, decimal places to report, integer between
-0 and 20. Zero returns an integer.}
+\item{digits}{Numeric scalar, decimal places to report, integer between 0 and
+20. Zero returns an integer.}
 
 \item{...}{Not used, force later arguments to be used by name.}
 
 \item{big_mark}{Character. If not empty, used as mark between every three
-digits before the decimal point. Applied as the \code{big.mark}
-argument of \code{formatC()}.}
+digits before the decimal point. Applied as the \code{big.mark} argument of
+\code{formatC()}.}
 
 \item{delim}{Character vector (length 1 or 2) defining the delimiters for
-marking up inline math. Possible values include \code{"$"} or
-\code{"\\\\("}, both of which create appropriate left and right
-delimiters. Alternatively, left and right can be defined explicitly,
-e.g., \code{c("$", "$")} or \code{c("\\\\(", "\\\\)")}. Custom
-delimiters can be assigned to suit the markup environment. Use
-argument by name.}
+marking up inline math. Possible values include \code{"$"} or \code{"\\\\("}, both of
+which create appropriate left and right delimiters. Alternatively, left and
+right can be defined explicitly in a character vector of length two, e.g.,
+\code{c("$", "$")} or \code{c("\\\\(", "\\\\)")}. Custom delimiters can be assigned to
+suit the markup environment. Use argument by name.}
 }
 \value{
 A character vector with the following properties:
 \itemize{
-    \item Numbers represented in integer or decimal notation.
-    \item Elements delimited as inline math markup.
+\item Numbers represented in integer or decimal notation.
+\item Elements delimited as inline math markup.
 }
 }
 \description{
-Convert the elements of a numerical vector to character strings in which
-the numbers are formatted using decimal notation and delimited for
-rendering as inline equations in an R Markdown document.
+Convert the elements of a numerical vector to character strings in which the
+numbers are formatted using decimal notation and delimited for rendering as
+inline equations in an R Markdown document.
 }
 \details{
 Given a number, a numerical vector, or a numerical column from a data frame,
-\code{format_decimal()} converts the numbers to character strings of
-the form, \code{"$a$"}, where \code{a} is the number in decimal notation.
-The user can specify the number of decimal places.
+\code{format_decimal()} converts the numbers to character strings of the form,
+\code{"$a$"}, where \code{a} is the number in decimal notation. The user can specify
+the number of decimal places.
 
 Delimiters for inline math markup can be edited if necessary. If the default
-argument fails, the \code{"\\\\("} alternative is available. If using a
-custom delimiter to suit the markup environment, be sure to escape all special
+argument fails, the \code{"\\\\("} alternative is available. If using a custom
+delimiter to suit the markup environment, be sure to escape all special
 symbols.
 }
 \examples{
@@ -76,6 +75,7 @@ DT[, lapply(.SD, function(x) format_decimal(x, 1))]
 }
 \seealso{
 Other format_*: 
-\code{\link{format_power}()}
+\code{\link{format_power}()},
+\code{\link{format_units}()}
 }
 \concept{format_*}
