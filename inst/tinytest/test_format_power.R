@@ -5,7 +5,7 @@ test_format_power<- function() {
   # arguments after dots must be named
 
   # Needed for tinytest::build_install_test()
-  library("data.table")
+  suppressPackageStartupMessages(library(data.table))
 
   # Avogadro's number
   avogadro <- 6.0221E+23

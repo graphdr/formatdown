@@ -22,17 +22,21 @@ the smallest magnitude value has this many significant digits.}
 
 \item{...}{Not used, force later arguments to be used by name.}
 
-\item{unit}{Character scalar, units label compatible with 'units' package.}
+\item{unit}{Character scalar, units label compatible with 'units' package.
+For \code{x} class numeric, transform to class units in \code{unit} measurement
+units. For \code{x} class units, convert to \code{unit} measurement units. If empty,
+existing class units retained.}
 
 \item{unit_form}{Character scalar. Possible values are "standard" (default)
-and "implicit". In standard form, the relationship between unit symbols or
-names is specified with arithmetic symbols for division \code{/}, multiplication
-\code{*}, and power exponents \code{^}. In implicit exponents form, unit symbols are
-followed by a number representing an exponent and symbols are separated by
-a space.}
+and "implicit" (implicit exponent form). In standard form, units are
+related with arithmetic symbols for multiplication, division, and powers,
+e.g., \code{"kg/m^3"} or \code{"W/(m*K)"}. In implicit exponent form, symbols are
+separated by spaces and numbers represent exponents, e.g., \code{"kg m-3"} or
+\code{"W m-1 K-1"}.}
 
 \item{big_mark}{Character. Applied as the \code{big.mark} argument of
-\code{base::format()}. Default is \code{""}.}
+\code{base::format()}. Default is \code{""}. If a period is selected for \code{big_mark},
+the decimal mark is changed to a comma.}
 }
 \value{
 A character vector of numbers with appended measurement units.

@@ -19,14 +19,18 @@
 #'   the smallest magnitude value has this many significant digits.
 #' @param ... Not used, force later arguments to be used by name.
 #' @param unit Character scalar, units label compatible with 'units' package.
+#'   For `x` class numeric, transform to class units in `unit` measurement
+#'   units. For `x` class units, convert to `unit` measurement units. If empty,
+#'   existing class units retained.
 #' @param unit_form Character scalar. Possible values are "standard" (default)
-#'   and "implicit". In standard form, the relationship between unit symbols or
-#'   names is specified with arithmetic symbols for division `/`, multiplication
-#'   `*`, and power exponents `^`. In implicit exponents form, unit symbols are
-#'   followed by a number representing an exponent and symbols are separated by
-#'   a space.
+#'   and "implicit" (implicit exponent form). In standard form, units are
+#'   related with arithmetic symbols for multiplication, division, and powers,
+#'   e.g., `"kg/m^3"` or `"W/(m*K)"`. In implicit exponent form, symbols are
+#'   separated by spaces and numbers represent exponents, e.g., `"kg m-3"` or
+#'   `"W m-1 K-1"`.
 #' @param big_mark Character. Applied as the `big.mark` argument of
-#'   `base::format()`. Default is `""`.
+#'   `base::format()`. Default is `""`. If a period is selected for `big_mark`,
+#'   the decimal mark is changed to a comma.
 #' @return A character vector of numbers with appended measurement units.
 #' @family format_*
 #' @example man/examples/examples_format_units.R
@@ -87,24 +91,32 @@ format_units <- function(x,
   # Assign or convert units
   units(x) <- unit
 
+  # Construct the implicit exponent form of units
   if (unit_form == "implicit") {
     label <- paste0("[", deparse_unit(x), "]")
-    x <- drop_units(x)
-  } else {
-    label = "" # standard
+    units(x) <- NULL
   }
 
+  # Adjust the decimal mark if big_mark is a period
+  decimal.mark <- ifelse(big_mark == ".", ",", ".")
+
   # Format number as character. Enough decimal places are included such that
-  # the smallest magnitude value has this many significant digits.
+  # the smallest magnitude value has "digits" many significant digits.
   x_char <- format(x,
                    trim = TRUE,
                    digits     = digits,
                    scientific = FALSE,
-                   big.mark   = big_mark)
+                   big.mark   = big_mark,
+                   decimal.mark = decimal.mark)
 
-  x_char <- paste(x_char, label)
+  # Join the implicit units to the output string
+  if (unit_form == "implicit") {
+    x_char <- paste0(x_char, " ", label)
+  }
 
 # Output ------------------------------------------------------------------
 
   return(x_char)
 }
+
+

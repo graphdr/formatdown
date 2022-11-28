@@ -5,7 +5,7 @@ test_format_decimal <- function() {
   # arguments after dots must be named
 
   # Needed for tinytest::build_install_test()
-  library("data.table")
+  suppressPackageStartupMessages(library(data.table))
 
   # Equivalent usage, named, unnamed, default
   x <- 1.12344

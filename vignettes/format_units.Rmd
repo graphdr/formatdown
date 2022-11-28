@@ -24,7 +24,7 @@ options(
 
 ## *Work in progress.*
 
-We can avoid the need for powers-of-ten notation by adjusting the measurement units assigned to a numerical vector. For example, we can convert `r format_power(101300)` Pa to 1013 hPa (a conventional measurement unit for atmospheric pressure) or 101.3 kPa if that better suits our rhetorical goals. 
+We can avoid the need for powers-of-ten notation by adjusting the measurement units assigned to a numerical vector. For example, we can convert `r format_power(101300)` Pa to 1013 hPa or 101.3 kPa. 
 
 We use the `units` package for this feature. The `formatdown::format_units()` function is a wrapper for `units::as_units()`, allowing us to assign basic physical units to a numerical vector and performing unit conversions that transform the numerical value to match the new measurements units. 
 
@@ -71,9 +71,9 @@ where `a` is the number and `u` is the measurement unit. The user can specify th
 
 - **unit** &nbsp; Character scalar, units label compatible with `units`  package.
 
-- **unit_form** &nbsp; Character scalar, either "standard" (default) or "implicit" (for implicit exponents). In standard form (using computer syntax), the relationship between unit symbols or names is specified with arithmetic symbols for division `/`, multiplication `*`, and exponents `^`, e.g. density units are `[kg/m^3]`. In implicit exponents form, unit symbols are followed by a number representing an exponent and symbols are separated by a space, e.g., density units would be `[kg m-3]`
+- **unit_form** &nbsp; Character scalar. Possible values are "standard" (default) and "implicit" (implicit exponent form). In standard form, units are related with arithmetic symbols for multiplication, division, and powers, e.g., `"kg/m^3"` or `"W/(m*K)"`. In implicit exponent form, symbols are separated by spaces and numbers represent exponents, e.g., `"kg m-3"` or `"W m-1 K-1"`.
 
-- **big_mark** &nbsp; Character. If not empty, used as mark between every three digits before the decimal point. Applied as the `big.mark` argument of `base::format()`. Default is "".
+- **big_mark** &nbsp; Character. Applied as the `big.mark` argument of `base::format()`. Default is `""`. If a period is selected for `big_mark`, the decimal mark is changed to a comma.
 
 If you are writing your own script to follow along, we use these packages in this vignette:
 
@@ -85,15 +85,160 @@ library(knitr)
 ```
 
 
+
+
+
+
+
 ## Scalar
+
+Assign a value and units, 
+
+```{r}
+x <- 101300
+units(x) <- "Pa"
+```
+
+Use with inline R code.
+
+```{verbatim}
+`r format_units(x)`
+`r format_units(x, unit = "hPa")`
+```
+
+which, in an `.Rmd` or `.qmd` document, are rendered as
+
+- `r format_units(x)`.
+- `r format_units(x, unit = "hPa")`.
+
+
+
+
+
+
 
 ## Vector
 
+The `atmos` data set included with `formatdown` has an altitude variable `alt` in meters. The columns do not include units metadata. Column is class numeric. 
+
+```{r}
+# Variable is class numeric
+x <- atmos$alt
+x
+class(x)
+```
+
+Assign measurement units  to match the source values and format. Results are class character. 
+
+```{r}
+x_char <- format_units(x, unit = "m")
+x_char
+```
+
+If we intend to convert the units, e.g., from meters to kilometers, we have to assign the source measurement units before using `format_units()`. Results are numeric, class units. 
+
+```{r}
+# Assign units before formatting
+units(x) <- "m"
+x
+class(x)
+```
+
+Convert units and format. The numbers change to match the unit conversion.  Results are class character. 
+
+```{r}
+# Covert units and format as character
+x_char <- format_units(x, unit = "km")
+x_char
+```
+
+
+
+
+
+
+
+
+
 ## Digits
+
+The `digits` argument sets the number of significant digits. Here, temperature values (K) are reported to 4 significant digits. 
+
+```{r}
+x <- sort(atmos$temp, decreasing = TRUE)
+format_units(x, digits = 4, unit = "K")
+```
+
+With values in decimal form, reducing `digits` to 3 has the expected effect of rounding to the units place. 
+
+```{r}
+format_units(x, digits = 3, unit = "K")
+```
+
+However, reducing `digits` to 2 has no additional effect. To reduce the number of significant digits further, we apply `signif()` to the numerical values before formatting with `format_units()`.  
+
+```{r}
+# Values are not converted to 2 significant digits
+format_units(x, digits = 2, unit = "K")
+
+# Apply signif() before formatting
+format_units(signif(x, 2), unit = "K")
+```
+
+If values span different orders of magnitude, the number of significant digits is applied to the *smallest magnitude value* and the number of decimal places in the other values is set to match. 
+
+For example, from the `metals` data set included with `formatdown`, the elastic modulus values (Pa) are converted to (GPa) with `digits = 3`. 
+
+```{r}
+x <- sort(metals$elast_mod, decreasing = TRUE)
+units(x) <- "Pa"
+format_units(x, digits = 3, unit = "GPa")
+```
+
+Three digits applied to the smallest magnitude value yields "13.8 [GPa]". Larger values are then formatted to the same number of decimal places. Thus some larger values will have more than three digits, e.g., "206.8 [GPa]". 
+
+
+
+
+
+
+
+
+
+
+
 
 ## Units
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Units format
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
