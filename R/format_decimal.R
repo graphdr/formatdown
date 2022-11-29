@@ -1,5 +1,5 @@
 
-#' Format decimal value
+#' Format decimal or integer values
 #'
 #' Convert the elements of a numerical vector to character strings in which the
 #' numbers are formatted using decimal notation and delimited for rendering as
@@ -42,20 +42,18 @@ format_decimal <- function(x,
                            big_mark = NULL,
                            delim = "$") {
 
-# Overhead ----------------------------------------------------------------
+  # Overhead ----------------------------------------------------------------
 
   # On exit, reset user's options values
   user_digits <- getOption("digits")
   on.exit(options(digits = user_digits))
 
   # Arguments after dots must be named
-  wrapr::stop_if_dot_args(
-    substitute(list(...)),
-    paste(
-      "Arguments after ... must be named.\n",
-      "* Did you forget to write `delim = `?\n *"
-    )
+  stop_if_dots_text <- paste(
+    "Arguments after ... must be named.\n",
+    "* Did you forget to write `big_mark = `, etc.\n *"
   )
+  wrapr::stop_if_dot_args(substitute(list(...)), stop_if_dots_text)
 
   # Default for NULL argument values using wrapr coalesce
   big_mark <- big_mark %?% ""
@@ -63,7 +61,7 @@ format_decimal <- function(x,
   # Indicate these are not unbound symbols (R CMD check Note)
   value <- NULL
 
-# Argument checks ---------------------------------------------------------
+  # Argument checks ---------------------------------------------------------
 
   # x: not "Date" class, length at least one, numeric
   checkmate::assert_disjunct(class(x), c("Date", "POSIXct", "POSIXt"))
@@ -81,13 +79,13 @@ format_decimal <- function(x,
   checkmate::assert_true(!"" %in% delim)
   checkmate::assert_true(length(delim) <= 2)
 
-# Initial processing ------------------------------------------------------
+  # Initial processing ------------------------------------------------------
 
   # Convert vector to data.table for processing
   DT <- data.table::copy(data.frame(x))
   data.table::setDT(DT)
 
-# Decimal notation --------------------------------------------------------
+  # Decimal notation --------------------------------------------------------
 
   # Create the character value to number of decimal places
   if(isTRUE(digits == 0)) {
@@ -100,13 +98,13 @@ format_decimal <- function(x,
     # Format with decimals (digits > 0)
     DT[, value := formatC(x, format = "f", digits = digits, big.mark = big_mark)]
 
-    }
+  }
 
   # Remove trailing decimal point and spaces created by formatC() if any
   # (see utils.R)
   DT <- omit_formatC_extras(DT, col_name = "value")
 
-# Output ------------------------------------------------------------------
+  # Output ------------------------------------------------------------------
 
   # Surround with math delimiters (see utils.R)
   DT <- add_delim(DT, col_name = "value", delim = delim)

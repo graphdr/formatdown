@@ -16,9 +16,30 @@ coverage](https://codecov.io/gh/graphdr/formatdown/branch/main/graph/badge.svg)]
 
 Provides a small set of tools for formatting tasks when creating
 documents in R Markdown or Quarto Markdown. Convert the elements of a
-numerical vector to character strings in which the numbers are formatted
-in decimal notation or using powers-of-ten notation in scientific or
-engineering form and delimited for rendering as inline equations.
+numerical vector to character strings in one of several forms:
+powers-of-ten notation in engineering or scientific form delimited for
+rendering as inline equations; integer or decimal notation delimited for
+equation rendering; numbers with measurement units (non-delimited) where
+units are selected to eliminate the need for powers-of-ten or scientific
+notation. Useful for rendering a numerical scalar in an inline R code
+chunk as well as formatting columns of data frames displayed in a table.
+
+## Introduction
+
+Formatting tools include:
+
+**`format_power()`**  
+Convert the elements of a numerical vector to character strings in which
+the numbers are formatted using powers-of-ten notation in scientific or
+engineering form and delimited for rendering as inline equations in
+`.Rmd` or `.qmd` markdown files.
+
+**`format_decimal()`**  
+Similar to above, but as integers or decimals
+
+**`format_units()`**  
+Format a vector of numbers as character strings with measurement units
+appended via the ‘units’ package.
 
 ## Usage
 
@@ -29,48 +50,47 @@ library("data.table")
 library("knitr")
 ```
 
-**`format_power()`**  
-Convert the elements of a numerical vector to character strings in which
-the numbers are formatted using powers-of-ten notation in scientific or
-engineering form and delimited for rendering as inline equations in
-`.Rmd` or `.qmd` markdown files. The `digits` argument sets the number
-of significant digits.
-
-**`format_decimal()`**  
-Similar to above, but in decimal notation. The `digits` argument sets
-the number of decimal places.
-
 *Scalar values.*   Typically rendered inline:
 
 ``` r
-# Scientific notation
-format_power(101100, digits = 4, format = "sci")
-#> [1] "$1.011 \\times 10^{5}$"
+x <- 101300
 
-# Engineering notation
-format_power(101100, digits = 4, format = "engr")
-#> [1] "$101.1 \\times 10^{3}$"
+# Scientific notation, math delimited
+format_power(x, digits = 4, format = "sci")
+#> [1] "$1.013 \\times 10^{5}$"
 
-# Decimal notation
-format_decimal(101100, digits = 0, big_mark = ",")
-#> [1] "$101,100$"
+# Engineering notation, math-delimited
+format_power(x, digits = 4, format = "engr")
+#> [1] "$101.3 \\times 10^{3}$"
+
+# Decimal notation, math-delimited
+format_decimal(x, digits = 0, big_mark = ",")
+#> [1] "$101,300$"
+
+# Unit notation, non-delimited
+units(x) <- "Pa"
+format_units(x, unit = "hPa")
+#> [1] "1013 [hPa]"
 ```
 
 which, in an `.Rmd` or `.qmd` output document, are rendered using inline
-math as
+R code as
 
-- Scientific notation: $1.011 \times 10^{5}$.
-- Engineering notation: $101.1 \times 10^{3}$
-- Decimal notation: $101,100$.
+|           Notation |           Rendered as |
+|-------------------:|----------------------:|
+|         scientific | $1.013 \times 10^{5}$ |
+|        engineering | $101.3 \times 10^{3}$ |
+| integer or decimal |             $101,300$ |
+|              units |          1013 \[hPa\] |
 
 *Data frame*.   Typically rendered as a table. We independently format
-three columns from the `water` data frame included with `formatdown`.
+columns from the `water` data frame included with `formatdown`.
 
 ``` r
 # Extract three columns
 properties <- water[, .(temp, visc, bulk_mod)]
 
-# Decimal notation 
+# Decimal notation
 properties[, temp := format_decimal(temp, 1)]
 
 # Power-of-ten notation with fixed exponent
@@ -79,26 +99,32 @@ properties[, visc := format_power(visc, set_power = -3)]
 # Power-of-ten notation with 3 significant figures
 properties[, bulk_mod := format_power(bulk_mod, 3)]
 
+# Unit notation
+properties$bulk_mod_GPa <- water$bulk_mod
+units(properties$bulk_mod_GPa) <- "Pa"
+properties[, bulk_mod_GPa := format_units(bulk_mod_GPa, 3, unit = "GPa")]
+
 # Render in document
-knitr::kable(properties, 
-             align = "r",  
-             caption = "Table 1: Properties of water as a function of temperature.", 
-             col.names = c("Temperatue [K]", "Viscosity [Pa-s]", "Bulk modulus [Pa]"))
+knitr::kable(properties,
+  align = "r",
+  caption = "Table 1: Properties of water as a function of temperature.",
+  col.names = c("Temperatue [K]", "Viscosity [Pa-s]", "Bulk modulus [Pa]", "Bulk modulus [GPa]")
+)
 ```
 
-| Temperatue \[K\] |      Viscosity \[Pa-s\] |  Bulk modulus \[Pa\] |
-|-----------------:|------------------------:|---------------------:|
-|          $273.1$ |  $1.734 \times 10^{-3}$ | $2.02 \times 10^{9}$ |
-|          $283.1$ |  $1.310 \times 10^{-3}$ | $2.10 \times 10^{9}$ |
-|          $293.1$ |  $1.021 \times 10^{-3}$ | $2.18 \times 10^{9}$ |
-|          $303.1$ | $0.8174 \times 10^{-3}$ | $2.25 \times 10^{9}$ |
-|          $313.1$ | $0.6699 \times 10^{-3}$ | $2.28 \times 10^{9}$ |
-|          $323.1$ | $0.5605 \times 10^{-3}$ | $2.29 \times 10^{9}$ |
-|          $333.1$ | $0.4776 \times 10^{-3}$ | $2.28 \times 10^{9}$ |
-|          $343.1$ | $0.4135 \times 10^{-3}$ | $2.25 \times 10^{9}$ |
-|          $353.1$ | $0.3631 \times 10^{-3}$ | $2.20 \times 10^{9}$ |
-|          $363.1$ | $0.3229 \times 10^{-3}$ | $2.14 \times 10^{9}$ |
-|          $373.1$ | $0.2902 \times 10^{-3}$ | $2.07 \times 10^{9}$ |
+| Temperatue \[K\] |      Viscosity \[Pa-s\] |  Bulk modulus \[Pa\] | Bulk modulus \[GPa\] |
+|-----------------:|------------------------:|---------------------:|---------------------:|
+|          $273.1$ |  $1.734 \times 10^{-3}$ | $2.02 \times 10^{9}$ |         2.02 \[GPa\] |
+|          $283.1$ |  $1.310 \times 10^{-3}$ | $2.10 \times 10^{9}$ |         2.10 \[GPa\] |
+|          $293.1$ |  $1.021 \times 10^{-3}$ | $2.18 \times 10^{9}$ |         2.18 \[GPa\] |
+|          $303.1$ | $0.8174 \times 10^{-3}$ | $2.25 \times 10^{9}$ |         2.25 \[GPa\] |
+|          $313.1$ | $0.6699 \times 10^{-3}$ | $2.28 \times 10^{9}$ |         2.28 \[GPa\] |
+|          $323.1$ | $0.5605 \times 10^{-3}$ | $2.29 \times 10^{9}$ |         2.29 \[GPa\] |
+|          $333.1$ | $0.4776 \times 10^{-3}$ | $2.28 \times 10^{9}$ |         2.28 \[GPa\] |
+|          $343.1$ | $0.4135 \times 10^{-3}$ | $2.25 \times 10^{9}$ |         2.25 \[GPa\] |
+|          $353.1$ | $0.3631 \times 10^{-3}$ | $2.20 \times 10^{9}$ |         2.20 \[GPa\] |
+|          $363.1$ | $0.3229 \times 10^{-3}$ | $2.14 \times 10^{9}$ |         2.14 \[GPa\] |
+|          $373.1$ | $0.2902 \times 10^{-3}$ | $2.07 \times 10^{9}$ |         2.07 \[GPa\] |
 
 Table 1: Properties of water as a function of temperature.
 

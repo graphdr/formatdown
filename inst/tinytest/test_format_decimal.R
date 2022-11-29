@@ -61,8 +61,10 @@ test_format_decimal <- function() {
 
   # Zero is OK
   x <- 0L
-  expect_equal(format_decimal(x, 1), "$0.0$")
   expect_equal(format_decimal(x, 0), "$0$")
+  x <- c(0, 0.1)
+  expect_equal(format_decimal(x, 1), c("$0.0$", "$0.1$"))
+
 
   # x argument type errors
   expect_error(format_decimal(x = as.Date("2020-11-24")))

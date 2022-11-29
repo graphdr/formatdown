@@ -22,8 +22,6 @@ options(
 )
 ```
 
-## *Work in progress.*
-
 We can avoid the need for powers-of-ten notation by adjusting the measurement units assigned to a numerical vector. For example, we can convert `r format_power(101300)` Pa to 1013 hPa or 101.3 kPa. 
 
 We use the `units` package for this feature. The `formatdown::format_units()` function is a wrapper for `units::as_units()`, allowing us to assign basic physical units to a numerical vector and performing unit conversions that transform the numerical value to match the new measurements units. 
@@ -196,54 +194,6 @@ format_units(x, digits = 3, unit = "GPa")
 ```
 
 Three digits applied to the smallest magnitude value yields "13.8 [GPa]". Larger values are then formatted to the same number of decimal places. Thus some larger values will have more than three digits, e.g., "206.8 [GPa]". 
-
-
-
-
-
-
-
-
-
-
-
-
-## Units
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Units format
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

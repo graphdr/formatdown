@@ -66,13 +66,14 @@ format_power <- function(x,
   on.exit(options(digits = user_digits))
 
   # Arguments after dots must be named
-  wrapr::stop_if_dot_args(
-    substitute(list(...)),
-    paste(
-      "Arguments after ... must be named.\n",
-      "* Did you forget to write `format = ` or `omit_power = `? etc.\n *"
-    )
+  stop_if_dots_text <- paste(
+    "Arguments after ... must be named.\n",
+    "* Did you forget to write `format = `, etc.\n *"
   )
+  wrapr::stop_if_dot_args(substitute(list(...)), stop_if_dots_text)
+
+  # More informative error for digits/format specifically
+  if (!isTRUE(class(digits) == "numeric")) {stop(stop_if_dots_text)}
 
   # Default for NULL argument values using wrapr coalesce
   set_power <- set_power %?% NA_real_
@@ -99,6 +100,7 @@ format_power <- function(x,
   # digits: numeric, not missing, length 1, between 1 and 20
   checkmate::qassert(digits, "N1")
   checkmate::assert_choice(digits, choices = c(1:20))
+
 
   # format: character, not missing, length 1, element of set
   checkmate::qassert(format, "S1")

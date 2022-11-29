@@ -34,7 +34,26 @@ Formatting Tools for R Markdown Documents
 [![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-Provides a small set of tools for formatting tasks when creating documents in R Markdown or Quarto Markdown. Convert the elements of a numerical vector to character strings in which the numbers are formatted in decimal notation or using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations. 
+Provides a small set of tools for formatting tasks when creating documents in R Markdown or Quarto Markdown. Convert the elements of a numerical vector to character strings in one of several forms: powers-of-ten notation in engineering or scientific form delimited for rendering as inline equations; integer or decimal notation delimited for equation rendering; numbers with measurement units (non-delimited) where units are selected to eliminate the need for powers-of-ten or scientific notation. Useful for rendering a numerical scalar in an inline R code chunk as well as formatting columns of data frames displayed in a table.  
+
+
+
+## Introduction
+
+Formatting tools include: 
+
+**`format_power()`** 
+
+: Convert the elements of a numerical vector to character strings in which the numbers are formatted using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations in `.Rmd` or `.qmd` markdown files.
+
+**`format_decimal()`**
+
+: Similar to above, but as integers or decimals 
+
+**`format_units()`**
+
+: Format a vector of numbers as character strings with measurement units appended via the 'units' package.
+
 
 
 
@@ -48,34 +67,51 @@ library("data.table")
 library("knitr")
 ```
 
-**`format_power()`** 
 
-: Convert the elements of a numerical vector to character strings in which the numbers are formatted using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations in `.Rmd` or `.qmd` markdown files. The `digits` argument sets the number of significant digits. 
-
-**`format_decimal()`**
-
-: Similar to above, but in decimal notation. The `digits` argument sets the number of  decimal places. 
 
 *Scalar values.* &nbsp; Typically rendered inline:
 
 ```{r}
-# Scientific notation
-format_power(101100, digits = 4, format = "sci")
+x <- 101300
 
-# Engineering notation
-format_power(101100, digits = 4, format = "engr")
+# Scientific notation, math delimited
+format_power(x, digits = 4, format = "sci")
 
-# Decimal notation
-format_decimal(101100, digits = 0, big_mark = ",")
+# Engineering notation, math-delimited
+format_power(x, digits = 4, format = "engr")
+
+# Decimal notation, math-delimited
+format_decimal(x, digits = 0, big_mark = ",")
+
+# Unit notation, non-delimited
+units(x) <- "Pa"
+format_units(x, unit = "hPa")
 ```
 
-which, in an `.Rmd` or `.qmd` output document, are rendered using inline math as  
+which, in an `.Rmd` or `.qmd` output document, are rendered using inline R code as
 
-- Scientific notation: `r format_power(101100, 4, format = "sci")`. 
-- Engineering notation: `r format_power(101100, digits = 4)`
-- Decimal notation: `r format_decimal(101100, digits = 0, big_mark = ",")`. 
+```{r}
+#| echo: false
+x <- 101300
+sci <- format_power(x, 4, format = "sci")
+engr <- format_power(x, digits = 4, format = "engr")
+deci <- format_decimal(x, digits = 0, big_mark = ",")
+units(x) <- "Pa"
+uni <- format_units(x, unit = "hPa")
 
-*Data frame*. &nbsp; Typically rendered as a table. We independently format three columns from the `water` data frame included with `formatdown`. 
+DT <- wrapr::build_frame(
+  "Notation", "Rendered as" |
+    "scientific", sci |
+    "engineering", engr |
+    "integer or decimal", deci |
+    "units", uni
+)
+setDT(DT)
+knitr::kable(DT, align = "r")
+```
+
+
+*Data frame*. &nbsp; Typically rendered as a table. We independently format  columns from the `water` data frame included with `formatdown`. 
 
 ```{r}
 # Extract three columns
@@ -90,11 +126,16 @@ properties[, visc := format_power(visc, set_power = -3)]
 # Power-of-ten notation with 3 significant figures
 properties[, bulk_mod := format_power(bulk_mod, 3)]
 
+# Unit notation
+properties$bulk_mod_GPa <- water$bulk_mod
+units(properties$bulk_mod_GPa) <- "Pa"
+properties[, bulk_mod_GPa := format_units(bulk_mod_GPa, 3, unit = "GPa")]
+
 # Render in document
 knitr::kable(properties,
   align = "r",
   caption = "Table 1: Properties of water as a function of temperature.",
-  col.names = c("Temperatue [K]", "Viscosity [Pa-s]", "Bulk modulus [Pa]")
+  col.names = c("Temperatue [K]", "Viscosity [Pa-s]", "Bulk modulus [Pa]", "Bulk modulus [GPa]")
 )
 ```
 

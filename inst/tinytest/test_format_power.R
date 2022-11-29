@@ -95,7 +95,8 @@ test_format_power<- function() {
 
   # Spaces inserted by formatC are trimmed. In this test, the first number
   # has four characters (the decimal point is a character); formatC() adds
-  # spaces to store "800" as " 800". format_power() removes the extra spaces.
+  # spaces to store "800" as " 800". format_power() removes the extra spaces
+  # ####### Change to format() from formatC() eliminates this issue.
   x <- 1.0E-6 * c(1.02, 0.8)
   ans <- c("$1.02 \\times 10^{-6}$", "$800 \\times 10^{-9}$")
   expect_equal(format_power(x, 3), ans)

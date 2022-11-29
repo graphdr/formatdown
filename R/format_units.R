@@ -42,20 +42,21 @@ format_units <- function(x,
                          unit_form = NULL,
                          big_mark = NULL) {
 
-# Overhead ----------------------------------------------------------------
+  # Overhead ----------------------------------------------------------------
 
   # On exit, reset user's options values
   user_digits <- getOption("digits")
   on.exit(options(digits = user_digits))
 
   # Arguments after dots must be named
-  wrapr::stop_if_dot_args(
-    substitute(list(...)),
-    paste(
-      "Arguments after ... must be named.\n",
-      "* Did you forget to write `unit = `? or `big_mark = `?\n *"
-    )
+  stop_if_dots_text <- paste(
+    "Arguments after ... must be named.\n",
+    "* Did you forget to write `unit = `, etc.\n *"
   )
+  wrapr::stop_if_dot_args(substitute(list(...)), stop_if_dots_text)
+
+  # More informative error for digits/unit specifically
+  if (!isTRUE(class(digits) == "numeric")) {stop(stop_if_dots_text)}
 
   # Default for NULL values using wrapr coalesce
   big_mark  <- big_mark %?% ""
@@ -67,7 +68,7 @@ format_units <- function(x,
   # Indicate these are not unbound symbols (R CMD check Note)
   # value <- NULL
 
-# Argument checks ---------------------------------------------------------
+  # Argument checks ---------------------------------------------------------
 
   # x: numeric, not empty. length 1 or more
   checkmate::qassert(x, "N+")
@@ -86,7 +87,7 @@ format_units <- function(x,
   checkmate::qassert(big_mark, "S1")
   checkmate::assert_choice(unit_form, choices = c("standard", "implicit"))
 
-# Unit notation --------------------------------------------------------
+  # Unit notation --------------------------------------------------------
 
   # Assign or convert units
   units(x) <- unit
@@ -114,9 +115,8 @@ format_units <- function(x,
     x_char <- paste0(x_char, " ", label)
   }
 
-# Output ------------------------------------------------------------------
+  # Output ------------------------------------------------------------------
 
   return(x_char)
 }
-
 

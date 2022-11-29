@@ -1,5 +1,5 @@
 # Scalar value
-format_power(101100)
+format_power(101100, digits = 4)
 
 # Vector value
 x <- c(1.2222e-6, 2.3333e-5, 3.4444e-4, 4.1111e-3, 5.2222e-2, 6.3333e-1,

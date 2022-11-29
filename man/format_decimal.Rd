@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_decimal.R
 \name{format_decimal}
 \alias{format_decimal}
-\title{Format decimal value}
+\title{Format decimal or integer values}
 \usage{
 format_decimal(x, digits = 4, ..., big_mark = NULL, delim = "$")
 }
