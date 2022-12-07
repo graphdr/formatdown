@@ -6,7 +6,7 @@
 <!-- PATCH version backwards-compatible bug fixes -->
 <!-- DEV 900x development -->
 
-## formatdown 0.1.1.9009 (dev)
+## formatdown 0.1.1.9010 (dev)
 
 2022-11-28
 
