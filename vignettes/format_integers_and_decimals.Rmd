@@ -20,6 +20,13 @@ options(
 )
 ```
 
+
+![](../man/figures/real-number-line.png){width=70%}    
+<small>*Real number line* by <a href="https://commons.wikimedia.org/wiki/File:Real_number_line.svg">User:Phrood~commonswiki</a>, Public domain, via Wikimedia Commons</small>
+
+<br>
+
+
 If we use `format_power()` to create powers-of-ten notation in a table, the  font face and size of these values do not necessarily match that of unformatted numbers. 
 
 The purpose of `format_decimal()` is to surround decimal numbers and integers with inline math delimiters to match the powers-of-ten font face and size in rendering an R Markdown or Quarto Markdown output document. 

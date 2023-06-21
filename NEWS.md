@@ -6,9 +6,9 @@
 <!-- PATCH version backwards-compatible bug fixes -->
 <!-- DEV 900x development -->
 
-## formatdown 0.1.1.9010 (dev)
+## formatdown 0.1.2
 
-2022-11-28
+2023-01-30
 
 - Add arguments `delim` and `set_power` to `format_power()`.
 - Fixed a bug to remove extra spaces added by `formatC()`. 

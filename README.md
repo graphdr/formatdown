@@ -139,8 +139,8 @@ install.packages("formatdown")
 The development version can be installed from GitHub.
 
 ``` r
-install.packages("devtools")
-devtools::install_github("graphdr/formatdown")
+install.packages("pak")
+pak::pkg_install("graphdr/formatdown")
 ```
 
 ## Requirements

@@ -22,6 +22,11 @@ options(
 )
 ```
 
+![](../man/figures/si-base-units.png){width=70%}    
+<small>*Table of SI units* by US National Institute of Standards and Technology (NIST)</small>
+
+<br>
+
 We can avoid the need for powers-of-ten notation by adjusting the measurement units assigned to a numerical vector. For example, we can convert `r format_power(101300)` Pa to 1013 hPa or 101.3 kPa. 
 
 We use the `units` package for this feature. The `formatdown::format_units()` function is a wrapper for `units::as_units()`, allowing us to assign basic physical units to a numerical vector and performing unit conversions that transform the numerical value to match the new measurements units. 
@@ -234,3 +239,32 @@ knitr::kable(
 )
 ```
 
+## US customary units
+
+The same table can be formatted in US customary units as shown below. 
+
+```{r}
+# Data set included with formatdown
+DT <- copy(atmos)
+
+units(DT$alt) <- "m"
+DT[, alt := format_units(alt, unit = "ft")]
+
+units(DT$temp) <- "K"
+DT[, temp := format_units(temp, 2, unit = "deg_F")]
+
+units(DT$pres) <- "Pa"
+DT[, pres := format_units(pres, unit = "psi")]
+
+units(DT$dens) <- "kg/m^3"
+DT[, dens := format_units(dens, unit = "lb/ft^3", unit_form = "implicit")]
+
+units(DT$sound) <- "m/s"
+DT[, sound := format_units(sound, 4, unit = "ft/s")]
+
+knitr::kable(
+  DT,
+  align = "r",
+  col.names = c("Altitude", "Temperature", "Pressure", "Density", "Speed of sound")
+)
+```

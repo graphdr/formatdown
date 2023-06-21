@@ -1,6 +1,6 @@
 ## Purpose
 
-Responding to corrections from initial submission. 
+Adding functionality
 
 
 ## R CMD check results

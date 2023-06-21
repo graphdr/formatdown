@@ -22,6 +22,11 @@ options(
 )
 ```
 
+![](../man/figures/powers-of-ten-chart-2.png){width=70%}    
+<small>Chart by Jeff Cruzan is licensed under CC BY-NC-SA 3.0</small>
+
+<br>
+
 The notation we use to represent large and small numbers depends on the context of our communications. In a computer script, for example, we might encode Avogadro's number as `6.0221*10^23`. A computer printout of this number would typically use E-notation, as in `6.0221E+23`.
 
 In professional technical communications, however, computer syntax should be avoided---the asterisk (`*`) and carat (`^`) in `6.0221*10^23` communicate   *instructions to a computer*, not *syntactical mathematics*. And while scientific E-notation (`6.0221E+23`) has currency in some discourse communities, the general convention in technical communications is to format large and small numbers using powers-of-ten notation of the form, 
