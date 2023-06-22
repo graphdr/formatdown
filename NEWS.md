@@ -6,7 +6,7 @@
 <!-- PATCH version backwards-compatible bug fixes -->
 <!-- DEV 900x development -->
 
-## formatdown 0.1.2
+# formatdown 0.1.2
 
 2023--06--21
 
@@ -17,7 +17,7 @@
 - Add `format_decimal()` and vignette.
 - Add `format_units()` and vignette. 
 
-## formatdown 0.1.1
+# formatdown 0.1.1
 
 2022-11-21
 
