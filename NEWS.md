@@ -8,7 +8,7 @@
 
 ## formatdown 0.1.2
 
-2023-01-30
+2023--06--21
 
 - Add arguments `delim` and `set_power` to `format_power()`.
 - Fixed a bug to remove extra spaces added by `formatC()`. 
