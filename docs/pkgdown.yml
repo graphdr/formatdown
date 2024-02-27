@@ -5,7 +5,7 @@ articles:
   format_integers_and_decimals: format_integers_and_decimals.html
   format_powers_of_ten: format_powers_of_ten.html
   format_units: format_units.html
-last_built: 2024-02-27T21:15Z
+last_built: 2024-02-27T21:16Z
 urls:
   reference: https://graphdr.github.io/formatdown/reference
   article: https://graphdr.github.io/formatdown/articles
