@@ -17,8 +17,8 @@ format_power(
 \arguments{
 \item{x}{Numeric vector to be formatted.}
 
-\item{digits}{Numeric scalar, significant digits in coefficient,
-integer between 1 and 20.}
+\item{digits}{Numeric scalar between 1 and 20 (inclusive) defining the
+number of significant digits in result.}
 
 \item{...}{Not used, force later arguments to be used by name.}
 

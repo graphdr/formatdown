@@ -254,10 +254,15 @@ DT <- data.table(
 knitr::kable(DT, align = "r", col.names = c("scientific notation", "engineering notation"))
 ```
 
+Suppose you wish to omit one specific power of ten only, for example, let `omit_power = c(-5, -5)`. 
 
+```{r}
+x <- c(3.2e-7, 4.5e-6, 4.5e-5, 6.7e-4, 3, 37800)
+format_power(x, 3, format = "sci", omit_power = c(-5, -5))
+format_power(x, 3, format = "engr", omit_power = c(-5, -5))
+```
 
-
-
+All the values except `4.5e-5` are formatted as powers of ten. 
 
 
 ## Set power notation

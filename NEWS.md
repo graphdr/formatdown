@@ -2,7 +2,8 @@
 
 - add package alias
 - correct issue with numbers < machine eps
-- add `signif()` before formatting to enforce significant digits in output 
+- correct issue with omit_power argument
+- add `signif() to enforce significant digits in output before applying `formatC()` 
 
 # formatdown 0.1.2
 
@@ -14,6 +15,7 @@
 - Rename `density` data set to `air_meas`.
 - Add `format_decimal()` and vignette.
 - Add `format_units()` and vignette. 
+
 
 # formatdown 0.1.1
 
