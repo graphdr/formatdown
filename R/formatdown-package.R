@@ -19,7 +19,7 @@ NULL
 #'
 #' @docType package
 #' @name formatdown-package
-#'
+#' @aliases formatdown
 #'
 #'
 #' @keywords internal

@@ -16,7 +16,7 @@ Markdown document."><meta property="og:image" content="https://graphdr.github.io
     
     <a class="navbar-brand me-2" href="../index.html">formatdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,8 +86,8 @@ Markdown document.</p>
 
 
 <dt>digits</dt>
-<dd><p>Numeric scalar, significant digits in coefficient, integer
-between 1 and 20.</p></dd>
+<dd><p>Numeric scalar, significant digits in coefficient,
+integer between 1 and 20.</p></dd>
 
 
 <dt>...</dt>
@@ -101,7 +101,7 @@ and "sci" (scientific notation). Use argument  by name.</p></dd>
 
 <dt>omit_power</dt>
 <dd><p>Numeric vector <code>c(p, q)</code> specifying the range of exponents
-over which power of ten notation is omitted, where <code>p &lt;= q</code>. If NULL all
+between which power of ten notation is omitted, where <code>p &lt;= q</code>. If NULL all
 numbers are formatted in powers of ten notation. Use argument by name.</p></dd>
 
 
@@ -132,8 +132,9 @@ with exponents in the range specified in <code>omit_power</code></p></li>
     <p>Given a number, a numerical vector, or a numerical column from a data frame,
 <code>format_power()</code> converts the numbers to character strings of the form, <code>"$a \\times 10^{n}$"</code>, where <code>a</code> is the coefficient and <code>n</code> is the exponent. The
 string includes markup delimiters <code>$...$</code> for rendering as an inline equation
-in R Markdown or Quarto Markdown document. The user can specify the number of
-significant digits and scientific or engineering format.</p>
+in R Markdown or Quarto Markdown document.</p>
+<p>The user can specify the minimum number of significant digits and scientific
+or engineering format.</p>
 <p>Powers-of-ten notation is omitted over a range of exponents via <code>omit_power</code>
 such that numbers are converted to character strings of the form, <code>"$a$"</code>,
 where <code>a</code> is the number in decimal notation. The default <code>omit_power = c(-1, 2)</code> formats numbers such as 0.123, 1.23, 12.3, and 123 in decimal form. To
@@ -165,7 +166,7 @@ symbols.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "$344.4 \\times 10^{-6}$" "$4.111 \\times 10^{-3}$"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "$52.22 \\times 10^{-3}$" "$0.6333$"               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "$7.444$"                 "$81.11$"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "$922.2 \\times 10^{0}$"  "$1.333 \\times 10^{3}$" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "$922.2$"                 "$1.333 \\times 10^{3}$" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [11] "$24.44 \\times 10^{3}$"  "$311.1 \\times 10^{3}$" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [13] "$4.222 \\times 10^{6}$" </span>
 <span class="r-in"><span></span></span>
@@ -202,11 +203,11 @@ symbols.</p>
 <span class="r-in"><span><span class="co"># Apply to columns of a data frame (data.table syntax)</span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fl">8</span><span class="op">:</span><span class="fl">13</span><span class="op">]</span></span></span>
-<span class="r-in"><span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">z</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">z</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">DT</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">.SD</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">format_power</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          y                      z</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: $1.222 \\times 10^{-6}$                $81.11$</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: $23.33 \\times 10^{-6}$ $922.2 \\times 10^{0}$</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: $23.33 \\times 10^{-6}$                $922.2$</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3: $344.4 \\times 10^{-6}$ $1.333 \\times 10^{3}$</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4: $4.111 \\times 10^{-3}$ $24.44 \\times 10^{3}$</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5: $52.22 \\times 10^{-3}$ $311.1 \\times 10^{3}$</span>

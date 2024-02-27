@@ -3,6 +3,7 @@
 \docType{package}
 \name{formatdown-package}
 \alias{formatdown-package}
+\alias{formatdown}
 \title{Formatting Tools for R Markdown Documents}
 \description{
 Provides a small set of tools for common formatting tasks when writing

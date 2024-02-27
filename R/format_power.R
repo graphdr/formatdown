@@ -10,8 +10,10 @@
 #' `format_power()` converts the numbers to character strings of the form, `"$a
 #' \\times 10^{n}$"`, where `a` is the coefficient and `n` is the exponent. The
 #' string includes markup delimiters `$...$` for rendering as an inline equation
-#' in R Markdown or Quarto Markdown document. The user can specify the number of
-#' significant digits and scientific or engineering format.
+#' in R Markdown or Quarto Markdown document.
+#'
+#' The user can specify the minimum number of significant digits and scientific
+#' or engineering format.
 #'
 #' Powers-of-ten notation is omitted over a range of exponents via `omit_power`
 #' such that numbers are converted to character strings of the form, `"$a$"`,
@@ -26,13 +28,13 @@
 #' symbols.
 #'
 #' @param x Numeric vector to be formatted.
-#' @param digits Numeric scalar, significant digits in coefficient, integer
-#'   between 1 and 20.
+#' @param digits Numeric scalar, significant digits in coefficient,
+#'   integer between 1 and 20.
 #' @param ... Not used, force later arguments to be used by name.
 #' @param format Character. Possible values are "engr" (engineering notation)
 #'   and "sci" (scientific notation). Use argument  by name.
 #' @param omit_power Numeric vector `c(p, q)` specifying the range of exponents
-#'   over which power of ten notation is omitted, where `p <= q`. If NULL all
+#'   between which power of ten notation is omitted, where `p <= q`. If NULL all
 #'   numbers are formatted in powers of ten notation. Use argument by name.
 #' @param set_power Numeric scalar integer. Assigned exponent that overrides
 #'   `format`. Default NULL makes no notation changes.
@@ -90,6 +92,8 @@ format_power <- function(x,
   exponent <- NULL
   coeff <- NULL
   value <- NULL
+  signum <- NULL
+  omit_check <- NULL
 
   # Argument checks ---------------------------------------------------------
 
@@ -100,7 +104,6 @@ format_power <- function(x,
   # digits: numeric, not missing, length 1, between 1 and 20
   checkmate::qassert(digits, "N1")
   checkmate::assert_choice(digits, choices = c(1:20))
-
 
   # format: character, not missing, length 1, element of set
   checkmate::qassert(format, "S1")
@@ -126,15 +129,21 @@ format_power <- function(x,
   DT <- data.table::copy(data.frame(x))
   setDT(DT)
 
-  # Set exponent to 0 if x close to zero
-  DT[, exponent := data.table::fifelse(
-    abs(x) > .Machine$double.eps,
-    log10(abs(x)),
-    0)]
+  # Set significant digits before processing
+  DT[, x := signif(x, digits = digits)]
+
+  # Obtain exponent as a decimal value
+  DT[, exponent := log10(abs(x))]
 
   # Obtain row indices to separate powers-of-ten from non-powers-of-ten
-  non_pow <- DT$exponent %between% omit_power
+  DT[, signum := sign(exponent)]
+  DT[, omit_check := fifelse(signum < 0, exponent, floor(exponent))]
+  non_pow <- DT$omit_check %between% omit_power
   pow_10  <- !non_pow
+
+  # clean up
+  DT[, signum := NULL]
+  DT[, omit_check := NULL]
 
   # Exponent multiple for scientific or engineering notation
   exp_multiple <- data.table::fcase(
@@ -165,11 +174,7 @@ format_power <- function(x,
   } else {
 
     # Round to multiple of 1 (scientific) or 3 (engineering)
-    # Set exponent to 0 if x close to zero
-    DT[pow_10, exponent := data.table::fifelse(
-      abs(x) > .Machine$double.eps,
-      exp_multiple * floor(log10(abs(x)) / exp_multiple),
-      0)]
+    DT[pow_10, exponent := exp_multiple * floor(log10(abs(x)) / exp_multiple)]
 
   }
 
@@ -182,7 +187,7 @@ format_power <- function(x,
                                    digits = digits,
                                    flag = "#")]
 
-  # Remove trailing decimal point and spaces created by formatC() if any
+  # Remove trailing decimal point and spaces if any created by formatC()
   # (see utils.R)
   DT[pow_10] <- omit_formatC_extras(DT[pow_10], col_name = "char_coeff")
 

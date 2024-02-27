@@ -57,15 +57,15 @@ x <- 101300
 
 # Scientific notation, math delimited
 format_power(x, digits = 4, format = "sci")
-#> [1] "$1.013 \\times 10^{5}$"
+#> [1] "$1.013 \\times 10^{5}$ "
 
 # Engineering notation, math-delimited
 format_power(x, digits = 4, format = "engr")
-#> [1] "$101.3 \\times 10^{3}$"
+#> [1] "$101.3 \\times 10^{3}$ "
 
 # Decimal notation, math-delimited
 format_decimal(x, digits = 0, big_mark = ",")
-#> [1] "$101,300$"
+#> [1] "$101,300$ "
 
 # Unit notation, non-delimited
 units(x) <- "Pa"

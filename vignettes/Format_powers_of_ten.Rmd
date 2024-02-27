@@ -93,7 +93,7 @@ where `a` is the number in decimal notation to the specified number of significa
 
 - **format** &nbsp; Possible values are "engr" (engineering notation) and "sci" (scientific notation). Default is "engr". 
 
-- **omit_power** &nbsp; Numeric vector of length two (or NULL). Determines the range of exponents excluded from power-of-ten notation. Default is `c(-1, 2)`.
+- **omit_power** &nbsp; Numeric vector of length two (or NULL). Determines the range of exponents between which power-of-ten notation is excluded. Default is `c(-1, 2)`.
 
 - **set_power** &nbsp; Integer assigned as the fixed power-of-ten, overriding scientific or engineering formatting. Default NULL. 
 
@@ -141,9 +141,6 @@ format_power(avogadro)
 ```
 
 which, in an `.Rmd` or `.qmd` document, is rendered as `r format_power(avogadro)`. 
-
-
-
 
 
 ## Vector 
@@ -231,6 +228,21 @@ are rendered as
 - `r format_power(0.0678, 3, format = "sci", omit_power = c(-2, 2))`
 - `r format_power(0.0678, 3, format = "sci", omit_power = c(-1, 2))`
 
+At the upper limit, 
+
+```{r}
+format_power(6789, 3, format = "sci", omit_power = c(-1, 2))
+format_power(6789, 3, format = "sci", omit_power = c(-1, 3))
+```
+
+
+are rendered as
+
+- `r format_power(6789, 3, format = "sci", omit_power = c(-1, 2))`    
+- `r format_power(6789, 3, format = "sci", omit_power = c(-1, 3))` 
+
+
+
 `omit_power = NULL` removes the exceptions and formats all numbers in  power-of-ten notation.  
 
 ```{r}
@@ -241,7 +253,6 @@ DT <- data.table(
 )
 knitr::kable(DT, align = "r", col.names = c("scientific notation", "engineering notation"))
 ```
-
 
 
 
@@ -275,7 +286,7 @@ knitr::kable(DT, align = "r", col.names = c(
 ))
 ```
 
-In the next example, we see that the `set_power` argument does not override the `omit_power` settings
+In the next example, we have density as a function of altitude with additional columns of density values formatted three ways. 
 
 ```{r}
 DT <- copy(atmos)
@@ -287,13 +298,15 @@ DT[, ver3 := format_power(dens, 3, set_power = -3, omit_power = NULL)]
 kable(DT, align = "r", col.names = c(
   "Altitude [km]",
   "Density [kg/m$^3$]",
-  "engineering notation",
-  "with fixed exponent",
-  "omit decimals"
+  "engr notation",
+  "set power",
+  "all power"
 ))
 ```
 
-
+- **engr notation** column is in engineering notation with the first two values in decimal notation (no powers of ten)
+- **set power** column uses the same power of ten for all but the first two decimal values 
+- **all power** column uses the same power of ten throughout (no decimal values) 
 
 
 

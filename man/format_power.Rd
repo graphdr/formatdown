@@ -17,8 +17,8 @@ format_power(
 \arguments{
 \item{x}{Numeric vector to be formatted.}
 
-\item{digits}{Numeric scalar, significant digits in coefficient, integer
-between 1 and 20.}
+\item{digits}{Numeric scalar, significant digits in coefficient,
+integer between 1 and 20.}
 
 \item{...}{Not used, force later arguments to be used by name.}
 
@@ -26,7 +26,7 @@ between 1 and 20.}
 and "sci" (scientific notation). Use argument  by name.}
 
 \item{omit_power}{Numeric vector \code{c(p, q)} specifying the range of exponents
-over which power of ten notation is omitted, where \code{p <= q}. If NULL all
+between which power of ten notation is omitted, where \code{p <= q}. If NULL all
 numbers are formatted in powers of ten notation. Use argument by name.}
 
 \item{set_power}{Numeric scalar integer. Assigned exponent that overrides
@@ -57,8 +57,10 @@ Markdown document.
 Given a number, a numerical vector, or a numerical column from a data frame,
 \code{format_power()} converts the numbers to character strings of the form, \code{"$a \\\\times 10^{n}$"}, where \code{a} is the coefficient and \code{n} is the exponent. The
 string includes markup delimiters \verb{$...$} for rendering as an inline equation
-in R Markdown or Quarto Markdown document. The user can specify the number of
-significant digits and scientific or engineering format.
+in R Markdown or Quarto Markdown document.
+
+The user can specify the minimum number of significant digits and scientific
+or engineering format.
 
 Powers-of-ten notation is omitted over a range of exponents via \code{omit_power}
 such that numbers are converted to character strings of the form, \code{"$a$"},

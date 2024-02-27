@@ -1,4 +1,8 @@
-# formatdown (development version)
+# formatdown 0.1.2.9000 (development version)
+
+- add package alias
+- correct issue with numbers < machine eps
+- add `signif()` before formatting to enforce significant digits in output 
 
 # formatdown 0.1.2
 

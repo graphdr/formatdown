@@ -34,6 +34,8 @@ Formatting Tools for R Markdown Documents
 [![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
+
+
 Provides a small set of tools for formatting tasks when creating documents in R Markdown or Quarto Markdown. Convert the elements of a numerical vector to character strings in one of several forms: powers-of-ten notation in engineering or scientific form delimited for rendering as inline equations; integer or decimal notation delimited for equation rendering; numbers with measurement units (non-delimited) where units are selected to eliminate the need for powers-of-ten or scientific notation. Useful for rendering a numerical scalar in an inline R code chunk as well as formatting columns of data frames displayed in a table.  
 
 
