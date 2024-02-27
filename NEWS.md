@@ -1,9 +1,11 @@
 # formatdown 0.1.2.9000 (development version)
 
+2024--02--27
+
 - add package alias
 - correct issue with numbers < machine eps
 - correct issue with omit_power argument
-- add `signif() to enforce significant digits in output before applying `formatC()` 
+- add `signif()` to enforce significant digits in output before applying `formatC()` 
 
 # formatdown 0.1.2
 

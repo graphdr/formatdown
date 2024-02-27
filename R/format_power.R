@@ -92,7 +92,6 @@ format_power <- function(x,
   exponent <- NULL
   coeff <- NULL
   value <- NULL
-  signum <- NULL
   omit_check <- NULL
 
   # Argument checks ---------------------------------------------------------
@@ -136,14 +135,11 @@ format_power <- function(x,
   DT[, exponent := log10(abs(x))]
 
   # Obtain row indices to separate powers-of-ten from non-powers-of-ten
-  DT[, signum := sign(exponent)]
-  # DT[, omit_check := fifelse(signum < 0, exponent, floor(exponent))]
   DT[, omit_check := floor(exponent)]
   non_pow <- DT$omit_check %between% omit_power
   pow_10  <- !non_pow
 
   # clean up
-  DT[, signum := NULL]
   DT[, omit_check := NULL]
 
   # Exponent multiple for scientific or engineering notation
