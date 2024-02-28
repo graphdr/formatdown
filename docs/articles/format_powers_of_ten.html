@@ -200,6 +200,7 @@ packages in this vignette:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/graphdr/formatdown/" class="external-link">"formatdown"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://r-datatable.com" class="external-link">"data.table"</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: package 'data.table' was built under R version 4.3.2</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span></code></pre></div>
 <p><em>Equivalent usage.</em>   The first two arguments do not have to
 be named if the argument order is maintained.</p>
@@ -1059,14 +1060,17 @@ a data frame,</p>
 <span></span>
 <span><span class="co"># Format selected columns, retain all columns</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="va">DT</span><span class="op">[</span>, <span class="op">(</span><span class="va">cols_we_want</span><span class="op">)</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">.SD</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>, .SDcols <span class="op">=</span> <span class="va">cols_we_want</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Treat the gas constant with 3 digits</span></span>
+<span><span class="va">DT</span><span class="op">$</span><span class="va">sp_gas</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">DT</span><span class="op">$</span><span class="va">sp_gas</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">DT</span><span class="op">[</span><span class="op">]</span></span>
 <span><span class="co">#&gt;          date  trial  humid    temp                   pres sp_gas    dens</span></span>
-<span><span class="co">#&gt;        &lt;Date&gt; &lt;char&gt; &lt;fctr&gt;  &lt;char&gt;                 &lt;char&gt;  &lt;int&gt;  &lt;char&gt;</span></span>
-<span><span class="co">#&gt; 1: 2018-06-12      a    low $294.1$ $101.1 \\times 10^{3}$    287 $1.198$</span></span>
-<span><span class="co">#&gt; 2: 2018-06-13      b   high $294.1$ $101.0 \\times 10^{3}$    287 $1.196$</span></span>
-<span><span class="co">#&gt; 3: 2018-06-14      c    med $294.6$ $101.1 \\times 10^{3}$    287 $1.196$</span></span>
-<span><span class="co">#&gt; 4: 2018-06-15      d    low $293.4$ $101.0 \\times 10^{3}$    287 $1.200$</span></span>
-<span><span class="co">#&gt; 5: 2018-06-16      e   high $293.9$ $101.1 \\times 10^{3}$    287 $1.199$</span></span>
+<span><span class="co">#&gt;        &lt;Date&gt; &lt;char&gt; &lt;fctr&gt;  &lt;char&gt;                 &lt;char&gt; &lt;char&gt;  &lt;char&gt;</span></span>
+<span><span class="co">#&gt; 1: 2018-06-12      a    low $294.1$ $101.1 \\times 10^{3}$  $287$ $1.198$</span></span>
+<span><span class="co">#&gt; 2: 2018-06-13      b   high $294.1$ $101.0 \\times 10^{3}$  $287$ $1.196$</span></span>
+<span><span class="co">#&gt; 3: 2018-06-14      c    med $294.6$ $101.1 \\times 10^{3}$  $287$ $1.196$</span></span>
+<span><span class="co">#&gt; 4: 2018-06-15      d    low $293.4$ $101.0 \\times 10^{3}$  $287$ $1.200$</span></span>
+<span><span class="co">#&gt; 5: 2018-06-16      e   high $293.9$ $101.1 \\times 10^{3}$  $287$ $1.199$</span></span>
 <span></span>
 <span><span class="co"># Render in document</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>, align <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></span></code></pre></div>
@@ -1097,7 +1101,7 @@ a data frame,</p>
 <td align="right"><span class="math inline">\(294.1\)</span></td>
 <td align="right"><span class="math inline">\(101.1 \times
 10^{3}\)</span></td>
-<td align="right">287</td>
+<td align="right"><span class="math inline">\(287\)</span></td>
 <td align="right"><span class="math inline">\(1.198\)</span></td>
 </tr>
 <tr class="even">
@@ -1107,7 +1111,7 @@ a data frame,</p>
 <td align="right"><span class="math inline">\(294.1\)</span></td>
 <td align="right"><span class="math inline">\(101.0 \times
 10^{3}\)</span></td>
-<td align="right">287</td>
+<td align="right"><span class="math inline">\(287\)</span></td>
 <td align="right"><span class="math inline">\(1.196\)</span></td>
 </tr>
 <tr class="odd">
@@ -1117,7 +1121,7 @@ a data frame,</p>
 <td align="right"><span class="math inline">\(294.6\)</span></td>
 <td align="right"><span class="math inline">\(101.1 \times
 10^{3}\)</span></td>
-<td align="right">287</td>
+<td align="right"><span class="math inline">\(287\)</span></td>
 <td align="right"><span class="math inline">\(1.196\)</span></td>
 </tr>
 <tr class="even">
@@ -1127,7 +1131,7 @@ a data frame,</p>
 <td align="right"><span class="math inline">\(293.4\)</span></td>
 <td align="right"><span class="math inline">\(101.0 \times
 10^{3}\)</span></td>
-<td align="right">287</td>
+<td align="right"><span class="math inline">\(287\)</span></td>
 <td align="right"><span class="math inline">\(1.200\)</span></td>
 </tr>
 <tr class="odd">
@@ -1137,7 +1141,7 @@ a data frame,</p>
 <td align="right"><span class="math inline">\(293.9\)</span></td>
 <td align="right"><span class="math inline">\(101.1 \times
 10^{3}\)</span></td>
-<td align="right">287</td>
+<td align="right"><span class="math inline">\(287\)</span></td>
 <td align="right"><span class="math inline">\(1.199\)</span></td>
 </tr>
 </tbody>
