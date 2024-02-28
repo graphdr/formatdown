@@ -421,6 +421,9 @@ cols_we_want <- c("temp", "pres", "dens")
 
 # Format selected columns, retain all columns
 DT <- DT[, (cols_we_want) := lapply(.SD, function(x) format_power(x, 4)), .SDcols = cols_we_want]
+
+# Treat the gas constant with 3 digits
+DT$sp_gas <- format_power(DT$sp_gas, digits = 3)
 DT[]
 
 # Render in document
