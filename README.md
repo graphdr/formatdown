@@ -26,6 +26,17 @@ chunk as well as formatting columns of data frames displayed in a table.
 
 ## Introduction
 
+In professional technical prose, large and small numbers are generally
+typeset using powers of ten notation. For example, Plank’s constant
+would be typeset as $6.626 \times 10^{-34}$ J/Hz rather than the
+familiar forms we use in communicating with computers, such as
+`6.626*10^34` or `6.626E-34`.
+
+The functions in this package help an author convert large and small
+numbers to character strings, formatted using powers-of-ten notation
+(and other formats) suitable for use in technical writing or
+presentations.
+
 Formatting tools include:
 
 **`format_power()`**  
@@ -57,15 +68,15 @@ x <- 101300
 
 # Scientific notation, math delimited
 format_power(x, digits = 4, format = "sci")
-#> [1] "$1.013 \\times 10^{5}$ "
+#> [1] "$1.013 \\times 10^{5}$"
 
 # Engineering notation, math-delimited
 format_power(x, digits = 4, format = "engr")
-#> [1] "$101.3 \\times 10^{3}$ "
+#> [1] "$101.3 \\times 10^{3}$"
 
 # Decimal notation, math-delimited
 format_decimal(x, digits = 0, big_mark = ",")
-#> [1] "$101,300$ "
+#> [1] "$101,300$"
 
 # Unit notation, non-delimited
 units(x) <- "Pa"

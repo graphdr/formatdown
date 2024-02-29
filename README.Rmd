@@ -18,6 +18,10 @@ options(
   datatable.print.topn = 3,
   datatable.print.class = TRUE
 )
+
+avo <- 6.0221E+23
+plank <- 6.62607015E-34 
+# J⋅Hz−1
 ```
 
 
@@ -41,6 +45,17 @@ Provides a small set of tools for formatting tasks when creating documents in R 
 
 
 ## Introduction
+
+In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Plank's constant would be typeset as `r format_power(plank, format = "sci")` J/Hz rather than the familiar forms we use in communicating with computers, such as `6.626*10^34` or `6.626E-34`. 
+
+The functions in this package help an author convert large and small numbers to character strings, formatted using powers-of-ten notation (and other formats) suitable for use in technical writing or presentations. 
+
+
+
+
+
+
+
 
 Formatting tools include: 
 

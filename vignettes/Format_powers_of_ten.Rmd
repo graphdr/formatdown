@@ -432,6 +432,14 @@ knitr::kable(DT, align = "r")
 
 
 
+```{r}
+numbers <- c(123.456, 2e-6, 5e8, 0.23)
+format_power_numbers <- format_power(numbers)
+format_power_numbers_digits <- format_power(numbers, digits = 2)
+format_power_numbers_digits <- format_power(numbers, format = "sci", digits = 2)
+```
+
+
 ## References
 
 Davide Cervone (2018) MathJax: TeX and LaTeX math delimiters,   https://docs.mathjax.org/en/v2.7-latest/tex.html#tex-and-latex-math-delimiters. 
