@@ -104,6 +104,8 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
+<p>In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Plank’s constant would be typeset as <span class="math inline">6.626 × 10<sup>−34</sup></span> J/Hz rather than the familiar forms we use in communicating with computers, such as <code>6.626*10^34</code> or <code>6.626E-34</code>.</p>
+<p>The functions in this package help an author convert large and small numbers to character strings, formatted using powers-of-ten notation (and other formats) suitable for use in technical writing or presentations.</p>
 <p>Formatting tools include:</p>
 <p><strong><code><a href="reference/format_power.html">format_power()</a></code></strong><br>
 Convert the elements of a numerical vector to character strings in which the numbers are formatted using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations in <code>.Rmd</code> or <code>.qmd</code> markdown files.</p>
@@ -126,15 +128,15 @@ Format a vector of numbers as character strings with measurement units appended 
 <span></span>
 <span><span class="co"># Scientific notation, math delimited</span></span>
 <span><span class="fu"><a href="reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">4</span>, format <span class="op">=</span> <span class="st">"sci"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$1.013 \\times 10^{5}$ "</span></span>
+<span><span class="co">#&gt; [1] "$1.013 \\times 10^{5}$"</span></span>
 <span></span>
 <span><span class="co"># Engineering notation, math-delimited</span></span>
 <span><span class="fu"><a href="reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">4</span>, format <span class="op">=</span> <span class="st">"engr"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$101.3 \\times 10^{3}$ "</span></span>
+<span><span class="co">#&gt; [1] "$101.3 \\times 10^{3}$"</span></span>
 <span></span>
 <span><span class="co"># Decimal notation, math-delimited</span></span>
 <span><span class="fu"><a href="reference/format_decimal.html">format_decimal</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">0</span>, big_mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$101,300$ "</span></span>
+<span><span class="co">#&gt; [1] "$101,300$"</span></span>
 <span></span>
 <span><span class="co"># Unit notation, non-delimited</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/units.html" class="external-link">units</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Pa"</span></span>
