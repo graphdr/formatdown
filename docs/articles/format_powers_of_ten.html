@@ -1156,6 +1156,8 @@ and add a caption.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Ideal gas constant can be dropped from table, placed in footnote</span></span>
 <span><span class="va">DT</span><span class="op">$</span><span class="va">sp_gas</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "date"  "trial" "humid" "temp"  "pres"  "dens"</span></span>
 <span></span>
 <span><span class="co"># Render in document</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
@@ -1165,7 +1167,7 @@ and add a caption.</p>
 <span>    <span class="st">"Date"</span>,</span>
 <span>    <span class="st">"Trial"</span>,</span>
 <span>    <span class="st">"Humidity"</span>,</span>
-<span>    <span class="st">"Temperature [K]"</span>, </span>
+<span>    <span class="st">"Temperature [K]"</span>,</span>
 <span>    <span class="st">"Pressure [Pa]"</span>,</span>
 <span>    <span class="st">"Density [kg/m$^3$]"</span></span>
 <span>  <span class="op">)</span></span>
