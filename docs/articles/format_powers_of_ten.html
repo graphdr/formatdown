@@ -1146,11 +1146,99 @@ a data frame,</p>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section level2">
+<h2 id="knitrkable-options">
+<code>knitr::kable()</code> options<a class="anchor" aria-label="anchor" href="#knitrkable-options"></a>
+</h2>
+<p>I use some <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> arguments to change the header
+and add a caption.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">numbers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">123.456</span>, <span class="fl">2e-6</span>, <span class="fl">5e8</span>, <span class="fl">0.23</span><span class="op">)</span></span>
-<span><span class="va">format_power_numbers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">numbers</span><span class="op">)</span></span>
-<span><span class="va">format_power_numbers_digits</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">numbers</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">format_power_numbers_digits</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">numbers</span>, format <span class="op">=</span> <span class="st">"sci"</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Ideal gas constant can be dropped from table, placed in footnote</span></span>
+<span><span class="va">DT</span><span class="op">$</span><span class="va">sp_gas</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span></span>
+<span><span class="co"># Render in document</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
+<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"Table 1. Multiple readings for calculating air density"</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Date"</span>,</span>
+<span>    <span class="st">"Trial"</span>,</span>
+<span>    <span class="st">"Humidity"</span>,</span>
+<span>    <span class="st">"Temperature [K]"</span>, </span>
+<span>    <span class="st">"Pressure [Pa]"</span>,</span>
+<span>    <span class="st">"Density [kg/m$^3$]"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<caption>Table 1. Multiple readings for calculating air
+density</caption>
+<colgroup>
+<col width="13%">
+<col width="7%">
+<col width="10%">
+<col width="19%">
+<col width="26%">
+<col width="22%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">Date</th>
+<th align="right">Trial</th>
+<th align="right">Humidity</th>
+<th align="right">Temperature [K]</th>
+<th align="right">Pressure [Pa]</th>
+<th align="right">Density [kg/m<span class="math inline">\(^3\)</span>]</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">2018-06-12</td>
+<td align="right">a</td>
+<td align="right">low</td>
+<td align="right"><span class="math inline">\(294.1\)</span></td>
+<td align="right"><span class="math inline">\(101.1 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(1.198\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">2018-06-13</td>
+<td align="right">b</td>
+<td align="right">high</td>
+<td align="right"><span class="math inline">\(294.1\)</span></td>
+<td align="right"><span class="math inline">\(101.0 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(1.196\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">2018-06-14</td>
+<td align="right">c</td>
+<td align="right">med</td>
+<td align="right"><span class="math inline">\(294.6\)</span></td>
+<td align="right"><span class="math inline">\(101.1 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(1.196\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">2018-06-15</td>
+<td align="right">d</td>
+<td align="right">low</td>
+<td align="right"><span class="math inline">\(293.4\)</span></td>
+<td align="right"><span class="math inline">\(101.0 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(1.200\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">2018-06-16</td>
+<td align="right">e</td>
+<td align="right">high</td>
+<td align="right"><span class="math inline">\(293.9\)</span></td>
+<td align="right"><span class="math inline">\(101.1 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(1.199\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Note: Ideal gas constant is <span class="math inline">\(287\)</span>
+J kg<span class="math inline">\(^{-1}\)</span>K<span class="math inline">\(^{-1}\)</span>.</p>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

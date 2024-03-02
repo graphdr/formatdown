@@ -107,7 +107,7 @@ numbers are formatted in powers of ten notation. Use argument by name.</p></dd>
 
 <dt>set_power</dt>
 <dd><p>Numeric scalar integer. Assigned exponent that overrides
-<code>format</code>. Default NULL makes no notation changes.</p></dd>
+<code>format</code>. Default NULL makes no notation changes. Use argument by name.</p></dd>
 
 
 <dt>delim</dt>
@@ -133,8 +133,8 @@ with exponents in the range specified in <code>omit_power</code></p></li>
 <code>format_power()</code> converts the numbers to character strings of the form, <code>"$a \\times 10^{n}$"</code>, where <code>a</code> is the coefficient and <code>n</code> is the exponent. The
 string includes markup delimiters <code>$...$</code> for rendering as an inline equation
 in R Markdown or Quarto Markdown document.</p>
-<p>The user can specify the minimum number of significant digits and scientific
-or engineering format.</p>
+<p>The user can specify either scientific or engineering format and
+the number of significant digits.</p>
 <p>Powers-of-ten notation is omitted over a range of exponents via <code>omit_power</code>
 such that numbers are converted to character strings of the form, <code>"$a$"</code>,
 where <code>a</code> is the number in decimal notation. The default <code>omit_power = c(-1, 2)</code> formats numbers such as 0.123, 1.23, 12.3, and 123 in decimal form. To

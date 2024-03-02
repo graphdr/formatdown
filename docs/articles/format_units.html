@@ -90,7 +90,7 @@
 
     
     
-<p><img src="../reference/figures/si-base-units.png" style="width:70.0%"><br><small><em>Table of SI units</em> by US National Institute of Standards
+<p><img src="../reference/figures/si-base-units-v2.png" style="width:70.0%"><br><small><em>Table of SI units</em> by US National Institute of Standards
 and Technology (NIST)</small></p>
 <p><br></p>
 <p>We can avoid the need for powers-of-ten notation by adjusting the
@@ -576,6 +576,175 @@ below.</p>
 <td align="right">-102 [deg_F]</td>
 <td align="right">0.0002 [psi]</td>
 <td align="right">0.000001 [lb ft-3]</td>
+<td align="right">927.0 [ft/s]</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="applying-powers-of-ten-notation">Applying powers of ten notation<a class="anchor" aria-label="anchor" href="#applying-powers-of-ten-notation"></a>
+</h2>
+<p>Power of ten notation can often be avoided by applying the units
+format, but in some cases both may be desired. For example, the column
+of density values in the table above span several orders of magnitude.
+One might wish to format these values using power of ten notation.</p>
+<p>Our approach is to work with the original data for this one column
+only and substitute the result for the “Density” column in the data
+frame above.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Start with the original density vector</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">atmos</span><span class="op">$</span><span class="va">dens</span></span>
+<span></span>
+<span><span class="co"># Assign the original units</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/units.html" class="external-link">units</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"kg/m^3"</span></span>
+<span></span>
+<span><span class="co"># Display a representative value</span></span>
+<span><span class="va">x</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt; 0.004 [kg/m^3]</span></span></code></pre></div>
+<p>We use the <code><a href="https://rdrr.io/r/base/units.html" class="external-link">units()</a></code> function to convert to the units we
+want, in this case, <code>[lb ft-3]</code> (using the units package
+“implicit” style of notation).</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Convert to US Customary units</span></span>
+<span><span class="va">display_units</span> <span class="op">&lt;-</span> <span class="st">"lb ft-3"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/units.html" class="external-link">units</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">display_units</span></span>
+<span></span>
+<span><span class="co"># Display the same representative value </span></span>
+<span><span class="va">x</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt; 0.0002497118 [lb/ft^3]</span></span></code></pre></div>
+<p>Having already assigned our units to the <code>display_units</code>
+variable (for later use), we convert the vector from units class to
+numeric class.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Convert the vector to numeric values</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Display the representative value </span></span>
+<span><span class="va">x</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt; [1] 0.0002497118</span></span></code></pre></div>
+<p>Apply <code><a href="../reference/format_power.html">format_power()</a></code> to yield the values as character
+strings in power of ten notation.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Apply power of ten notation using format_power()</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">3</span>, format <span class="op">=</span> <span class="st">"sci"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Display the representative value </span></span>
+<span><span class="va">x</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt; [1] "$2.50 \\times 10^{-4}$"</span></span></code></pre></div>
+<p>Append the display units to each element of the vector.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Append units string to value strings</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">" ["</span>, <span class="va">display_units</span>, <span class="st">"]"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Display the representative value </span></span>
+<span><span class="va">x</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt; [1] "$2.50 \\times 10^{-4}$ [lb ft-3]"</span></span></code></pre></div>
+<p>Finally, substitute this vector for the column of density values
+constructed earlier.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Substitute for column in the data frame from above</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">dens</span> <span class="op">:=</span> <span class="va">x</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span></span>
+<span>  <span class="va">DT</span>,</span>
+<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Altitude"</span>, <span class="st">"Temperature"</span>, <span class="st">"Pressure"</span>, <span class="st">"Density"</span>, <span class="st">"Speed of sound"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<table style="width:100%;" class="table">
+<colgroup>
+<col width="13%">
+<col width="15%">
+<col width="16%">
+<col width="37%">
+<col width="17%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">Altitude</th>
+<th align="right">Temperature</th>
+<th align="right">Pressure</th>
+<th align="right">Density</th>
+<th align="right">Speed of sound</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">0 [ft]</td>
+<td align="right">59 [deg_F]</td>
+<td align="right">14.6923 [psi]</td>
+<td align="right">
+<span class="math inline">\(7.68 \times
+10^{-2}\)</span> [lb ft-3]</td>
+<td align="right">1116.4 [ft/s]</td>
+</tr>
+<tr class="even">
+<td align="right">32808 [ft]</td>
+<td align="right">-58 [deg_F]</td>
+<td align="right">3.8435 [psi]</td>
+<td align="right">
+<span class="math inline">\(2.58 \times
+10^{-2}\)</span> [lb ft-3]</td>
+<td align="right">982.7 [ft/s]</td>
+</tr>
+<tr class="odd">
+<td align="right">65617 [ft]</td>
+<td align="right">-70 [deg_F]</td>
+<td align="right">0.8019 [psi]</td>
+<td align="right">
+<span class="math inline">\(5.55 \times
+10^{-3}\)</span> [lb ft-3]</td>
+<td align="right">968.1 [ft/s]</td>
+</tr>
+<tr class="even">
+<td align="right">98425 [ft]</td>
+<td align="right">-52 [deg_F]</td>
+<td align="right">0.1736 [psi]</td>
+<td align="right">
+<span class="math inline">\(1.15 \times
+10^{-3}\)</span> [lb ft-3]</td>
+<td align="right">989.9 [ft/s]</td>
+</tr>
+<tr class="odd">
+<td align="right">131234 [ft]</td>
+<td align="right">-9 [deg_F]</td>
+<td align="right">0.0416 [psi]</td>
+<td align="right">
+<span class="math inline">\(2.50 \times
+10^{-4}\)</span> [lb ft-3]</td>
+<td align="right">1040.6 [ft/s]</td>
+</tr>
+<tr class="even">
+<td align="right">164042 [ft]</td>
+<td align="right">27 [deg_F]</td>
+<td align="right">0.0116 [psi]</td>
+<td align="right">
+<span class="math inline">\(6.43 \times
+10^{-5}\)</span> [lb ft-3]</td>
+<td align="right">1082.0 [ft/s]</td>
+</tr>
+<tr class="odd">
+<td align="right">196850 [ft]</td>
+<td align="right">-15 [deg_F]</td>
+<td align="right">0.0032 [psi]</td>
+<td align="right">
+<span class="math inline">\(1.94 \times
+10^{-5}\)</span> [lb ft-3]</td>
+<td align="right">1033.7 [ft/s]</td>
+</tr>
+<tr class="even">
+<td align="right">229659 [ft]</td>
+<td align="right">-64 [deg_F]</td>
+<td align="right">0.0008 [psi]</td>
+<td align="right">
+<span class="math inline">\(5.17 \times
+10^{-6}\)</span> [lb ft-3]</td>
+<td align="right">974.6 [ft/s]</td>
+</tr>
+<tr class="odd">
+<td align="right">262467 [ft]</td>
+<td align="right">-102 [deg_F]</td>
+<td align="right">0.0002 [psi]</td>
+<td align="right">
+<span class="math inline">\(1.15 \times
+10^{-6}\)</span> [lb ft-3]</td>
 <td align="right">927.0 [ft/s]</td>
 </tr>
 </tbody>
