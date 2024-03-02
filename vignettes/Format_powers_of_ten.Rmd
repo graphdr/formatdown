@@ -441,6 +441,7 @@ I use some `knitr::kable()` arguments to change the header and add a caption.
 ```{r}
 # Ideal gas constant can be dropped from table, placed in footnote
 DT$sp_gas <- NULL
+names(DT)
 
 # Render in document
 knitr::kable(DT,
@@ -450,7 +451,7 @@ knitr::kable(DT,
     "Date",
     "Trial",
     "Humidity",
-    "Temperature [K]", 
+    "Temperature [K]",
     "Pressure [Pa]",
     "Density [kg/m$^3$]"
   )
