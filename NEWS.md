@@ -5,7 +5,7 @@
 - add package alias
 - correct issue with numbers < machine eps
 - correct issue with `omit_power()` argument
-- add `signif()` to enforce significant digits in output before applying `formatC()` 
+- add `signif()` to `format_power()` to enforce significant digits in output before applying `formatC()` 
 - update vignettes to reflect changes
 
 # formatdown 0.1.2

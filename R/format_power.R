@@ -12,8 +12,8 @@
 #' string includes markup delimiters `$...$` for rendering as an inline equation
 #' in R Markdown or Quarto Markdown document.
 #'
-#' The user can specify the minimum number of significant digits and scientific
-#' or engineering format.
+#' The user can specify either scientific or engineering format and
+#' the number of significant digits.
 #'
 #' Powers-of-ten notation is omitted over a range of exponents via `omit_power`
 #' such that numbers are converted to character strings of the form, `"$a$"`,
@@ -37,7 +37,7 @@
 #'   between which power of ten notation is omitted, where `p <= q`. If NULL all
 #'   numbers are formatted in powers of ten notation. Use argument by name.
 #' @param set_power Numeric scalar integer. Assigned exponent that overrides
-#'   `format`. Default NULL makes no notation changes.
+#'   `format`. Default NULL makes no notation changes. Use argument by name.
 #' @param delim Character vector (length 1 or 2) defining the delimiters for
 #'   marking up inline math. Possible values include `"$"` or `"\\("`, both of
 #'   which create appropriate left and right delimiters. Alternatively, left and

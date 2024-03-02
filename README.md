@@ -119,23 +119,23 @@ properties[, bulk_mod_GPa := format_units(bulk_mod_GPa, 3, unit = "GPa")]
 knitr::kable(properties,
   align = "r",
   caption = "Table 1: Properties of water as a function of temperature.",
-  col.names = c("Temperatue [K]", "Viscosity [Pa-s]", "Bulk modulus [Pa]", "Bulk modulus [GPa]")
+  col.names = c("Temperature [K]", "Viscosity [Pa-s]", "Bulk modulus [Pa]", "Bulk modulus [GPa]")
 )
 ```
 
-| Temperatue \[K\] |      Viscosity \[Pa-s\] |  Bulk modulus \[Pa\] | Bulk modulus \[GPa\] |
-|-----------------:|------------------------:|---------------------:|---------------------:|
-|          $273.1$ |  $1.734 \times 10^{-3}$ | $2.02 \times 10^{9}$ |         2.02 \[GPa\] |
-|          $283.1$ |  $1.310 \times 10^{-3}$ | $2.10 \times 10^{9}$ |         2.10 \[GPa\] |
-|          $293.1$ |  $1.021 \times 10^{-3}$ | $2.18 \times 10^{9}$ |         2.18 \[GPa\] |
-|          $303.1$ | $0.8174 \times 10^{-3}$ | $2.25 \times 10^{9}$ |         2.25 \[GPa\] |
-|          $313.1$ | $0.6699 \times 10^{-3}$ | $2.28 \times 10^{9}$ |         2.28 \[GPa\] |
-|          $323.1$ | $0.5605 \times 10^{-3}$ | $2.29 \times 10^{9}$ |         2.29 \[GPa\] |
-|          $333.1$ | $0.4776 \times 10^{-3}$ | $2.28 \times 10^{9}$ |         2.28 \[GPa\] |
-|          $343.1$ | $0.4135 \times 10^{-3}$ | $2.25 \times 10^{9}$ |         2.25 \[GPa\] |
-|          $353.1$ | $0.3631 \times 10^{-3}$ | $2.20 \times 10^{9}$ |         2.20 \[GPa\] |
-|          $363.1$ | $0.3229 \times 10^{-3}$ | $2.14 \times 10^{9}$ |         2.14 \[GPa\] |
-|          $373.1$ | $0.2902 \times 10^{-3}$ | $2.07 \times 10^{9}$ |         2.07 \[GPa\] |
+| Temperature \[K\] |      Viscosity \[Pa-s\] |  Bulk modulus \[Pa\] | Bulk modulus \[GPa\] |
+|------------------:|------------------------:|---------------------:|---------------------:|
+|           $273.1$ |  $1.734 \times 10^{-3}$ | $2.02 \times 10^{9}$ |         2.02 \[GPa\] |
+|           $283.1$ |  $1.310 \times 10^{-3}$ | $2.10 \times 10^{9}$ |         2.10 \[GPa\] |
+|           $293.1$ |  $1.021 \times 10^{-3}$ | $2.18 \times 10^{9}$ |         2.18 \[GPa\] |
+|           $303.1$ | $0.8174 \times 10^{-3}$ | $2.25 \times 10^{9}$ |         2.25 \[GPa\] |
+|           $313.1$ | $0.6699 \times 10^{-3}$ | $2.28 \times 10^{9}$ |         2.28 \[GPa\] |
+|           $323.1$ | $0.5605 \times 10^{-3}$ | $2.29 \times 10^{9}$ |         2.29 \[GPa\] |
+|           $333.1$ | $0.4776 \times 10^{-3}$ | $2.28 \times 10^{9}$ |         2.28 \[GPa\] |
+|           $343.1$ | $0.4135 \times 10^{-3}$ | $2.25 \times 10^{9}$ |         2.25 \[GPa\] |
+|           $353.1$ | $0.3631 \times 10^{-3}$ | $2.20 \times 10^{9}$ |         2.20 \[GPa\] |
+|           $363.1$ | $0.3229 \times 10^{-3}$ | $2.14 \times 10^{9}$ |         2.14 \[GPa\] |
+|           $373.1$ | $0.2902 \times 10^{-3}$ | $2.07 \times 10^{9}$ |         2.07 \[GPa\] |
 
 Table 1: Properties of water as a function of temperature.
 

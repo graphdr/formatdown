@@ -30,7 +30,7 @@ between which power of ten notation is omitted, where \code{p <= q}. If NULL all
 numbers are formatted in powers of ten notation. Use argument by name.}
 
 \item{set_power}{Numeric scalar integer. Assigned exponent that overrides
-\code{format}. Default NULL makes no notation changes.}
+\code{format}. Default NULL makes no notation changes. Use argument by name.}
 
 \item{delim}{Character vector (length 1 or 2) defining the delimiters for
 marking up inline math. Possible values include \code{"$"} or \code{"\\\\("}, both of
@@ -59,8 +59,8 @@ Given a number, a numerical vector, or a numerical column from a data frame,
 string includes markup delimiters \verb{$...$} for rendering as an inline equation
 in R Markdown or Quarto Markdown document.
 
-The user can specify the minimum number of significant digits and scientific
-or engineering format.
+The user can specify either scientific or engineering format and
+the number of significant digits.
 
 Powers-of-ten notation is omitted over a range of exponents via \code{omit_power}
 such that numbers are converted to character strings of the form, \code{"$a$"},

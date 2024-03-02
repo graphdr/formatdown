@@ -110,18 +110,18 @@ which, in an `.Rmd` or `.qmd` output document, are rendered using inline R code 
 ```{r}
 #| echo: false
 x <- 101300
-sci <- format_power(x, 4, format = "sci")
-engr <- format_power(x, digits = 4, format = "engr")
-deci <- format_decimal(x, digits = 0, big_mark = ",")
+sci  <-   format_power(x, 4, format = "sci")
+engr <-   format_power(x, 4, format = "engr")
+deci <- format_decimal(x, 0, big_mark = ",")
 units(x) <- "Pa"
 uni <- format_units(x, unit = "hPa")
 
 DT <- wrapr::build_frame(
-  "Notation", "Rendered as" |
-    "scientific", sci |
-    "engineering", engr |
+  "Notation"            , "Rendered as" |
+    "scientific"        , sci  |
+    "engineering"       , engr |
     "integer or decimal", deci |
-    "units", uni
+    "units"             , uni
 )
 setDT(DT)
 knitr::kable(DT, align = "r")
@@ -152,7 +152,7 @@ properties[, bulk_mod_GPa := format_units(bulk_mod_GPa, 3, unit = "GPa")]
 knitr::kable(properties,
   align = "r",
   caption = "Table 1: Properties of water as a function of temperature.",
-  col.names = c("Temperatue [K]", "Viscosity [Pa-s]", "Bulk modulus [Pa]", "Bulk modulus [GPa]")
+  col.names = c("Temperature [K]", "Viscosity [Pa-s]", "Bulk modulus [Pa]", "Bulk modulus [GPa]")
 )
 ```
 

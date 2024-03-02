@@ -42,7 +42,7 @@ test_format_power<- function() {
   expect_equal(format_power(x, 3, set_power = NA), ans)
   expect_equal(format_power(x, 3, set_power = NULL), ans)
 
-  # Ignore exponents
+  # Omit power
   x   <- 0.633
   ans <- "$0.633$"
   expect_equal(format_power(x, 3, omit_power = c(-1, 2)), ans)
@@ -56,6 +56,11 @@ test_format_power<- function() {
   expect_equal(format_power(x, 3, omit_power = c(0, 0)), ans)
   expect_equal(format_power(x, 3, omit_power = NA), ans)
   expect_equal(format_power(x, 3, omit_power = NULL), ans)
+
+  # Omitting a single power of ten
+  x <- c(1.2e-4, 3.4e-3, 5.6e-2)
+  ans <- c("$1.200 \\times 10^{-4}$", "$0.003400$", "$5.600 \\times 10^{-2}$")
+  expect_equal(format_power(x, format = "sci", omit_power = c(-3, -3)), ans)
 
   # Delimiter options
   x   <- avogadro

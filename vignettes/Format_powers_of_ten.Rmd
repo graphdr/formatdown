@@ -432,12 +432,35 @@ knitr::kable(DT, align = "r")
 
 
 
+
+## `knitr::kable()` options
+
+I use some `knitr::kable()` arguments to change the header and add a caption. 
+
+
 ```{r}
-numbers <- c(123.456, 2e-6, 5e8, 0.23)
-format_power_numbers <- format_power(numbers)
-format_power_numbers_digits <- format_power(numbers, digits = 2)
-format_power_numbers_digits <- format_power(numbers, format = "sci", digits = 2)
+# Ideal gas constant can be dropped from table, placed in footnote
+DT$sp_gas <- NULL
+
+# Render in document
+knitr::kable(DT,
+  align = "r",
+  caption = "Table 1. Multiple readings for calculating air density",
+  col.names = c(
+    "Date",
+    "Trial",
+    "Humidity",
+    "Temperature [K]", 
+    "Pressure [Pa]",
+    "Density [kg/m$^3$]"
+  )
+)
 ```
+Note: Ideal gas constant is `r format_power(round(mean(air_meas$sp_gas), 0), digits = 3)` J kg$^{-1}$K$^{-1}$. 
+
+
+
+
 
 
 ## References

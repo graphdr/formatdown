@@ -22,7 +22,9 @@ options(
 )
 ```
 
-![](../man/figures/si-base-units.png){width=70%}    
+
+
+![](../man/figures/si-base-units-v2.png){width=70%}    
 <small>*Table of SI units* by US National Institute of Standards and Technology (NIST)</small>
 
 <br>
@@ -269,5 +271,74 @@ knitr::kable(
 )
 ```
 
+## Applying powers of ten notation
 
+Power of ten notation can often be avoided by applying the units format, but in some cases both may be desired. For example, the column of density values in the table above span several orders of magnitude. One might wish to format these values using power of ten notation. 
+
+Our approach is to work with the original data for this one column only and substitute the result for the "Density" column in the data frame above. 
+
+```{r}
+# Start with the original density vector
+x <- atmos$dens
+
+# Assign the original units
+units(x) <- "kg/m^3"
+
+# Display a representative value
+x[5]
+```
+
+We use the `units()` function to convert to the units we want, in this case, `[lb ft-3]` (using the units package "implicit" style of notation). 
+
+```{r}
+# Convert to US Customary units
+display_units <- "lb ft-3"
+units(x) <- display_units
+
+# Display the same representative value 
+x[5]
+```
+
+Having already assigned our units to the `display_units` variable (for later use), we convert the vector from units class to numeric class. 
+
+```{r}
+# Convert the vector to numeric values
+x <- as.numeric(x)
+
+# Display the representative value 
+x[5]
+```
+
+Apply `format_power()` to yield the values as character strings in power of ten notation. 
+
+```{r}
+# Apply power of ten notation using format_power()
+x <- format_power(x, digits = 3, format = "sci")
+
+# Display the representative value 
+x[5]
+```
+
+Append the display units to each element of the vector.  
+
+```{r}
+# Append units string to value strings
+x <- paste0(x, " [", display_units, "]")
+
+# Display the representative value 
+x[5]
+```
+
+Finally, substitute this vector for the column of density values constructed earlier. 
+
+```{r}
+# Substitute for column in the data frame from above
+DT[, dens := x]
+
+knitr::kable(
+  DT,
+  align = "r",
+  col.names = c("Altitude", "Temperature", "Pressure", "Density", "Speed of sound")
+)
+```
 
