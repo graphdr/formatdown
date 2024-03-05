@@ -295,7 +295,7 @@ We use the `units()` function to convert to the units we want, in this case, `[l
 display_units <- "lb ft-3"
 units(x) <- display_units
 
-# Display the same representative value 
+# Display the same representative value
 x[5]
 ```
 
@@ -305,7 +305,7 @@ Having already assigned our units to the `display_units` variable (for later use
 # Convert the vector to numeric values
 x <- as.numeric(x)
 
-# Display the representative value 
+# Display the representative value
 x[5]
 ```
 
@@ -315,7 +315,7 @@ Apply `format_power()` to yield the values as character strings in power of ten 
 # Apply power of ten notation using format_power()
 x <- format_power(x, digits = 3, format = "sci")
 
-# Display the representative value 
+# Display the representative value
 x[5]
 ```
 
@@ -325,7 +325,7 @@ Append the display units to each element of the vector.
 # Append units string to value strings
 x <- paste0(x, " [", display_units, "]")
 
-# Display the representative value 
+# Display the representative value
 x[5]
 ```
 

@@ -27,6 +27,11 @@ test_format_power<- function() {
   ans <- "$6.022 \\times 10^{23}$"
   expect_equal(format_power(x, format = "sci"), ans)
 
+  # Values smaller than machine eps format correctly
+  x <- 2e-20
+  ans <- "$2.0 \\times 10^{-20}$"
+  expect_equal(format_power(x, 2, format = "sci"), ans)
+
   # Set power
   x   <- avogadro
   ans <- "$0.6022 \\times 10^{24}$"

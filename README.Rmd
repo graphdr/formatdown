@@ -20,7 +20,7 @@ options(
 )
 
 avo <- 6.0221E+23
-plank <- 6.62607015E-34 
+plank <- 6.62607015E-34
 # J⋅Hz−1
 ```
 
@@ -110,18 +110,18 @@ which, in an `.Rmd` or `.qmd` output document, are rendered using inline R code 
 ```{r}
 #| echo: false
 x <- 101300
-sci  <-   format_power(x, 4, format = "sci")
-engr <-   format_power(x, 4, format = "engr")
+sci <- format_power(x, 4, format = "sci")
+engr <- format_power(x, 4, format = "engr")
 deci <- format_decimal(x, 0, big_mark = ",")
 units(x) <- "Pa"
 uni <- format_units(x, unit = "hPa")
 
 DT <- wrapr::build_frame(
-  "Notation"            , "Rendered as" |
-    "scientific"        , sci  |
-    "engineering"       , engr |
+  "Notation", "Rendered as" |
+    "scientific", sci |
+    "engineering", engr |
     "integer or decimal", deci |
-    "units"             , uni
+    "units", uni
 )
 setDT(DT)
 knitr::kable(DT, align = "r")

@@ -1,6 +1,6 @@
 ## Purpose
 
-Adding new functions. Minor modifications to vignettes.
+Correcting issues and updating vignettes accordingly. 
 
 ## R CMD check results
 
@@ -9,7 +9,7 @@ Adding new functions. Minor modifications to vignettes.
 
 ## Build results
 
-No errors or warnings, only some NOTES unrelated to the package. 
+No errors or warnings. 
 
 Platforms: 
 
