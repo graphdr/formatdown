@@ -171,9 +171,7 @@ packages in this vignette:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/graphdr/formatdown/" class="external-link">formatdown</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: package 'data.table' was built under R version 4.3.2</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-quantities.github.io/units/" class="external-link">units</a></span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: package 'units' was built under R version 4.3.2</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -609,7 +607,7 @@ want, in this case, <code>[lb ft-3]</code> (using the units package
 <span><span class="va">display_units</span> <span class="op">&lt;-</span> <span class="st">"lb ft-3"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/units.html" class="external-link">units</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">display_units</span></span>
 <span></span>
-<span><span class="co"># Display the same representative value </span></span>
+<span><span class="co"># Display the same representative value</span></span>
 <span><span class="va">x</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span></span>
 <span><span class="co">#&gt; 0.0002497118 [lb/ft^3]</span></span></code></pre></div>
 <p>Having already assigned our units to the <code>display_units</code>
@@ -619,7 +617,7 @@ numeric class.</p>
 <code class="sourceCode R"><span><span class="co"># Convert the vector to numeric values</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Display the representative value </span></span>
+<span><span class="co"># Display the representative value</span></span>
 <span><span class="va">x</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span></span>
 <span><span class="co">#&gt; [1] 0.0002497118</span></span></code></pre></div>
 <p>Apply <code><a href="../reference/format_power.html">format_power()</a></code> to yield the values as character
@@ -628,7 +626,7 @@ strings in power of ten notation.</p>
 <code class="sourceCode R"><span><span class="co"># Apply power of ten notation using format_power()</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_power.html">format_power</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">3</span>, format <span class="op">=</span> <span class="st">"sci"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Display the representative value </span></span>
+<span><span class="co"># Display the representative value</span></span>
 <span><span class="va">x</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span></span>
 <span><span class="co">#&gt; [1] "$2.50 \\times 10^{-4}$"</span></span></code></pre></div>
 <p>Append the display units to each element of the vector.</p>
@@ -636,7 +634,7 @@ strings in power of ten notation.</p>
 <code class="sourceCode R"><span><span class="co"># Append units string to value strings</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">" ["</span>, <span class="va">display_units</span>, <span class="st">"]"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Display the representative value </span></span>
+<span><span class="co"># Display the representative value</span></span>
 <span><span class="va">x</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span></span>
 <span><span class="co">#&gt; [1] "$2.50 \\times 10^{-4}$ [lb ft-3]"</span></span></code></pre></div>
 <p>Finally, substitute this vector for the column of density values
