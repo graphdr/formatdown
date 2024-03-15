@@ -76,6 +76,7 @@ DT[, lapply(.SD, function(x) format_decimal(x, 1))]
 \seealso{
 Other format_*: 
 \code{\link{format_power}()},
+\code{\link{format_text}()},
 \code{\link{format_units}()}
 }
 \concept{format_*}

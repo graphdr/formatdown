@@ -86,6 +86,7 @@ format_units(x, digits = 2, unit_form = "implicit")
 \seealso{
 Other format_*: 
 \code{\link{format_decimal}()},
-\code{\link{format_power}()}
+\code{\link{format_power}()},
+\code{\link{format_text}()}
 }
 \concept{format_*}

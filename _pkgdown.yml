@@ -13,6 +13,8 @@ navbar:
         href: articles/format_powers_of_ten.html
       - text: Format integers and decimals
         href: articles/format_integers_and_decimals.html
+      - text: Format text
+        href: articles/format_text.html
       - text: Format units
         href: articles/format_units.html
 

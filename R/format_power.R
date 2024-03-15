@@ -23,7 +23,7 @@
 #' set the `omit_power` argument to NULL.
 #'
 #' Delimiters for inline math markup can be edited if necessary. If the default
-#' argument fails, the `"\\("` alternative is available. If using a custom
+#' argument fails, try using `"\\("` as an alternative. If using a custom
 #' delimiter to suit the markup environment, be sure to escape all special
 #' symbols.
 #'
@@ -31,8 +31,16 @@
 #' @param digits Numeric scalar between 1 and 20 (inclusive) defining the
 #'   number of significant digits in result.
 #' @param ... Not used, force later arguments to be used by name.
-#' @param format Character. Possible values are "engr" (engineering notation)
-#'   and "sci" (scientific notation). Use argument  by name.
+#' @param format Character. Possible values are "engr" (default) for engineering
+#'   notation and and "sci" for scientific notation. Use argument  by name. Can
+#'   also be set as a global option, for example,
+#'   `options(formatdown.power.format = "sci")` that can be overwritten
+#'   in an individual function call.
+#' @param size Font size. Possible values are "scriptsize", "small" (default),
+#'   "normalsize", "large", and "huge". which correspond to selected
+#'   LaTeX font size values. Can also be set as a global option, for example,
+#'   `options(formatdown.font.size = "normalsize")` that can be overwritten
+#'   in an individual function call.
 #' @param omit_power Numeric vector `c(p, q)` specifying the range of exponents
 #'   between which power of ten notation is omitted, where `p <= q`. If NULL all
 #'   numbers are formatted in powers of ten notation. Use argument by name.
@@ -56,7 +64,8 @@
 format_power <- function(x,
                          digits = 4,
                          ...,
-                         format = "engr",
+                         format = NULL,
+                         size = NULL,
                          omit_power = c(-1, 2),
                          set_power = NULL,
                          delim = "$") {
@@ -73,6 +82,26 @@ format_power <- function(x,
     "* Did you forget to write `format = `, etc.\n *"
   )
   wrapr::stop_if_dot_args(substitute(list(...)), stop_if_dots_text)
+
+
+
+  # Determine the value assigned to format
+  if (isTRUE(!is.null(format))) {
+    # Use the value from the argument list
+    format <- format
+  } else {
+    # Use the value assigned as an option, otherwise use default
+    format <- getOption("formatdown.power.format", default = "engr")
+  }
+
+  # Determine the value assigned to size
+  if (isTRUE(!is.null(size))) {
+    # Use the value from the argument list
+    size <- size
+  } else {
+    # Use the value assigned as an option, otherwise use default
+    size <- getOption("formatdown.font.size", default = "small")
+  }
 
   # More informative error for digits/format specifically
   if (!isTRUE(class(digits) == "numeric")) {stop(stop_if_dots_text)}
@@ -93,6 +122,7 @@ format_power <- function(x,
   coeff <- NULL
   value <- NULL
   omit_check <- NULL
+  size_markup <- NULL
 
   # Argument checks ---------------------------------------------------------
 
@@ -107,6 +137,13 @@ format_power <- function(x,
   # format: character, not missing, length 1, element of set
   checkmate::qassert(format, "S1")
   checkmate::assert_choice(format, choices = c("engr", "sci"))
+
+  # size: character, not missing, length 1, element of set
+  checkmate::qassert(size, "S1")
+  checkmate::assert_choice(
+    size,
+    choices = c("scriptsize", "small", "normalsize", "large", "huge")
+  )
 
   # set_power: numeric, length 1 (can be NA)
   checkmate::qassert(set_power, "n1")
@@ -123,6 +160,13 @@ format_power <- function(x,
   checkmate::assert_true(length(delim) <= 2)
 
   # Initial processing ------------------------------------------------------
+
+  # Size format for math markup ----------------------------------------------
+  if(size == "huge")       size_markup  <- "\\huge"
+  if(size == "large")      size_markup  <- "\\large"
+  if(size == "normalsize") size_markup  <- "\\normalsize"
+  if(size == "small")      size_markup  <- "\\small"
+  if(size == "scriptsize") size_markup  <- "\\scriptsize"
 
   # Convert vector to data.table for processing
   DT <- data.table::copy(data.frame(x))
@@ -160,6 +204,9 @@ format_power <- function(x,
   # (see utils.R)
   DT[non_pow] <- omit_formatC_extras(DT[non_pow], col_name = "value")
 
+  # Add font size
+  DT[non_pow, value := paste0(size_markup, " ", value)]
+
   # Power rows ------------------------------------------------------
 
   # Determine exponent
@@ -189,7 +236,7 @@ format_power <- function(x,
   DT[pow_10] <- omit_formatC_extras(DT[pow_10], col_name = "char_coeff")
 
   # Construct powers-of-ten character string
-  DT[pow_10, value := paste0(char_coeff, " \\times ", "10^{", exponent, "}")]
+  DT[pow_10, value := paste0(size_markup, " ", char_coeff, " \\times ", "10^{", exponent, "}")]
 
   # Output ------------------------------------------------------
 

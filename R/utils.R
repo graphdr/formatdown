@@ -40,3 +40,6 @@ add_delim <- function(DT, col_name, delim) {
     DT[, (col_name) := paste0(delim[1], get(col_name), delim[2])]
   }
 }
+
+
+

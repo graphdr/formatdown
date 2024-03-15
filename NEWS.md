@@ -1,12 +1,15 @@
-# formatdown 0.1.2.9000 (development version)
+# formatdown 0.1.3
 
-2024--02--27
+2024--03--14
 
-- add package alias
-- correct issue with numbers < machine eps
-- correct issue with `omit_power()` argument
+- add `format_text()` function 
+- add `size` argument to `format_power()`
 - add `signif()` to `format_power()` to enforce significant digits in output before applying `formatC()` 
-- update vignettes to reflect changes
+- add `options()` to globally set font size and power of ten format arguments
+- correct issue with `omit_power()` argument
+- correct issue with numbers < machine eps
+- add package alias
+- update tests and vignettes to reflect changes
 
 # formatdown 0.1.2
 

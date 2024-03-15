@@ -1,7 +1,7 @@
 test_format_power<- function() {
 
   # usage
-  # format_power(x, digits = 3, ..., format = "engr", omit_power = c(-1, 2))
+  # format_power(x, digits = 3, ..., format = "engr", size = NULL, omit_power = c(-1, 2))
   # arguments after dots must be named
 
   # Needed for tinytest::build_install_test()
@@ -12,92 +12,94 @@ test_format_power<- function() {
 
   # Equivalent usage, named, unnamed, default
   x   <- avogadro
-  ans <- "$602.2 \\times 10^{21}$"
+  ans <- "$\\small 602.2 \\times 10^{21}$"
   expect_equal(format_power(x = x, digits = 4), ans)
   expect_equal(format_power(x, 4), ans)
   expect_equal(format_power(x), ans)
+  expect_equal(format_power(x), format_power(x, format = NULL))
+  expect_equal(format_power(x), format_power(x, size = NULL))
 
   # Significant digits
   x   <- avogadro
-  ans <- "$602 \\times 10^{21}$"
+  ans <- "$\\small 602 \\times 10^{21}$"
   expect_equal(format_power(x, 3), ans)
 
   # Scientific format
   x   <- avogadro
-  ans <- "$6.022 \\times 10^{23}$"
+  ans <- "$\\small 6.022 \\times 10^{23}$"
   expect_equal(format_power(x, format = "sci"), ans)
 
   # Values smaller than machine eps format correctly
   x <- 2e-20
-  ans <- "$2.0 \\times 10^{-20}$"
+  ans <- "$\\small 2.0 \\times 10^{-20}$"
   expect_equal(format_power(x, 2, format = "sci"), ans)
 
   # Set power
   x   <- avogadro
-  ans <- "$0.6022 \\times 10^{24}$"
+  ans <- "$\\small 0.6022 \\times 10^{24}$"
   expect_equal(format_power(x, set_power = 24, format = "engr"), ans)
   expect_equal(format_power(x, set_power = 24, format = "sci"), ans)
   expect_equal(format_power(x, set_power = 24L), ans)
 
   x   <- 0.633
-  ans <- "$6.33 \\times 10^{-1}$"
+  ans <- "$\\small 6.33 \\times 10^{-1}$"
   expect_equal(format_power(x, 3, set_power = -1, omit_power = NULL), ans)
-  ans <- "$0.633$"
+  ans <- "$\\small 0.633$"
   expect_equal(format_power(x, 3, set_power = -1, omit_power = c(-1, 2)), ans)
   expect_equal(format_power(x, 3, set_power = NA), ans)
   expect_equal(format_power(x, 3, set_power = NULL), ans)
 
   # Omit power
   x   <- 0.633
-  ans <- "$0.633$"
+  ans <- "$\\small 0.633$"
   expect_equal(format_power(x, 3, omit_power = c(-1, 2)), ans)
 
   x   <- 0.633
-  ans <- "$633 \\times 10^{-3}$"
+  ans <- "$\\small 633 \\times 10^{-3}$"
   expect_equal(format_power(x, 3, omit_power = c(0, 2)), ans)
 
   x   <- 633
-  ans <- "$633 \\times 10^{0}$"
+  ans <- "$\\small 633 \\times 10^{0}$"
   expect_equal(format_power(x, 3, omit_power = c(0, 0)), ans)
   expect_equal(format_power(x, 3, omit_power = NA), ans)
   expect_equal(format_power(x, 3, omit_power = NULL), ans)
 
   # Omitting a single power of ten
   x <- c(1.2e-4, 3.4e-3, 5.6e-2)
-  ans <- c("$1.200 \\times 10^{-4}$", "$0.003400$", "$5.600 \\times 10^{-2}$")
+  ans <- c("$\\small 1.200 \\times 10^{-4}$", "$\\small 0.003400$", "$\\small 5.600 \\times 10^{-2}$")
   expect_equal(format_power(x, format = "sci", omit_power = c(-3, -3)), ans)
 
   # Delimiter options
   x   <- avogadro
-  ans <- "$602.2 \\times 10^{21}$"
+  ans <- "$\\small 602.2 \\times 10^{21}$"
   expect_equal(format_power(x, delim = "$"), ans)
   expect_equal(format_power(x, delim = c("$", "$")), ans)
 
-  ans <- "\\(602.2 \\times 10^{21}\\)"
+  ans <- "\\(\\small 602.2 \\times 10^{21}\\)"
   expect_equal(format_power(x, delim = "\\("), ans)
   expect_equal(format_power(x, delim = c("\\(", "\\)")), ans)
 
-  ans <- "\\[602.2 \\times 10^{21}\\]"
+  ans <- "\\[\\small 602.2 \\times 10^{21}\\]"
   expect_equal(format_power(x, delim = c("\\[", "\\]")), ans)
 
   # Data frame,one column as vector
   x   <- air_meas[, (pres)]
-  ans <- c("$101.1 \\times 10^{3}$",
-           "$101.0 \\times 10^{3}$",
-           "$101.1 \\times 10^{3}$",
-           "$101.0 \\times 10^{3}$",
-           "$101.1 \\times 10^{3}$")
+  ans <- c("$\\small 101.1 \\times 10^{3}$",
+           "$\\small 101.0 \\times 10^{3}$",
+           "$\\small 101.1 \\times 10^{3}$",
+           "$\\small 101.0 \\times 10^{3}$",
+           "$\\small 101.1 \\times 10^{3}$")
   expect_equal(format_power(x), ans)
 
   # Data frame, selected column in place
   DT  <- air_meas[, .(trial, pres)]
   ans <- data.table(wrapr::build_frame(
     "trial"  , "pres"               |
-      "a"    , "$101.1 \\times 10^{3}$" |
-      "b"    , "$101.0 \\times 10^{3}$" |
-      "c"    , "$101.1 \\times 10^{3}$" |
-      "d"    , "$101.0 \\times 10^{3}$" |
-      "e"    , "$101.1 \\times 10^{3}$" ))
+      "a"    , "$\\small 101.1 \\times 10^{3}$" |
+      "b"    , "$\\small 101.0 \\times 10^{3}$" |
+      "c"    , "$\\small 101.1 \\times 10^{3}$" |
+      "d"    , "$\\small 101.0 \\times 10^{3}$" |
+      "e"    , "$\\small 101.1 \\times 10^{3}$" ))
   cols_we_want <- c("pres")
   DT <- DT[, (cols_we_want) := lapply(.SD, function(x) format_power(x)),
            .SDcols = cols_we_want]
@@ -108,12 +110,12 @@ test_format_power<- function() {
   # spaces to store "800" as " 800". format_power() removes the extra spaces
   # ####### Change to format() from formatC() eliminates this issue.
   x <- 1.0E-6 * c(1.02, 0.8)
-  ans <- c("$1.02 \\times 10^{-6}$", "$800 \\times 10^{-9}$")
+  ans <- c("$\\small 1.02 \\times 10^{-6}$", "$\\small 800 \\times 10^{-9}$")
   expect_equal(format_power(x, 3), ans)
 
   # Negative number are OK
   x <- -1.0E-6 * c(1.02, 0.8)
-  ans <- c("$-1.02 \\times 10^{-6}$", "$-800 \\times 10^{-9}$")
+  ans <- c("$\\small -1.02 \\times 10^{-6}$", "$\\small -800 \\times 10^{-9}$")
   expect_equal(format_power(x, 3), ans)
 
   # Errors for incorrect x argument
@@ -134,7 +136,6 @@ test_format_power<- function() {
 
   # Errors for incorrect format argument
   expect_error(format_power(avogadro, format = NA_character_))
-  expect_error(format_power(avogadro, format = NULL))
   expect_error(format_power(avogadro, format = TRUE))
   expect_error(format_power(avogadro, format = 3))
   expect_error(format_power(avogadro, format = c("engr", "sci")))

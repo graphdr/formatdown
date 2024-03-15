@@ -8,7 +8,8 @@ format_power(
   x,
   digits = 4,
   ...,
-  format = "engr",
+  format = NULL,
+  size = NULL,
   omit_power = c(-1, 2),
   set_power = NULL,
   delim = "$"
@@ -22,8 +23,17 @@ number of significant digits in result.}
 
 \item{...}{Not used, force later arguments to be used by name.}
 
-\item{format}{Character. Possible values are "engr" (engineering notation)
-and "sci" (scientific notation). Use argument  by name.}
+\item{format}{Character. Possible values are "engr" (default) for engineering
+notation and and "sci" for scientific notation. Use argument  by name. Can
+also be set as a global option, for example,
+\code{options(formatdown.power.format = "sci")} that can be overwritten
+in an individual function call.}
+
+\item{size}{Font size. Possible values are "scriptsize", "small" (default),
+"normalsize", "large", and "huge". which correspond to selected
+LaTeX font size values. Can also be set as a global option, for example,
+\code{options(formatdown.font.size = "normalsize")} that can be overwritten
+in an individual function call.}
 
 \item{omit_power}{Numeric vector \code{c(p, q)} specifying the range of exponents
 between which power of ten notation is omitted, where \code{p <= q}. If NULL all
@@ -69,7 +79,7 @@ cancel these exceptions and convert all numbers to powers-of-ten notation,
 set the \code{omit_power} argument to NULL.
 
 Delimiters for inline math markup can be edited if necessary. If the default
-argument fails, the \code{"\\\\("} alternative is available. If using a custom
+argument fails, try using \code{"\\\\("} as an alternative. If using a custom
 delimiter to suit the markup environment, be sure to escape all special
 symbols.
 }
@@ -110,6 +120,7 @@ DT[, lapply(.SD, function(x) format_power(x))]
 \seealso{
 Other format_*: 
 \code{\link{format_decimal}()},
+\code{\link{format_text}()},
 \code{\link{format_units}()}
 }
 \concept{format_*}

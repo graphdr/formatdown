@@ -2,6 +2,7 @@
 
 export(format_decimal)
 export(format_power)
+export(format_text)
 export(format_units)
 importFrom(checkmate,assert_choice)
 importFrom(checkmate,assert_disjunct)

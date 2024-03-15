@@ -29,23 +29,23 @@ options(
 
 The notation we use to represent large and small numbers depends on the context of our communications. In a computer script, for example, we might encode Avogadro's number as `6.0221*10^23`. A computer printout of this number would typically use E-notation, as in `6.0221E+23`.
 
-In professional technical communications, however, computer syntax should be avoided---the asterisk (`*`) and carat (`^`) in `6.0221*10^23` communicate   *instructions to a computer*, not *syntactical mathematics*. And while scientific E-notation (`6.0221E+23`) has currency in some discourse communities, the general convention in technical communications is to format large and small numbers using powers-of-ten notation of the form, 
+In professional technical communications, however, Avogadro's number would be typeset using power of ten notation, $\small 6.0221 \times 10^{23}$. Computer syntax is generally avoided---the asterisk (`*`) and carat (`^`) in `6.0221*10^23` communicate   *instructions to a computer*, not *syntactical mathematics*. And while scientific E-notation (`6.0221E+23`) has currency in some discourse communities, the general convention in technical communications is to format large and small numbers using powers-of-ten notation of the form, 
 
 $$
-a \times 10^n, 
+\small a \times 10^n, 
 $$
 
 The $\times$ multiplication symbol, often avoided in other contexts, is conventional syntax in powers-of-ten notation. Also, the notation has two forms in general use: *scientific* and *engineering* (Chase 2021, 63–67).
 
-- *Scientific.* &nbsp; $n$ is an integer and $a \in Re: 1\leq{|a|}<10$. For example, `r format_power(6.0221E+23, 4, format = "sci")`
+- *Scientific.* &nbsp; $\small n$ is an integer and $\small a \in Re: 1\leq{|a|}<10$. For example, `r format_power(6.0221E+23, 4, format = "sci")`
 
-- *Engineering.* &nbsp; $n$ is a multiple of 3 and $a \in Re: 1\leq{|a|}<1000$. For example, `r format_power(6.0221E+23, 4)`
+- *Engineering.* &nbsp; $\small n$ is a multiple of 3 and $\small a \in Re: 1\leq{|a|}<1000$. For example, `r format_power(6.0221E+23, 4)`
 
-*Exceptions.* &nbsp; When exponents are in the neighborhood of zero, for example, $n \in \{-1, 0, 1, 2\}$, decimal notation may be preferred to power of ten notation. Decimal values such as 0.1234, 1.234, 12.34, and 123.4 might be printed as-is. The range of exponents to include in this set is discretionary. 
+*Exceptions.* &nbsp; When exponents are in the neighborhood of zero, for example, $\small n \in \{-1, 0, 1, 2\}$, decimal notation may be preferred to power of ten notation. Decimal values such as $\small 0.1234$, $\small 1.234$, $\small 12.34$, and $\small 123.4$ might be printed as-is. The range of exponents to include in this set is discretionary. 
 
 *Notes on syntax.* &nbsp; We have to distinguish between computer syntax, math syntax, and markup syntax. 
 
-- Anyone who has written a line of code involving multiplication is familiar with the asterisk as the multiplication operator, e.g., `x = a * b` or `y = a * (b + c)`. In written mathematics, however, these expressions are written without multiplication symbols, that is, $x=ab$ and $y=a(b+c)$. Moreover, mathematically the asterisk has a completely different meaning---it represents the *convolution* operation between two functions, as in $\left(f * g \right)(t)$. 
+- Anyone who has written a line of code involving multiplication is familiar with the asterisk as the multiplication operator, e.g., `x = a * b` or `y = a * (b + c)`. In written mathematics, however, these expressions are written without multiplication symbols, that is, $\small x=ab$ and $\small y=a(b+c)$. Moreover, the asterisk has a completely different meaning in mathematics, representing the *convolution* operation between two functions, as in $\small \left(f * g \right)(t)$. 
 
 - The carat symbol (`^`), to the best of my knowledge, is a programming operator only; mathematically it has no meaning. 
 
@@ -63,8 +63,8 @@ The $\times$ multiplication symbol, often avoided in other contexts, is conventi
 In R Markdown and Quarto Markdown, we use an inline equation markup delimited by `$ ... $` to create a math expression in the output document (`\( ... \)` is also an option). For example, the markup for Avogadro's number is given by, 
 
         $6.0221 \times 10^{23}$
-
-which yields $6.0221 \times 10^{23}$ in the document. To *program* the markup, however, we enclose the markup as a character string, that is, 
+        
+rendered in an R markdown document as $\small 6.0221 \times 10^{23}$. To *program* the markup, however, we enclose the markup as a character string, that is, 
 
         "$6.0221 \\times 10^{23}$"
 
@@ -91,7 +91,9 @@ where `a` is the number in decimal notation to the specified number of significa
 
 - **digits** &nbsp; Positive nonzero integer to specify the number of significant digits. Default is 4. 
 
-- **format** &nbsp; Possible values are "engr" (engineering notation) and "sci" (scientific notation). Default is "engr". 
+- **format** &nbsp; Possible values are "engr" (default) for engineering notation and "sci" for scientific notation. Can also be set as a global option, for example, `options(formatdown.power.format = "sci")`, that can be overwritten in an individual function call.
+
+- **size** &nbsp; Font size. Possible values are "scriptsize", "small" (default), "normalsize", "large", or "huge". Can also be set as a global option, for example, `options(formatdown.font.size = "normalsize")`, that can be overwritten in an individual function call.
 
 - **omit_power** &nbsp; Numeric vector of length two (or NULL). Determines the range of exponents between which power-of-ten notation is excluded. Default is `c(-1, 2)`.
 
@@ -212,6 +214,29 @@ The values displayed without powers-of-ten notation are in the range set by the 
 
 
 
+## Font size
+
+Format the same column of text using each of the five possible `size` arguments for comparison. 
+
+```{r}
+x <- c(1.2E-6, 3.4E+0, 5.6E+13)
+
+# Compare formats
+DT <- data.table(
+  scriptsize = format_power(x, 2, size = "scriptsize"),
+  small      = format_power(x, 2, size = "small"),
+  normalsize = format_power(x, 2, size = "normalsize"),
+  large      = format_power(x, 2, size = "large"),
+  huge       = format_power(x, 2, size = "huge")
+)
+knitr::kable(DT, align = "r")
+```
+
+
+
+
+
+
 ## Omit power notation
 
 `omit_power` argument, if included, must be named. 
@@ -276,43 +301,41 @@ When values in a table column span a few orders of magnitude, an audience is oft
 DT <- copy(water)
 
 # Convert temperature from K to C
-DT <- DT[, .(temp = round(temp - 273.15), visc)]
+DT <- DT[, .(visc)]
 
 # Create two columns to compare
 DT[, ver1 := format_power(visc, 3)]
 DT[, ver2 := format_power(visc, 3, set_power = -3)]
 ```
 
-The first two columns are unformatted. The third column, in engineering format, includes exponents of $-3$ and $-6$. In the last column, we set the exponents to $-3$ throughout. 
+The first column is unformatted. The second column, in engineering format, includes exponents of $\small -3$ and $\small -6$. In the third column, we set the exponents to $\small -3$ throughout. 
 
 ```{r}
 knitr::kable(DT, align = "r", col.names = c(
-  "Temperature [C]", "Viscosity [Pa s]", "engineering notation", "with fixed exponent"
+  "$\\small\\mu$ [Pa s]", "engr notation", "set power"
 ))
 ```
 
-In the next example, we have density as a function of altitude with additional columns of density values formatted three ways. 
+In the next example, we have density (that decreases with altitude) with additional columns of density values formatted three ways. 
 
 ```{r}
 DT <- copy(atmos)
-DT <- DT[, .(alt = alt / 1000, dens)]
+DT <- DT[, .(dens)]
 DT[, ver1 := format_power(dens, 3)]
 DT[, ver2 := format_power(dens, 3, set_power = -3)]
 DT[, ver3 := format_power(dens, 3, set_power = -3, omit_power = NULL)]
 
 kable(DT, align = "r", col.names = c(
-  "Altitude [km]",
-  "Density [kg/m$^3$]",
+  "$\\small\\rho$ [kg/m$^3$]",
   "engr notation",
   "set power",
-  "all power"
+  "set power, omit none"
 ))
 ```
 
-- **engr notation** column is in engineering notation with the first two values in decimal notation (no powers of ten)
-- **set power** column uses the same power of ten for all but the first two decimal values 
-- **all power** column uses the same power of ten throughout (no decimal values) 
-
+- **engr notation** formatted in engineering notation except for values with exponents near zero. 
+- **set power** formatted with a constant exponent except for values with exponents near zero.  
+- **set power, omit none** formatted with a constant exponent for all values, no exceptions. 
 
 
 
@@ -432,32 +455,54 @@ knitr::kable(DT, align = "r")
 
 
 
+## Options
 
-## `knitr::kable()` options
+The `options()` function can be used to set global values for two argument in `format_power()`:
 
-I use some `knitr::kable()` arguments to change the header and add a caption. 
+- `format` (default is "engr")
+- `size` (default is "small")
 
+For example, 
 
 ```{r}
-# Ideal gas constant can be dropped from table, placed in footnote
-DT$sp_gas <- NULL
-names(DT)
+# Assign arguments to be used from this point forward in the script
+options(formatdown.power.format = "sci")
+options(formatdown.font.size = "scriptsize")
+
+# Copy to avoid "by reference" changes to air_meas
+DT <- copy(air_meas)
+
+# Format selected columns to 4 digits
+cols_we_want <- c("temp", "pres", "dens")
+DT <- DT[, (cols_we_want) := lapply(.SD, function(x) format_power(x, 4)), .SDcols = cols_we_want]
+
+# Treat the gas constant with 3 digits
+DT$sp_gas <- format_power(DT$sp_gas, digits = 3)
+
+# Format selected columns as text
+cols_we_want <- c("date", "trial", "humid")
+DT <- DT[, (cols_we_want) := lapply(.SD, function(x) format_text(x)), .SDcols = cols_we_want]
 
 # Render in document
 knitr::kable(DT,
   align = "r",
-  caption = "Table 1. Multiple readings for calculating air density",
+  caption = "Table 1: Multiple readings for calculating air density",
   col.names = c(
     "Date",
     "Trial",
     "Humidity",
-    "Temperature [K]",
-    "Pressure [Pa]",
-    "Density [kg/m$^3$]"
+    "$\\small\\theta$ [K]",
+    "$\\small P$ [Pa]",
+    "$\\small R_{sp}$ [J kg$^{-1}$K$^{-1}$]",
+    "$\\small\\rho$ [kg/m$^3$]"
   )
 )
 ```
-Note: Ideal gas constant is `r format_power(round(mean(air_meas$sp_gas), 0), digits = 3)` J kg$^{-1}$K$^{-1}$. 
+
+You can overwrite your global assignment using the `format` or `size` argument in any individual function call.  
+
+- The `format` option affects arguments of `format_power()` only. 
+- The `size` option affects arguments of both `format_text()` and `format_power()`. 
 
 
 
