@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">formatdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,6 +48,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-vignettes">
     <a class="dropdown-item" href="../articles/format_powers_of_ten.html">Format powers of ten</a>
     <a class="dropdown-item" href="../articles/format_integers_and_decimals.html">Format integers and decimals</a>
+    <a class="dropdown-item" href="../articles/format_text.html">Format text</a>
     <a class="dropdown-item" href="../articles/format_units.html">Format units</a>
   </div>
 </li>
@@ -95,8 +96,8 @@ and Technology (NIST)</small></p>
 <p><br></p>
 <p>We can avoid the need for powers-of-ten notation by adjusting the
 measurement units assigned to a numerical vector. For example, we can
-convert <span class="math inline">\(101.3 \times 10^{3}\)</span> Pa to
-1013 hPa or 101.3 kPa.</p>
+convert <span class="math inline">\(\small 101.3 \times 10^{3}\)</span>
+Pa to 1013 hPa or 101.3 kPa.</p>
 <p>We use the <code>units</code> package for this feature. The
 <code><a href="../reference/format_units.html">formatdown::format_units()</a></code> function is a wrapper for
 <code><a href="https://r-quantities.github.io/units/reference/units.html" class="external-link">units::as_units()</a></code>, allowing us to assign basic physical
@@ -628,7 +629,7 @@ strings in power of ten notation.</p>
 <span></span>
 <span><span class="co"># Display the representative value</span></span>
 <span><span class="va">x</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] "$2.50 \\times 10^{-4}$"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "$\\small 2.50 \\times 10^{-4}$"</span></span></code></pre></div>
 <p>Append the display units to each element of the vector.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Append units string to value strings</span></span>
@@ -636,7 +637,7 @@ strings in power of ten notation.</p>
 <span></span>
 <span><span class="co"># Display the representative value</span></span>
 <span><span class="va">x</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] "$2.50 \\times 10^{-4}$ [lb ft-3]"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "$\\small 2.50 \\times 10^{-4}$ [lb ft-3]"</span></span></code></pre></div>
 <p>Finally, substitute this vector for the column of density values
 constructed earlier.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
@@ -650,11 +651,11 @@ constructed earlier.</p>
 <span><span class="op">)</span></span></code></pre></div>
 <table style="width:100%;" class="table">
 <colgroup>
+<col width="12%">
 <col width="13%">
 <col width="15%">
+<col width="41%">
 <col width="16%">
-<col width="37%">
-<col width="17%">
 </colgroup>
 <thead><tr class="header">
 <th align="right">Altitude</th>
@@ -669,7 +670,7 @@ constructed earlier.</p>
 <td align="right">59 [deg_F]</td>
 <td align="right">14.6923 [psi]</td>
 <td align="right">
-<span class="math inline">\(7.68 \times
+<span class="math inline">\(\small 7.68 \times
 10^{-2}\)</span> [lb ft-3]</td>
 <td align="right">1116.4 [ft/s]</td>
 </tr>
@@ -678,7 +679,7 @@ constructed earlier.</p>
 <td align="right">-58 [deg_F]</td>
 <td align="right">3.8435 [psi]</td>
 <td align="right">
-<span class="math inline">\(2.58 \times
+<span class="math inline">\(\small 2.58 \times
 10^{-2}\)</span> [lb ft-3]</td>
 <td align="right">982.7 [ft/s]</td>
 </tr>
@@ -687,7 +688,7 @@ constructed earlier.</p>
 <td align="right">-70 [deg_F]</td>
 <td align="right">0.8019 [psi]</td>
 <td align="right">
-<span class="math inline">\(5.55 \times
+<span class="math inline">\(\small 5.55 \times
 10^{-3}\)</span> [lb ft-3]</td>
 <td align="right">968.1 [ft/s]</td>
 </tr>
@@ -696,7 +697,7 @@ constructed earlier.</p>
 <td align="right">-52 [deg_F]</td>
 <td align="right">0.1736 [psi]</td>
 <td align="right">
-<span class="math inline">\(1.15 \times
+<span class="math inline">\(\small 1.15 \times
 10^{-3}\)</span> [lb ft-3]</td>
 <td align="right">989.9 [ft/s]</td>
 </tr>
@@ -705,7 +706,7 @@ constructed earlier.</p>
 <td align="right">-9 [deg_F]</td>
 <td align="right">0.0416 [psi]</td>
 <td align="right">
-<span class="math inline">\(2.50 \times
+<span class="math inline">\(\small 2.50 \times
 10^{-4}\)</span> [lb ft-3]</td>
 <td align="right">1040.6 [ft/s]</td>
 </tr>
@@ -714,7 +715,7 @@ constructed earlier.</p>
 <td align="right">27 [deg_F]</td>
 <td align="right">0.0116 [psi]</td>
 <td align="right">
-<span class="math inline">\(6.43 \times
+<span class="math inline">\(\small 6.43 \times
 10^{-5}\)</span> [lb ft-3]</td>
 <td align="right">1082.0 [ft/s]</td>
 </tr>
@@ -723,7 +724,7 @@ constructed earlier.</p>
 <td align="right">-15 [deg_F]</td>
 <td align="right">0.0032 [psi]</td>
 <td align="right">
-<span class="math inline">\(1.94 \times
+<span class="math inline">\(\small 1.94 \times
 10^{-5}\)</span> [lb ft-3]</td>
 <td align="right">1033.7 [ft/s]</td>
 </tr>
@@ -732,7 +733,7 @@ constructed earlier.</p>
 <td align="right">-64 [deg_F]</td>
 <td align="right">0.0008 [psi]</td>
 <td align="right">
-<span class="math inline">\(5.17 \times
+<span class="math inline">\(\small 5.17 \times
 10^{-6}\)</span> [lb ft-3]</td>
 <td align="right">974.6 [ft/s]</td>
 </tr>
@@ -741,7 +742,7 @@ constructed earlier.</p>
 <td align="right">-102 [deg_F]</td>
 <td align="right">0.0002 [psi]</td>
 <td align="right">
-<span class="math inline">\(1.15 \times
+<span class="math inline">\(\small 1.15 \times
 10^{-6}\)</span> [lb ft-3]</td>
 <td align="right">927.0 [ft/s]</td>
 </tr>
