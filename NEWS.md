@@ -1,5 +1,15 @@
 # formatdown (development version)
 
+2024-03-25
+
+- deprecate `format_decimal()` because it turned out to be a special case of `format_power()`.
+- rename `format_power()` to `format_num()` and add the new `"dcml"` format
+- rename `format_text()` to `format_txt()`
+- edit `format_txt()` to retain any spaces between characters in a character argument
+- add `options()` to globally set several arguments
+- update tests and vignettes to reflect changes
+
+
 # formatdown 0.1.3
 
 2024--03--14

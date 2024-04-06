@@ -10,13 +10,13 @@ navbar:
     - text: Vignettes
       menu:
       - text: Format powers of ten
-        href: articles/format_powers_of_ten.html
-      - text: Format integers and decimals
-        href: articles/format_integers_and_decimals.html
+        href: articles/format_numbers.html
       - text: Format text
         href: articles/format_text.html
       - text: Format units
         href: articles/format_units.html
+      - text: Global settings
+        href: articles/global_settings.html
 
     - text: Reference
       href: reference/index.html

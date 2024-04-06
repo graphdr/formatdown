@@ -1,0 +1,1 @@
+The rationale for the formatdown package is formatting numbers in power-of-ten notation in inline R code or tabulated columns of data frames. Other features of the package provide tools for typesetting non-power-of-ten columns to match. 

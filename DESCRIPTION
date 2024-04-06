@@ -1,17 +1,13 @@
 Package: formatdown
-Title: Formatting Tools for 'rmarkdown' Documents
+Title: Formatting Numbers in 'rmarkdown' Documents
 Version: 0.1.3.9000
 Language: en-US
 Authors@R: person("Richard", "Layton", email="graphdoctor@gmail.com", role=c("aut", "cre"))
-Description: Provides a small set of tools for formatting tasks when creating 
-    documents in R Markdown or Quarto Markdown. Convert the elements of a 
-    numerical vector to character strings in one of several forms: powers-of-ten 
-    notation in engineering or scientific form delimited for rendering as inline 
-    equations; integer or decimal notation delimited for equation rendering; 
-    numbers with measurement units (non-delimited) where units are selected to 
-    eliminate the need for powers-of-ten or scientific notation. Useful for 
-    rendering a numerical scalar in an inline R code chunk as well as formatting 
-    columns of data frames displayed in a table. 
+Description: Provides a small set of tools for formatting numbers in R-markdown 
+    documents. Converts a numerical vector to character strings in power-of-ten 
+    form, decimal form, or measurement-units form; all are math-delimited for 
+    rendering as inline equations. Useful for rendering numerical scalars using 
+    inline R code chunks or for rendering numerical columns in tables.   
 Depends: R (>= 3.5.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -20,9 +16,10 @@ LazyDataCompression: bzip2
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Imports:
-    checkmate, 
-    data.table, 
-    units, 
+    checkmate,
+    data.table,
+    settings, 
+    units,
     wrapr
 Suggests: 
     covr,
@@ -36,9 +33,9 @@ URL: https://github.com/graphdr/formatdown/,
 BugReports: https://github.com/graphdr/formatdown/issues
 Collate: 
     'data.R'
-    'utils.R'
-    'format_decimal.R'
-    'format_power.R'
+    'format_numbers.R'
     'format_text.R'
     'format_units.R'
+    'formatdown_options.R'
     'formatdown-package.R'
+    'utils.R'

@@ -23,13 +23,13 @@
 #' Properties of standard atmosphere
 #'
 #' Table of atmospheric properties as a function of altitude, sea level to
-#' 80 km.
+#' 1000 km.
 #'
 #' @usage data(atmos, package = "formatdown")
 #'
 #' @format Classes data.table and data.frame: 9 observations of 5 variables:
 #' \describe{
-#'  \item{alt}{Numeric, altitude (m)}
+#'  \item{alt}{Numeric, altitude (km)}
 #'  \item{temp}{Numeric, air temperature (K)}
 #'  \item{pres}{Numeric, atmospheric pressure (Pa)}
 #'  \item{dens}{Numeric, air density (kg m\eqn{^{-3}}{^{-13}})}

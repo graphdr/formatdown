@@ -3,7 +3,7 @@
 
 # formatdown <img src="man/figures/logo.png" align="right">
 
-Formatting Tools for R Markdown Documents
+Formatting Numbers in R Markdown Documents
 
 <!-- badges: start -->
 
@@ -14,43 +14,41 @@ coverage](https://codecov.io/gh/graphdr/formatdown/branch/main/graph/badge.svg)]
 [![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-Provides a small set of tools for formatting tasks when creating
-documents in R Markdown or Quarto Markdown. Convert the elements of a
-numerical vector to character strings in one of several forms:
-powers-of-ten notation in engineering or scientific form delimited for
-rendering as inline equations; integer or decimal notation delimited for
-equation rendering; numbers with measurement units (non-delimited) where
-units are selected to eliminate the need for powers-of-ten or scientific
-notation. Useful for rendering a numerical scalar in an inline R code
-chunk as well as formatting columns of data frames displayed in a table.
+Provides a small set of tools for formatting numbers in R-markdown
+documents. Converts a numerical vector to character strings in
+power-of-ten form, decimal form, or measurement-units form; all are
+math-delimited for rendering as inline equations. Useful for rendering
+numerical scalars using inline R code chunks or for rendering numerical
+columns in tables.
 
 ## Introduction
 
 In professional technical prose, large and small numbers are generally
 typeset using powers of ten notation. For example, Plank’s constant
-would be typeset as $6.626 \times 10^{-34}$ J/Hz rather than the
-familiar forms we use in communicating with computers, such as
-`6.626*10^34` or `6.626E-34`.
+would be typeset as $\small 6.63 \times 10^{-34}$
+$\small\mathrm{J\\/Hz}$ rather than the familiar forms we use in
+communicating with computers, such as `6.63*10^-34` or `6.63E-34`.
 
 The functions in this package help an author convert large and small
-numbers to character strings, formatted using powers-of-ten notation
-(and other formats) suitable for use in technical writing or
-presentations.
+numbers to character strings, formatted using powers-of-ten notation. In
+addition, decimal numbers and text can be formatted with the same font
+face and size as the power-of-ten numbers for a consistent typeface
+across all columns of a data table.
 
 Formatting tools include:
 
-**`format_power()`**  
-Convert the elements of a numerical vector to character strings in which
-the numbers are formatted using powers-of-ten notation in scientific or
-engineering form and delimited for rendering as inline equations in
-`.Rmd` or `.qmd` markdown files.
+**`format_numbers()`**  
+Convert a numeric vector to a math-delimited character vector in which
+the numbers are formatted in power-of-ten notation in scientific or
+engineering form. Decimal numbers can be similarly formatted.
 
-**`format_decimal()`**  
-Similar to above, but as integers or decimals
+**`format_text()`**  
+Convert a character vector to math-delimited character vector. Useful
+for creating a consistent typeface across all columns of a table.
 
 **`format_units()`**  
-Format a vector of numbers as character strings with measurement units
-appended via the ‘units’ package.
+Convert a numeric vector to class “units” via the **units** R package
+and then to a math-delimited character vector.
 
 ## Usage
 
@@ -66,78 +64,81 @@ library("knitr")
 ``` r
 x <- 101300
 
-# Scientific notation, math delimited
-format_power(x, digits = 4, format = "sci")
-#> [1] "$1.013 \\times 10^{5}$"
+# Scientific notation
+format_numbers(x, digits = 4, format = "sci")
+#> [1] "$\\small 1.013 \\times 10^{5}$"
 
-# Engineering notation, math-delimited
-format_power(x, digits = 4, format = "engr")
-#> [1] "$101.3 \\times 10^{3}$"
+# Engineering notation
+format_numbers(x, digits = 4, format = "engr")
+#> [1] "$\\small 101.3 \\times 10^{3}$"
 
-# Decimal notation, math-delimited
-format_decimal(x, digits = 0, big_mark = ",")
-#> [1] "$101,300$"
+# Decimal notation
+format_numbers(x, digits = 4, format = "dcml")
+#> [1] "$\\small 101300$"
 
-# Unit notation, non-delimited
+# Measurement units notation
 units(x) <- "Pa"
-format_units(x, unit = "hPa")
-#> [1] "1013 [hPa]"
+format_units(x, digits = 4, unit = "hPa")
+#> [1] "$\\small\\mathrm{1013\\ [hPa]}$"
 ```
 
 which, in an `.Rmd` or `.qmd` output document, are rendered using inline
 R code as
 
-|           Notation |           Rendered as |
-|-------------------:|----------------------:|
-|         scientific | $1.013 \times 10^{5}$ |
-|        engineering | $101.3 \times 10^{3}$ |
-| integer or decimal |             $101,300$ |
-|              units |          1013 \[hPa\] |
+|      Format |                  Rendered as |
+|------------:|-----------------------------:|
+|  scientific | $\small 1.013 \times 10^{5}$ |
+| engineering | $\small 101.3 \times 10^{3}$ |
+|     decimal |              $\small 101300$ |
+|       units | $\small\mathrm{1013\ [hPa]}$ |
 
-*Data frame*.   Typically rendered as a table. We independently format
-columns from the `water` data frame included with `formatdown`.
+*Data frame*.   Typically rendered in a table. We independently format
+columns from the `metals` data frame included with formatdown.
 
 ``` r
-# Extract three columns
-properties <- water[, .(temp, visc, bulk_mod)]
+# View the data set
+metals
+#>            metal  dens  thrm_exp thrm_cond  elast_mod
+#>           <char> <num>     <num>     <num>      <num>
+#> 1: aluminum 6061  2700 2.430e-05    155.77 7.3084e+10
+#> 2:        copper  8900 1.656e-05    392.88 1.1721e+11
+#> 3:          lead 11340 5.274e-05     37.04 1.3790e+10
+#> 4:      platinum 21450 9.000e-06     69.23 1.4686e+11
+#> 5:    steel 1020  7850 1.134e-05     46.73 2.0684e+11
+#> 6:      titanium  4850 9.360e-06      7.44 1.0204e+11
 
-# Decimal notation
-properties[, temp := format_decimal(temp, 1)]
+# First column in text format
+DT <- copy(metals)
+DT$metal <- format_text(DT$metal)
 
-# Power-of-ten notation with fixed exponent
-properties[, visc := format_power(visc, set_power = -3)]
+# Density and thermal conductivity in decimal form
+cols_we_want <- c("dens", "thrm_cond")
+DT[, cols_we_want] <- lapply(DT[, ..cols_we_want], function(x) format_numbers(x,
+    3, "dcml"))
 
-# Power-of-ten notation with 3 significant figures
-properties[, bulk_mod := format_power(bulk_mod, 3)]
+# Thermal expansion in engineering format
+DT$thrm_exp <- format_numbers(DT$thrm_exp, 3, "engr")
 
-# Unit notation
-properties$bulk_mod_GPa <- water$bulk_mod
-units(properties$bulk_mod_GPa) <- "Pa"
-properties[, bulk_mod_GPa := format_units(bulk_mod_GPa, 3, unit = "GPa")]
+# Elastic modulus in units form
+units(DT$elast_mod) <- "Pa"
+DT$elast_mod <- format_units(DT$elast_mod, 3, "GPa")
 
 # Render in document
-knitr::kable(properties,
-  align = "r",
-  caption = "Table 1: Properties of water as a function of temperature.",
-  col.names = c("Temperature [K]", "Viscosity [Pa-s]", "Bulk modulus [Pa]", "Bulk modulus [GPa]")
-)
+knitr::kable(DT, align = "r", caption = "Table 1: Properties of metals.", col.names = c("Metal",
+    "Density [kg/m$^3$]", "Therm. expan. [m/m K$^{-1}$]", "Therm. cond. [W/m K$^{-1}$]",
+    "Elastic modulus"))
 ```
 
-| Temperature \[K\] |      Viscosity \[Pa-s\] |  Bulk modulus \[Pa\] | Bulk modulus \[GPa\] |
-|------------------:|------------------------:|---------------------:|---------------------:|
-|           $273.1$ |  $1.734 \times 10^{-3}$ | $2.02 \times 10^{9}$ |         2.02 \[GPa\] |
-|           $283.1$ |  $1.310 \times 10^{-3}$ | $2.10 \times 10^{9}$ |         2.10 \[GPa\] |
-|           $293.1$ |  $1.021 \times 10^{-3}$ | $2.18 \times 10^{9}$ |         2.18 \[GPa\] |
-|           $303.1$ | $0.8174 \times 10^{-3}$ | $2.25 \times 10^{9}$ |         2.25 \[GPa\] |
-|           $313.1$ | $0.6699 \times 10^{-3}$ | $2.28 \times 10^{9}$ |         2.28 \[GPa\] |
-|           $323.1$ | $0.5605 \times 10^{-3}$ | $2.29 \times 10^{9}$ |         2.29 \[GPa\] |
-|           $333.1$ | $0.4776 \times 10^{-3}$ | $2.28 \times 10^{9}$ |         2.28 \[GPa\] |
-|           $343.1$ | $0.4135 \times 10^{-3}$ | $2.25 \times 10^{9}$ |         2.25 \[GPa\] |
-|           $353.1$ | $0.3631 \times 10^{-3}$ | $2.20 \times 10^{9}$ |         2.20 \[GPa\] |
-|           $363.1$ | $0.3229 \times 10^{-3}$ | $2.14 \times 10^{9}$ |         2.14 \[GPa\] |
-|           $373.1$ | $0.2902 \times 10^{-3}$ | $2.07 \times 10^{9}$ |         2.07 \[GPa\] |
+|                           Metal | Density \[kg/m$^3$\] | Therm. expan. \[m/m K$^{-1}$\] | Therm. cond. \[W/m K$^{-1}$\] |               Elastic modulus |
+|--------------------------------:|---------------------:|-------------------------------:|------------------------------:|------------------------------:|
+| $\small\mathrm{aluminum\ 6061}$ |        $\small 2700$ |   $\small 24.3 \times 10^{-6}$ |                  $\small 156$ |  $\small\mathrm{73.1\ [GPa]}$ |
+|         $\small\mathrm{copper}$ |        $\small 8900$ |   $\small 16.6 \times 10^{-6}$ |                  $\small 393$ | $\small\mathrm{117.0\ [GPa]}$ |
+|           $\small\mathrm{lead}$ |       $\small 11300$ |   $\small 52.7 \times 10^{-6}$ |                 $\small 37.0$ |  $\small\mathrm{13.8\ [GPa]}$ |
+|       $\small\mathrm{platinum}$ |       $\small 21400$ |   $\small 9.00 \times 10^{-6}$ |                 $\small 69.2$ | $\small\mathrm{147.0\ [GPa]}$ |
+|    $\small\mathrm{steel\ 1020}$ |        $\small 7850$ |   $\small 11.3 \times 10^{-6}$ |                 $\small 46.7$ | $\small\mathrm{207.0\ [GPa]}$ |
+|       $\small\mathrm{titanium}$ |        $\small 4850$ |   $\small 9.36 \times 10^{-6}$ |                 $\small 7.44$ | $\small\mathrm{102.0\ [GPa]}$ |
 
-Table 1: Properties of water as a function of temperature.
+Table 1: Properties of metals.
 
 ## Installation
 
@@ -147,10 +148,10 @@ Install from CRAN.
 install.packages("formatdown")
 ```
 
-The development version can be installed from GitHub.
+The development version can be installed from GitHub. I suggest using
+the “pak” package:
 
 ``` r
-install.packages("pak")
 pak::pkg_install("graphdr/formatdown")
 ```
 
@@ -161,26 +162,16 @@ pak::pkg_install("graphdr/formatdown")
 
 ## Contributing
 
-To contribute to formatdown,
-
-- Please clone this repo locally.  
-- Commit your contribution on a separate branch.
-- If you submit a function, please use the *checkmate* package to
-  include runtime argument checks.
-
 To provide feedback or report a bug,
 
 - Use the GitHub <a href="https://github.com/graphdr/formatdown/issues">
   Issues</a> page.
-- Please run the package unit tests and report the results with your bug
-  report. Any user can run the package tests by installing the
-  *tinytest* package and running:
 
-``` r
-# Detailed test results
-test_results <- tinytest::test_package("formatdown")
-as.data.frame(test_results)
-```
+To contribute to formatdown,
+
+- Please clone this repo locally.  
+- Commit your contribution on a separate branch.
+- Submit a pull request
 
 Participation in this open source project is subject to a [Code of
 Conduct](https://graphdr.github.io/formatdown/CONDUCT.html).

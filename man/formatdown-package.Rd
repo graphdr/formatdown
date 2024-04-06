@@ -6,8 +6,13 @@
 \alias{formatdown}
 \title{Formatting Tools for R Markdown Documents}
 \description{
-Provides a small set of tools for common formatting tasks when writing
-documents in R markdown or Quarto markdown. Works with outputs in html,
-pdf, docx and possibly others.
+Provides a small set of tools for formatting tasks when creating
+documents in R Markdown or Quarto Markdown. Convert the elements of a
+numerical vector to character strings in decimal form or power-of-ten form
+using engineering or scientific notation, all delimited for rendering as inline
+equations; or as numbers with measurement units (non-delimited) where units
+can be selected to eliminate the need for power-of-ten notation. Useful for
+rendering a numerical scalar in an inline R code chunk as well as formatting
+columns of data frames displayed in a table.
 }
 \keyword{internal}

@@ -1,0 +1,3 @@
+digits
+
+: Integer scalar from 1 through 20 that controls the number of significant digits in printed numeric values; passed to `signif()`. Default is 4.  

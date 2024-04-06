@@ -1,0 +1,10 @@
+*Packages.* &nbsp; If you are writing your own script to follow along, we use the following packages in this vignette. Data frame operations are performed with data.table syntax. Some users may wish to translate the examples to use  base R or dplyr syntax.  
+
+```{r}
+#| echo: true
+#| eval: false
+
+library("formatdown")
+library("data.table")
+library("knitr")
+```

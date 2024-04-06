@@ -1,4 +1,5 @@
 
+
 #' Remove trailing decimal point and spaces, if any, added by formatC()
 #'
 #' @param DT data.table
@@ -40,6 +41,11 @@ add_delim <- function(DT, col_name, delim) {
     DT[, (col_name) := paste0(delim[1], get(col_name), delim[2])]
   }
 }
+
+
+
+
+
 
 
 

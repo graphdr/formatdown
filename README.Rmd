@@ -7,8 +7,10 @@ output: github_document
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>", 
+  tidy = TRUE
 )
+
 library("formatdown")
 library("data.table")
 
@@ -29,7 +31,7 @@ plank <- 6.62607015E-34
 
 # formatdown  <img src="man/figures/logo.png" align="right">
 
-Formatting Tools for R Markdown Documents
+Formatting Numbers in R Markdown Documents
 
 <!-- badges: start -->
 [![](https://www.r-pkg.org/badges/version/formatdown)](https://cran.r-project.org/package=formatdown)
@@ -40,15 +42,15 @@ Formatting Tools for R Markdown Documents
 
 
 
-Provides a small set of tools for formatting tasks when creating documents in R Markdown or Quarto Markdown. Convert the elements of a numerical vector to character strings in one of several forms: powers-of-ten notation in engineering or scientific form delimited for rendering as inline equations; integer or decimal notation delimited for equation rendering; numbers with measurement units (non-delimited) where units are selected to eliminate the need for powers-of-ten or scientific notation. Useful for rendering a numerical scalar in an inline R code chunk as well as formatting columns of data frames displayed in a table.  
+Provides a small set of tools for formatting numbers in R-markdown documents. Converts a numerical vector to character strings in power-of-ten form, decimal form, or measurement-units form; all are math-delimited for rendering as inline equations. Useful for rendering numerical scalars using inline R code chunks or for rendering numerical columns in tables.  
 
 
 
 ## Introduction
 
-In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Plank's constant would be typeset as `r format_power(plank, format = "sci", delim = "\\(")` J/Hz rather than the familiar forms we use in communicating with computers, such as `6.626*10^34` or `6.626E-34`. 
+In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Plank's constant would be typeset as `r format_numbers(plank, 3, "sci", delim = "\\(")`  `r format_text("J\\\\/Hz")` rather than the familiar forms we use in communicating with computers, such as `6.63*10^-34` or `6.63E-34`. 
 
-The functions in this package help an author convert large and small numbers to character strings, formatted using powers-of-ten notation (and other formats) suitable for use in technical writing or presentations. 
+The functions in this package help an author convert large and small numbers to character strings, formatted using powers-of-ten notation. In addition, decimal numbers and text can be formatted with the same font face and size as the power-of-ten numbers for a consistent typeface across all columns of a data table. 
 
 
 
@@ -59,18 +61,17 @@ The functions in this package help an author convert large and small numbers to 
 
 Formatting tools include: 
 
-**`format_power()`** 
+**`format_numbers()`** 
 
-: Convert the elements of a numerical vector to character strings in which the numbers are formatted using powers-of-ten notation in scientific or engineering form and delimited for rendering as inline equations in `.Rmd` or `.qmd` markdown files.
+: Convert a numeric vector to a math-delimited character vector in which the numbers are formatted in power-of-ten notation in scientific or engineering form. Decimal numbers can be similarly formatted.  
 
-**`format_decimal()`**
+**`format_text()`**
 
-: Similar to above, but as integers or decimals 
+: Convert a character vector to math-delimited character vector. Useful for creating a consistent typeface across all columns of a table. 
 
 **`format_units()`**
 
-: Format a vector of numbers as character strings with measurement units appended via the 'units' package.
-
+: Convert a numeric vector to class "units" via the **units** R package and then to a math-delimited character vector. 
 
 
 
@@ -91,72 +92,69 @@ library("knitr")
 ```{r}
 x <- 101300
 
-# Scientific notation, math delimited
-format_power(x, digits = 4, format = "sci")
+# Scientific notation
+format_numbers(x, digits = 4, format = "sci")
 
-# Engineering notation, math-delimited
-format_power(x, digits = 4, format = "engr")
+# Engineering notation
+format_numbers(x, digits = 4, format = "engr")
 
-# Decimal notation, math-delimited
-format_decimal(x, digits = 0, big_mark = ",")
+# Decimal notation
+format_numbers(x, digits = 4, format = "dcml")
 
-# Unit notation, non-delimited
+# Measurement units notation
 units(x) <- "Pa"
-format_units(x, unit = "hPa")
+format_units(x, digits = 4, unit = "hPa")
 ```
 
 which, in an `.Rmd` or `.qmd` output document, are rendered using inline R code as
 
 ```{r}
 #| echo: false
-x <- 101300
-sci <- format_power(x, 4, format = "sci")
-engr <- format_power(x, 4, format = "engr")
-deci <- format_decimal(x, 0, big_mark = ",")
+
+x    <- 101300
+sci  <- format_numbers(x, 4, "sci")
+engr <- format_numbers(x, 4, "engr")
+dcml <- format_numbers(x, 4, "dcml")
 units(x) <- "Pa"
-uni <- format_units(x, unit = "hPa")
+hPa  <- format_units(x, 4, "hPa")
 
 DT <- wrapr::build_frame(
-  "Notation", "Rendered as" |
-    "scientific", sci |
-    "engineering", engr |
-    "integer or decimal", deci |
-    "units", uni
-)
+    "Format"      , "Rendered as" |
+    "scientific"    , sci  |
+    "engineering"   , engr |
+    "decimal"       , dcml |
+    "units", hPa  )
 setDT(DT)
 knitr::kable(DT, align = "r")
 ```
 
-
-*Data frame*. &nbsp; Typically rendered as a table. We independently format  columns from the `water` data frame included with `formatdown`. 
+*Data frame*. &nbsp; Typically rendered in a table. We independently format  columns from the `metals` data frame included with formatdown. 
 
 ```{r}
-# Extract three columns
-properties <- water[, .(temp, visc, bulk_mod)]
+# View the data set
+metals
 
-# Decimal notation
-properties[, temp := format_decimal(temp, 1)]
+# First column in text format
+DT <- copy(metals)
+DT$metal <- format_text(DT$metal)
 
-# Power-of-ten notation with fixed exponent
-properties[, visc := format_power(visc, set_power = -3)]
+# Density and thermal conductivity in decimal form
+cols_we_want <- c("dens", "thrm_cond")
+DT[, cols_we_want] <- lapply(DT[, ..cols_we_want], function(x) format_numbers(x, 3, "dcml"))
 
-# Power-of-ten notation with 3 significant figures
-properties[, bulk_mod := format_power(bulk_mod, 3)]
+# Thermal expansion in engineering format
+DT$thrm_exp <- format_numbers(DT$thrm_exp, 3, "engr")
 
-# Unit notation
-properties$bulk_mod_GPa <- water$bulk_mod
-units(properties$bulk_mod_GPa) <- "Pa"
-properties[, bulk_mod_GPa := format_units(bulk_mod_GPa, 3, unit = "GPa")]
+# Elastic modulus in units form
+units(DT$elast_mod) <- "Pa"
+DT$elast_mod <- format_units(DT$elast_mod, 3, "GPa")
 
 # Render in document
-knitr::kable(properties,
-  align = "r",
-  caption = "Table 1: Properties of water as a function of temperature.",
-  col.names = c("Temperature [K]", "Viscosity [Pa-s]", "Bulk modulus [Pa]", "Bulk modulus [GPa]")
-)
+knitr::kable(DT,
+             align = "r",
+             caption = "Table 1: Properties of metals.", 
+             col.names = c("Metal", "Density [kg/m$^3$]", "Therm. expan. [m/m K$^{-1}$]", "Therm. cond. [W/m K$^{-1}$]", "Elastic modulus"))
 ```
-
-
 
 
 
@@ -169,10 +167,9 @@ Install from CRAN.
 install.packages("formatdown")
 ```
 
-The development version can be installed from GitHub.   
+The development version can be installed from GitHub.  I suggest using the "pak" package:  
 
 ```r
-install.packages("pak")
 pak::pkg_install("graphdr/formatdown")
 ```
 
@@ -194,27 +191,16 @@ pak::pkg_install("graphdr/formatdown")
 
 ## Contributing
 
-To contribute to formatdown,
-
-- Please clone this repo locally.  
-- Commit your contribution on a separate branch.
-- If you submit a function, please use the *checkmate* package to
-  include runtime argument checks.
-
-
 To provide feedback or report a bug,
 
 - Use the GitHub <a href="https://github.com/graphdr/formatdown/issues">
     Issues</a> page.
-- Please run the package unit tests and report the results with your bug
-  report. Any user can run the package tests by installing the
-  *tinytest* package and running:
 
-``` r
-# Detailed test results
-test_results <- tinytest::test_package("formatdown")
-as.data.frame(test_results)
-```
+To contribute to formatdown,
+
+- Please clone this repo locally.  
+- Commit your contribution on a separate branch.
+- Submit a pull request
 
 Participation in this open source project is subject to a [Code of
 Conduct](https://graphdr.github.io/formatdown/CONDUCT.html).
