@@ -8,33 +8,69 @@ format_dcml(
   x,
   digits = 4,
   ...,
-  size = formatdown_options("size"),
   delim = formatdown_options("delim"),
+  size = formatdown_options("size"),
   decimal_mark = formatdown_options("decimal_mark"),
   big_mark = formatdown_options("big_mark"),
-  small_mark = formatdown_options("small_mark")
+  big_interval = formatdown_options("big_interval"),
+  small_mark = formatdown_options("small_mark"),
+  small_interval = formatdown_options("small_interval")
 )
 }
 \arguments{
-\item{x}{Numerical vector to be formatted. Can be a scalar, a vector, or a
-column from a data frame.}
+\item{x}{Number or numbers to be formatted. Can be a single number, a vector,
+or a column of a data frame.}
 
-\item{digits}{Integer scalar from 1 through 20 that controls the number of
-significant digits in printed numeric values; passed to \code{signif()}.
+\item{digits}{Integer from 1 through 20 that controls the number of
+significant digits in printed numeric values. Passed to \code{signif()}.
 Default is 4.}
 
-\item{...}{Not used for values, forces subsequent arguments to be referable
-only by name.}
+\item{...}{Not used for values; forces subsequent arguments to be
+referable only by name.}
 
-\item{size, delim, decimal_mark, big_mark, small_mark}{Formatting options. For
-details, see the help page for \code{formatdown_options()}.}
+\item{delim}{Character, length 1 or 2, to define the left and right math
+markup delimiters. The default setting, \code{delim = "$"}, produces
+left and right delimiters \verb{$...$}. The alternate built-in
+setting, \code{delim = "\\("}, produces left and right delimiters
+\verb{\\\\( ... \\\\)}. Custom delimiters can be assigned in a vector of
+length 2 with left and right delimiter symbols, e.g.,
+\verb{c("\\\[", "\\\]")}. Special characters typically must be escaped.}
+
+\item{size}{Character, length 1, to assign a font size. If not empty, adds
+a font size macro to the markup inside the math delimiters. Possible
+values are \code{"scriptsize"}, \code{"small"}, \code{"normalsize"}, \code{"large"}, and
+\code{"huge"}. One may also assign the equivalent LaTeX-style markup itself,
+e.g., \code{"\\\\scriptsize"}, \code{"\\\\small"}, etc. Default is NULL.}
+
+\item{decimal_mark}{Character, length 1, to assign the decimal marker.
+Possible values are a period \code{"."} (default) or a comma \code{","}. Passed
+to \code{formatC(decimal.mark)}.}
+
+\item{big_mark}{Character, length 1, used as the mark between every
+\code{big_interval} number of digits to the left of the decimal marker to
+improve readability. Possible values are empty \code{""} (default) or
+\code{"thin"} to produce a LaTeX-style thin, horizontal space. One may also
+assign the thin-space markup itself \code{"\\\\\\\\,"}.
+Passed to \code{formatC(big.mark)}.}
+
+\item{big_interval}{Integer, length 1, that defines the number of digits
+(default 3) in groups separated by \code{big_mark}. Passed to
+\code{formatC(big.interval)}.}
+
+\item{small_mark}{Character, length 1, used as the mark between every
+\code{small_interval} number of digits to the right of the decimal marker to
+improve readability. Possible values are empty \code{""} (default) or
+\code{"thin"} to produce a LaTeX-style thin, horizontal space. One may also
+assign the thin-space markup itself \code{"\\\\\\\\,"}.
+Passed to \code{formatC(small.mark)}.}
+
+\item{small_interval}{Integer, length 1, that defines the number of digits
+(default 5) in groups separated by \code{small_mark}. Passed to
+\code{formatC(small.interval)}.}
 }
 \value{
-A character vector with the following properties:
-\itemize{
-\item Numbers represented in decimal notation.
-\item Elements delimited as inline math markup.
-}
+A character vector in which numbers are formatted in decimal form
+and delimited for rendering as inline equations in an R markdown document.
 }
 \description{
 Convert a numeric vector to a character vector in which the numbers are
@@ -42,20 +78,55 @@ formatted in decimal form and delimited for rendering as inline equations
 in an R markdown document.
 }
 \details{
-A convenience function to create decimal notation with a
-minimal set of arguments by wrapping \code{format_numbers()}. Use
-\code{formatdown_options()} to globally set \code{size}, \code{delim}, \code{decimal_mark},
-\code{big_mark}, or \code{small_mark} for use with this convenience function.
-Otherwise, use \code{format_numbers()} for direct local access to all arguments.
+\code{format_dcml()} is a wrapper for the more general function \code{format_numbers()}.
+Where defaults are defined by \code{formatdown_options()}, users may reassign
+the arguments locally in the function call or globally using
+\code{format_down_options()}.
 
 Arguments after the dots (\code{...}) must be referred to by name.
+}
+\examples{
+# Single number
+format_numbers(101100, digits = 4, format = "engr")
+
+# Vector of numbers
+x <- c(1.2222e-06, 3.4444e-04, 6.3333e-01, 8.1111e+01, 2.4444e+04, 9.123e+7)
+format_numbers(x)
+
+# Columns of a data frame
+y <- x[1:3]
+z <- x[4:6]
+df <- data.frame(y, z)
+apply(df, 2, format_numbers, digits = 3, format = "sci")
+
+# Compare significant digits
+format_numbers(x[1], 3)
+format_numbers(x[1], 4)
+format_numbers(x[4], 2, "dcml")
+format_numbers(x[4], 3, "dcml")
+
+# Compare format type
+format_numbers(x[2], format = "dcml")
+format_numbers(x[2], format = "sci")
+format_numbers(x[2], format = "engr")
+
+# Compare omit_power range
+format_numbers(x[3], omit_power = c(-1, 2))
+format_numbers(x[3], omit_power = c(0, 2))
+format_numbers(x[4])
+format_numbers(x[4], omit_power = c(-Inf, Inf))
+format_numbers(x[4], omit_power = NULL)
+
+# Compare set_power results
+format_numbers(x[2], set_power = -5)
+format_numbers(x[2], set_power = -4)
+format_numbers(x[2], set_power = -3)
 }
 \seealso{
 Other format_*: 
 \code{\link{format_engr}()},
 \code{\link{format_numbers}()},
 \code{\link{format_sci}()},
-\code{\link{format_text}()},
-\code{\link{format_units}()}
+\code{\link{format_text}()}
 }
 \concept{format_*}

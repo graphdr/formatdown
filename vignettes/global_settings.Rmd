@@ -34,155 +34,454 @@ options(
 ![](../man/figures/options-img.png){width=70%}    
 <small>*option* by Mike Lawrence is licensed under CC BY 2.0 DEED <https://creativecommons.org/licenses/by/2.0/>.</small>
 
+<br>
 
-Global options are provided for those arguments most likely to be used throughout a document. For example, some users prefer a period (".") as a decimal marker, others prefer a comma (","). A user would likely prefer to set this option once rather than restating it in every function call.
+Global options are provided for arguments that users are likely prefer to set once in a document instead of repeating in every function call. For example, some users prefer a comma decimal marker (",") throughout a document. 
 
 Globally-set arguments can be overridden locally by assigning them in a function call.
 
-## formatdown_options()
+## `formatdown_options()`
 
-Set and examine several global options which affect the way in which formatdown displays its results. The options and their default settings are: 
+Set, examine, or reset several global options which affect the way in which a formatted object is rendered in an R markdown document. The options and their default settings are
 
-        size         = NA_character_
-        delim        = "$"
-        decimal_mark = "."
-        big_mark     = ""
-        small_mark   = ""
-        word_space   = "\\\\>"
+```r
+formatdown_options(delim = "$",
+                   size = NULL,
+                   decimal_mark = ".",
+                   big_mark = "",
+                   big_interval = 3,
+                   small_mark = "",
+                   small_interval = 5,
+                   word_space = "\\\\>", 
+                   reset = FALSE)
+```
+
+To reset all formatdown arguments to their default values: 
+
+```r
+    formatdown_options(reset = TRUE)
+```
+
+
 
 <br>
 
-*Arguments.* 
-
-size
-
-: Font size. Possible values are NA (default), "scriptsize", "small", "normalsize", "large", and "huge". If not NA, adds a prefix to the markup to invoke the macros `\scriptsize`, `\small`, `\normalsize`, etc.
-
-delim
-
-: Character vector of length one or two defining the math markup delimiters. Possible values include `c("$", "$")` or `c("\\(", "\\)")`. Alternatively, one can use `"$"` (default) or `"\\("`, both of which create appropriate left and right delimiters. If required by one's markup environment, custom 2-element (left and right) delimiters can be assigned.
-
-decimal_mark
-
-: Character. Possible values are a period (`"."` default) or a comma (`","`) to denote the numeric decimal point; passed to `formatC(decimal.mark)`. 
-
-big_mark, small_mark
-
-: Character. Possible values are empty (`""`, default) or "thin" to produce a LaTeX-style thin space (`"\\\\,"`) to separate numbers into groups of three to the left of the decimal mark (`big_mark`) or to the right of the decimal mark (`small_mark`); passed to `formatC(big.mark, small.mark)`.
-
-word_space
-
-: Character. Defines the LaTeX-style math-mode macro to preserve a horizontal space between words. Default is ($\small\mathtt{\verb|"\\\\>"|}$). Alternatives include ($\small\mathtt{\verb|"\\\\:"|}$) or ($\small\mathtt{\verb|"\\\\ "|}$).
-
-
-
-
-## stuff
-
-Suppose we want to change `size` and `decimal_mark` in a formatted column. We can set these arguments in the usual fashion, 
+*Usage.* &nbsp; For example, get two of the current settings.
 
 ```{r}
-x <- c(2.1e-4, 3.2e-3, 4.3e-2, 5.4e-1, 6.5)
-
-# Construct a formatted data frame
-sci  <- format_sci(x, 2, size = "large", decimal_mark = ",")
-engr <- format_engr(x, 2, size = "large", decimal_mark = ",")
-DT <- data.table(x, sci, engr)
-
-# Render in the document
-knitr::kable(DT, 
-             align = "r", 
-             caption = "Using the `size` and `decimal_mark` arguments",
-             col.names = c("x (as stored in R)", "scientific notation", "engineering notation"))
-```
-
-Alternatively, we can set these arguments globally using `formatdown_options()`. Available options and their default settings are: 
-
-        size         = NA_character_
-        delim        = "$"
-        decimal_mark = "."
-        big_mark     = ""
-        small_mark   = ""
-
-The `formatdown_options()` function can be used to "get" the current values and to "set" new values. For example, 
-
-```{r}
-# View the current settings
 formatdown_options("size", "decimal_mark")
 ```
 
-To create new global settings, 
+Assign new settings; examine result. 
 
 ```{r}
-formatdown_options(size = "large", 
-                   decimal_mark = ",")
+# Set
+formatdown_options(size = "large", decimal_mark = ",")
 
-# View the new settings
+# Examine result
 formatdown_options("size", "decimal_mark")
 ```
 
-Format the same data frame without the optional arguments in the function calls,  
+Reset to default values; examine result.
 
 ```{r}
-# Construct a formatted data frame
-sci  <- format_sci(x, 2)
-engr <- format_engr(x, 2)
-DT <- data.table(x, sci, engr)
+# Set to defaults
+formatdown_options(reset = TRUE)
 
-# View one vector
-sci
-
-# Render in the document
-knitr::kable(DT, 
-             align = "r", 
-             caption = "Selected arguments set using `formatdown_options()`",
-             col.names = c("x (as stored in R)", "scientific notation", "engineering notation"))
-```
-
-Options can be reset to their package defaults, 
-
-```{r}
-reset_formatdown_options()
-
-# View the reset options
+# Examine result
 formatdown_options("size", "decimal_mark")
 ```
 
-From this point forward, the default formatdown arguments are used, 
+
+## Delimiters
+
+Delimiters are characters that surround a formatted expression such that R Markdown renders it as an inline math expression. 
+
+Sometimes the default `$ ... $` delimiters fail to render correctly. I encountered this once using `kableExtra::kbl()` in a `.qmd` document. The solution, suggested by the MathJax consortium [@Cervone:2018], is to use the delimiter pair `\( ... \)`, hence the built-in alternate, `delim = "\\("`. 
+
+Left and right custom delimiters can be assigned in a vector, e.g., `c("\\[", "\\]")`.
+
+<br>
+
+*Examples.* &nbsp; Note that using `format_text()` introduces additional markup inside the delimiters. Details are described in the [Format text](format_text.html) article. 
 
 ```{r}
-# Construct a formatted data frame
-sci  <- format_sci(x, 2)
-engr <- format_engr(x, 2)
-DT <- data.table(x, sci, engr)
+x <- 101300
+txt <- "Hello world!"
 
-# View one vector
-sci
+# 1. Numeric input, default delimiters
+format_dcml(x)
+
+# 2. Numeric input, alternate delimiters
+format_dcml(x, delim = "\\(")
+
+# 3. Character input, default delimiters
+format_text(txt)
+
+# 4. Character input, alternate delimiters
+format_text(txt, delim = "\\(")
 ```
+
+<br>
+
+Examples 1--4 (in inline code chunks) render as, 
+
+1. `r format_dcml(x)`
+
+1. `r format_dcml(x, delim = "\\(")`
+
+1. `r format_text(txt)`
+
+1. `r format_text(txt, delim = "\\(")`
+
+<br>
+
+
+## Font size
+
+Font size is set using LaTeX-style macros inside the math-delimited expression. For example, with `size = "small"` (or `size = "\\small"`), the formatdown markup of the Avogadro constant would be  
+
+        "$\\small 6.0221 \\times 10^{23}$", 
+
+where the extra backslashes are necessary to escape the backslashes in `\small` and `\times`.  If `size = NULL` (default), no size command is added and the font size is equivalent to `"normalsize"`. 
+
+
+
+<br>
+
+*Examples.*
+
+```{r}
+# 5. Numeric input
+format_dcml(x, size = "scriptsize")
+
+# 6. Numeric input
+format_dcml(x, size = "small")
+
+# 7. Power-of-ten number using LaTeX-style size markup 
+format_sci(6.0221e+23, size = "\\small")
+
+# 8. Character input, default size
+format_text(txt)
+
+# 9. Character input
+format_text(txt, size = "large")
+```
+
+<br>
+
+Examples 5--9 render as, 
+
+5. `r format_dcml(x, size = "scriptsize")`
+
+5. `r format_dcml(x, size = "small")`
+
+5. `r format_sci(6.0221e+23, size = "small")`
+
+5. `r format_text(txt)`
+
+5. `r format_text(txt, size = "large")`
+
+<br>
+
+
+*Available sizes*
+
+Comparing decimal notation, scientific notation, and text in possible font sizes (formatdown does not support the sizes: tiny, footnotesize, Large, LARGE, and Huge).  
+
+```{r}
+#| echo: false
+
+x <- pi
+y <- 5.3e+3
+z <- "The cat"
+
+scriptsize <- c(format_dcml(x, 5, size = "scriptsize"), 
+          format_sci(y, 1, size = "scriptsize"), 
+          format_text(z, size = "scriptsize"))
+small <- c(format_dcml(x, 5, size = "small"), 
+          format_sci(y, 1, size = "small"), 
+          format_text(z, size = "small"))
+normalsize <- c(format_dcml(x, 5, size = "normalsize"), 
+          format_sci(y, 1, size = "normalsize"), 
+          format_text(z, size = "normalsize"))
+large <- c(format_dcml(x, 5, size = "large"), 
+          format_sci(y, 1, size = "large"), 
+          format_text(z, size = "large"))
+huge <- c(format_dcml(x, 5, size = "huge"), 
+          format_sci(y, 1, size = "huge"), 
+          format_text(z, size = "huge"))
+
+DT <- data.table(scriptsize, small, normalsize, large, huge)
+knitr::kable(DT, align = "r")
+```
+
+
+
+## Decimal separator
+
+For a number written in decimal form, the decimal mark separates the integer part from the fractional part. 
+
+- A period or dot (".") is the conventional decimal mark in the US, Australia, Canada (English-speaking), Mexico, the UK, much of eastern Asia, and other regions. 
+
+- A comma (",") is the conventional decimal mark in Brazil, Canada (French-speaking), much of Europe and Latin America, Russia, and other regions. 
+
+The decimal mark in formatdown may be reset locally in a function call or globally using `formatdown_options()`; it is not affected by the base R option `OutDec`. 
+
+<br>
+
+*Examples.*
+
+```{r}
+# 10. Decimal markup
+x <- pi
+format_dcml(x, 5, decimal_mark = ",")
+
+# 11. Power-of-ten markup
+y <- 1.602176634e-19
+format_sci(y, 5, decimal_mark = ",")
+```
+
+
+<br>
+
+Examples 10 and 11 render as, 
+
+10. `r format_dcml(x, 5, decimal_mark = ",")`
+
+10. `r format_sci(y, 5, decimal_mark = ",")`
+
+<br>
+
+
+
+## Separating digits
+
+The NIST recommends we use a thin space to separate more than 4 digits to the left or to the right of a decimal marker [@NIST:2022, 10.5.3]:
+
+> ... digits should be separated into groups of three, counting from the decimal marker towards the left and right, by the use of a thin, fixed space. However, this practice is not usually followed for numbers having only four digits on either side of the decimal marker except when uniformity in a table is desired.
+
+Both `big_mark` and `small_mark` add the horizontal-space characters inside the math delimiters; `big_mark` to the integer portion and `small_mark` to the fractional portion. The possible values are empty `""` (default), `"thin"`, or the thin-space macro itself `\\\\,`. 
+
+The interval arguments `big_interval` and `small_interval` set the number of digits separated by thin spaces when `big_mark` or `small_mark` are not empty. However, formatdown does not encode the exemption for 4-digit groups mentioned in the IST quote above.  
+
+<br>
+
+
+*Examples.*
+
+```{r}
+w <- 1013
+x <- 101300
+y <- 0.002456
+z <- x + y
+
+# 12. 4-digit number, no space
+format_dcml(w)
+
+# 13. 4-digit number, with space
+format_dcml(w, big_mark = "thin")
+
+# 14. Group digits to the left of the decimal
+format_dcml(x, big_mark = "thin")
+
+# 15. Group digits to the right of the decimal
+format_dcml(y, small_mark = "\\\\,")
+
+# 16. Change the small interval
+format_dcml(y, small_mark = "\\\\,", small_interval = 3)
+
+# 17. Group digits to the left and right of the decimal
+format_dcml(z, 12, big_mark = "thin", small_mark = "thin")
+```
+
+
+<br>
+
+Examples 12--17 render as, 
+
+12. `r format_dcml(w)`
+
+12. `r format_dcml(w, big_mark = "thin")`
+
+12. `r format_dcml(x, big_mark = "\\\\,")`
+
+12. `r format_dcml(y, small_mark = "\\\\,")`
+
+12. `r format_dcml(y, small_mark = "\\\\,", small_interval = 3)`
+
+12. `r format_dcml(z, 12, big_mark = "thin", small_mark = "\\\\,")`
+
+
+
+## Preserving text spaces
+
+The horizontal-space macro is used to preserve spaces in text formatted with `format_text()`. Without it, an inline math markup such as 
+
+        $\mathrm{This Is Math Text.}$
+
+is rendered in an R markdown document as 
+
+$\qquad$ `r "$\\small\\mathrm{This Is Math Text.}$"`
+
+To preserve such spaces, formatdown substitutes the character string  `\>` for each space, producing output like the following, where backslashes have been escaped, 
+
+        "$\\mathrm{This\\>Is\\>Math\\>Text.}$"
+
+rendered as, 
+
+$\qquad$ `r "$\\small\\mathrm{This\\>Is\\>Math\\>Text.}$"`
+
+
+Because the backslashes must be escaped, the formatdown output is $\small\mathtt{\verb|"\\>"|}$, but the the argument value set by the user is  `word_space =` $\small\mathtt{\verb|"\\\\>"|}$. One may also use $\mathtt{\small\verb|"\\\\:"|}$ or $\mathtt{\small\verb|"\\\\ "|}$. 
+
+
+<br>
+
+*Examples.*
+
+```{r}
+# 18. Character input, default space "\>"
+format_text(txt, word_space = "\\\\>")
+
+# 19. Character input, alternate space "\:"
+format_text(txt, word_space = "\\\\:")
+
+# 20. Character input, alternate space "\ "
+format_text(txt, word_space = "\\\\ ")
+```
+
+<br>
+
+Examples 18--20 render as, 
+
+18. `r format_text(txt)` 
+
+18. `r format_text(txt, word_space = "\\\\:")`
+
+18. `r format_text(txt, word_space = "\\\\ ")` 
+
+
+
+
+
+
+
+## Applications
+
+
+*Example 21.*
+
+In this example, we format different columns of a data frame using `decimal_mark`, `big_mark` and `small_mark`. 
 
 ```{r}
 #| echo: false
 formatdown_options(size = "small")
-sci  <- format_numbers(x, 2, "sci")
-engr <- format_numbers(x, 2, "engr")
-DT <- data.table(x, sci, engr)
 ```
 
 ```{r}
-# Render in the document
-knitr::kable(DT, 
-             align = "r", 
-             caption = "Default arguments restored",
-             col.names = c("x (as stored in R)", "scientific notation", "engineering notation"))
+# Set options
+formatdown_options(decimal_mark = ",", big_mark = "thin", small_mark = "thin")
+
+# Use water data included with formatdown
+DT <- copy(water)[1:6]
+
+# Examine the data frame
+DT[]
+
+# Routine decimal formatting
+DT$temp <- format_dcml(DT$temp)
+DT$dens <- format_dcml(DT$dens)
+
+# Omit big_mark spacing for 4 digits
+DT$sp_wt <- format_dcml(DT$sp_wt, 4, big_mark = "")
+
+# Set significant digits (viscosity) to achieve a consistent string length
+DT[visc >= 0.001, temp_visc := format_dcml(visc, 5)]
+DT[visc  < 0.001, temp_visc := format_dcml(visc, 4)]
+DT[, visc := temp_visc]
+DT[, temp_visc := NULL]
+
+# Will appear with big_mark spacing, change from Pa to kPa
+DT$bulk_mod_kPa <- format_dcml(DT$bulk_mod/1000, 4)
+DT$bulk_mod <- NULL
+
+knitr::kable(DT, align = "r", caption = "Example 21.")
+
+# Set package options to default values
+formatdown_options(reset = TRUE)
+```
+
+<br>
+
+*Example 22.*
+
+Same table, but using power of ten formatting. 
+
+```{r}
+#| echo: false
+formatdown_options(size = "small")
+```
+
+```{r}
+# Use water data included with formatdown
+DT <- copy(water)[1:6]
+
+# Routine decimal formatting
+cols <- c("temp", "dens", "sp_wt")
+DT[, (cols) := lapply(.SD, function(x) format_dcml(x)), .SDcols = cols]
+
+# Power of ten 
+DT$bulk_mod <- format_engr(DT$bulk_mod, 3)
+DT$visc <- format_engr(DT$visc, 4, set_power = -3)
+
+knitr::kable(DT, align = "r", caption = "Example 22.")
 ```
 
 ```{r}
 #| echo: false
-reset_formatdown_options()
+formatdown_options(reset = TRUE)
 ```
 
-illustrating that the default options have been restored.  
+<br>
+
+*Example 23.*
+
+The `metals` data set includes columns of text and  decimal and power-of-ten numbers. 
+
+```{r}
+#| echo: false
+formatdown_options(size = "small")
+```
+
+```{r}
+# Use water data included with formatdown
+DT <- copy(metals)
+
+# Examine the data frame
+DT[]
+
+# Text 
+DT$metal <- format_text(DT$metal)
+
+# Decimal
+cols <- c("dens", "thrm_cond")
+DT[, (cols) := lapply(.SD, function(x) format_dcml(x)), .SDcols = cols]
+
+# Power of ten 
+cols <- c("elast_mod", "thrm_exp")
+DT[, (cols) := lapply(.SD, function(x) format_engr(x, 3)), .SDcols = cols]
+
+knitr::kable(DT, align = "lrrrr", caption = "Example 23.")
+```
+
+```{r}
+#| echo: false
+formatdown_options(reset = TRUE)
+```
+
+
+
 
 
 ## References
-

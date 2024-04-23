@@ -158,7 +158,7 @@ knitr::kable(DT,
   )
 )
 
-reset_formatdown_options()
+formatdown_options(reset = TRUE)
 ```
 
 The purpose of the decimal format in formatdown is to match the font face and size of decimal columns to those of the power-of-ten columns. If no power-of-ten columns are used, of course, decimal columns can be displayed as-is or formatted using other R tools. 
@@ -170,149 +170,237 @@ The purpose of the decimal format in formatdown is to match the font face and si
 
 ## Markup {#markup}
 
-We format values as inline math expressions  delimited by `$ ... $` or the optional `\( ... \)`. For example, the Avogadro constant is marked up as
+We format numbers as inline math expressions  delimited by `$ ... $` or the optional `\( ... \)`. For example, the Avogadro constant is marked up as
 
         $6.0221 \times 10^{23}$, 
 
-and rendered in an R markdown document as $\small 6.0221 \times 10^{23}$. To *program* the markup, however, we enclose the markup in quote marks as a character string, that is, 
+where the `\times` macro creates the multiplication symbol ($\small\times$). This math markup, as an inline equation in an R markdown document, renders as: $\small 6.0221 \times 10^{23}$. To *program* the markup, however, we enclose it in quote marks as a character string, that is, 
 
-        "$6.0221 \\times 10^{23}$".
+        "$6.0221 \\times 10^{23}$", 
 
-An extra backslash is necessary to "escape" the backslash in `\times`.
+which requires us to "escape" the backslash in `\times` by adding an extra backslash. When the optional font size argument is assigned, formatdown adds a LaTeX-style sizing macro such as `\small` or `\large`, for example, 
 
-## `format_numbers()` {#format_num}
+        "$\\small 6.0221 \\times 10^{23}$", 
 
-Given a number, a numerical vector, or a numerical column from a data frame, `format_numbers()` converts the numbers to character strings in a power-of-ten form, 
+where again the markup includes an extra backslash.  
+
+
+
+## `format_sci()` {#format_sci}
+
+Converts numbers to character strings in power-of-ten form, 
 
         "$a \\times 10^{n}$" 
 
-or in decimal form, 
+where $\small a$ is the coefficient and $\small n$ is the exponent. `format_sci()` is a wrapper for the more general function `format_numbers()`. For a subset of values with exponents near zero, e.g., $\small n \in \{-1, 0, 1, 2\}$, the output is in decimal form, 
 
-        "$a$" 
-
-where $\small a$ is coefficient (or decimal number), `\\times` is the macro for the multiplication symbol ($\small \times$), and $\small n$ is the exponent. 
+        "$a$"
 
 <br>
 
-*Arguments.* 
+*Usage.* &nbsp; 
 
-x
+```r
+format_sci(x,
+           digits = 4,
+           ...,
+           omit_power = c(-1, 2),
+           set_power = NULL,
+           delim          = formatdown_options("delim"),
+           size           = formatdown_options("size"),
+           decimal_mark   = formatdown_options("decimal_mark"),
+           small_mark     = formatdown_options("small_mark"),
+           small_interval = formatdown_options("small_interval"))
+```
 
-: Numerical vector to be formatted. Can be a scalar, a vector, or a column from a data frame. Can include NA elements. 
-
-```{r child = "man/rmd/define-digits.Rmd"}
-``` 
-
-format
-
-: Possible values are `"engr"` (default) for engineering notation, `"sci"` for scientific notation, and `"dcml"` for decimal notation. 
-
-omit_power
-
-: Numeric vector `c(p, q)` with `p <= q`, specifying the range of exponents over which power-of-ten notation is omitted in either scientific or engineering power-of-ten format. Default is `c(-1, 2)`. If a single value is assigned, i.e., `omit_power = p`, the argument is interpreted as `c(p, p)`. If `NULL` or `NA`, all elements are formatted in power-of-ten notation. Argument is overridden by a non-empty `set_power` or if decimal notation is specified (`format = "dcml"`). 
-
-set_power
-
-: Integer scalar. In scientific or engineering notation, formats all values in `x` with the same power-of-ten exponent. Default NULL. Argument overrides `omit_power`. Argument is overridden if decimal notation is specified.
-
-```{r child = "man/rmd/define-options.Rmd"}
-``` 
+- Arguments before the dots do not have to be named if argument order is maintained. 
+- Arguments after the dots (`...`) must be named. 
+- The arguments assigned via `formatdown_options()` can be reset by the user  locally in a function call or globally using `formatdown_options()`. 
  
+
 <br>
 
-*Equivalent usage.*  &nbsp;  The first three arguments do not have to be named if the argument order is maintained. 
+*Examples.*  &nbsp; These early examples are shown with default arguments. Arguments are explored more fully starting with [Numeric input](#numeric-input) section. 
 
 ```{r}
-# Numerical value
-avogadro <- 6.0221E+23
+# 1. Avogadro constant
+L <- 6.0221E+23
+format_sci(L)
 
-# Arguments named
-(x <- format_numbers(x = avogadro, digits = 4, format = "engr"))
-
-# Arguments unnamed
-y <- format_numbers(avogadro, 4, "engr")
-
-# Implicit use of default argument
-z <- format_numbers(avogadro)
-
-# Demonstrate equivalence
-all.equal(x, y)
-all.equal(x, z)
+# 2. Elementary charge
+e <- 1.602176634e-19
+format_sci(e)
 ```
 
-## Convenience functions
+Examples 1 and 2 (in inline code chunks) render as,    
 
-Each of the primary formats (`"sci"`, `"engr"`, and `"dcml"`) can be accessed with its own convenience function that wraps `format_numbers()`. 
+1. The Avogadro constant is $\small L =$ `r format_sci(L, size = "small")` $\small \mathit{mol}^{-1}$.
+1. The elementary charge constant is $\small e =$ `r format_sci(e, size = "small")` $\small C$. 
 
-*Usage.*
 
-- `format_dcml(x, digits, <options>)`
-- `format_engr(x, digits, omit_power, set_power, <options>)`
-- `format_sci (x, digits, omit_power, set_power, <options>)`
 
-Examples of equivalence between the wrappers and `format_numbers()`. First, in decimal notation, 
+
+## `format_engr()` {#format_engr}
+
+Similar to `format_sci()` except using engineering notation, i.e., exponents are multiples of 3. 
+
+<br>
+
+*Usage.* 
+
+```r
+format_engr(x,
+            digits = 4,
+            ...,
+            omit_power = c(-1, 2),
+            set_power = NULL,
+            delim          = formatdown_options("delim"),
+            size           = formatdown_options("size"),
+            decimal_mark   = formatdown_options("decimal_mark"),
+            small_mark     = formatdown_options("small_mark"),
+            small_interval = formatdown_options("small_interval"))
+```
+
+<br>
+
+*Examples.*  &nbsp; (with default arguments)
 
 ```{r}
-(x <- 101300)
-(p <- format_dcml(x, 3))
-(q <- format_numbers(x, 3, "dcml"))
-all.equal(p, q)
+# 3. Avogadro constant
+format_engr(L)
+
+# 4. Elementary charge
+format_engr(e)
 ```
 
-In engineering notation, 
+Examples 3 and 4 render as,   
+
+3. The Avogadro constant is $\small L =$ `r format_engr(L, size = "small")` $\small \mathit{mol}^{-1}$.
+3. The elementary charge constant is $\small e =$ `r format_engr(e, size = "small")` $\small C$. 
+
+
+
+
+## `format_dcml()` {#format_dcml}
+
+A wrapper for the more general function `format_numbers()`; converts numbers to  character strings in decimal form, 
+
+        "$a$"
+
+ where $\small a$ is the decimal value.  
+
+<br>
+
+*Usage.* 
+
+```r
+format_dcml(x,
+            digits = 4,
+            ...,
+            size           = formatdown_options("size"),
+            delim          = formatdown_options("delim"),
+            decimal_mark   = formatdown_options("decimal_mark"),
+            big_mark       = formatdown_options("big_mark"),
+            big_interval   = formatdown_options("big_interval"),
+            small_mark     = formatdown_options("small_mark"),
+            small_interval = formatdown_options("small_interval"))
+```
+
+<br>
+
+*Examples.*  &nbsp; (with default arguments)
 
 ```{r}
-(x <- avogadro)
-(p <- format_engr(x, 3))
-(q <- format_numbers(x, 3, "engr"))
-all.equal(p, q)
+# 5. Speed of light in a vacuum
+c <- 299792458
+format_dcml(c)
+
+# 6. Molar gas constant
+R <- 8.31446261815324
+format_dcml(R)
 ```
 
-And in scientific notation, 
+Examples 5 and 6 render as,  
+
+5. The speed of light in a vacuum is $\small c =$ `r format_dcml(c, size = "small")` $\small\mathit{m/s}$.
+5. The molar gas constant is $\small R =$ `r format_dcml(R, size = "small")` $\small\mathit{J}\cdot\mathit{K}^{-1}\mathit{mol}^{-1}$. 
+
+
+
+
+
+## `format_numbers()` {#format_numbers}
+
+`format_numbers()` is the general-purpose formatting function called by `format_sci()`, `format_engr()`, and `format_dcml()`. The general function can be used instead of the convenience functions simply by setting its `format` argument to `"sci"`, `"engr"` (default), or `"dcml"`. 
+
+
+<br>
+
+*Usage.* 
+
+```r
+format_numbers(x,
+               digits = 4,
+               format = "engr",
+               ...,
+               omit_power = c(-1, 2),
+               set_power = NULL,
+               delim          = formatdown_options("delim"),
+               size           = formatdown_options("size"),
+               decimal_mark   = formatdown_options("decimal_mark"),
+               big_mark       = formatdown_options("big_mark"),
+               small_mark     = formatdown_options("small_mark"),
+               big_interval   = formatdown_options("big_interval"),
+               small_interval = formatdown_options("small_interval"))
+```
+
+
+*Examples.*  &nbsp; Reproducing some of the earlier examples using `format_numbers()`.
 
 ```{r}
-(x <- avogadro)
-(p <- format_sci(x, 3))
-(q <- format_numbers(x, 3, "sci"))
-all.equal(p, q)
+# 7. Scientific
+format_numbers(L, format = "sci")
+
+# 8. Engineering
+format_numbers(e, format = "engr")
+
+# 9. Decimal
+format_numbers(R, format = "dcml")
 ```
 
-Optional arguments can be set in individual function calls or set globally; see [Global settings](#global-settings). For example, the following produce identical results, 
+Examples 7--9 render as,  
 
-```{r}
-(x <- avogadro)
-(p <- format_sci(x, 3, size = "small"))
-(q <- format_numbers(x, 3, "sci", size = "small"))
-all.equal(p, q)
-```
+7. The Avogadro constant is $\small L =$ `r format_numbers(L, format = "sci", size = "small")` $\small \mathit{mol}^{-1}$. 
+7. The elementary charge constant is $\small e =$ `r format_numbers(e, format = "engr", size = "small")` $\small C$. 
+7. The molar gas constant is  $\small R =$ `r format_dcml(R, size = "small")` $\small\mathit{J}\cdot\mathit{K}^{-1}\mathit{mol}^{-1}$. 
 
 
 
 
 
+## Numeric input {#numeric-input}
 
-## Numeric input {#input}
+This section begins our detailed discussion of arguments.  
 
-*Scalar.* &nbsp; Use with inline R code. For example, the following Quarto or RMarkdown sentence fragment that includes some math markup and some inline R code,  
+*Scalar input.* &nbsp; Generally used with inline R code. For example, the following R markdown sentence, which includes some math markup and some inline R code,  
 
 ````{verbatim}
-    $N_A = $ `r format_sci(6.022E+23, 4)`
+    The Avogadro constant is $L = $ `r format_sci(L)` $\mathit{mol}^{-1}$. 
 ````
 
-is rendered as 
-
-$\qquad\small N_A =$ `r format_numbers(6.022E+23, 4, "sci", size = "small")`.
+renders as: The Avogadro constant is $\small L =$ `r format_sci(L, size = "small")` $\small\mathit{mol}^{-1}$.
 
 <br>
 
-*Vector.* &nbsp; Given a vector of numbers (or a data frame column), 
+*Vector.* &nbsp; A vector of numbers (or a data frame column) is marked up as follows, 
 
 ```{r}
+# 10. Sample vector
 x <- c(2.3333e-5, 3.4444e-4, 5.2222e-2, 6.3333e-1, 8.1111e+1, 9.2222e+2, 2.4444e+4, 3.1111e+5, 4.2222e+6)
 format_engr(x)
 ```
 
-the formatted values are rendered as, 
+In a table, the output renders as,   
 
 ```{r}
 #| echo: false
@@ -321,57 +409,48 @@ formatdown_options(size = "small")
 
 ```{r}
 DT <- data.table(x, format_engr(x))
-knitr::kable(DT, align = "r", col.names = c("x", "Default formatting"))
+knitr::kable(DT, 
+             align = "r", 
+             col.names = c("Unformatted", "Engr notation"), 
+             caption = "Example 10.")
 ```
 
 ```{r}
 #| echo: false
-reset_formatdown_options()
+formatdown_options(reset = TRUE)
 ```
 
-Comments:
+For values with exponents $\small n\in\{-1, 0, 1, 2\}$, the default format is decimal; see [Excluding exponents](#excluding-exponents). 
 
-- Default significant digits is 4. 
-- For values with exponents $\small n\in\{-1, 0, 1, 2\}$, the default format is decimal. 
+
+
 
 ## Significant digits {#significant-digits}
 
-Argument does not have to be named. Default is 4. 
-
 Significant digits are applied to the input argument using the base R function `signif()` before additional formatting is applied.  For example, 
 
-```{r}
-# Value
-(y <- 2.3333e-5)
-```
-
-when formatted with different numbers of significant digits, 
 
 ```{r}
-#| echo: false
-
-formatdown_options(size = "small")
-
-y <- 2.3333e-5
-
-r <- c(format_sci(y, 3), format_sci(y, 4), format_sci(y, 5))
-
-s <- c("format\\_sci(y, 3)", "format\\_sci(y, 4)", "format\\_sci(y, 5)")
-
-s <- format_text(s, face = "mono")
-
-DT <- data.table(s, r)
-
-knitr::kable(DT, 
-             align = "lr", 
-             col.names = c("function call", "renders as"))
-
-reset_formatdown_options()
+# 11. Significant digits
+format_sci(e, digits = 5)
+format_sci(e, digits = 4)
+format_sci(e, digits = 3)
 ```
+
+Example 11 renders as, 
+
+- `r format_sci(e, digits = 5, size = "small")`
+- `r format_sci(e, digits = 4, size = "small")`
+- `r format_sci(e, digits = 3, size = "small")`
+
+
+
+
+
 
 ## Formats {#formats}
 
-The `format` argument appears in `format_numbers()` only. The default is "engr". In the convenience functions `format_dcml()`, `format_engr()`, and `format_sci()`, the format is preset. 
+The `format` argument appears in `format_numbers()` only. The default is "engr". The format is preset in the `format_dcml()`, `format_engr()`, and `format_sci()` convenience functions. 
 
 To compare the effects across many orders of magnitude, we display the same vector in different formats.
 
@@ -381,32 +460,30 @@ formatdown_options(size = "small")
 ```
 
 ```{r}
+# 12. Comparing formats
 x <- c(2.3333e-5, 3.4444e-4, 5.2222e-2, 6.3333e-1, 8.1111e+1, 9.2222e+2, 2.4444e+4, 3.1111e+5, 4.2222e+6)
-
-# Compare three formats
-dcml <- format_numbers(x, 3, "dcml")
-sci  <- format_numbers(x, 3, "sci")
-engr <- format_numbers(x, 3, "engr")
+dcml <- format_numbers(x, 3, format = "dcml")
+sci  <- format_numbers(x, 3, format = "sci")
+engr <- format_numbers(x, 3, format = "engr")
 DT   <- data.table(dcml, sci, engr)
 knitr::kable(DT, 
              align = "r", 
-             col.names = c("decimal", "scientific", "engineering"))
+             col.names = c("decimal", "scientific", "engineering"), 
+             caption = "Example 12.")
 ```
 
 ```{r}
 #| echo: false
-reset_formatdown_options()
+formatdown_options(reset = TRUE)
 ```
 
 The values displayed without powers-of-ten notation in the scientific and engineering columns are determined by the `omit_power` argument discussed next.  
 
 ## Excluding a range of exponents {#excluding-exponents}
 
-Argument `omit_power`, if included, must be named. Default is `c(-1, 2)`.
+When specifying power-of-ten notation, numbers with exponents lying within the range of the `omit_power` argument are typeset in decimal form. In engineering notation, the exponent is checked for lying within the range before and after the conversion to multiple-of-3 exponents.  
 
-Numbers with exponents within the range of `omit_power` are typeset in decimal form; all other numbers are typeset in power-of-ten form. In engineering format, being "within the range" applies to exponents both before and after the conversion to engineering form. 
-
-To illustrate, we compare two `omit_power` settings in both scientific and engineering formats. 
+To illustrate, we compare two `omit_power` settings in both scientific and engineering formats. In some columns, we set `omit_power = NULL`, which imposes power-of-ten notation on the entire vector. 
 
 ```{r}
 #| echo: false
@@ -414,49 +491,52 @@ formatdown_options(size = "small")
 ```
 
 ```{r}
+# 13. Effects of omit_power
 DT <- atmos[3:12, .(pres)]
-DT[, sci1  := format_sci (pres , 3, omit_power = NULL)]
-DT[, sci2  := format_sci (pres , 3, omit_power = c(-1, 0))]
-DT[, engr1 := format_engr(pres , 3, omit_power = NULL)]
-DT[, engr2 := format_engr(pres , 3, omit_power = c(-1, 0))]
+DT[, sci_all   := format_sci (pres , 3, omit_power = NULL)]
+DT[, sci_omit  := format_sci (pres , 3, omit_power = c(-1, 0))]
+DT[, engr_all  := format_engr(pres , 3, omit_power = NULL)]
+DT[, engr_omit := format_engr(pres , 3, omit_power = c(-1, 0))]
 knitr::kable(DT, 
              align = "r", 
-             col.names = c("pressure", 
+             col.names = c("Unformatted", 
                          "all scientific", 
                          "scientific w/ omit", 
                          "all engineering", 
-                         "engineering w/ omit"))
+                         "engineering w/ omit"), 
+             caption = "Example 13.")
 ```
 
 Comments: 
 
-- Setting `omit_ower = NULL` imposes power-of-ten-notation for an entire column. 
 - In the "scientific with omit" column, the three values $\small (0.184, 1.05, 5.22)$ are in decimal form because their exponents lie within the `omit_power` range $\small \{-1, 0\}$. 
-- In the "engineering with omit" column, these values are again in decimal form because *before* converting to engineering form their exponents lie within the `omit_power` range. 
-- Additionally in the "engineering with omit" column, the values $(\small 22, 80, 287)$ are in decimal form because *after* converting to engineering notation their exponents lie within the `omit_power` range. 
+- The same is true in the "engineering with omit" column because these exponents are in the omit range  *before* converting to engineering form. 
+- The "engineering with omit" column also displays the values $(\small 22, 80, 287)$ in decimal form because their exponents are in the omit range *after* converting to engineering notation. 
 
 <br>
 
 If a single value is assigned, e.g., `omit_power = 0`, the argument is interpreted as `c(0, 0)`.
 
 ```{r}
+# 14. Omit power used for a single value of exponent
 DT <- atmos[3:12, .(pres)]
-DT[, sci1  := format_sci(pres, 3, omit_power = NULL)]
-DT[, sci2  := format_sci(pres, 3, omit_power = 0)]
-DT[, engr1 := format_engr(pres, 3, omit_power = NULL)]
-DT[, engr2 := format_engr(pres, 3, omit_power = 0)]
+DT[, sci_all   := format_sci(pres, 3, omit_power = NULL)]
+DT[, sci_omit  := format_sci(pres, 3, omit_power = 0)]
+DT[, engr_all  := format_engr(pres, 3, omit_power = NULL)]
+DT[, engr_omit := format_engr(pres, 3, omit_power = 0)]
 knitr::kable(DT, 
              align = "r", 
-             col.names = c("pressure", 
+             col.names = c("Unformatted", 
                          "all scientific", 
                          "scientific w/ omit", 
                          "all engineering", 
-                         "engineering w/ omit"))
+                         "engineering w/ omit"), 
+             caption = "Example 14.")
 ```
 
 ```{r}
 #| echo: false
-reset_formatdown_options()
+formatdown_options(reset = TRUE)
 ```
 
 <br>
@@ -464,6 +544,7 @@ reset_formatdown_options()
 Setting `omit_power = c(-Inf, Inf)` yields the same decimal result as `format = "dcml"` and overrides any other `format` setting. For example, 
 
 ```{r}
+# 15. Different ways of creating a decimal format
 (y <- 6.78e-3)
 
 (p <- format_numbers(y, 3, "sci", omit_power = c(-Inf, Inf)))
@@ -476,13 +557,15 @@ all.equal(p, q)
 all.equal(p, r)
 ```
 
-and all render as `r format_numbers(y, 3, "dcml", size = "small")`
+Example 15 (all cases) renders as, 
+
+- `r format_numbers(y, 3, "dcml", size = "small")`
+
+
 
 ## Enforcing a specific exponent {#enforcing-exponent}
 
-Argument `set_power`, if included, must be named. Default is NULL. 
-
-When values in a table column span only a few orders of magnitude, an audience is sometimes better served by setting the notation to a constant power of ten. For example, here we show numbers in scientific format and compare to columns in which the exponents are set to fixed values. 
+When values in a table column span only a few orders of magnitude, an audience is sometimes better served by setting the notation to a constant power of ten. For example, here we show numbers in scientific format and compare to columns in which the exponents are set to fixed values. Assigning a value to `set_power` overrides `omit_power` and  `format`. 
 
 ```{r}
 #| echo: false
@@ -490,217 +573,30 @@ formatdown_options(size = "small")
 ```
 
 ```{r}
+# 16. set_power argument
 DT <- atmos[alt <= 40, .(alt, pres, dens)]
-
-DT[, pres_sci := format_numbers(pres, 3, format = "sci", omit_power = c(-1, 2))]
-DT[, pres_set := format_numbers(pres, 3, format = "sci", omit_power = c(-1, 2), set_power = 3)]
-DT[, dens_sci := format_numbers(dens, 3, format = "engr", omit_power = c(-1, 2))]
-DT[, dens_set := format_numbers(dens, 3, format = "engr", omit_power = c(-1, 2), set_power = -2)]
+DT[, sci_pres := format_sci(pres, 3, omit_power = c(-1, 2))]
+DT[, set_pres := format_sci(pres, 3, omit_power = c(-1, 2), set_power = 3)]
+DT[, sci_dens := format_engr(dens, 3, omit_power = c(-1, 2))]
+DT[, set_dens := format_engr(dens, 3, omit_power = c(-1, 2), set_power = -2)]
 DT[, pres := NULL]
 DT[, dens := NULL]
 knitr::kable(DT, 
              align = "r", 
-             col.names = c('Altitude (km)', 'Pressure (Pa)', 'with set_power', 'Density (kg/m$^{3}$)', 'with set_power'))
+             col.names = c('Altitude (km)', 'Pressure (Pa)', 'with set_power', 'Density (kg/m$^{3}$)', 'with set_power'), 
+             caption = "Example 16.")
 ```
 
 ```{r}
 #| echo: false
-reset_formatdown_options()
-```
-
-Assigning a value to `set_power` overrides `omit_power` and (if present)  `format`. 
-
-## Optional arguments
-
-Optional arguments `size`, `delim`, `decimal_mark`, `big_mark`, and `small_mark` can be set one of two ways: locally (by name) in the function call or globally (see [Global settings](#global-settings)). 
-
-### Font size {#font-size}
-
-Adds a LaTeX-style font size command inside the math delimiters. For example, with `size = "small"`, the math markup of the Avogadro constant would be  
-
-        $\\small 6.0221 \times 10^{23}$, 
-
-where again, an extra backslash is necessary.  If `size = NA` (default), no size command is added. 
-
-In the example below, we format the same column of text using each of the five possible `size` arguments for comparison. 
-
-```{r}
-y <- c(1E-3, 3E+0, 5E+3)
-script <- format_sci(y, 1, size = "scriptsize")
-small  <- format_sci(y, 1, size = "small")
-normal <- format_sci(y, 1, size = "normalsize")
-large  <- format_sci(y, 1, size = "large")
-huge   <- format_sci(y, 1, size = "huge")
-  
-# View a sample markup
-small
-  
-# Compare formats
-DT <- data.table(script, small, normal, large, huge)
-knitr::kable(DT, align = "r")
-```
-
-Comparing the output of `size = NA` and `size = "normalsize"`, the math markup is different but the rendered output is identical. 
-
-```{r}
-# A value
-(y <- 2.3333e-5)
-
-# Markup with size = NA
-(p <- format_engr(y, 3, size = NA))
-
-# Markup with size = "normalsize"
-(q <- format_engr(y, 4, size = "normalsize"))
-```
-
-```{r}
-#| echo: false
-func_call <- c('format\\_engr(y, 3, size = NA)', 'format\\_engr(y, 4, size = "normalsize")')
-
-func_call <- format_text(func_call, face = "mono")
-
-func_eval <- c(p, q)
-
-
-DT <- data.table(func_call, func_eval)
-
-knitr::kable(DT, 
-             align = "lr", 
-             col.names = c("function call", "renders as"), 
-             caption = 'Font size "NA" and "normalsize" are identically rendered')
-```
-
-### Delimiters {#delimiters}
-
-Characters that surround a formatted number such that it can be rendered in an R Markdown document as an inline math expression. Default is `"$"`. 
- 
-```{r}
-x <- 2.1e-4
-
-# View markup
-format_numbers(x)
-
-# Equivalent usage
-p <- format_numbers(x)
-q <- format_numbers(x, delim = "$")
-r <- format_numbers(x, delim = c("$", "$"))
-
-# Verify equivalence
-all.equal(p, q)
-all.equal(p, r)
-```
-
-all of which render as 
-
-- `r format_numbers(x, size = "small")`
-
-I encountered one instance --- when using `kableExtra::kbl()` to create a table in a `.qmd` output document --- in which the `$ ... $` delimiters did not produce the desired output. Switching the delimiters to `\( ... \)` fixed the problem, per the recommendation of the MathJax consortium [@Cervone:2018]. 
-
-In this specific instance, you can assign either left or right delimiters, or both. Again we encounter a case where the backslash must be escaped. 
-
-```{r}
-# View markup
-format_numbers(x, delim = "\\(")
-
-# Equivalent usage
-p <- format_numbers(x, delim = "\\(")
-q <- format_numbers(x, delim = "\\)")
-r <- format_numbers(x, delim = c("\\(", "\\)"))
-
-# Verify equivalence
-all.equal(p, q)
-all.equal(p, r)
-```
-
-are all rendered as 
-
-- `r format_numbers(x, delim = "\\(", size = "small")`
-
-If your markup environment requires delimiters other than `$...$` or `\(...\)`, you must specify both left and right delimiters, similar to the following. You may have to escape any special characters.  
-
-        # Specifying left and right delimiters
-        format_numbers(x, delim = c("$", "$"))
-        format_numbers(x, delim = c("\\(", "\\)"))
-
-### Digit grouping {#digit-grouping}
-
-Three separators for grouping digits are available.  
-
-- `decimal_mark`, passed to the `decimal.mark` argument of `formatC()`. Default is (`"."`).
-- `big_mark`, passed to the `big.mark` argument of `formatC()`. Default is empty (`""`). 
-- `small_mark`, passed to the `small.mark` argument of `formatC()`. Default is empty (`""`). 
-
-<br>
-
-*Decimal mark.* &nbsp; The decimal mark separates the integer part from the fractional part of a number written in decimal form. The argument may not be assigned the same symbol as `big_mark`. 
-
-The convention in Australia, English-speaking Canada, China, Ireland, Japan, Korea, Mexico, the United Kingdom, the United States, and other regions is the period ("."). The convention in Brazil, French-speaking Canada, France, much of Latin America, Poland, Portugal, Russia, Scandinavia, Ukraine, and other regions is the comma (","). 
-
-The decimal mark in R can be reset with `options(OutDec = ",")`. The decimal mark in formatdown must be reset either locally in a function call or globally using `formatdown_options()`. 
-
-```{r}
-#| echo: false
-formatdown_options(size = "small")
-```
-
-```{r}
-# Preserve user's current options settings
-backup_options <- options()
-
-# Set R decimal mark to a comma
-options(OutDec = ",")
-
-# Format two columns using format_numbers() with decimal_mark argument
-DT <- atmos[1:12, .(pres)]
-DT[, sci := format_numbers(pres, 3, "sci", decimal_mark = ",")]
-DT[, engr := format_numbers(pres, 3, "engr", decimal_mark = ",")]
-
-# render data frame in a table
-knitr::kable(DT, 
-             align = "r", 
-             col.names = c("Pressure (Pa)", "scientific", "engineering"), 
-             caption = "Comma as decimal separator")
-
-# Reset to the preserved options 
-options(backup_options)
-```
-
-Comment
-
-- In the first column, "Pressure (Pa)", the comma decimal mark is formatted using the base R `OutDec` option. 
-- In the second and third columns, the comma decimal marks are created by the `decimal_mark` argument of `format_numbers()`. 
-
-<br>
-
-*Big mark.* &nbsp; The big mark is the character that separates digits into groups of three to the left of the decimal mark. Used in decimal notation only. 
-
-*Small mark.* &nbsp; The small mark is the character that separates digits into groups of three to the right of the decimal mark. Used in decimal notation only. 
-
-The NIST recommends we use a thin space to separate more than 4 digits [@NIST:2022, 10.5.3]. 
-
-> Because the comma is widely used as the decimal marker outside the United States, it should not be used to separate digits into groups of three. Instead, digits should be separated into groups of three, counting from the decimal marker towards the left and right, by the use of a thin, fixed space. However, this practice is not usually followed for numbers having only four digits on either side of the decimal marker except when uniformity in a table is desired.
-
-The "thin" fixed space setting in formatdown can be applied via `big_mark` or `small_mark` or both. 
-
-```{r}
-DT <- water[, .(bulk_mod, visc)]
-DT[, bulk_mod := format_numbers(bulk_mod/1000, 5, "dcml", big_mark = "thin")]
-DT[, visc := format_numbers(visc*1000, 6, "dcml", small_mark = "thin")]
-knitr::kable(DT, 
-             align = "r", 
-             col.names = c("Modulus (MPa)", "Viscosity (mPa$\\cdot$s)"), 
-             caption = "Thin spaces as digit separators")
+formatdown_options(reset = TRUE)
 ```
 
 
-```{r}
-#| echo: false
-reset_formatdown_options()
-```
 
-Note that we do not employ the NIST recommendation to omit the thin space for 4 digits. 
+## Options
 
-
+Arguments assigned using `formatdown_options()` are described in the [Global settings](global_settings.html) article. 
 
 
 

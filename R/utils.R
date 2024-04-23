@@ -1,5 +1,4 @@
 
-
 #' Remove trailing decimal point and spaces, if any, added by formatC()
 #'
 #' @param DT data.table
@@ -18,9 +17,6 @@ omit_formatC_extras <- function(DT, col_name) {
   # Trim space added by formatC if any
   DT[, (col_name) := trimws(get(col_name), which = "both")]
 }
-
-
-
 
 #' Surround elements of character vector with inline math delimiters
 #'
@@ -42,10 +38,22 @@ add_delim <- function(DT, col_name, delim) {
   }
 }
 
+#' Is an element of x NA or NULL, true/false
+#'
+#' @param x Vector
+#'
+#' @noRd
+#'
+is_null_or_na <- function(x) {
+  sum(c(is.null(x), is.na(x))) > 0
+}
 
-
-
-
-
-
-
+#' Is x numeric and length 1?
+#'
+#' @param x Vector
+#'
+#' @noRd
+#'
+is_numeric_and_length_one <- function (x) {
+  isTRUE(is.numeric(x) & length(x) == 1)
+}

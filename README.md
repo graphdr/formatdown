@@ -25,9 +25,9 @@ columns in tables.
 
 In professional technical prose, large and small numbers are generally
 typeset using powers of ten notation. For example, Plank’s constant
-would be typeset as $\small 6.63 \times 10^{-34}$
-$\small\mathrm{J\\/Hz}$ rather than the familiar forms we use in
-communicating with computers, such as `6.63*10^-34` or `6.63E-34`.
+would be typeset as $6.63 \times 10^{-34}$ $\mathrm{J\\/Hz}$ rather than
+the familiar forms we use in communicating with computers, such as
+`6.63*10^-34` or `6.63E-34`.
 
 The functions in this package help an author convert large and small
 numbers to character strings, formatted using powers-of-ten notation. In
@@ -66,31 +66,31 @@ x <- 101300
 
 # Scientific notation
 format_numbers(x, digits = 4, format = "sci")
-#> [1] "$\\small 1.013 \\times 10^{5}$"
+#> [1] "$1.013 \\times 10^{5}$"
 
 # Engineering notation
 format_numbers(x, digits = 4, format = "engr")
-#> [1] "$\\small 101.3 \\times 10^{3}$"
+#> [1] "$101.3 \\times 10^{3}$"
 
 # Decimal notation
 format_numbers(x, digits = 4, format = "dcml")
-#> [1] "$\\small 101300$"
+#> [1] "$101300$"
 
 # Measurement units notation
 units(x) <- "Pa"
 format_units(x, digits = 4, unit = "hPa")
-#> [1] "$\\small\\mathrm{1013\\ [hPa]}$"
+#> [1] "$\\small \\mathrm{1013\\>[hPa]}$"
 ```
 
 which, in an `.Rmd` or `.qmd` output document, are rendered using inline
 R code as
 
-|      Format |                  Rendered as |
-|------------:|-----------------------------:|
-|  scientific | $\small 1.013 \times 10^{5}$ |
-| engineering | $\small 101.3 \times 10^{3}$ |
-|     decimal |              $\small 101300$ |
-|       units | $\small\mathrm{1013\ [hPa]}$ |
+|      Format |                   Rendered as |
+|------------:|------------------------------:|
+|  scientific |         $1.013 \times 10^{5}$ |
+| engineering |         $101.3 \times 10^{3}$ |
+|     decimal |                      $101300$ |
+|       units | $\small \mathrm{1013\>[hPa]}$ |
 
 *Data frame*.   Typically rendered in a table. We independently format
 columns from the `metals` data frame included with formatdown.
@@ -129,14 +129,14 @@ knitr::kable(DT, align = "r", caption = "Table 1: Properties of metals.", col.na
     "Elastic modulus"))
 ```
 
-|                           Metal | Density \[kg/m$^3$\] | Therm. expan. \[m/m K$^{-1}$\] | Therm. cond. \[W/m K$^{-1}$\] |               Elastic modulus |
-|--------------------------------:|---------------------:|-------------------------------:|------------------------------:|------------------------------:|
-| $\small\mathrm{aluminum\ 6061}$ |        $\small 2700$ |   $\small 24.3 \times 10^{-6}$ |                  $\small 156$ |  $\small\mathrm{73.1\ [GPa]}$ |
-|         $\small\mathrm{copper}$ |        $\small 8900$ |   $\small 16.6 \times 10^{-6}$ |                  $\small 393$ | $\small\mathrm{117.0\ [GPa]}$ |
-|           $\small\mathrm{lead}$ |       $\small 11300$ |   $\small 52.7 \times 10^{-6}$ |                 $\small 37.0$ |  $\small\mathrm{13.8\ [GPa]}$ |
-|       $\small\mathrm{platinum}$ |       $\small 21400$ |   $\small 9.00 \times 10^{-6}$ |                 $\small 69.2$ | $\small\mathrm{147.0\ [GPa]}$ |
-|    $\small\mathrm{steel\ 1020}$ |        $\small 7850$ |   $\small 11.3 \times 10^{-6}$ |                 $\small 46.7$ | $\small\mathrm{207.0\ [GPa]}$ |
-|       $\small\mathrm{titanium}$ |        $\small 4850$ |   $\small 9.36 \times 10^{-6}$ |                 $\small 7.44$ | $\small\mathrm{102.0\ [GPa]}$ |
+|                     Metal | Density \[kg/m$^3$\] | Therm. expan. \[m/m K$^{-1}$\] | Therm. cond. \[W/m K$^{-1}$\] |                Elastic modulus |
+|--------------------------:|---------------------:|-------------------------------:|------------------------------:|-------------------------------:|
+| $\mathrm{aluminum\>6061}$ |               $2700$ |          $24.3 \times 10^{-6}$ |                         $156$ |  $\small \mathrm{73.1\>[GPa]}$ |
+|         $\mathrm{copper}$ |               $8900$ |          $16.6 \times 10^{-6}$ |                         $393$ | $\small \mathrm{117.0\>[GPa]}$ |
+|           $\mathrm{lead}$ |              $11300$ |          $52.7 \times 10^{-6}$ |                        $37.0$ |  $\small \mathrm{13.8\>[GPa]}$ |
+|       $\mathrm{platinum}$ |              $21400$ |          $9.00 \times 10^{-6}$ |                        $69.2$ | $\small \mathrm{147.0\>[GPa]}$ |
+|    $\mathrm{steel\>1020}$ |               $7850$ |          $11.3 \times 10^{-6}$ |                        $46.7$ | $\small \mathrm{207.0\>[GPa]}$ |
+|       $\mathrm{titanium}$ |               $4850$ |          $9.36 \times 10^{-6}$ |                        $7.44$ | $\small \mathrm{102.0\>[GPa]}$ |
 
 Table 1: Properties of metals.
 

@@ -11,48 +11,87 @@ format_numbers(
   ...,
   omit_power = c(-1, 2),
   set_power = NULL,
-  size = formatdown_options("size"),
   delim = formatdown_options("delim"),
+  size = formatdown_options("size"),
   decimal_mark = formatdown_options("decimal_mark"),
   big_mark = formatdown_options("big_mark"),
-  small_mark = formatdown_options("small_mark")
+  big_interval = formatdown_options("big_interval"),
+  small_mark = formatdown_options("small_mark"),
+  small_interval = formatdown_options("small_interval")
 )
 }
 \arguments{
-\item{x}{Numerical vector to be formatted. Can be a scalar, a vector, or a
-column from a data frame. Ca include NA elements.}
+\item{x}{Number or numbers to be formatted. Can be a single number, a vector,
+or a column of a data frame.}
 
-\item{digits}{Integer scalar from 1 through 20 that controls the number of
-significant digits in printed numeric values; see \code{signif()}. Default is 4.}
+\item{digits}{Integer from 1 through 20 that controls the number of
+significant digits in printed numeric values. Passed to \code{signif()}.
+Default is 4.}
 
-\item{format}{Type of notation. Possible values are "engr" (default) for
-engineering power-of-ten notation, "sci" for scientific power-of-ten
-notation, and "dcml" for decimal notation.}
+\item{format}{Character, length 1, defines the type of notation. Possible
+values are \code{"engr"} (default) for engineering power-of-ten notation,
+\code{"sci"} for scientific power-of-ten notation, and \code{"dcml"} for decimal
+notation.}
 
-\item{...}{Not used for values, forces subsequent arguments to be referable
-only by name.}
+\item{...}{Not used for values; forces subsequent arguments to be
+referable only by name.}
 
-\item{omit_power}{Numeric vector \code{c(p, q)} with \code{p <= q}, specifying the
-range of exponents over which power-of-ten notation is omitted in either
-scientific or engineering power-of-ten format. Default is \code{c(-1, 2)}. If a
-single value is assigned, i.e., \code{omit_power = p}, the argument is
-interpreted as \code{c(p, p)}. If \code{NULL} or \code{NA}, all elements are formatted in
-power-of-ten notation. Argument is overridden by a non-empty \code{set_power}
-or if decimal notation is specified (\code{format = "dcml"}).}
+\item{omit_power}{Numeric vector \code{c(p, q)} with \code{p <= q}, specifying
+the range of exponents over which power-of-ten notation is omitted in
+either scientific or engineering format. Default is
+\code{c(-1, 2)}. If a single value is assigned, i.e., \code{omit_power = p}, the
+argument is interpreted as \code{c(p, p)}. If \code{NULL} or \code{NA}, all elements
+are formatted in power-of-ten notation. Argument is overridden by
+specifying \code{set_power} or decimal notation.}
 
-\item{set_power}{Integer scalar. Formats all values in \code{x} with the same
-power-of-ten exponent. Default NULL. Assigning a value to set_power
-overrides \code{format} and \code{omit_power} arguments.}
+\item{set_power}{Integer, length 1. Formats all values in \code{x} with the same
+power-of-ten exponent. Default NULL. Overrides \code{format} and \code{omit_power}
+arguments.}
 
-\item{size, delim, decimal_mark, big_mark, small_mark}{Formatting options. For
-details, see the help page for \code{formatdown_options()}.}
+\item{delim}{Character, length 1 or 2, to define the left and right math
+markup delimiters. The default setting, \code{delim = "$"}, produces
+left and right delimiters \verb{$...$}. The alternate built-in
+setting, \code{delim = "\\("}, produces left and right delimiters
+\verb{\\\\( ... \\\\)}. Custom delimiters can be assigned in a vector of
+length 2 with left and right delimiter symbols, e.g.,
+\verb{c("\\\[", "\\\]")}. Special characters typically must be escaped.}
+
+\item{size}{Character, length 1, to assign a font size. If not empty, adds
+a font size macro to the markup inside the math delimiters. Possible
+values are \code{"scriptsize"}, \code{"small"}, \code{"normalsize"}, \code{"large"}, and
+\code{"huge"}. One may also assign the equivalent LaTeX-style markup itself,
+e.g., \code{"\\\\scriptsize"}, \code{"\\\\small"}, etc. Default is NULL.}
+
+\item{decimal_mark}{Character, length 1, to assign the decimal marker.
+Possible values are a period \code{"."} (default) or a comma \code{","}. Passed
+to \code{formatC(decimal.mark)}.}
+
+\item{big_mark}{Character, length 1, used as the mark between every
+\code{big_interval} number of digits to the left of the decimal marker to
+improve readability. Possible values are empty \code{""} (default) or
+\code{"thin"} to produce a LaTeX-style thin, horizontal space. One may also
+assign the thin-space markup itself \code{"\\\\\\\\,"}.
+Passed to \code{formatC(big.mark)}.}
+
+\item{big_interval}{Integer, length 1, that defines the number of digits
+(default 3) in groups separated by \code{big_mark}. Passed to
+\code{formatC(big.interval)}.}
+
+\item{small_mark}{Character, length 1, used as the mark between every
+\code{small_interval} number of digits to the right of the decimal marker to
+improve readability. Possible values are empty \code{""} (default) or
+\code{"thin"} to produce a LaTeX-style thin, horizontal space. One may also
+assign the thin-space markup itself \code{"\\\\\\\\,"}.
+Passed to \code{formatC(small.mark)}.}
+
+\item{small_interval}{Integer, length 1, that defines the number of digits
+(default 5) in groups separated by \code{small_mark}. Passed to
+\code{formatC(small.interval)}.}
 }
 \value{
-A character vector with the following properties:
-\itemize{
-\item Numbers represented in powers of ten notation or decimal notation.
-\item Elements delimited as inline math markup.
-}
+A character vector in which numbers are formatted in power-of-ten
+or decimal notation and delimited for rendering as inline equations
+in an R markdown document.
 }
 \description{
 Convert a numeric vector to a character vector in which the numbers are
@@ -67,8 +106,8 @@ Given a number, a numerical vector, or a numerical column from a data frame,
 \code{"$a \\\\times 10^{n}$"}, where \code{a} is the coefficient to a specified
 number of significant digits and \code{n} is the exponent. When used for decimal
 notation, \code{format_numbers()} converts numbers to character strings of the
-form \code{"$a$"}. All strings include markup delimiters \verb{$...$} for rendering
-(in an R markdown or Quarto markdown document) as an inline equation.
+form \code{"$a$"}. All strings include markup delimiters \verb{$...$} for rendering the
+result as an inline equation in a R markdown document.
 
 Powers-of-ten notation is omitted over a range of exponents via \code{omit_power}
 such that numbers so specified are converted to decimal notation. For
@@ -85,56 +124,47 @@ symbols.
 Arguments after the dots (\code{...}) must be referred to by name.
 }
 \examples{
-# Scalar value
-format_numbers(101100, digits = 4)
+# Single number
+format_numbers(101100, digits = 4, format = "engr")
 
-# Vector value
-x <- c(1.2222e-6, 2.3333e-5, 3.4444e-4, 4.1111e-3, 5.2222e-2, 6.3333e-1,
-       7.4444e+0, 8.1111e+1, 9.2222e+2, 1.3333e+3, 2.4444e+4, 3.1111e+5, 4.2222e+6)
+# Vector of numbers
+x <- c(1.2222e-06, 3.4444e-04, 6.3333e-01, 8.1111e+01, 2.4444e+04, 9.123e+7)
 format_numbers(x)
+
+# Columns of a data frame
+y <- x[1:3]
+z <- x[4:6]
+df <- data.frame(y, z)
+apply(df, 2, format_numbers, digits = 3, format = "sci")
 
 # Compare significant digits
 format_numbers(x[1], 3)
 format_numbers(x[1], 4)
+format_numbers(x[4], 2, "dcml")
+format_numbers(x[4], 3, "dcml")
 
 # Compare format type
-format_numbers(x[3], format = "dcml")
-format_numbers(x[3], format = "sci")
-format_numbers(x[3], format = "engr")
-
-# Compare set_power results
-format_numbers(x[3], set_power = -5)
-format_numbers(x[3], set_power = -4)
-format_numbers(x[3], set_power = -3)
+format_numbers(x[2], format = "dcml")
+format_numbers(x[2], format = "sci")
+format_numbers(x[2], format = "engr")
 
 # Compare omit_power range
-format_numbers(x[6], omit_power = c(-1, 2))
-format_numbers(x[6], omit_power = c(0, 2))
-format_numbers(x[8])
-format_numbers(x[8], omit_power = c(-Inf, Inf))
-format_numbers(x[8], omit_power = NULL)
+format_numbers(x[3], omit_power = c(-1, 2))
+format_numbers(x[3], omit_power = c(0, 2))
+format_numbers(x[4])
+format_numbers(x[4], omit_power = c(-Inf, Inf))
+format_numbers(x[4], omit_power = NULL)
 
-# Apply to columns of a data frame
-y <- x[1:6]
-z <- x[8:13]
-df <- data.frame(y, z)
-apply(df, 2, format_numbers, digits = 3)
-
-# Convenience functions
-format_dcml(x[11], 3)
-format_sci(x[11], 3)
-format_engr(x[11], 3)
-
-# With digit grouping
-format_numbers(x[11], 3, "dcml", big_mark = "\\\\\\\\,")
-format_numbers(x[1], 3, "dcml", small_mark = "\\\\\\\\,")
+# Compare set_power results
+format_numbers(x[2], set_power = -5)
+format_numbers(x[2], set_power = -4)
+format_numbers(x[2], set_power = -3)
 }
 \seealso{
 Other format_*: 
 \code{\link{format_dcml}()},
 \code{\link{format_engr}()},
 \code{\link{format_sci}()},
-\code{\link{format_text}()},
-\code{\link{format_units}()}
+\code{\link{format_text}()}
 }
 \concept{format_*}

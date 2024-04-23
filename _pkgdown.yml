@@ -9,7 +9,7 @@ navbar:
   left:
     - text: Vignettes
       menu:
-      - text: Format powers of ten
+      - text: Format numbers
         href: articles/format_numbers.html
       - text: Format text
         href: articles/format_text.html

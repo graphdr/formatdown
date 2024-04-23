@@ -1,8 +1,17 @@
 test_format_numbers <- function() {
 
   # usage
-  # format_numbers(x, digits = 3, ..., format = "engr", size = NULL, omit_power = c(-1, 2))
-  # arguments after dots must be named
+  # format_numbers(x,
+  #                digits = 4,
+  #                format = "engr",
+  #                ...,
+  #                omit_power = c(-1, 2),
+  #                set_power = NULL,
+  #                size = formatdown_options("size"),
+  #                delim = formatdown_options("delim"),
+  #                decimal_mark = formatdown_options("decimal_mark"),
+  #                big_mark = formatdown_options("big_mark"),
+  #                small_mark = formatdown_options("small_mark"))
 
   # Needed for tinytest::build_install_test()
   suppressPackageStartupMessages(library(data.table))
@@ -28,7 +37,13 @@ test_format_numbers <- function() {
   ans3 <- "$6.022 \\times 10^{23}$"
   expect_equal(format_numbers(x, format = "sci"), ans3)
 
-  # Values smaller than machine eps format correctly
+  # Convenience functions
+  x   <- avogadro
+  expect_equal(format_numbers(x, format = "sci"), format_sci(x))
+  expect_equal(format_numbers(x, format = "engr"), format_engr(x))
+  expect_equal(format_numbers(x, format = "dcml"), format_dcml(x))
+
+  # Small values format correctly
   x <- 2e-20
   ans4 <- "$2.0 \\times 10^{-20}$"
   expect_equal(format_numbers(x, 2, format = "sci"), ans4)
@@ -181,13 +196,14 @@ test_format_numbers <- function() {
   ans24 <- "$123\\,400$"
   expect_equal(format_numbers(x, big_mark = "thin", omit_power = c(-Inf, Inf)), ans24)
 
-  # x <- 123456.78
-  # ans25 <- "$123,456.78$"
-  # expect_equal(format_numbers(x, 8, big_mark = ",", decimal_mark = ".",
+  # x <- 123456.789259
+  # ans25 <- "$123\\,456,78925\\,9$"
+  # expect_equal(format_numbers(x, 12, format = "dcml", big_mark = "thin", decimal_mark = ",",
   #                           omit_power = c(-Inf, Inf)), ans25)
-  # ans26 <- "$123.456,78$"
-  # expect_equal(format_numbers(x, 8, big_mark = ".", decimal_mark = ",",
-  #                           omit_power = c(-Inf, Inf)), ans26)
+  # ans26 <- "$123456,789\\,25$"
+  # expect_equal(format_numbers(x, 11, big_mark = "", decimal_mark = ",",
+  #                             small_mark = "thin", omit_power = c(-Inf, Inf)), ans26)
+
 
   # Errors for incorrect x argument
   expect_error(format_numbers(x = air_meas))
@@ -238,19 +254,10 @@ test_format_numbers <- function() {
   # arguments after dots must be named
   expect_error(format_numbers(avogadro, 4, "engr", c(0.1, 1)))
 
-  # verify that options work
-  # formatdown.digits = 4
-  # formatdown.format = "engr"
-  # formatdown.size = "small"
-  # formatdown.big_mark = ","
-  # formatdown.decimal_mark = "."
-  # formatdown.delim = "$"
+  # options
+  formatdown_options(size = "large")
 
   x <- avogadro
-
-
-
-  formatdown_options(size = "large")
   ans32 <- "$\\large 602.2 \\times 10^{21}$"
   expect_equal(format_numbers(x), ans32)
 
@@ -258,14 +265,8 @@ test_format_numbers <- function() {
   ans33 <- "\\(\\large 602.2 \\times 10^{21}\\)"
   expect_equal(format_numbers(x), ans33)
 
-  x <- 123456.78
-
-  # options(formatdown.big_mark = ".", formatdown.decimal_mark = ",")
-  # ans34 <- "\\(\\large 123.456,78\\)"
-  # expect_equal(format_numbers(x, 8, omit_power = c(-Inf, Inf)), ans34)
-
   # reset options
-  reset_formatdown_options()
+  formatdown_options(reset = TRUE)
 
   # function output not printed
   invisible(NULL)

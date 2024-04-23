@@ -2,17 +2,26 @@
 % Please edit documentation in R/formatdown-package.R
 \docType{package}
 \name{formatdown-package}
-\alias{formatdown-package}
 \alias{formatdown}
-\title{Formatting Tools for R Markdown Documents}
+\alias{formatdown-package}
+\title{formatdown: Formatting Numbers in 'rmarkdown' Documents}
 \description{
-Provides a small set of tools for formatting tasks when creating
-documents in R Markdown or Quarto Markdown. Convert the elements of a
-numerical vector to character strings in decimal form or power-of-ten form
-using engineering or scientific notation, all delimited for rendering as inline
-equations; or as numbers with measurement units (non-delimited) where units
-can be selected to eliminate the need for power-of-ten notation. Useful for
-rendering a numerical scalar in an inline R code chunk as well as formatting
-columns of data frames displayed in a table.
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
+Provides a small set of tools for formatting numbers in R-markdown documents. Convert a numerical vector to character strings in power-of-ten form, decimal form, or measurement-units form; all are math-delimited for rendering as inline equations. Can also convert text into math-delimited text to match the font face and size of math-delimited numbers. Useful for rendering single numbers in inline R code chunks and for rendering columns in tables.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/graphdr/formatdown/}
+  \item \url{https://graphdr.github.io/formatdown/}
+  \item \url{https://CRAN.R-project.org/package=formatdown}
+  \item Report bugs at \url{https://github.com/graphdr/formatdown/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Richard Layton \email{graphdoctor@gmail.com}
+
 }
 \keyword{internal}

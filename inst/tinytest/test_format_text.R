@@ -106,7 +106,7 @@ test_format_text<- function() {
   expect_equal(format_text(x), ans13)
 
   # reset to defaults
-  reset_formatdown_options()
+  formatdown_options(reset = TRUE)
 
   # ERRORS  ------------------------
   # Errors for incorrect x argument

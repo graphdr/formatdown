@@ -1,3 +1,0 @@
-size, delim, decimal_mark, big_mark, small_mark
-
-: Global options used for formatting math-delimited character strings. For details, see the help page for `formatdown_options()`. Any globally-set argument is overridden locally if the argument is declared in the function. 

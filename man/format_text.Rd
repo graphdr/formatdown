@@ -16,9 +16,11 @@ format_text(
 \arguments{
 \item{x}{Vector to be formatted.}
 
-\item{face}{Font face. Possible values are "plain" (default), "italic",
-"bold", "sans", or "mono". Adds a prefix to the markup to invoke the macros
-\verb{\\mathrm}, \verb{\\mathit}, \verb{\\mathbf}, \verb{\\mathsf}, or \verb{\\mathtt}.}
+\item{face}{Font face. Determines the font face macro inside the math
+delimiters. Possible values are "plain" (default), "italic", "bold",
+"sans", or "mono". One may assign instead the corresponding LaTeX-style
+markup itself, e.g., \verb{\\\\mathrm}, \verb{\\\\mathit}, \verb{\\\\mathbf}, \verb{\\\\mathsf}, or
+\verb{\\\\mathtt}.}
 
 \item{...}{Not used, force later arguments to be used by name.}
 
@@ -31,9 +33,8 @@ in plain, italic, sans serif, bold, or monospace font face.
 }
 \description{
 Convert a character vector to "math text" delimited for rendering as inline
-equations in an R markdown document. The formatting is particularly useful
-for text columns in a table in which numerical columns are formatted using
-\code{format_numbers()}.
+equations in an R markdown document. Particularly useful for matching the
+font face of character columns to that of numerical columns in a table.
 }
 \details{
 Given a scalar, vector, or data frame column, \code{format_text()} converts its
@@ -44,16 +45,6 @@ bold by \verb{\\\\mathbf}; sans serif by \verb{\\\\mathsf}; and monospace (typew
 text) by \verb{\\\\mathtt}. All strings include markup delimiters \verb{$...$} for
 rendering (in an R markdown or Quarto markdown document) as an inline
 equation.
-
-Using \code{options()} to assign a value to \code{formatdown.face} affects only
-that text formatted using \code{format_text()}. However, using \code{options} to assign
-\code{formatdown.size} affects output formatted by \code{format_text()} and
-\code{format_numbers()}.
-
-Delimiters for inline math markup can be edited if necessary. If the default
-argument fails, try using \code{"\\\\("} as an alternative. If using a custom
-delimiter to suit the markup environment, be sure to escape all special
-symbols.
 }
 \examples{
 # Text vector
@@ -87,7 +78,6 @@ Other format_*:
 \code{\link{format_dcml}()},
 \code{\link{format_engr}()},
 \code{\link{format_numbers}()},
-\code{\link{format_sci}()},
-\code{\link{format_units}()}
+\code{\link{format_sci}()}
 }
 \concept{format_*}

@@ -1,25 +1,27 @@
 # Internal functions, not exported
 
-# Typeface format for math markup ------------------------------------------
+# Typeface
 get_math_markup <- function(face) {
-  # Face format for math markup
-  if(face == "plain")  math_markup  <- "\\mathrm"
-  if(face == "italic") math_markup  <- "\\mathit"
-  if(face == "bold")   math_markup  <- "\\mathbf"
-  if(face == "sans")   math_markup  <- "\\mathsf"
-  if(face == "mono")   math_markup  <- "\\mathtt"
+
+  # Default is plain
+  math_markup  <- "\\mathrm"
+
+  # Allow shorthand and markup style
+  if (isTRUE(!is.na(face)) & isTRUE(!is.null(face))) {
+    if(face == "plain"  | face == "\\mathrm") math_markup  <- "\\mathrm"
+    if(face == "italic" | face == "\\mathit") math_markup  <- "\\mathit"
+    if(face == "bold"   | face == "\\mathbf") math_markup  <- "\\mathbf"
+    if(face == "sans"   | face == "\\mathsf") math_markup  <- "\\mathsf"
+    if(face == "mono"   | face == "\\mathtt") math_markup  <- "\\mathtt"
+  }
   return(math_markup)
 }
-
-
-
 
 #' Format text
 #'
 #' Convert a character vector to "math text" delimited for rendering as inline
-#' equations in an R markdown document. The formatting is particularly useful
-#' for text columns in a table in which numerical columns are formatted using
-#' `format_numbers()`.
+#' equations in an R markdown document. Particularly useful for matching the
+#' font face of character columns to that of numerical columns in a table.
 #'
 #' Given a scalar, vector, or data frame column, `format_text()` converts its
 #' argument to a character string of the form `"$\\mathxx{a}$"` where `a`
@@ -30,23 +32,15 @@ get_math_markup <- function(face) {
 #' rendering (in an R markdown or Quarto markdown document) as an inline
 #' equation.
 #'
-#' Using `options()` to assign a value to `formatdown.face` affects only
-#' that text formatted using `format_text()`. However, using `options` to assign
-#' `formatdown.size` affects output formatted by `format_text()` and
-#' `format_numbers()`.
-#'
-#' Delimiters for inline math markup can be edited if necessary. If the default
-#' argument fails, try using `"\\("` as an alternative. If using a custom
-#' delimiter to suit the markup environment, be sure to escape all special
-#' symbols.
-#'
 #' @param x Vector to be formatted.
 #'
 #' @param ... Not used, force later arguments to be used by name.
 #'
-#' @param face Font face. Possible values are "plain" (default), "italic",
-#'   "bold", "sans", or "mono". Adds a prefix to the markup to invoke the macros
-#'   `\mathrm`, `\mathit`, `\mathbf`, `\mathsf`, or `\mathtt`.
+#' @param face Font face. Determines the font face macro inside the math
+#'   delimiters. Possible values are "plain" (default), "italic", "bold",
+#'   "sans", or "mono". One may assign instead the corresponding LaTeX-style
+#'   markup itself, e.g., `\\mathrm`, `\\mathit`, `\\mathbf`, `\\mathsf`, or
+#'   `\\mathtt`.
 #'
 #' @param size,delim,word_space Used to format the math-delimited character
 #'   strings. For details, see the help page for `formatdown_options()`.
@@ -96,14 +90,14 @@ format_text <- function(x,
   checkmate::qassert(face, "S1")
   checkmate::assert_choice(
     face,
-    choices = c("plain", "italic", "bold", "sans", "mono")
+    choices = c("plain", "italic", "bold", "sans", "mono", "\\mathrm", "\\mathit", "\\mathbf", "\\mathsf", "\\mathtt")
     )
 
   # size: character, not missing, length 1, element of set
   checkmate::qassert(size, "s1")
   checkmate::assert_choice(
     size,
-    choices = c(NA_character_, "scriptsize", "small", "normalsize", "large", "huge")
+    choices = c(NA_character_, "scriptsize", "small", "normalsize", "large", "huge", "\\scriptsize", "\\small", "\\normalsize", "\\large", "\\huge")
   )
 
   # delim: character, not missing, length 1 or 2, not empty

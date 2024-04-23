@@ -2,79 +2,136 @@
 % Please edit documentation in R/formatdown_options.R
 \name{formatdown_options}
 \alias{formatdown_options}
-\title{Options settings}
+\title{Get and set function arguments via options}
 \usage{
-formatdown_options(...)
+formatdown_options(..., reset = FALSE)
 }
 \arguments{
 \item{...}{One or more \code{name = value} pairs to set values; or one or more
 quoted option names to get values.}
+
+\item{reset}{Logical vector of length 1; if TRUE, reset all options to their
+default values.}
+}
+\value{
+Nothing; used for its side-effect.
 }
 \description{
-Set and examine several global options which affect the way in which
-formatdown displays its results.
+Changes the default values of function arguments which affect the markup and
+appearance of formatdown results.
 }
 \details{
-Global options are provided for those arguments most likely to be used
-throughout a document. For example, a period (".") is the convention for
-the decimal separator in many regions, while in others a comma (",") is the
-convention. A user would likely prefer to set this option once rather than
-restating it in every function call.
+Global options are provided for arguments that users would likely prefer to
+set once in a document instead of repeating in every function call. For
+example, some users prefer a comma decimal marker (",") throughout a
+document.
 
 Globally-set arguments can be overridden locally by assigning them in a
 function call.
+
+The arguments that can be set with this function are as follows:
+\itemize{
+\item \code{delim}:          Character, length 1 or 2, to define the left and right math
+markup delimiters. The default setting, \code{delim = "$"}, produces
+left and right delimiters \verb{$...$}. The alternate built-in
+setting, \code{delim = "\\("}, produces left and right delimiters
+\verb{\\\\( ... \\\\)}. Custom delimiters can be assigned in a vector of
+length 2 with left and right delimiter symbols, e.g.,
+\verb{c("\\\[", "\\\]")}. Special characters typically must be escaped.
+\item \code{size}:           Character, length 1, to assign a font size. If not empty, adds
+a font size macro to the markup inside the math delimiters. Possible
+values are \code{"scriptsize"}, \code{"small"}, \code{"normalsize"}, \code{"large"}, and
+\code{"huge"}. One may also assign the equivalent LaTeX-style markup itself,
+e.g., \code{"\\\\scriptsize"}, \code{"\\\\small"}, etc. Default is NULL.
+\item \code{decimal_mark}:   Character, length 1, to assign the decimal marker.
+Possible values are a period \code{"."} (default) or a comma \code{","}. Passed
+to \code{formatC(decimal.mark)}.
+\item \code{big_mark}:       Character, length 1, used as the mark between every
+\code{big_interval} number of digits to the left of the decimal marker to
+improve readability. Possible values are empty \code{""} (default) or
+\code{"thin"} to produce a LaTeX-style thin, horizontal space. One may also
+assign the thin-space markup itself \code{"\\\\\\\\,"}.
+Passed to \code{formatC(big.mark)}.
+\item \code{big_interval}:   Integer, length 1, that defines the number of digits
+(default 3) in groups separated by \code{big_mark}. Passed to
+\code{formatC(big.interval)}.
+\item \code{small_mark}:     Character, length 1, used as the mark between every
+\code{small_interval} number of digits to the right of the decimal marker to
+improve readability. Possible values are empty \code{""} (default) or
+\code{"thin"} to produce a LaTeX-style thin, horizontal space. One may also
+assign the thin-space markup itself \code{"\\\\\\\\,"}.
+Passed to \code{formatC(small.mark)}.
+\item \code{small_interval}: Integer, length 1, that defines the number of digits
+(default 5) in groups separated by \code{small_mark}. Passed to
+\code{formatC(small.interval)}.
+\item \code{word_space}:     Character, length 1, to define the LaTeX-style
+math-mode macro to preserve a horizontal space between words. Default
+is \code{"\\\\\\\\>"}. Alternatives include \code{"\\\\\\\\:"} or
+"\verb{\\\\\\\\ }".
 }
-\section{formatdown options}{
-
-\describe{
-
-\item{\code{size}}{Font size. Possible values are NA (default), "scriptsize",
-"small", "normalsize", "large", and "huge". If not NA, adds a prefix to
-the markup to invoke the macros \verb{\\scriptsize}, \verb{\\small}, \verb{\\normalsize},
-etc.}
-
-\item{\code{delim}}{Character vector of length one or two defining the math markup
-delimiters. Possible values include \code{c("$", "$")} or \code{c("\\\\(", "\\\\)")}.
-Alternatively, one can use \code{"$"} (default) or \code{"\\\\("}, both of which
-create appropriate left and right delimiters. If required by one's markup
-environment, custom 2-element (left and right) delimiters can be assigned.}
-
-\item{\code{decimal_mark}}{Character. Possible values are a period (\code{"."},
-default) or a comma (\code{","}) to denote the numeric decimal point; passed
-to \code{formatC(decimal.mark)}.}
-
-\item{\code{big_mark}}{Character. Possible values are empty (\code{""}, default)
-or "thin" to produce a LaTeX-style thin space (\code{"\\\\\\\\,"}) to separate
-numbers into groups of three to the left of the decimal mark; passed to
-\code{formatC(big.mark)}.}
-
-\item{\code{small_mark}}{c}
-
-\item{\code{word_space}}{Character. Defines the LaTeX-style math-mode macro to
-preserve a horizontal space between words. Default is (\code{"\\\\\\\\>"}).
-Alternatives include (\code{"\\\\\\\\:"}) or ("\verb{\\\\\\\\ }").}
-
 }
-}
-
 \examples{
-# get default options
+# Show all options
+formatdown_options()
+
+# Store existing settings, including any changes made by the user
+old_settings <- formatdown_options()
+
+# View one option
+formatdown_options()$delim
+
+# View multiple options
 formatdown_options("size", "delim")
 
-# set new options
-formatdown_options(size = "large", delim = c("\\\\(", "\\\\)"))
-
-# verify new options
+# Change options
+formatdown_options(size = "small", delim = "\\\\(")
 formatdown_options("size", "delim")
 
-# reset to default options
-reset_formatdown_options()
-
-# confirm default options
+# Reset to default values
+formatdown_options(reset = TRUE)
 formatdown_options("size", "delim")
+
+# Reset options to those before this example was run
+do.call(formatdown_options, old_settings)
+
+# Option effects
+
+# delim
+x <- 101300
+format_dcml(x)
+format_dcml(x, delim = "\\\\(")
+
+# size
+format_dcml(x)
+format_dcml(x, size = "small")
+format_dcml(x, size = "\\\\small")
+
+# decimal_mark
+y <- 6.02214076E+10
+format_sci(y, 5, decimal_mark = ".")
+format_sci(y, 5, decimal_mark = ",")
+
+# big_mark
+format_dcml(y, 9)
+format_dcml(y, 9, big_mark = "thin")
+format_dcml(y, 9, big_mark = "\\\\\\\\,")
+
+# big_interval
+format_dcml(y, 9, big_mark = "thin", big_interval = 3)
+format_dcml(y, 9, big_mark = "thin", big_interval = 5)
+
+# small_mark
+z <- 1.602176634e-9
+format_sci(z, 10)
+format_sci(z, 10, small_mark = "thin")
+format_sci(z, 10, small_mark = "\\\\\\\\,")
+
+# small_interval
+format_sci(z, 10, small_mark = "thin", small_interval = 3)
+format_sci(z, 10, small_mark = "thin", small_interval = 5)
+
+# word_space
+
+
+
 }
-\seealso{
-Other *_options: 
-\code{\link{reset_formatdown_options}()}
-}
-\concept{*_options}

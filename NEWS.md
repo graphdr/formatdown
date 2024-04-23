@@ -1,12 +1,11 @@
 # formatdown (development version)
 
-2024-03-25
+2024-04-09
 
-- deprecate `format_decimal()` because it turned out to be a special case of `format_power()`.
-- rename `format_power()` to `format_num()` and add the new `"dcml"` format
-- rename `format_text()` to `format_txt()`
-- edit `format_txt()` to retain any spaces between characters in a character argument
-- add `options()` to globally set several arguments
+- deprecate `format_decimal()` and `format_power()` in favor of the more general `format_numbers()` 
+- add `format_sci()`, `format_engr()`, and `format_dcml()` that wrap `fotmat_numbers()`
+- add global options and functions `formatdown_options()` and `reset_formatdown_options()`, plus vignette. Update functions to take advantage of options. 
+- edit `format_text()` to retain any spaces in a character input 
 - update tests and vignettes to reflect changes
 
 
@@ -17,7 +16,6 @@
 - add `format_text()` function 
 - add `size` argument to `format_power()`
 - add `signif()` to `format_power()` to enforce significant digits in output before applying `formatC()` 
-- add `options()` to globally set font size and power of ten format arguments
 - correct issue with `omit_power()` argument
 - correct issue with numbers < machine eps
 - add package alias

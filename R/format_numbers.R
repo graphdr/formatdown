@@ -1,30 +1,27 @@
+# Internal functions not exported:
 
-
-# size can now be NA. Removes \\size from markup
+# Obtain size macro
 get_size_markup <- function(size) {
-  # Size format for math markup
-  if(isTRUE(is.na(size)) & isTRUE(!is.null(size))) {
-    size_markup  <- NULL
-  } else {
-    if(size == "huge")       size_markup  <- "\\huge "
-    if(size == "large")      size_markup  <- "\\large "
-    if(size == "normalsize") size_markup  <- "\\normalsize "
-    if(size == "small")      size_markup  <- "\\small "
-    if(size == "scriptsize") size_markup  <- "\\scriptsize "
+  # Default is no size markup
+  size_markup  <- NULL
+  # Allow shorthand and markup style
+  if (isTRUE(!is.na(size)) & isTRUE(!is.null(size))) {
+    if(size == "huge"       | size == "\\huge")       size_markup  <- "\\huge "
+    if(size == "large"      | size == "\\large")      size_markup  <- "\\large "
+    if(size == "normalsize" | size == "\\normalsize") size_markup  <- "\\normalsize "
+    if(size == "small"      | size == "\\small")      size_markup  <- "\\small "
+    if(size == "scriptsize" | size == "\\scriptsize") size_markup  <- "\\scriptsize "
   }
   return(size_markup)
 }
 
 # Determine indices to decimal (non-power) rows
 assign_non_power_rows <- function(DT, format, omit_power, set_power) {
-
   # Indicate these are not unbound symbols (R CMD check Note)
   exponent <- NULL
   exp_raw <- NULL
   omit <- NULL
-
   DT[, omit := FALSE]
-
   # Cases for omit TRUE
   DT[exponent %between% omit_power, omit := TRUE]
   if (format == "engr") {
@@ -32,12 +29,10 @@ assign_non_power_rows <- function(DT, format, omit_power, set_power) {
     DT[exponent %between% omit_power, omit := TRUE]
   }
   # DT[is.na(x), omit := TRUE]
-
   # Identify the non-power rows
   non_pow <- DT$omit
-
   # Override all if set_power has been assigned
-  if (isTRUE(!is.null(set_power)) & isTRUE(!is.na(set_power))) {
+  if (isTRUE(!is_null_or_na(set_power))) {
     DT[, exponent := set_power]
     non_pow <- FALSE
   }
@@ -47,34 +42,33 @@ assign_non_power_rows <- function(DT, format, omit_power, set_power) {
 # Prepare result with size, delim, and back to vector form
 prepare_output_vector <- function(DT, size_markup, delim) {
   # DT$value is a power-of-ten or decimal character
-
   # Indicate these are not unbound symbols (R CMD check Note)
   value <- NULL
-
   # Add font size prefix
   DT[, value := paste0(size_markup, value)]
-
   # Surround with math delimiters (see utils.R)
   DT <- add_delim(DT, col_name = "value", delim = delim)
-
   # Convert to vector output
   DT <- DT[, (value)]
-
-  # enable printing (see data.table FAQ 2.23)
-  DT[]
   return(DT)
 }
 
-# Logical. Is any element of x NA or NULL?
-is_null_or_na <- function(x) {
-  sum(c(is.null(x), is.na(x))) > 0
+get_units_suffix <- function(char) {
+  # u_suffix <- x
+  if (length(char) > 0) {
+    # regex to find: optional - sign, followed by any number of digits
+    u_regex <- "-?[0-9]+"
+    # units exponents, if any
+    u_unbraced <- regmatches(char, gregexec(u_regex, char))[[1]]
+    if (length(u_unbraced) > 0) {
+      # add braces and exponent symbol
+      u_braced <- paste0("^{", u_unbraced, "}")
+      # substitute each braced exponent for each un-braced exponent
+      regmatches(char, gregexec(u_regex, char))[[1]] <- u_braced
+    }
+  }
+  return(char)
 }
-
-# Logical. Is x numeric and length 1?
-is_numeric_and_length_one <- function (x) {
-  is.numeric(x) & length(x) == 1
-}
-
 
 #' Format numbers
 #'
@@ -89,8 +83,8 @@ is_numeric_and_length_one <- function (x) {
 #' `"$a \\times 10^{n}$"`, where `a` is the coefficient to a specified
 #' number of significant digits and `n` is the exponent. When used for decimal
 #' notation, `format_numbers()` converts numbers to character strings of the
-#' form `"$a$"`. All strings include markup delimiters `$...$` for rendering
-#' (in an R markdown or Quarto markdown document) as an inline equation.
+#' form `"$a$"`. All strings include markup delimiters `$...$` for rendering the
+#' result as an inline equation in a R markdown document.
 #'
 #' Powers-of-ten notation is omitted over a range of exponents via `omit_power`
 #' such that numbers so specified are converted to decimal notation. For
@@ -106,54 +100,40 @@ is_numeric_and_length_one <- function (x) {
 #'
 #' Arguments after the dots (`...`) must be referred to by name.
 #'
-#' @param x Numerical vector to be formatted. Can be a scalar, a vector, or a
-#'   column from a data frame. Ca include NA elements.
+#' @param x              `r param_x`
+#' @param digits         `r param_digits`
+#' @param format         `r param_format`
+#' @param ...            `r param_dots`
+#' @param omit_power     `r param_omit_power`
+#' @param set_power      `r param_set_power`
+#' @param delim          `r param_delim`
+#' @param size           `r param_size`
+#' @param decimal_mark   `r param_decimal_mark`
+#' @param big_mark       `r param_big_mark`
+#' @param big_interval   `r param_big_interval`
+#' @param small_mark     `r param_small_mark`
+#' @param small_interval `r param_small_interval`
 #'
-#' @param digits Integer scalar from 1 through 20 that controls the number of
-#'   significant digits in printed numeric values; see `signif()`. Default is 4.
-#'
-#' @param format Type of notation. Possible values are "engr" (default) for
-#'   engineering power-of-ten notation, "sci" for scientific power-of-ten
-#'   notation, and "dcml" for decimal notation.
-#'
-#' @param ... Not used for values, forces subsequent arguments to be referable
-#'   only by name.
-#'
-#' @param omit_power Numeric vector `c(p, q)` with `p <= q`, specifying the
-#'   range of exponents over which power-of-ten notation is omitted in either
-#'   scientific or engineering power-of-ten format. Default is `c(-1, 2)`. If a
-#'   single value is assigned, i.e., `omit_power = p`, the argument is
-#'   interpreted as `c(p, p)`. If `NULL` or `NA`, all elements are formatted in
-#'   power-of-ten notation. Argument is overridden by a non-empty `set_power`
-#'   or if decimal notation is specified (`format = "dcml"`).
-#'
-#' @param set_power Integer scalar. Formats all values in `x` with the same
-#'   power-of-ten exponent. Default NULL. Assigning a value to set_power
-#'   overrides `format` and `omit_power` arguments.
-#'
-#' @param size,delim,decimal_mark,big_mark,small_mark Formatting options. For
-#'   details, see the help page for `formatdown_options()`.
-#'
-#' @return A character vector with the following properties:
-#' \itemize{
-#'   \item Numbers represented in powers of ten notation or decimal notation.
-#'   \item Elements delimited as inline math markup.
-#' }
+#' @return A character vector in which numbers are formatted in power-of-ten
+#' or decimal notation and delimited for rendering as inline equations
+#' in an R markdown document.
 #'
 #' @family format_*
 #' @example man/examples/examples_format_numbers.R
 #' @export
 format_numbers <- function(x,
-                         digits = 4,
-                         format = "engr",
-                         ...,
-                         omit_power = c(-1, 2),
-                         set_power = NULL,
-                         size = formatdown_options("size"),
-                         delim = formatdown_options("delim"),
-                         decimal_mark = formatdown_options("decimal_mark"),
-                         big_mark = formatdown_options("big_mark"),
-                         small_mark = formatdown_options("small_mark")) {
+                           digits = 4,
+                           format = "engr",
+                           ...,
+                           omit_power = c(-1, 2),
+                           set_power = NULL,
+                           delim          = formatdown_options("delim"),
+                           size           = formatdown_options("size"),
+                           decimal_mark   = formatdown_options("decimal_mark"),
+                           big_mark       = formatdown_options("big_mark"),
+                           big_interval   = formatdown_options("big_interval"),
+                           small_mark     = formatdown_options("small_mark"),
+                           small_interval = formatdown_options("small_interval")) {
 
   # Overhead ----------------------------------------------------------------
 
@@ -175,29 +155,39 @@ format_numbers <- function(x,
   exp_raw <- NULL
   coeff <- NULL
   value <- NULL
-
+  u_input <- NULL
+  u_regex <- NULL
+  u_braced <- NULL
+  u_unbraced <- NULL
 
   # Assign arguments -------------------------------------------------------
+
+  # omit_power
+  if (is_null_or_na(omit_power))             omit_power <- c(0.5, 0.5)
+  if (is_numeric_and_length_one(omit_power)) omit_power <- rep(omit_power, 2)
+  if (isTRUE(format == "dcml"))              omit_power <- c(-Inf, Inf)
+
+  # set_power
+  if (is_null_or_na(set_power) | isTRUE(format == "dcml")) set_power <- NA_real_
 
   # size
   if (is_null_or_na(size)) size <- NA_character_
 
-  # omit_power
-  if (is_null_or_na(omit_power)) omit_power <- c(0.5, 0.5)
-  if (is_numeric_and_length_one(omit_power)) omit_power <- rep(omit_power, 2)
-  if (format == "dcml") omit_power <- c(-Inf, Inf)
-
-  # set_power
-  if (is_null_or_na(set_power)) set_power <- NA_real_
-  if (format == "dcml") set_power <- NA_real_
-
-
-
+  # grouping digits
+  if (is_null_or_na(big_mark))   big_mark   <- ""
+  if (is_null_or_na(small_mark)) small_mark <- ""
 
   # Argument checks ---------------------------------------------------------
 
-  # x: not Date-class,length at least 1, numeric
-  checkmate::assert_disjunct(class(x), c("Date", "POSIXct", "POSIXt"))
+  # x: class "units" or "numeric" both allowed
+  if (FALSE) {
+    checkmate::assert(
+      checkmate::check_class(x, "units"),
+      checkmate::check_class(x, "numeric"),
+      combine = "or"
+    )
+  }
+  # x: numeric, length at least 1
   checkmate::qassert(x, "n+")
 
   # digits: numeric, not missing, length 1, between 1 and 20
@@ -221,7 +211,7 @@ format_numbers <- function(x,
   checkmate::qassert(size, "s1")
   checkmate::assert_choice(
     size,
-    choices = c(NA_character_, "scriptsize", "small", "normalsize", "large", "huge")
+    choices = c(NA_character_, "scriptsize", "small", "normalsize", "large", "huge", "\\scriptsize", "\\small", "\\normalsize", "\\large", "\\huge")
   )
 
   # delim: character, not missing, length 1 or 2, not empty
@@ -253,6 +243,13 @@ format_numbers <- function(x,
 
   # Initial processing -----------------------------------------
 
+  # If x is class units, store units separately and drop the units
+  u_input <- NULL
+  if (checkmate::test_class(x, classes = c("units"))) {
+    u_input  <- deparse_unit(x)
+    units(x) <- NULL
+  }
+
   # Set significant digits before processing
   x <- signif(x, digits = digits)
 
@@ -281,14 +278,14 @@ format_numbers <- function(x,
 
   # Format the coefficient as character
   DT[, char_coeff := formatC(coeff,
-                             format = "fg",
-                             digits = digits,
-                             big.mark = big_mark,
-                             decimal.mark = decimal_mark,
-                             small.mark = small_mark,
-                             small.interval = 3,
-                             flag = "#")]
-
+                             format         = "fg",
+                             digits         = digits,
+                             decimal.mark   = decimal_mark,
+                             big.mark       = big_mark,
+                             big.interval   = big_interval,
+                             small.mark     = small_mark,
+                             small.interval = small_interval,
+                             flag           = "#")]
 
   # Remove trailing decimal point and spaces created by formatC() if any
   # (see utils.R)
@@ -300,9 +297,25 @@ format_numbers <- function(x,
   DT[is.na(x), value := "\\mathrm{NA}"]
 
   # Prep for output
-  result <- prepare_output_vector(DT, size_markup, delim)
-  result[]
-  return(result)
+  output <- prepare_output_vector(DT, size_markup, delim)
+
+  # Add formatted units suffix if any
+  u_suffix <- get_units_suffix(u_input)
+  u_suffix <- formatdown::format_text(u_suffix, size = size, delim = delim)
+  output <- paste0(output, u_suffix)
+
+  if (length(u_suffix) > 0) {
+    # possibly remove back to back $$
+    # $ and any no. of spaces followed by $, two backslashes and any number of
+    # letters, expecting the \\small, for example
+    r <- "\\$ +\\$\\\\[a-zA-Z]+"
+    double_dollar <- regmatches(output, gregexec(r, output))[[1]]
+    output <- gsub(double_dollar, "\\>", output, fixed = TRUE)
+  }
+
+  # enable printing (see data.table FAQ 2.23)
+  output[]
+  return(output)
 }
 
 
@@ -317,43 +330,18 @@ format_numbers <- function(x,
 #' formatted in power-of-ten notation in scientific form and delimited for
 #' rendering as inline equations in an R markdown document.
 #'
-#' A convenience function to create scientific power-of-ten notation with a
-#' minimal set of arguments by wrapping `format_numbers()`. Use
-#' `formatdown_options()` to globally set `size`, `delim`, `decimal_mark`,
-#' `big_mark`, or `small_mark` for use with this convenience function.
-#' Otherwise, use `format_numbers()` for direct local access to all arguments.
+#' `format_sci()` is a wrapper for the more general function `format_numbers()`.
+#' Where defaults are defined by `formatdown_options()`, users may reassign
+#' the arguments locally in the function call or globally using
+#' `format_down_options()`.
 #'
 #' Arguments after the dots (`...`) must be referred to by name.
 #'
-#' @param x Numerical vector to be formatted. Can be a scalar, a vector, or a
-#'   column from a data frame.
+#' @return A character vector in which numbers are formatted in power-of-ten
+#' notation in scientific form and delimited for rendering as inline equations
+#' in an R markdown document.
 #'
-#' @param digits Integer scalar from 1 through 20 that controls the number of
-#'   significant digits in printed numeric values; passed to `signif()`.
-#'   Default is 4.
-#'
-#' @param ... Not used for values, forces subsequent arguments to be referable
-#'   only by name.
-#'
-#' @param omit_power Numeric vector `c(p, q)` with `p <= q`, specifying the
-#'   range of exponents over which power-of-ten notation is omitted in either
-#'   scientific or engineering power-of-ten format. Default is `c(-1, 2)`. If a
-#'   single value is assigned, i.e., `omit_power = p`, the argument is
-#'   interpreted as `c(p, p)`. If `NULL` or `NA`, all elements are formatted in
-#'   power-of-ten notation. Argument is overridden by a non-empty `set_power`.
-#'
-#' @param set_power Integer scalar. Formats all values in `x` with the same
-#'   power-of-ten exponent. Default NULL. Assigning a value to set_power
-#'   overrides `omit_power` arguments.
-#'
-#' @param size,delim,decimal_mark,big_mark,small_mark Formatting options. For
-#'   details, see the help page for `formatdown_options()`.
-#'
-#' @return A character vector with the following properties:
-#' \itemize{
-#'   \item Numbers represented in scientific powers of ten notation.
-#'   \item Elements delimited as inline math markup.
-#' }
+#' @inherit format_numbers
 #'
 #' @family format_*
 #' @export
@@ -362,30 +350,35 @@ format_sci <- function(x,
                        ...,
                        omit_power = c(-1, 2),
                        set_power = NULL,
-                       size = formatdown_options("size"),
-                       delim = formatdown_options("delim"),
-                       decimal_mark = formatdown_options("decimal_mark"),
-                       big_mark = formatdown_options("big_mark"),
-                       small_mark = formatdown_options("small_mark")) {
 
-  # wrapper for format_numbers()
-  result <- format_numbers(x = x,
-                           digits = digits,
-                           format = "sci",
-                           omit_power = omit_power,
-                           set_power = set_power,
+                       # argument defaults in formatdown_options
+                       delim          = formatdown_options("delim"),
+                       size           = formatdown_options("size"),
+                       decimal_mark   = formatdown_options("decimal_mark"),
+                       small_mark     = formatdown_options("small_mark"),
+                       small_interval = formatdown_options("small_interval")) {
 
-                           size = size,
-                           delim = delim,
-                           decimal_mark = decimal_mark,
-                           big_mark = big_mark,
-                           small_mark = small_mark)
+                       # wrapper for format_numbers()
+  output <- format_numbers(x              = x,
+                           digits         = digits,
+                           omit_power     = omit_power,
+                           set_power      = set_power,
+                           delim          = delim,
+                           size           = size,
+                           decimal_mark   = decimal_mark,
+                           small_mark     = small_mark,
+                           small_interval = small_interval,
 
-  result[]
-  return(result)
+                           # pre-sets for this wrapper
+                           format         = "sci",
+                           big_mark       = formatdown_options("big_mark"),
+                           big_interval   = formatdown_options("big_interval")
+                           )
+
+  # enable printing (see data.table FAQ 2.23)
+  output[]
+  return(output)
 }
-
-
 
 
 
@@ -396,43 +389,19 @@ format_sci <- function(x,
 #' formatted in power-of-ten notation in engineering form and delimited for
 #' rendering as inline equations in an R markdown document.
 #'
-#' A convenience function to create engineering power-of-ten notation with a
-#' minimal set of arguments by wrapping `format_numbers()`. Use
-#' `formatdown_options()` to globally set `size`, `delim`, `decimal_mark`,
-#' `big_mark`, or `small_mark` for use with this convenience function.
-#' Otherwise, use `format_numbers()` for direct local access to all arguments.
+#' In engineering notation, all exponents are multiples of three.
+#' `format_engr()` is a wrapper for the more general function `format_numbers()`.
+#' Where defaults are defined by `formatdown_options()`, users may reassign
+#' the arguments locally in the function call or globally using
+#' `format_down_options()`.
 #'
 #' Arguments after the dots (`...`) must be referred to by name.
 #'
-#' @param x Numerical vector to be formatted. Can be a scalar, a vector, or a
-#'   column from a data frame.
+#' @inherit format_numbers
 #'
-#' @param digits Integer scalar from 1 through 20 that controls the number of
-#'   significant digits in printed numeric values; passed to `signif()`.
-#'   Default is 4.
-#'
-#' @param ... Not used for values, forces subsequent arguments to be referable
-#'   only by name.
-#'
-#' @param omit_power Numeric vector `c(p, q)` with `p <= q`, specifying the
-#'   range of exponents over which power-of-ten notation is omitted in either
-#'   scientific or engineering power-of-ten format. Default is `c(-1, 2)`. If a
-#'   single value is assigned, i.e., `omit_power = p`, the argument is
-#'   interpreted as `c(p, p)`. If `NULL` or `NA`, all elements are formatted in
-#'   power-of-ten notation. Argument is overridden by a non-empty `set_power`.
-#'
-#' @param set_power Integer scalar. Formats all values in `x` with the same
-#'   power-of-ten exponent. Default NULL. Assigning a value to set_power
-#'   overrides `omit_power` arguments.
-#'
-#' @param size,delim,decimal_mark,big_mark,small_mark Formatting options. For
-#'   details, see the help page for `formatdown_options()`.
-#'
-#' @return A character vector with the following properties:
-#' \itemize{
-#'   \item Numbers represented in engineering powers of ten notation.
-#'   \item Elements delimited as inline math markup.
-#' }
+#' @return A character vector in which numbers are formatted in power-of-ten
+#' notation in engineering form and delimited for rendering as inline equations
+#' in an R markdown document.
 #'
 #' @family format_*
 #' @export
@@ -441,28 +410,34 @@ format_engr <- function(x,
                         ...,
                         omit_power = c(-1, 2),
                         set_power = NULL,
-                        size = formatdown_options("size"),
-                        delim = formatdown_options("delim"),
-                        decimal_mark = formatdown_options("decimal_mark"),
-                        big_mark = formatdown_options("big_mark"),
-                        small_mark = formatdown_options("small_mark")) {
 
+                        # argument defaults in formatdown_options
+                        delim          = formatdown_options("delim"),
+                        size           = formatdown_options("size"),
+                        decimal_mark   = formatdown_options("decimal_mark"),
+                        small_mark     = formatdown_options("small_mark"),
+                        small_interval = formatdown_options("small_interval")) {
 
   # wrapper for format_numbers()
-  result <- format_numbers(x = x,
-                           digits = digits,
-                           format = "engr",
-                           omit_power = omit_power,
-                           set_power = set_power,
+  output <- format_numbers(x              = x,
+                           digits         = digits,
+                           omit_power     = omit_power,
+                           set_power      = set_power,
+                           delim          = delim,
+                           size           = size,
+                           decimal_mark   = decimal_mark,
+                           small_mark     = small_mark,
+                           small_interval = small_interval,
 
-                           size = size,
-                           delim = delim,
-                           decimal_mark = decimal_mark,
-                           big_mark = big_mark,
-                           small_mark = small_mark)
+                           # pre-sets for this wrapper
+                           format         = "engr",
+                           big_mark       = formatdown_options("big_mark"),
+                           big_interval   = formatdown_options("big_interval")
+  )
 
-  result[]
-  return(result)
+  # enable printing (see data.table FAQ 2.23)
+  output[]
+  return(output)
 }
 
 
@@ -476,60 +451,50 @@ format_engr <- function(x,
 #' formatted in decimal form and delimited for rendering as inline equations
 #' in an R markdown document.
 #'
-#' A convenience function to create decimal notation with a
-#' minimal set of arguments by wrapping `format_numbers()`. Use
-#' `formatdown_options()` to globally set `size`, `delim`, `decimal_mark`,
-#' `big_mark`, or `small_mark` for use with this convenience function.
-#' Otherwise, use `format_numbers()` for direct local access to all arguments.
+#' `format_dcml()` is a wrapper for the more general function `format_numbers()`.
+#' Where defaults are defined by `formatdown_options()`, users may reassign
+#' the arguments locally in the function call or globally using
+#' `format_down_options()`.
 #'
 #' Arguments after the dots (`...`) must be referred to by name.
 #'
-#' @param x Numerical vector to be formatted. Can be a scalar, a vector, or a
-#'   column from a data frame.
+#' @inherit format_numbers
 #'
-#' @param digits Integer scalar from 1 through 20 that controls the number of
-#'   significant digits in printed numeric values; passed to `signif()`.
-#'   Default is 4.
-#'
-#' @param ... Not used for values, forces subsequent arguments to be referable
-#'   only by name.
-#'
-#' @param size,delim,decimal_mark,big_mark,small_mark Formatting options. For
-#'   details, see the help page for `formatdown_options()`.
-#'
-#' @return A character vector with the following properties:
-#' \itemize{
-#'   \item Numbers represented in decimal notation.
-#'   \item Elements delimited as inline math markup.
-#' }
+#' @return A character vector in which numbers are formatted in decimal form
+#' and delimited for rendering as inline equations in an R markdown document.
 #'
 #' @family format_*
 #' @export
 format_dcml <- function(x,
                         digits = 4,
                         ...,
-                        size = formatdown_options("size"),
-                        delim = formatdown_options("delim"),
-                        decimal_mark = formatdown_options("decimal_mark"),
-                        big_mark = formatdown_options("big_mark"),
-                        small_mark = formatdown_options("small_mark")) {
+
+                        # argument defaults in formatdown_options
+                        delim          = formatdown_options("delim"),
+                        size           = formatdown_options("size"),
+                        decimal_mark   = formatdown_options("decimal_mark"),
+                        big_mark       = formatdown_options("big_mark"),
+                        big_interval   = formatdown_options("big_interval"),
+                        small_mark     = formatdown_options("small_mark"),
+                        small_interval = formatdown_options("small_interval")) {
 
   # wrapper for format_numbers() with format set to "dcml"
-  result <- format_numbers(x = x,
-                           digits = digits,
-                           format = "dcml",
+  output <- format_numbers(x              = x,
+                           digits         = digits,
+                           delim          = delim,
+                           size           = size,
+                           decimal_mark   = decimal_mark,
+                           big_mark       = big_mark,
+                           big_interval   = big_interval,
+                           small_mark     = small_mark,
+                           small_interval = small_interval,
 
-                           # arguments not used for decimal notation
+                           # pre-sets for this wrapper
+                           format     = "dcml",
                            omit_power = NULL,
-                           set_power = NULL,
+                           set_power  = NULL)
 
-                           # optional arguments
-                           size = size,
-                           delim = delim,
-                           decimal_mark = decimal_mark,
-                           big_mark = big_mark,
-                           small_mark = small_mark)
-
-  result[]
-  return(result)
+  # enable printing (see data.table FAQ 2.23)
+  output[]
+  return(output)
 }
