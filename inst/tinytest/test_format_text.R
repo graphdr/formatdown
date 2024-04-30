@@ -1,11 +1,14 @@
 test_format_text<- function() {
 
+  # All tests, e.g., expect_equal, expect_error, etc., are from the
+  # tinytest package. Possible test functions listed at
+  # https://github.com/markvanderloo/tinytest/blob/master/pkg/README.md
+
   # usage
   # format_text(x, ..., face = NULL, size = NULL, delim = "$")
   # arguments after dots must be named
 
-  # Needed for tinytest::build_install_test()
-  suppressPackageStartupMessages(library(data.table))
+  # correct behaviors
 
   # character vector
   x <- c("a", "b", "c")
@@ -117,12 +120,10 @@ test_format_text<- function() {
   expect_error(format_text(x, face = "bold.italic"))
   expect_error(format_text(x, face = TRUE))
 
-
   # Errors for incorrect size argument
   expect_error(format_text(x, size = c(3, 4)))
   expect_error(format_text(x, size = "Huge"))
   expect_error(format_text(x, size = TRUE))
-
 
   # Errors for incorrect delim argument
   expect_error(format_text(x, delim = c("")))

@@ -14,7 +14,8 @@ format_dcml(
   big_mark = formatdown_options("big_mark"),
   big_interval = formatdown_options("big_interval"),
   small_mark = formatdown_options("small_mark"),
-  small_interval = formatdown_options("small_interval")
+  small_interval = formatdown_options("small_interval"),
+  whitespace = formatdown_options("whitespace")
 )
 }
 \arguments{
@@ -67,6 +68,12 @@ Passed to \code{formatC(small.mark)}.}
 \item{small_interval}{Integer, length 1, that defines the number of digits
 (default 5) in groups separated by \code{small_mark}. Passed to
 \code{formatC(small.interval)}.}
+
+\item{whitespace}{Character, length 1, to define the LaTeX-style
+math-mode macro to preserve a horizontal space between words of text or
+between physical-unit abbreviations when formatting numbers of class
+"units". Default is \code{"\\\\\\\\>"}. Alternatives include \code{"\\\\\\\\:"} or
+"\verb{\\\\\\\\ }".}
 }
 \value{
 A character vector in which numbers are formatted in decimal form

@@ -22,12 +22,9 @@ options(
 )
 
 avo <- 6.0221E+23
-plank <- 6.62607015E-34
-# J⋅Hz−1
+planck <- 6.62607015E-34
+units(planck) <- "J Hz-1"
 ```
-
-
-
 
 # formatdown  <img src="man/figures/logo.png" align="right">
 
@@ -48,7 +45,7 @@ Provides a small set of tools for formatting numbers in R-markdown documents. Co
 
 ## Introduction
 
-In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Plank's constant would be typeset as `r format_numbers(plank, 3, "sci", delim = "\\(")`  `r format_text("J\\\\/Hz")` rather than the familiar forms we use in communicating with computers, such as `6.63*10^-34` or `6.63E-34`. 
+In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Planck's constant would be typeset as `r format_sci(planck, 3, delim = "\\(", size = "small")` rather than the familiar forms we use in communicating with computers, such as `6.63*10^-34` or `6.63E-34`. 
 
 The functions in this package help an author convert large and small numbers to character strings, formatted using powers-of-ten notation. In addition, decimal numbers and text can be formatted with the same font face and size as the power-of-ten numbers for a consistent typeface across all columns of a data table. 
 
@@ -63,17 +60,23 @@ Formatting tools include:
 
 **`format_numbers()`** 
 
-: Convert a numeric vector to a math-delimited character vector in which the numbers are formatted in power-of-ten notation in scientific or engineering form. Decimal numbers can be similarly formatted.  
+: Convert a numeric vector to a math-delimited character vector in which the numbers can be formatted in scientific or engineering power-of-ten notation or in decimal form.  
+
+**`format_sci()`** 
+
+: Convenience function. A wrapper around `format_numbers()` for scientific notation. 
+
+**`format_engr()`** 
+
+: Convenience function. A wrapper around `format_numbers()` for engineering notation.
+
+**`format_dcml()`** 
+
+: Convenience function. A wrapper around `format_numbers()` for decimal notation.
 
 **`format_text()`**
 
 : Convert a character vector to math-delimited character vector. Useful for creating a consistent typeface across all columns of a table. 
-
-**`format_units()`**
-
-: Convert a numeric vector to class "units" via the **units** R package and then to a math-delimited character vector. 
-
-
 
 
 ## Usage
@@ -101,9 +104,10 @@ format_numbers(x, digits = 4, format = "engr")
 # Decimal notation
 format_numbers(x, digits = 4, format = "dcml")
 
-# Measurement units notation
+# With measurement units
 units(x) <- "Pa"
-format_units(x, digits = 4, unit = "hPa")
+units(x) <- "hPa"
+format_dcml(x)
 ```
 
 which, in an `.Rmd` or `.qmd` output document, are rendered using inline R code as
@@ -111,24 +115,35 @@ which, in an `.Rmd` or `.qmd` output document, are rendered using inline R code 
 ```{r}
 #| echo: false
 
+formatdown_options(size = "small")
+
 x    <- 101300
-sci  <- format_numbers(x, 4, "sci")
-engr <- format_numbers(x, 4, "engr")
-dcml <- format_numbers(x, 4, "dcml")
+sci  <- format_sci(x)
+engr <- format_engr(x)
+dcml <- format_dcml(x)
 units(x) <- "Pa"
-hPa  <- format_units(x, 4, "hPa")
+units(x) <- "hPa"
+hPa  <- format_dcml(x)
 
 DT <- wrapr::build_frame(
     "Format"      , "Rendered as" |
     "scientific"    , sci  |
     "engineering"   , engr |
     "decimal"       , dcml |
-    "units", hPa  )
+    "units"         , hPa  )
 setDT(DT)
 knitr::kable(DT, align = "r")
+
+formatdown_options(reset = TRUE)
 ```
 
 *Data frame*. &nbsp; Typically rendered in a table. We independently format  columns from the `metals` data frame included with formatdown. 
+
+
+```{r}
+#| echo: false
+formatdown_options(size = "small")
+```
 
 ```{r}
 # View the data set
@@ -140,14 +155,15 @@ DT$metal <- format_text(DT$metal)
 
 # Density and thermal conductivity in decimal form
 cols_we_want <- c("dens", "thrm_cond")
-DT[, cols_we_want] <- lapply(DT[, ..cols_we_want], function(x) format_numbers(x, 3, "dcml"))
+DT[, cols_we_want] <- lapply(DT[, ..cols_we_want], function(x) format_dcml(x, 3))
 
 # Thermal expansion in engineering format
-DT$thrm_exp <- format_numbers(DT$thrm_exp, 3, "engr")
+DT$thrm_exp <- format_engr(DT$thrm_exp, 3)
 
 # Elastic modulus in units form
 units(DT$elast_mod) <- "Pa"
-DT$elast_mod <- format_units(DT$elast_mod, 3, "GPa")
+units(DT$elast_mod) <- "GPa"
+DT$elast_mod <- format_dcml(DT$elast_mod, 3)
 
 # Render in document
 knitr::kable(DT,
@@ -156,6 +172,10 @@ knitr::kable(DT,
              col.names = c("Metal", "Density [kg/m$^3$]", "Therm. expan. [m/m K$^{-1}$]", "Therm. cond. [W/m K$^{-1}$]", "Elastic modulus"))
 ```
 
+```{r}
+#| echo: false
+formatdown_options(reset = TRUE)
+```
 
 
 
@@ -212,6 +232,7 @@ Conduct](https://graphdr.github.io/formatdown/CONDUCT.html).
 - [`R`](https://www.r-project.org/) and [`RStudio`](https://posit.co/) for the working environment  
 - [`rmarkdown`](https://CRAN.R-project.org/package=rmarkdown) and [`knitr`](https://CRAN.R-project.org/package=knitr) for authoring tools  
 - [`data.table`](https://CRAN.R-project.org/package=data.table) for its programmable syntax  
+- [`units`](https://CRAN.R-project.org/package=units) for handling physical units 
 - [`wrapr`](https://CRAN.R-project.org/package=wrapr), [`checkmate`](https://CRAN.R-project.org/package=checkmate), and [`tinytest`](https://CRAN.R-project.org/package=tinytest) for programming tools
 - [`devtools`](https://CRAN.R-project.org/package=devtools) and [`pkgdown`](https://CRAN.R-project.org/package=pkgdown) for package building 
 

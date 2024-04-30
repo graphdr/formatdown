@@ -52,7 +52,7 @@ formatdown_options(delim = "$",
                    big_interval = 3,
                    small_mark = "",
                    small_interval = 5,
-                   word_space = "\\\\>", 
+                   whitespace = "\\\\>", 
                    reset = FALSE)
 ```
 
@@ -263,7 +263,7 @@ The NIST recommends we use a thin space to separate more than 4 digits to the le
 
 Both `big_mark` and `small_mark` add the horizontal-space characters inside the math delimiters; `big_mark` to the integer portion and `small_mark` to the fractional portion. The possible values are empty `""` (default), `"thin"`, or the thin-space macro itself `\\\\,`. 
 
-The interval arguments `big_interval` and `small_interval` set the number of digits separated by thin spaces when `big_mark` or `small_mark` are not empty. However, formatdown does not encode the exemption for 4-digit groups mentioned in the IST quote above.  
+The interval arguments `big_interval` and `small_interval` set the number of digits separated by thin spaces when `big_mark` or `small_mark` are not empty. However, formatdown does not encode the exemption for 4-digit groups mentioned in the NIST quote above.  
 
 <br>
 
@@ -316,7 +316,7 @@ Examples 12--17 render as,
 
 ## Preserving text spaces
 
-The horizontal-space macro is used to preserve spaces in text formatted with `format_text()`. Without it, an inline math markup such as 
+The horizontal-space macro is used to preserve spaces in text formatted with `format_text()` as well as spaces within physical-unit strings with `format_numbers()`. Without it, an inline math markup such as 
 
         $\mathrm{This Is Math Text.}$
 
@@ -333,7 +333,7 @@ rendered as,
 $\qquad$ `r "$\\small\\mathrm{This\\>Is\\>Math\\>Text.}$"`
 
 
-Because the backslashes must be escaped, the formatdown output is $\small\mathtt{\verb|"\\>"|}$, but the the argument value set by the user is  `word_space =` $\small\mathtt{\verb|"\\\\>"|}$. One may also use $\mathtt{\small\verb|"\\\\:"|}$ or $\mathtt{\small\verb|"\\\\ "|}$. 
+Because the backslashes must be escaped, the formatdown output is $\small\mathtt{\verb|"\\>"|}$, but the the argument value set by the user is  `whitespace =` $\small\mathtt{\verb|"\\\\>"|}$. One may also use $\mathtt{\small\verb|"\\\\:"|}$ or $\mathtt{\small\verb|"\\\\ "|}$. 
 
 
 <br>
@@ -342,13 +342,13 @@ Because the backslashes must be escaped, the formatdown output is $\small\mathtt
 
 ```{r}
 # 18. Character input, default space "\>"
-format_text(txt, word_space = "\\\\>")
+format_text(txt, whitespace = "\\\\>")
 
 # 19. Character input, alternate space "\:"
-format_text(txt, word_space = "\\\\:")
+format_text(txt, whitespace = "\\\\:")
 
 # 20. Character input, alternate space "\ "
-format_text(txt, word_space = "\\\\ ")
+format_text(txt, whitespace = "\\\\ ")
 ```
 
 <br>
@@ -357,9 +357,9 @@ Examples 18--20 render as,
 
 18. `r format_text(txt)` 
 
-18. `r format_text(txt, word_space = "\\\\:")`
+18. `r format_text(txt, whitespace = "\\\\:")`
 
-18. `r format_text(txt, word_space = "\\\\ ")` 
+18. `r format_text(txt, whitespace = "\\\\ ")` 
 
 
 

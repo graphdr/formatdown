@@ -42,7 +42,7 @@ get_math_markup <- function(face) {
 #'   markup itself, e.g., `\\mathrm`, `\\mathit`, `\\mathbf`, `\\mathsf`, or
 #'   `\\mathtt`.
 #'
-#' @param size,delim,word_space Used to format the math-delimited character
+#' @param size,delim,whitespace Used to format the math-delimited character
 #'   strings. For details, see the help page for `formatdown_options()`.
 #'
 #' @return A character vector with elements delimited as inline math markup
@@ -56,20 +56,12 @@ format_text <- function(x,
                         ...,
                         size = formatdown_options("size"),
                         delim = formatdown_options("delim"),
-                        word_space = formatdown_options("word_space")) {
+                        whitespace = formatdown_options("whitespace")) {
 
   # Overhead ----------------------------------------------------------------
 
-  # On exit, anything to reset?
-  # on.exit()
-
   # Arguments after dots must be named
-  stop_if_dots_text <- paste(
-    "Arguments after ... must be named.\n",
-    "* Did you forget to write `arg_name = value`\n",
-    "  for one of the arguments after the dots?*"
-  )
-  wrapr::stop_if_dot_args(substitute(list(...)), stop_if_dots_text)
+  arg_after_dots_named(...)
 
   # Indicate these are not unbound symbols (R CMD check Note)
   value <- NULL
@@ -93,21 +85,10 @@ format_text <- function(x,
     choices = c("plain", "italic", "bold", "sans", "mono", "\\mathrm", "\\mathit", "\\mathbf", "\\mathsf", "\\mathtt")
     )
 
-  # size: character, not missing, length 1, element of set
-  checkmate::qassert(size, "s1")
-  checkmate::assert_choice(
-    size,
-    choices = c(NA_character_, "scriptsize", "small", "normalsize", "large", "huge", "\\scriptsize", "\\small", "\\normalsize", "\\large", "\\huge")
-  )
-
-  # delim: character, not missing, length 1 or 2, not empty
-  checkmate::qassert(delim, "S+")
-  checkmate::assert_true(!"" %in% delim)
-  checkmate::assert_true(length(delim) <= 2)
-
-  # word_space: character, not missing, length 1,
-  checkmate::qassert(word_space, "S1")
-
+  # Assertions on options (in utils.R)
+  param_assert_delim(delim)
+  param_assert_size(size)
+  param_assert_whitespace(whitespace)
 
   # Initial processing ------------------------------------------------------
 
@@ -123,7 +104,7 @@ format_text <- function(x,
 
   # To retain spaces within x, sub LaTeX "\:"
   DT[, value := as.character(x)]
-  DT[, value := gsub(" ", word_space, value)]
+  DT[, value := gsub(" ", whitespace, value)]
   DT[is.na(x), value := NA_character_]
 
 # Add math markup

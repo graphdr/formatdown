@@ -8,7 +8,7 @@ formatdown_opts <- settings::options_manager(
   big_interval = 3,
   small_mark = "",
   small_interval = 5,
-  word_space = "\\\\>"
+  whitespace = "\\\\>"
 )
 
 # User function is exported:
@@ -35,7 +35,7 @@ formatdown_opts <- settings::options_manager(
 #' - `big_interval`:   `r param_big_interval`
 #' - `small_mark`:     `r param_small_mark`
 #' - `small_interval`: `r param_small_interval`
-#' - `word_space`:     `r param_word_space`
+#' - `whitespace`:     `r param_whitespace`
 #'
 #' @param reset Logical vector of length 1; if TRUE, reset all options to their
 #'     default values.

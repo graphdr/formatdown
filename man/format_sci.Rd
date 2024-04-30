@@ -13,8 +13,7 @@ format_sci(
   delim = formatdown_options("delim"),
   size = formatdown_options("size"),
   decimal_mark = formatdown_options("decimal_mark"),
-  small_mark = formatdown_options("small_mark"),
-  small_interval = formatdown_options("small_interval")
+  whitespace = formatdown_options("whitespace")
 )
 }
 \arguments{
@@ -58,16 +57,11 @@ e.g., \code{"\\\\scriptsize"}, \code{"\\\\small"}, etc. Default is NULL.}
 Possible values are a period \code{"."} (default) or a comma \code{","}. Passed
 to \code{formatC(decimal.mark)}.}
 
-\item{small_mark}{Character, length 1, used as the mark between every
-\code{small_interval} number of digits to the right of the decimal marker to
-improve readability. Possible values are empty \code{""} (default) or
-\code{"thin"} to produce a LaTeX-style thin, horizontal space. One may also
-assign the thin-space markup itself \code{"\\\\\\\\,"}.
-Passed to \code{formatC(small.mark)}.}
-
-\item{small_interval}{Integer, length 1, that defines the number of digits
-(default 5) in groups separated by \code{small_mark}. Passed to
-\code{formatC(small.interval)}.}
+\item{whitespace}{Character, length 1, to define the LaTeX-style
+math-mode macro to preserve a horizontal space between words of text or
+between physical-unit abbreviations when formatting numbers of class
+"units". Default is \code{"\\\\\\\\>"}. Alternatives include \code{"\\\\\\\\:"} or
+"\verb{\\\\\\\\ }".}
 }
 \value{
 A character vector in which numbers are formatted in power-of-ten

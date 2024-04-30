@@ -17,7 +17,8 @@ format_numbers(
   big_mark = formatdown_options("big_mark"),
   big_interval = formatdown_options("big_interval"),
   small_mark = formatdown_options("small_mark"),
-  small_interval = formatdown_options("small_interval")
+  small_interval = formatdown_options("small_interval"),
+  whitespace = formatdown_options("whitespace")
 )
 }
 \arguments{
@@ -87,6 +88,12 @@ Passed to \code{formatC(small.mark)}.}
 \item{small_interval}{Integer, length 1, that defines the number of digits
 (default 5) in groups separated by \code{small_mark}. Passed to
 \code{formatC(small.interval)}.}
+
+\item{whitespace}{Character, length 1, to define the LaTeX-style
+math-mode macro to preserve a horizontal space between words of text or
+between physical-unit abbreviations when formatting numbers of class
+"units". Default is \code{"\\\\\\\\>"}. Alternatives include \code{"\\\\\\\\:"} or
+"\verb{\\\\\\\\ }".}
 }
 \value{
 A character vector in which numbers are formatted in power-of-ten
@@ -106,8 +113,7 @@ Given a number, a numerical vector, or a numerical column from a data frame,
 \code{"$a \\\\times 10^{n}$"}, where \code{a} is the coefficient to a specified
 number of significant digits and \code{n} is the exponent. When used for decimal
 notation, \code{format_numbers()} converts numbers to character strings of the
-form \code{"$a$"}. All strings include markup delimiters \verb{$...$} for rendering the
-result as an inline equation in a R markdown document.
+form \code{"$a$"}.
 
 Powers-of-ten notation is omitted over a range of exponents via \code{omit_power}
 such that numbers so specified are converted to decimal notation. For
@@ -120,6 +126,10 @@ Delimiters for inline math markup can be edited if necessary. If the default
 argument fails, try using \code{"\\\\("} as an alternative. If using a custom
 delimiter to suit the markup environment, be sure to escape all special
 symbols.
+
+When inputs are of class "units" (created with the units package), a
+math-text macro of the form \verb{\\\\mathrm\{<units_string>\}} is appended
+to the formatted numerical value inside the math delimiters.
 
 Arguments after the dots (\code{...}) must be referred to by name.
 }

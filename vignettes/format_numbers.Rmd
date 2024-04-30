@@ -32,25 +32,6 @@ options(
 ```
 
 
-<!-- # TO-DO -->
-<!-- # revise format_numbers to handle units class     -->
-<!-- # # Start with a numeric value      -->
-<!-- # G <- 6.67384e-11      -->
-<!-- #  -->
-<!-- # # Do some units things      -->
-<!-- # display_units <- "m3 kg-1 s-2"      -->
-<!-- # units(G) <- display_units      -->
-<!-- #  -->
-<!-- # # Convert back to numeric to power formatting      -->
-<!-- # G <- format_power(as.numeric(G))      -->
-<!-- #  -->
-<!-- # # Paste the display units to the result      -->
-<!-- # G <- paste0(G, " [", display_units, "]")      -->
-<!-- # G -->
-
-
-
-
 ```{r}
 #| echo: false
 
@@ -425,19 +406,169 @@ For values with exponents $\small n\in\{-1, 0, 1, 2\}$, the default format is de
 
 
 
+
+
+
+## Units input
+
+The units R package (website: [Measurement Units for R](https://r-quantities.github.io/units/)) provides measurement units for R vectors, converting vectors of class "numeric" to class "units" [@Pebesma+Mailund+Hiebert:2016:units]. For example
+
+```{r}
+# Number
+x <- 10320
+class(x)
+
+# Convert to units class
+units(x) <- "m"
+x
+class(x)
+
+# Operations are reflected in the values and its units
+y <- x^2
+y
+
+# Unit conversion is supported
+z <- y
+z
+units(z) <- "ft^2"
+z
+```
+
+If an input argument to `format_numbers()` (or its convenience functions) is of class "units", formatdown attempts to extract the units character string, format the number in the expected way, and append a units character string to the result. For example, 
+
+```{r}
+# 11. Units-class inputs
+format_sci(x)
+format_sci(y)
+format_sci(z)
+```
+
+Example 11 renders as, 
+
+- `r format_sci(x, size = "small")`
+- `r format_sci(y, size = "small")`
+- `r format_sci(z, size = "small")`
+
+More complicated units can be managed. For example the Newtonian gravitational constant could be formatted as follows, where the exponents in the units definition are given in "implicit" form, that is, where $\small m^3 kg^{-1} s^{-2}$ is represented by `"m3 kg-1 s-2"`. 
+
+```r
+    G        <- 6.6743e-11
+    units(G) <- "m3 kg-1 s-2"
+    format_sci(G)
+```
+
+
+Applying a similar procedure to several physical constants and collecting the results in a data frame yields, 
+
+```{r}
+#| echo: false
+c <- 299792458
+units(c) <- "m/s"
+format_c <- format_sci(c, size = "small")
+
+h <- 6.62607015e-34
+units(h) <- "J/Hz"
+format_h <- format_sci(h, size = "small")
+
+mu <- 1.25663706212e-6
+units(mu) <- "N A-2"
+format_mu <- format_sci(mu, size = "small")
+
+G <- 6.67430e-11
+units(G) <- "m3 kg-1 s-2"
+format_G <- format_sci(G, size = "small")
+
+ke <- 8.9875517923e+9
+units(ke) <- "N m2 C-2"
+format_ke <- format_sci(ke, size = "small")
+
+sigma <- 5.67037442e-8
+units(sigma) <- "W m-2 K-4"
+format_sigma <- format_sci(sigma, size = "small")
+
+symbol <- c("$\\small c$", 
+            "$\\small h$", 
+            "$\\small \\mu_0$", 
+            "$\\small G$", 
+            "$\\small k_e$", 
+            "$\\small \\sigma$")
+
+quantity <- format_text(c("speed of light in a vacuum", 
+                          "Planck constant", 
+                          "vacuum magnetic permeability", 
+                          "Newtonian gravitational constant", 
+                          "Coulomb constant", 
+                          "Stefan-Boltzmann constant"),
+                        size = "small")
+
+formatted_value <- c(format_c, 
+           format_h, 
+           format_mu, 
+           format_G, 
+           format_ke, 
+           format_sigma)
+
+DT <- data.table(symbol, quantity, formatted_value)
+knitr::kable(DT)
+```
+
+
+This table is constructed simply to illustrate how formatdown returns a variety of units-class values with  units appended to the formatted number. 
+
+In a typical application, however, the numbers in a column have the same physical units and are formatted as a vector. For example, 
+
+
+```{r}
+#| echo: false
+formatdown_options(size = "small")
+```
+
+```{r}
+# Example 12
+DT <- air_meas[, .(temp, pres, sp_gas, dens)]
+
+# Examine data
+DT[]
+
+# Assign units
+units(DT$temp)   <- "K"
+units(DT$pres)   <- "Pa"
+units(DT$sp_gas) <- "J kg-1 K-1"
+units(DT$dens)   <- "kg m-3"
+
+# Format one column at a time
+DT$temp <- format_dcml(DT$temp)
+DT$pres <- format_engr(DT$pres)
+
+# Or format multiple columns in one pass
+cols <- c("sp_gas", "dens")
+DT[, (cols) := lapply(.SD, format_dcml), .SDcols = cols]
+
+knitr::kable(DT, align = "r", caption = "Example 12.")
+```
+
+```{r}
+#| echo: false
+formatdown_options(reset = TRUE)
+```
+
+
+
+
+
 ## Significant digits {#significant-digits}
 
 Significant digits are applied to the input argument using the base R function `signif()` before additional formatting is applied.  For example, 
 
 
 ```{r}
-# 11. Significant digits
+# 13. Significant digits
 format_sci(e, digits = 5)
 format_sci(e, digits = 4)
 format_sci(e, digits = 3)
 ```
 
-Example 11 renders as, 
+Example 13 renders as, 
 
 - `r format_sci(e, digits = 5, size = "small")`
 - `r format_sci(e, digits = 4, size = "small")`
@@ -460,7 +591,7 @@ formatdown_options(size = "small")
 ```
 
 ```{r}
-# 12. Comparing formats
+# 14. Comparing formats
 x <- c(2.3333e-5, 3.4444e-4, 5.2222e-2, 6.3333e-1, 8.1111e+1, 9.2222e+2, 2.4444e+4, 3.1111e+5, 4.2222e+6)
 dcml <- format_numbers(x, 3, format = "dcml")
 sci  <- format_numbers(x, 3, format = "sci")
@@ -469,7 +600,7 @@ DT   <- data.table(dcml, sci, engr)
 knitr::kable(DT, 
              align = "r", 
              col.names = c("decimal", "scientific", "engineering"), 
-             caption = "Example 12.")
+             caption = "Example 14.")
 ```
 
 ```{r}
@@ -491,7 +622,7 @@ formatdown_options(size = "small")
 ```
 
 ```{r}
-# 13. Effects of omit_power
+# 15. Effects of omit_power
 DT <- atmos[3:12, .(pres)]
 DT[, sci_all   := format_sci (pres , 3, omit_power = NULL)]
 DT[, sci_omit  := format_sci (pres , 3, omit_power = c(-1, 0))]
@@ -504,7 +635,7 @@ knitr::kable(DT,
                          "scientific w/ omit", 
                          "all engineering", 
                          "engineering w/ omit"), 
-             caption = "Example 13.")
+             caption = "Example 15.")
 ```
 
 Comments: 
@@ -518,7 +649,7 @@ Comments:
 If a single value is assigned, e.g., `omit_power = 0`, the argument is interpreted as `c(0, 0)`.
 
 ```{r}
-# 14. Omit power used for a single value of exponent
+# 16. Omit power used for a single value of exponent
 DT <- atmos[3:12, .(pres)]
 DT[, sci_all   := format_sci(pres, 3, omit_power = NULL)]
 DT[, sci_omit  := format_sci(pres, 3, omit_power = 0)]
@@ -531,7 +662,7 @@ knitr::kable(DT,
                          "scientific w/ omit", 
                          "all engineering", 
                          "engineering w/ omit"), 
-             caption = "Example 14.")
+             caption = "Example 16.")
 ```
 
 ```{r}
@@ -544,7 +675,7 @@ formatdown_options(reset = TRUE)
 Setting `omit_power = c(-Inf, Inf)` yields the same decimal result as `format = "dcml"` and overrides any other `format` setting. For example, 
 
 ```{r}
-# 15. Different ways of creating a decimal format
+# 17. Different ways of creating a decimal format
 (y <- 6.78e-3)
 
 (p <- format_numbers(y, 3, "sci", omit_power = c(-Inf, Inf)))
@@ -557,7 +688,7 @@ all.equal(p, q)
 all.equal(p, r)
 ```
 
-Example 15 (all cases) renders as, 
+Example 17 (all cases) renders as, 
 
 - `r format_numbers(y, 3, "dcml", size = "small")`
 
@@ -573,7 +704,7 @@ formatdown_options(size = "small")
 ```
 
 ```{r}
-# 16. set_power argument
+# 18. set_power argument
 DT <- atmos[alt <= 40, .(alt, pres, dens)]
 DT[, sci_pres := format_sci(pres, 3, omit_power = c(-1, 2))]
 DT[, set_pres := format_sci(pres, 3, omit_power = c(-1, 2), set_power = 3)]
@@ -584,7 +715,7 @@ DT[, dens := NULL]
 knitr::kable(DT, 
              align = "r", 
              col.names = c('Altitude (km)', 'Pressure (Pa)', 'with set_power', 'Density (kg/m$^{3}$)', 'with set_power'), 
-             caption = "Example 16.")
+             caption = "Example 18.")
 ```
 
 ```{r}

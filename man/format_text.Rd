@@ -10,7 +10,7 @@ format_text(
   ...,
   size = formatdown_options("size"),
   delim = formatdown_options("delim"),
-  word_space = formatdown_options("word_space")
+  whitespace = formatdown_options("whitespace")
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ markup itself, e.g., \verb{\\\\mathrm}, \verb{\\\\mathit}, \verb{\\\\mathbf}, \v
 
 \item{...}{Not used, force later arguments to be used by name.}
 
-\item{size, delim, word_space}{Used to format the math-delimited character
+\item{size, delim, whitespace}{Used to format the math-delimited character
 strings. For details, see the help page for \code{formatdown_options()}.}
 }
 \value{

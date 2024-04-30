@@ -64,9 +64,10 @@ Passed to \code{formatC(small.mark)}.
 \item \code{small_interval}: Integer, length 1, that defines the number of digits
 (default 5) in groups separated by \code{small_mark}. Passed to
 \code{formatC(small.interval)}.
-\item \code{word_space}:     Character, length 1, to define the LaTeX-style
-math-mode macro to preserve a horizontal space between words. Default
-is \code{"\\\\\\\\>"}. Alternatives include \code{"\\\\\\\\:"} or
+\item \code{whitespace}:     Character, length 1, to define the LaTeX-style
+math-mode macro to preserve a horizontal space between words of text or
+between physical-unit abbreviations when formatting numbers of class
+"units". Default is \code{"\\\\\\\\>"}. Alternatives include \code{"\\\\\\\\:"} or
 "\verb{\\\\\\\\ }".
 }
 }
@@ -130,7 +131,7 @@ format_sci(z, 10, small_mark = "\\\\\\\\,")
 format_sci(z, 10, small_mark = "thin", small_interval = 3)
 format_sci(z, 10, small_mark = "thin", small_interval = 5)
 
-# word_space
+# whitespace
 
 
 

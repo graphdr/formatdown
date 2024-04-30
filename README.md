@@ -24,10 +24,10 @@ columns in tables.
 ## Introduction
 
 In professional technical prose, large and small numbers are generally
-typeset using powers of ten notation. For example, Plank’s constant
-would be typeset as $6.63 \times 10^{-34}$ $\mathrm{J\\/Hz}$ rather than
-the familiar forms we use in communicating with computers, such as
-`6.63*10^-34` or `6.63E-34`.
+typeset using powers of ten notation. For example, Planck’s constant
+would be typeset as $\small 6.63 \times 10^{-34}\>\mathrm{J\>Hz^{-1}}$
+rather than the familiar forms we use in communicating with computers,
+such as `6.63*10^-34` or `6.63E-34`.
 
 The functions in this package help an author convert large and small
 numbers to character strings, formatted using powers-of-ten notation. In
@@ -39,16 +39,24 @@ Formatting tools include:
 
 **`format_numbers()`**  
 Convert a numeric vector to a math-delimited character vector in which
-the numbers are formatted in power-of-ten notation in scientific or
-engineering form. Decimal numbers can be similarly formatted.
+the numbers can be formatted in scientific or engineering power-of-ten
+notation or in decimal form.
+
+**`format_sci()`**  
+Convenience function. A wrapper around `format_numbers()` for scientific
+notation.
+
+**`format_engr()`**  
+Convenience function. A wrapper around `format_numbers()` for
+engineering notation.
+
+**`format_dcml()`**  
+Convenience function. A wrapper around `format_numbers()` for decimal
+notation.
 
 **`format_text()`**  
 Convert a character vector to math-delimited character vector. Useful
 for creating a consistent typeface across all columns of a table.
-
-**`format_units()`**  
-Convert a numeric vector to class “units” via the **units** R package
-and then to a math-delimited character vector.
 
 ## Usage
 
@@ -76,21 +84,22 @@ format_numbers(x, digits = 4, format = "engr")
 format_numbers(x, digits = 4, format = "dcml")
 #> [1] "$101300$"
 
-# Measurement units notation
+# With measurement units
 units(x) <- "Pa"
-format_units(x, digits = 4, unit = "hPa")
-#> [1] "$\\small \\mathrm{1013\\>[hPa]}$"
+units(x) <- "hPa"
+format_dcml(x)
+#> [1] "$1013\\>\\mathrm{hPa}$"
 ```
 
 which, in an `.Rmd` or `.qmd` output document, are rendered using inline
 R code as
 
-|      Format |                   Rendered as |
-|------------:|------------------------------:|
-|  scientific |         $1.013 \times 10^{5}$ |
-| engineering |         $101.3 \times 10^{3}$ |
-|     decimal |                      $101300$ |
-|       units | $\small \mathrm{1013\>[hPa]}$ |
+|      Format |                  Rendered as |
+|------------:|-----------------------------:|
+|  scientific | $\small 1.013 \times 10^{5}$ |
+| engineering | $\small 101.3 \times 10^{3}$ |
+|     decimal |              $\small 101300$ |
+|       units |  $\small 1013\>\mathrm{hPa}$ |
 
 *Data frame*.   Typically rendered in a table. We independently format
 columns from the `metals` data frame included with formatdown.
@@ -113,15 +122,15 @@ DT$metal <- format_text(DT$metal)
 
 # Density and thermal conductivity in decimal form
 cols_we_want <- c("dens", "thrm_cond")
-DT[, cols_we_want] <- lapply(DT[, ..cols_we_want], function(x) format_numbers(x,
-    3, "dcml"))
+DT[, cols_we_want] <- lapply(DT[, ..cols_we_want], function(x) format_dcml(x, 3))
 
 # Thermal expansion in engineering format
-DT$thrm_exp <- format_numbers(DT$thrm_exp, 3, "engr")
+DT$thrm_exp <- format_engr(DT$thrm_exp, 3)
 
 # Elastic modulus in units form
 units(DT$elast_mod) <- "Pa"
-DT$elast_mod <- format_units(DT$elast_mod, 3, "GPa")
+units(DT$elast_mod) <- "GPa"
+DT$elast_mod <- format_dcml(DT$elast_mod, 3)
 
 # Render in document
 knitr::kable(DT, align = "r", caption = "Table 1: Properties of metals.", col.names = c("Metal",
@@ -129,14 +138,14 @@ knitr::kable(DT, align = "r", caption = "Table 1: Properties of metals.", col.na
     "Elastic modulus"))
 ```
 
-|                     Metal | Density \[kg/m$^3$\] | Therm. expan. \[m/m K$^{-1}$\] | Therm. cond. \[W/m K$^{-1}$\] |                Elastic modulus |
-|--------------------------:|---------------------:|-------------------------------:|------------------------------:|-------------------------------:|
-| $\mathrm{aluminum\>6061}$ |               $2700$ |          $24.3 \times 10^{-6}$ |                         $156$ |  $\small \mathrm{73.1\>[GPa]}$ |
-|         $\mathrm{copper}$ |               $8900$ |          $16.6 \times 10^{-6}$ |                         $393$ | $\small \mathrm{117.0\>[GPa]}$ |
-|           $\mathrm{lead}$ |              $11300$ |          $52.7 \times 10^{-6}$ |                        $37.0$ |  $\small \mathrm{13.8\>[GPa]}$ |
-|       $\mathrm{platinum}$ |              $21400$ |          $9.00 \times 10^{-6}$ |                        $69.2$ | $\small \mathrm{147.0\>[GPa]}$ |
-|    $\mathrm{steel\>1020}$ |               $7850$ |          $11.3 \times 10^{-6}$ |                        $46.7$ | $\small \mathrm{207.0\>[GPa]}$ |
-|       $\mathrm{titanium}$ |               $4850$ |          $9.36 \times 10^{-6}$ |                        $7.44$ | $\small \mathrm{102.0\>[GPa]}$ |
+|                            Metal | Density \[kg/m$^3$\] | Therm. expan. \[m/m K$^{-1}$\] | Therm. cond. \[W/m K$^{-1}$\] |             Elastic modulus |
+|---------------------------------:|---------------------:|-------------------------------:|------------------------------:|----------------------------:|
+| $\small \mathrm{aluminum\>6061}$ |        $\small 2700$ |   $\small 24.3 \times 10^{-6}$ |                  $\small 156$ | $\small 73.1\>\mathrm{GPa}$ |
+|         $\small \mathrm{copper}$ |        $\small 8900$ |   $\small 16.6 \times 10^{-6}$ |                  $\small 393$ |  $\small 117\>\mathrm{GPa}$ |
+|           $\small \mathrm{lead}$ |       $\small 11300$ |   $\small 52.7 \times 10^{-6}$ |                 $\small 37.0$ | $\small 13.8\>\mathrm{GPa}$ |
+|       $\small \mathrm{platinum}$ |       $\small 21400$ |   $\small 9.00 \times 10^{-6}$ |                 $\small 69.2$ |  $\small 147\>\mathrm{GPa}$ |
+|    $\small \mathrm{steel\>1020}$ |        $\small 7850$ |   $\small 11.3 \times 10^{-6}$ |                 $\small 46.7$ |  $\small 207\>\mathrm{GPa}$ |
+|       $\small \mathrm{titanium}$ |        $\small 4850$ |   $\small 9.36 \times 10^{-6}$ |                 $\small 7.44$ |  $\small 102\>\mathrm{GPa}$ |
 
 Table 1: Properties of metals.
 
@@ -185,6 +194,8 @@ Conduct](https://graphdr.github.io/formatdown/CONDUCT.html).
   tools  
 - [`data.table`](https://CRAN.R-project.org/package=data.table) for its
   programmable syntax  
+- [`units`](https://CRAN.R-project.org/package=units) for handling
+  physical units
 - [`wrapr`](https://CRAN.R-project.org/package=wrapr),
   [`checkmate`](https://CRAN.R-project.org/package=checkmate), and
   [`tinytest`](https://CRAN.R-project.org/package=tinytest) for

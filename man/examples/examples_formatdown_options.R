@@ -57,7 +57,7 @@ format_sci(z, 10, small_mark = "\\\\,")
 format_sci(z, 10, small_mark = "thin", small_interval = 3)
 format_sci(z, 10, small_mark = "thin", small_interval = 5)
 
-# word_space
+# whitespace
 
 
 

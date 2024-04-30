@@ -21,6 +21,7 @@ assign_non_power_rows <- function(DT, format, omit_power, set_power) {
   exponent <- NULL
   exp_raw <- NULL
   omit <- NULL
+  # Create default
   DT[, omit := FALSE]
   # Cases for omit TRUE
   DT[exponent %between% omit_power, omit := TRUE]
@@ -28,7 +29,6 @@ assign_non_power_rows <- function(DT, format, omit_power, set_power) {
     DT[, exponent := floor(exp_raw / 3) * 3]
     DT[exponent %between% omit_power, omit := TRUE]
   }
-  # DT[is.na(x), omit := TRUE]
   # Identify the non-power rows
   non_pow <- DT$omit
   # Override all if set_power has been assigned
@@ -41,9 +41,9 @@ assign_non_power_rows <- function(DT, format, omit_power, set_power) {
 
 # Prepare result with size, delim, and back to vector form
 prepare_output_vector <- function(DT, size_markup, delim) {
-  # DT$value is a power-of-ten or decimal character
   # Indicate these are not unbound symbols (R CMD check Note)
   value <- NULL
+  # DT$value is a power-of-ten or decimal character
   # Add font size prefix
   DT[, value := paste0(size_markup, value)]
   # Surround with math delimiters (see utils.R)
@@ -53,21 +53,21 @@ prepare_output_vector <- function(DT, size_markup, delim) {
   return(DT)
 }
 
-get_units_suffix <- function(char) {
-  # u_suffix <- x
-  if (length(char) > 0) {
+get_units_suffix <- function(units_string, whitespace) {
+  if (length(units_string) > 0) {
     # regex to find: optional - sign, followed by any number of digits
     u_regex <- "-?[0-9]+"
     # units exponents, if any
-    u_unbraced <- regmatches(char, gregexec(u_regex, char))[[1]]
+    u_unbraced <- regmatches(units_string, gregexec(u_regex, units_string))[[1]]
     if (length(u_unbraced) > 0) {
       # add braces and exponent symbol
       u_braced <- paste0("^{", u_unbraced, "}")
       # substitute each braced exponent for each un-braced exponent
-      regmatches(char, gregexec(u_regex, char))[[1]] <- u_braced
+      regmatches(units_string, gregexec(u_regex, units_string))[[1]] <- u_braced
     }
+    units_string <- gsub(" ", whitespace, units_string)
   }
-  return(char)
+  return(units_string)
 }
 
 #' Format numbers
@@ -83,8 +83,7 @@ get_units_suffix <- function(char) {
 #' `"$a \\times 10^{n}$"`, where `a` is the coefficient to a specified
 #' number of significant digits and `n` is the exponent. When used for decimal
 #' notation, `format_numbers()` converts numbers to character strings of the
-#' form `"$a$"`. All strings include markup delimiters `$...$` for rendering the
-#' result as an inline equation in a R markdown document.
+#' form `"$a$"`.
 #'
 #' Powers-of-ten notation is omitted over a range of exponents via `omit_power`
 #' such that numbers so specified are converted to decimal notation. For
@@ -97,6 +96,10 @@ get_units_suffix <- function(char) {
 #' argument fails, try using `"\\("` as an alternative. If using a custom
 #' delimiter to suit the markup environment, be sure to escape all special
 #' symbols.
+#'
+#' When inputs are of class "units" (created with the units package), a
+#' math-text macro of the form `\\mathrm{<units_string>}` is appended
+#' to the formatted numerical value inside the math delimiters.
 #'
 #' Arguments after the dots (`...`) must be referred to by name.
 #'
@@ -113,6 +116,7 @@ get_units_suffix <- function(char) {
 #' @param big_interval   `r param_big_interval`
 #' @param small_mark     `r param_small_mark`
 #' @param small_interval `r param_small_interval`
+#' @param whitespace     `r param_whitespace`
 #'
 #' @return A character vector in which numbers are formatted in power-of-ten
 #' or decimal notation and delimited for rendering as inline equations
@@ -133,32 +137,22 @@ format_numbers <- function(x,
                            big_mark       = formatdown_options("big_mark"),
                            big_interval   = formatdown_options("big_interval"),
                            small_mark     = formatdown_options("small_mark"),
-                           small_interval = formatdown_options("small_interval")) {
+                           small_interval = formatdown_options("small_interval"),
+                           whitespace     = formatdown_options("whitespace")) {
 
   # Overhead ----------------------------------------------------------------
 
-  # On exit, anything to reset?
-  # on.exit()
-
   # Arguments after dots must be named
-  stop_if_dots_text <- paste(
-    "Arguments after ... must be named.\n",
-    "* Did you forget to write `arg_name = value`\n",
-    "  for one of the arguments after the dots?*"
-  )
-  wrapr::stop_if_dot_args(substitute(list(...)), stop_if_dots_text)
+  arg_after_dots_named(...)
 
   # Indicate these are not unbound symbols (R CMD check Note)
   size_markup <- NULL
   char_coeff <- NULL
   exponent <- NULL
+  units_x <- NULL
   exp_raw <- NULL
   coeff <- NULL
   value <- NULL
-  u_input <- NULL
-  u_regex <- NULL
-  u_braced <- NULL
-  u_unbraced <- NULL
 
   # Assign arguments -------------------------------------------------------
 
@@ -174,8 +168,10 @@ format_numbers <- function(x,
   if (is_null_or_na(size)) size <- NA_character_
 
   # grouping digits
-  if (is_null_or_na(big_mark))   big_mark   <- ""
-  if (is_null_or_na(small_mark)) small_mark <- ""
+  if (is_null_or_na(big_mark))       big_mark   <- ""
+  if (is_null_or_na(big_interval))   big_mark   <- ""
+  if (is_null_or_na(small_mark))     small_mark <- ""
+  if (is_null_or_na(small_interval)) small_mark <- ""
 
   # Argument checks ---------------------------------------------------------
 
@@ -207,47 +203,39 @@ format_numbers <- function(x,
   # set_power: numeric, length 1 (can be NA)
   checkmate::qassert(set_power, "n1")
 
-  # size: character, not missing, length 1, element of set
-  checkmate::qassert(size, "s1")
-  checkmate::assert_choice(
-    size,
-    choices = c(NA_character_, "scriptsize", "small", "normalsize", "large", "huge", "\\scriptsize", "\\small", "\\normalsize", "\\large", "\\huge")
-  )
+  # Assertions on options (in utils.R)
+  param_assert_delim(delim)
+  param_assert_size(size)
+  param_assert_mark(big_mark)
+  param_assert_mark(small_mark)
+  param_assert_whitespace(whitespace)
 
-  # delim: character, not missing, length 1 or 2, not empty
-  checkmate::qassert(delim, "S+")
-  checkmate::assert_true(!"" %in% delim)
-  checkmate::assert_true(length(delim) <= 2)
-
-  # decimal_mark: character, not missing, length 1
+  # decimal_mark: character, not missing, length 1, period or comma
   checkmate::qassert(decimal_mark, "S1")
+  checkmate::assert_choice(decimal_mark, choices = c(".", ","))
 
-  # big_mark: character, length 1, can be empty
-  checkmate::qassert(big_mark, "s1")
-  checkmate::assert_choice(
-    big_mark,
-    choices = c("thin", "\\\\,", "")
-  )
+  # big_mark, small_mark
 
-  # small_mark: character, length 1, can be empty
-  checkmate::qassert(small_mark, "s1")
-  checkmate::assert_choice(
-    small_mark,
-    choices = c("thin", "\\\\,", "")
-  )
 
-  # big_mark and decimal_mark may not be the same character
-  if (sum(isTRUE(big_mark == decimal_mark)) > 0) {
-    stop("`big_mark` and `decimal_mark` may not be assigned the same symbol.")
-  }
+
+
+  # intervals: integer-ish, length 1 (can be NA), equal to 0,1,2,...
+  checkmate::qassert(big_interval  , "x1[0,)")
+  checkmate::qassert(small_interval, "x1[0,)")
+  if (isTRUE(big_interval < 1))   {big_mark   = ""}
+  if (isTRUE(small_interval < 1)) {small_mark = ""}
 
   # Initial processing -----------------------------------------
 
-  # If x is class units, store units separately and drop the units
-  u_input <- NULL
-  if (checkmate::test_class(x, classes = c("units"))) {
-    u_input  <- deparse_unit(x)
+  # Set units flag
+  x_has_units <- checkmate::test_class(x, classes = c("units"))
+
+  # store units separately and drop the units from x
+  if (x_has_units) {
+    units_x  <- deparse_unit(x)
     units(x) <- NULL
+    # Create unit_space from whitespace by dropping the first backslash
+    unit_space <- substr(whitespace, start = 2, stop = 100000L)
   }
 
   # Set significant digits before processing
@@ -262,7 +250,7 @@ format_numbers <- function(x,
 
   # Convert vector to data.table for processing
   DT <- data.table::copy(data.frame(x))
-  setDT(DT)
+  data.table::setDT(DT)
 
   # Raw decimal exponent and integer exponent
   DT[, exp_raw := log10(abs(x))]
@@ -292,27 +280,19 @@ format_numbers <- function(x,
   DT <- omit_formatC_extras(DT, col_name = "char_coeff")
 
   # Construct various string values
+  # Desired character output is in the value column
   DT[non_pow, value := char_coeff]
   DT[pow_10, value := paste0(char_coeff, " \\times ", "10^{", exponent, "}")]
   DT[is.na(x), value := "\\mathrm{NA}"]
 
-  # Prep for output
-  output <- prepare_output_vector(DT, size_markup, delim)
-
-  # Add formatted units suffix if any
-  u_suffix <- get_units_suffix(u_input)
-  u_suffix <- formatdown::format_text(u_suffix, size = size, delim = delim)
-  output <- paste0(output, u_suffix)
-
-  if (length(u_suffix) > 0) {
-    # possibly remove back to back $$
-    # $ and any no. of spaces followed by $, two backslashes and any number of
-    # letters, expecting the \\small, for example
-    r <- "\\$ +\\$\\\\[a-zA-Z]+"
-    double_dollar <- regmatches(output, gregexec(r, output))[[1]]
-    output <- gsub(double_dollar, "\\>", output, fixed = TRUE)
+  # Add units suffix if any
+  if (x_has_units){
+    u_suffix <- get_units_suffix(units_x, whitespace)
+    DT[, value := paste0(value, unit_space, "\\mathrm{", u_suffix, "}")]
   }
 
+  # Prep for output
+  output <- prepare_output_vector(DT, size_markup, delim)
   # enable printing (see data.table FAQ 2.23)
   output[]
   return(output)
@@ -351,29 +331,31 @@ format_sci <- function(x,
                        omit_power = c(-1, 2),
                        set_power = NULL,
 
-                       # argument defaults in formatdown_options
-                       delim          = formatdown_options("delim"),
-                       size           = formatdown_options("size"),
-                       decimal_mark   = formatdown_options("decimal_mark"),
-                       small_mark     = formatdown_options("small_mark"),
-                       small_interval = formatdown_options("small_interval")) {
+                       # options
+                       delim        = formatdown_options("delim"),
+                       size         = formatdown_options("size"),
+                       decimal_mark = formatdown_options("decimal_mark"),
+                       whitespace   = formatdown_options("whitespace")) {
 
-                       # wrapper for format_numbers()
-  output <- format_numbers(x              = x,
-                           digits         = digits,
-                           omit_power     = omit_power,
-                           set_power      = set_power,
-                           delim          = delim,
-                           size           = size,
-                           decimal_mark   = decimal_mark,
-                           small_mark     = small_mark,
-                           small_interval = small_interval,
+  # wrap format_numbers()
+  output <- format_numbers(x          = x,
+                           digits     = digits,
+                           omit_power = omit_power,
+                           set_power  = set_power,
 
-                           # pre-sets for this wrapper
+                           # options
+                           delim        = delim,
+                           size         = size,
+                           decimal_mark = decimal_mark,
+                           whitespace   = whitespace,
+
+                           # wrapper pre-sets
                            format         = "sci",
                            big_mark       = formatdown_options("big_mark"),
-                           big_interval   = formatdown_options("big_interval")
-                           )
+                           big_interval   = formatdown_options("big_interval"),
+                           small_mark     = formatdown_options("small_mark"),
+                           small_interval = formatdown_options("small_interval")
+  )
 
   # enable printing (see data.table FAQ 2.23)
   output[]
@@ -411,28 +393,30 @@ format_engr <- function(x,
                         omit_power = c(-1, 2),
                         set_power = NULL,
 
-                        # argument defaults in formatdown_options
-                        delim          = formatdown_options("delim"),
-                        size           = formatdown_options("size"),
-                        decimal_mark   = formatdown_options("decimal_mark"),
-                        small_mark     = formatdown_options("small_mark"),
-                        small_interval = formatdown_options("small_interval")) {
+                        # options
+                        delim        = formatdown_options("delim"),
+                        size         = formatdown_options("size"),
+                        decimal_mark = formatdown_options("decimal_mark"),
+                        whitespace   = formatdown_options("whitespace")) {
 
-  # wrapper for format_numbers()
-  output <- format_numbers(x              = x,
-                           digits         = digits,
-                           omit_power     = omit_power,
-                           set_power      = set_power,
-                           delim          = delim,
-                           size           = size,
-                           decimal_mark   = decimal_mark,
-                           small_mark     = small_mark,
-                           small_interval = small_interval,
+  # wrap format_numbers()
+  output <- format_numbers(x          = x,
+                           digits     = digits,
+                           omit_power = omit_power,
+                           set_power  = set_power,
 
-                           # pre-sets for this wrapper
+                           # options
+                           delim        = delim,
+                           size         = size,
+                           decimal_mark = decimal_mark,
+                           whitespace   = whitespace,
+
+                           # wrapper pre-sets
                            format         = "engr",
                            big_mark       = formatdown_options("big_mark"),
-                           big_interval   = formatdown_options("big_interval")
+                           big_interval   = formatdown_options("big_interval"),
+                           small_mark     = formatdown_options("small_mark"),
+                           small_interval = formatdown_options("small_interval")
   )
 
   # enable printing (see data.table FAQ 2.23)
@@ -469,18 +453,21 @@ format_dcml <- function(x,
                         digits = 4,
                         ...,
 
-                        # argument defaults in formatdown_options
+                        # options
                         delim          = formatdown_options("delim"),
                         size           = formatdown_options("size"),
                         decimal_mark   = formatdown_options("decimal_mark"),
                         big_mark       = formatdown_options("big_mark"),
                         big_interval   = formatdown_options("big_interval"),
                         small_mark     = formatdown_options("small_mark"),
-                        small_interval = formatdown_options("small_interval")) {
+                        small_interval = formatdown_options("small_interval"),
+                        whitespace     = formatdown_options("whitespace")) {
 
-  # wrapper for format_numbers() with format set to "dcml"
-  output <- format_numbers(x              = x,
-                           digits         = digits,
+  # wrap for format_numbers()
+  output <- format_numbers(x      = x,
+                           digits = digits,
+
+                           # options
                            delim          = delim,
                            size           = size,
                            decimal_mark   = decimal_mark,
@@ -488,8 +475,9 @@ format_dcml <- function(x,
                            big_interval   = big_interval,
                            small_mark     = small_mark,
                            small_interval = small_interval,
+                           whitespace     = whitespace,
 
-                           # pre-sets for this wrapper
+                           # wrapper pre-sets
                            format     = "dcml",
                            omit_power = NULL,
                            set_power  = NULL)
