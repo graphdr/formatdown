@@ -25,9 +25,9 @@ columns in tables.
 
 In professional technical prose, large and small numbers are generally
 typeset using powers of ten notation. For example, Planck’s constant
-would be typeset as $\small 6.63 \times 10^{-34}\>\mathrm{J\>Hz^{-1}}$
-rather than the familiar forms we use in communicating with computers,
-such as `6.63*10^-34` or `6.63E-34`.
+would be typeset as $\small 6.63 \times 10^{-34}$ rather than the
+familiar forms we use in communicating with computers, such as
+`6.63*10^-34` or `6.63E-34`.
 
 The functions in this package help an author convert large and small
 numbers to character strings, formatted using powers-of-ten notation. In
