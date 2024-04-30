@@ -176,13 +176,12 @@ format_numbers <- function(x,
   # Argument checks ---------------------------------------------------------
 
   # x: class "units" or "numeric" both allowed
-  if (FALSE) {
-    checkmate::assert(
-      checkmate::check_class(x, "units"),
-      checkmate::check_class(x, "numeric"),
-      combine = "or"
-    )
-  }
+  checkmate::assert(
+    checkmate::check_class(x, "units"),
+    checkmate::check_class(x, "numeric"),
+    combine = "or"
+  )
+
   # x: numeric, length at least 1
   checkmate::qassert(x, "n+")
 

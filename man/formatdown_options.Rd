@@ -131,8 +131,11 @@ format_sci(z, 10, small_mark = "\\\\\\\\,")
 format_sci(z, 10, small_mark = "thin", small_interval = 3)
 format_sci(z, 10, small_mark = "thin", small_interval = 5)
 
-# whitespace
+# whitespace in text
+p <- "Hello world!"
+format_text(p, whitespace = "\\\\\\\\:")
 
-
-
+# whitespace in physical units expression
+units(x) <- "m/s"
+format_dcml(x, whitespace = "\\\\\\\\:")
 }

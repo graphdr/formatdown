@@ -13,7 +13,7 @@ link-citations: yes
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>", 
+  comment = "#>",
   tidy = TRUE
 )
 
@@ -37,9 +37,9 @@ options(
 # make header table, but scan it and save as png
 
 # Markup <- c("$\\small\\mathtt{\\verb+\\mathrm{...}+}$", "$\\small\\mathtt{\\verb+\\mathit{...}+}$", "$\\small\\mathtt{\\verb+\\mathbf{...}+}$", "$\\small\\mathtt{\\verb+\\mathsf{...}+}$", "$\\small\\mathtt{\\verb+\\mathtt{...}+}$")
-# 
+#
 # Style <- c("$\\small\\mathrm{plain}$", "$\\small\\mathit{italic}$", "$\\small\\mathbf{bold}$", "$\\small\\mathsf{sans\\ serif}$", "$\\small\\mathtt{typewriter}$")
-# 
+#
 # DT <- data.table(Markup, Style)
 # knitr::kable(DT, align = "l") |>
 #   kableExtra::kable_styling(font_size = 16, position = "left") |>
@@ -210,11 +210,11 @@ Format the same column of text using each of the five possible `face` arguments 
 ```{r}
 # 10. Compare available typefaces
 x <- c("One day", "at a", "time.")
-plain  <- format_text(x, face = "plain", size = "small")
+plain <- format_text(x, face = "plain", size = "small")
 italic <- format_text(x, face = "italic", size = "small")
-bold   <- format_text(x, face = "bold", size = "small")
-sans   <- format_text(x, face = "sans", size = "small")
-mono   <- format_text(x, face = "mono", size = "small")
+bold <- format_text(x, face = "bold", size = "small")
+sans <- format_text(x, face = "sans", size = "small")
+mono <- format_text(x, face = "mono", size = "small")
 DT <- data.table(plain, italic, bold, sans, mono)
 knitr::kable(DT, align = "l", caption = "Example 10.")
 ```
@@ -225,7 +225,7 @@ One may use the LaTeX-style macro instead of the shorthand argument option. For 
 # 11. Two equivalent values for argument
 hello_text <- "Hello world!"
 p <- format_text(hello_text, face = "plain")
-q <- format_text(hello_text, face = "\\mathrm") 
+q <- format_text(hello_text, face = "\\mathrm")
 
 # Demonstrate equivalence
 all.equal(p, q)

@@ -20,11 +20,11 @@
 #' @param digits Numeric scalar, a positive integer. Applied as the `digits`
 #'   argument of `base::format()`. Enough decimal places are included such that
 #'   the smallest magnitude value has this many significant digits.
-#' @param ... Not used, force later arguments to be used by name.
 #' @param unit Character scalar, units label compatible with 'units' package.
 #'   For `x` class numeric, transform to class units in `unit` measurement
 #'   units. For `x` class units, convert to `unit` measurement units. If empty,
 #'   existing class units retained.
+#' @param ... Not used, force later arguments to be used by name.
 #' @param unit_form Character scalar. Possible values are "standard" (default)
 #'   and "implicit" (implicit exponent form). In standard form, units are
 #'   related with arithmetic symbols for multiplication, division, and powers,
@@ -37,7 +37,7 @@
 #' @return A character vector of numbers with appended measurement units.
 #'
 #' @name format_units-deprecated
-#' @usage format_units(x, digits, ..., unit, unit_form, big_mark)
+#' @usage format_units(x, digits, unit, ..., unit_form, big_mark)
 #' @seealso \code{\link{formatdown-deprecated}}
 #' @keywords internal
 NULL
@@ -50,8 +50,8 @@ NULL
 #' @export
 format_units <- function(x,
                          digits = 1,
-                         ...,
                          unit = NULL,
+                         ...,
                          unit_form = NULL,
                          big_mark = NULL) {
 

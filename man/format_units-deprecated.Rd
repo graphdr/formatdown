@@ -4,7 +4,7 @@
 \alias{format_units-deprecated}
 \title{Format values with measurement units}
 \usage{
-format_units(x, digits, ..., unit, unit_form, big_mark)
+format_units(x, digits, unit, ..., unit_form, big_mark)
 }
 \arguments{
 \item{x}{Vector of class numeric or class units.}
@@ -13,12 +13,12 @@ format_units(x, digits, ..., unit, unit_form, big_mark)
 argument of \code{base::format()}. Enough decimal places are included such that
 the smallest magnitude value has this many significant digits.}
 
-\item{...}{Not used, force later arguments to be used by name.}
-
 \item{unit}{Character scalar, units label compatible with 'units' package.
 For \code{x} class numeric, transform to class units in \code{unit} measurement
 units. For \code{x} class units, convert to \code{unit} measurement units. If empty,
 existing class units retained.}
+
+\item{...}{Not used, force later arguments to be used by name.}
 
 \item{unit_form}{Character scalar. Possible values are "standard" (default)
 and "implicit" (implicit exponent form). In standard form, units are

@@ -24,8 +24,8 @@ format_power(
 format_units(
   x,
   digits = 1,
-  ...,
   unit = NULL,
+  ...,
   unit_form = NULL,
   big_mark = NULL
 )

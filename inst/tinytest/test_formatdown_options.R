@@ -14,7 +14,10 @@ test_formatdown_options <- function() {
   # small_interval = 5    any positive integer
   # whitespace = "\\\\>"  "\\\\:" or "⁠\\\\ ⁠".
 
-  # Reset to default
+  # Store existing settings
+  prior_settings <- formatdown_options()
+
+  # Reset to default settings
   formatdown_options(reset = TRUE)
 
   x <- 6.0221e+23
@@ -99,6 +102,13 @@ test_formatdown_options <- function() {
   expect_equal(ans917, format_dcml(x))
   formatdown_options(reset = TRUE)
 
+  # set multiple options
+  x <- 0.9876543211
+  formatdown_options(decimal_mark = ",", small_mark = "thin", small_interval = 4)
+  ans918 <- "$0,9876\\,5432\\,11$"
+  expect_equal(ans918, format_dcml(x, 10))
+  formatdown_options(reset = TRUE)
+
   # errors
   expect_error(formatdown_options("x"))
   expect_error(formatdown_options("digits"))
@@ -107,6 +117,9 @@ test_formatdown_options <- function() {
   expect_error(formatdown_options("set_power"))
   expect_error(formatdown_options("face"))
   formatdown_options(reset = TRUE)
+
+  # reset options to those before this test
+  do.call(formatdown_options, prior_settings)
 
   # function output not printed
   invisible(NULL)

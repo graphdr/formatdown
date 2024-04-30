@@ -34,8 +34,8 @@ test_format_numbers <- function() {
   x <- 103219
   ans102 <- "$103200$"
   expect_equal(ans102, format_numbers(x, format = "dcml"))
-  expect_equal(ans102, format_dcml(x))
   expect_equal(ans102, format_dcml(x, 4))
+  expect_equal(ans102, format_dcml(x))
 
   x <- 6.0221E-23
   ans103 <- "$6.0221 \\times 10^{-23}$"
@@ -60,7 +60,6 @@ test_format_numbers <- function() {
   x <- 1.7e+300
   ans107 <- "$1.7 \\times 10^{300}$"
   expect_equal(ans107, format_sci(x, 2))
-
 
   # Inputs: Data frame,one column as vector
   x <- air_meas[, (pres)]
@@ -98,9 +97,14 @@ test_format_numbers <- function() {
   ans111 <- c("$1.02 \\times 10^{-6}$", "$800 \\times 10^{-9}$")
   expect_equal(ans111, format_numbers(x, 3))
 
-
-
-
+  # Digits
+  x <- 9.75358e+5
+  ans151 <- "$9.8 \\times 10^{5}$"
+  expect_equal(ans151, format_sci(x, 2))
+  ans152 <- "$9.75 \\times 10^{5}$"
+  expect_equal(ans152, format_sci(x, 3))
+  ans153 <- "$9.754 \\times 10^{5}$"
+  expect_equal(ans153, format_sci(x, 4))
 
   # Combinations of format, set_power, and omit_power
   x <- 0.00021541
@@ -158,7 +162,7 @@ test_format_numbers <- function() {
   x <- 101300
   ans210 <- format_dcml(x)
   expect_equal(ans210, format_dcml(x, set_power = 2))
-  expect_equal(ans210, format_dcml(x, omit_power = 5))
+  expect_equal(ans210, format_engr(x, omit_power = 5))
 
   # Data frame,one column as vector
   x   <- air_meas[, (pres)]
@@ -185,7 +189,11 @@ test_format_numbers <- function() {
 
 
 
-
+  # errors
+  # input class "numeric" or "units"
+  expect_error(format_numbers(x = TRUE))
+  # omit_power c(p, q) requires p LEQ q
+  expect_error(format_sci(101300, omit_power = c(3, -1)))
 
 
 

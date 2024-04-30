@@ -7,7 +7,7 @@ output: github_document
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>", 
+  comment = "#>",
   tidy = TRUE
 )
 
@@ -117,20 +117,21 @@ which, in an `.Rmd` or `.qmd` output document, are rendered using inline R code 
 
 formatdown_options(size = "small")
 
-x    <- 101300
-sci  <- format_sci(x)
+x <- 101300
+sci <- format_sci(x)
 engr <- format_engr(x)
 dcml <- format_dcml(x)
 units(x) <- "Pa"
 units(x) <- "hPa"
-hPa  <- format_dcml(x)
+hPa <- format_dcml(x)
 
 DT <- wrapr::build_frame(
-    "Format"      , "Rendered as" |
-    "scientific"    , sci  |
-    "engineering"   , engr |
-    "decimal"       , dcml |
-    "units"         , hPa  )
+  "Format", "Rendered as" |
+    "scientific", sci |
+    "engineering", engr |
+    "decimal", dcml |
+    "units", hPa
+)
 setDT(DT)
 knitr::kable(DT, align = "r")
 
@@ -167,9 +168,10 @@ DT$elast_mod <- format_dcml(DT$elast_mod, 3)
 
 # Render in document
 knitr::kable(DT,
-             align = "r",
-             caption = "Table 1: Properties of metals.", 
-             col.names = c("Metal", "Density [kg/m$^3$]", "Therm. expan. [m/m K$^{-1}$]", "Therm. cond. [W/m K$^{-1}$]", "Elastic modulus"))
+  align = "r",
+  caption = "Table 1: Properties of metals.",
+  col.names = c("Metal", "Density [kg/m$^3$]", "Therm. expan. [m/m K$^{-1}$]", "Therm. cond. [W/m K$^{-1}$]", "Elastic modulus")
+)
 ```
 
 ```{r}

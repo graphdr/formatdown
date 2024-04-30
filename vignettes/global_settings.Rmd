@@ -13,7 +13,7 @@ link-citations: yes
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>", 
+  comment = "#>",
   tidy = TRUE
 )
 
@@ -158,7 +158,7 @@ format_dcml(x, size = "scriptsize")
 # 6. Numeric input
 format_dcml(x, size = "small")
 
-# 7. Power-of-ten number using LaTeX-style size markup 
+# 7. Power-of-ten number using LaTeX-style size markup
 format_sci(6.0221e+23, size = "\\small")
 
 # 8. Character input, default size
@@ -196,21 +196,31 @@ x <- pi
 y <- 5.3e+3
 z <- "The cat"
 
-scriptsize <- c(format_dcml(x, 5, size = "scriptsize"), 
-          format_sci(y, 1, size = "scriptsize"), 
-          format_text(z, size = "scriptsize"))
-small <- c(format_dcml(x, 5, size = "small"), 
-          format_sci(y, 1, size = "small"), 
-          format_text(z, size = "small"))
-normalsize <- c(format_dcml(x, 5, size = "normalsize"), 
-          format_sci(y, 1, size = "normalsize"), 
-          format_text(z, size = "normalsize"))
-large <- c(format_dcml(x, 5, size = "large"), 
-          format_sci(y, 1, size = "large"), 
-          format_text(z, size = "large"))
-huge <- c(format_dcml(x, 5, size = "huge"), 
-          format_sci(y, 1, size = "huge"), 
-          format_text(z, size = "huge"))
+scriptsize <- c(
+  format_dcml(x, 5, size = "scriptsize"),
+  format_sci(y, 1, size = "scriptsize"),
+  format_text(z, size = "scriptsize")
+)
+small <- c(
+  format_dcml(x, 5, size = "small"),
+  format_sci(y, 1, size = "small"),
+  format_text(z, size = "small")
+)
+normalsize <- c(
+  format_dcml(x, 5, size = "normalsize"),
+  format_sci(y, 1, size = "normalsize"),
+  format_text(z, size = "normalsize")
+)
+large <- c(
+  format_dcml(x, 5, size = "large"),
+  format_sci(y, 1, size = "large"),
+  format_text(z, size = "large")
+)
+huge <- c(
+  format_dcml(x, 5, size = "huge"),
+  format_sci(y, 1, size = "huge"),
+  format_text(z, size = "huge")
+)
 
 DT <- data.table(scriptsize, small, normalsize, large, huge)
 knitr::kable(DT, align = "r")
@@ -398,12 +408,12 @@ DT$sp_wt <- format_dcml(DT$sp_wt, 4, big_mark = "")
 
 # Set significant digits (viscosity) to achieve a consistent string length
 DT[visc >= 0.001, temp_visc := format_dcml(visc, 5)]
-DT[visc  < 0.001, temp_visc := format_dcml(visc, 4)]
+DT[visc < 0.001, temp_visc := format_dcml(visc, 4)]
 DT[, visc := temp_visc]
 DT[, temp_visc := NULL]
 
 # Will appear with big_mark spacing, change from Pa to kPa
-DT$bulk_mod_kPa <- format_dcml(DT$bulk_mod/1000, 4)
+DT$bulk_mod_kPa <- format_dcml(DT$bulk_mod / 1000, 4)
 DT$bulk_mod <- NULL
 
 knitr::kable(DT, align = "r", caption = "Example 21.")
@@ -431,7 +441,7 @@ DT <- copy(water)[1:6]
 cols <- c("temp", "dens", "sp_wt")
 DT[, (cols) := lapply(.SD, function(x) format_dcml(x)), .SDcols = cols]
 
-# Power of ten 
+# Power of ten
 DT$bulk_mod <- format_engr(DT$bulk_mod, 3)
 DT$visc <- format_engr(DT$visc, 4, set_power = -3)
 
@@ -461,14 +471,14 @@ DT <- copy(metals)
 # Examine the data frame
 DT[]
 
-# Text 
+# Text
 DT$metal <- format_text(DT$metal)
 
 # Decimal
 cols <- c("dens", "thrm_cond")
 DT[, (cols) := lapply(.SD, function(x) format_dcml(x)), .SDcols = cols]
 
-# Power of ten 
+# Power of ten
 cols <- c("elast_mod", "thrm_exp")
 DT[, (cols) := lapply(.SD, function(x) format_engr(x, 3)), .SDcols = cols]
 

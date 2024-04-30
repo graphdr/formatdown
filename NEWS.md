@@ -1,13 +1,12 @@
 # formatdown (development version)
 
-2024-04-09
+2024-04-29
 
 - `format_numbers()` replaces the now deprecated `format_decimal()`, `format_power()`, and `format_units()`. 
 - add `format_sci()`, `format_engr()`, and `format_dcml()` that wrap `format_numbers()`
 - add `formatdown_options()` for global options and update functions to use them.
 - edit `format_text()` to retain spaces in a character input 
 - update examples, tests, and vignettes to reflect changes
-
 
 # formatdown 0.1.3
 
