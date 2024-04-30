@@ -27,6 +27,7 @@ reference:
     desc     : Functions exported by formatdown
     contents :
     - starts_with("format_")
+    - formatdown_options
 
   - title    : Prepared data
     desc     : Data sets included with formatdown
