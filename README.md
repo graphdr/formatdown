@@ -1,6 +1,18 @@
 
 <!-- Edit README.Rmd (not README.md) -->
 
+``` css
+.math {
+  font-size: small;
+}
+```
+
+<style type="text/css">
+.math {
+  font-size: small;
+}
+</style>
+
 # formatdown <img src="man/figures/logo.png" align="right">
 
 Formatting Numbers in R Markdown Documents
@@ -25,9 +37,9 @@ columns in tables.
 
 In professional technical prose, large and small numbers are generally
 typeset using powers of ten notation. For example, Planck’s constant
-would be typeset as $\small\>6.63\times 10^{-34}$ rather than the
-familiar forms we use in communicating with computers, such as
-`6.63*10^-34` or `6.63E-34`.
+would be typeset as $6.63\times 10^{-34}$ rather than the familiar forms
+we use in communicating with computers, such as `6.63*10^-34` or
+`6.63E-34`.
 
 The functions in this package help an author convert large and small
 numbers to character strings, formatted using powers-of-ten notation. In
@@ -94,12 +106,12 @@ format_dcml(x)
 which, in an `.Rmd` or `.qmd` output document, are rendered using inline
 R code as
 
-|      Format |                  Rendered as |
-|------------:|-----------------------------:|
-|  scientific | $\small 1.013 \times 10^{5}$ |
-| engineering | $\small 101.3 \times 10^{3}$ |
-|     decimal |              $\small 101300$ |
-|       units |  $\small 1013\>\mathrm{hPa}$ |
+|      Format |           Rendered as |
+|------------:|----------------------:|
+|  scientific | $1.013 \times 10^{5}$ |
+| engineering | $101.3 \times 10^{3}$ |
+|     decimal |              $101300$ |
+|       units |  $1013\>\mathrm{hPa}$ |
 
 *Data frame*.   Typically rendered in a table. We independently format
 columns from the `metals` data frame included with formatdown.
@@ -138,14 +150,14 @@ knitr::kable(DT, align = "r", caption = "Table 1: Properties of metals.", col.na
     "Elastic modulus"))
 ```
 
-|                            Metal | Density \[kg/m$^3$\] | Therm. expan. \[m/m K$^{-1}$\] | Therm. cond. \[W/m K$^{-1}$\] |             Elastic modulus |
-|---------------------------------:|---------------------:|-------------------------------:|------------------------------:|----------------------------:|
-| $\small \mathrm{aluminum\>6061}$ |        $\small 2700$ |   $\small 24.3 \times 10^{-6}$ |                  $\small 156$ | $\small 73.1\>\mathrm{GPa}$ |
-|         $\small \mathrm{copper}$ |        $\small 8900$ |   $\small 16.6 \times 10^{-6}$ |                  $\small 393$ |  $\small 117\>\mathrm{GPa}$ |
-|           $\small \mathrm{lead}$ |       $\small 11300$ |   $\small 52.7 \times 10^{-6}$ |                 $\small 37.0$ | $\small 13.8\>\mathrm{GPa}$ |
-|       $\small \mathrm{platinum}$ |       $\small 21400$ |   $\small 9.00 \times 10^{-6}$ |                 $\small 69.2$ |  $\small 147\>\mathrm{GPa}$ |
-|    $\small \mathrm{steel\>1020}$ |        $\small 7850$ |   $\small 11.3 \times 10^{-6}$ |                 $\small 46.7$ |  $\small 207\>\mathrm{GPa}$ |
-|       $\small \mathrm{titanium}$ |        $\small 4850$ |   $\small 9.36 \times 10^{-6}$ |                 $\small 7.44$ |  $\small 102\>\mathrm{GPa}$ |
+|                     Metal | Density \[kg/m$^3$\] | Therm. expan. \[m/m K$^{-1}$\] | Therm. cond. \[W/m K$^{-1}$\] |      Elastic modulus |
+|--------------------------:|---------------------:|-------------------------------:|------------------------------:|---------------------:|
+| $\mathrm{aluminum\>6061}$ |               $2700$ |          $24.3 \times 10^{-6}$ |                         $156$ | $73.1\>\mathrm{GPa}$ |
+|         $\mathrm{copper}$ |               $8900$ |          $16.6 \times 10^{-6}$ |                         $393$ |  $117\>\mathrm{GPa}$ |
+|           $\mathrm{lead}$ |              $11300$ |          $52.7 \times 10^{-6}$ |                        $37.0$ | $13.8\>\mathrm{GPa}$ |
+|       $\mathrm{platinum}$ |              $21400$ |          $9.00 \times 10^{-6}$ |                        $69.2$ |  $147\>\mathrm{GPa}$ |
+|    $\mathrm{steel\>1020}$ |               $7850$ |          $11.3 \times 10^{-6}$ |                        $46.7$ |  $207\>\mathrm{GPa}$ |
+|       $\mathrm{titanium}$ |               $4850$ |          $9.36 \times 10^{-6}$ |                        $7.44$ |  $102\>\mathrm{GPa}$ |
 
 Table 1: Properties of metals.
 
