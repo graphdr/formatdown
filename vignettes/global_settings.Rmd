@@ -126,13 +126,13 @@ format_text(txt, delim = "\\(")
 
 Examples 1--4 (in inline code chunks) render as, 
 
-1. `r format_dcml(x)`
+1. `r format_dcml(x, size = "small")`
 
-1. `r format_dcml(x, delim = "\\(")`
+1. `r format_dcml(x, delim = "\\(", size = "small")`
 
-1. `r format_text(txt)`
+1. `r format_text(txt, size = "small")`
 
-1. `r format_text(txt, delim = "\\(")`
+1. `r format_text(txt, delim = "\\(", size = "small")`
 
 <br>
 
@@ -257,9 +257,9 @@ format_sci(y, 5, decimal_mark = ",")
 
 Examples 10 and 11 render as, 
 
-10. `r format_dcml(x, 5, decimal_mark = ",")`
+10. `r format_dcml(x, 5, decimal_mark = ",", size = "small")`
 
-10. `r format_sci(y, 5, decimal_mark = ",")`
+10. `r format_sci(y, 5, decimal_mark = ",", size = "small")`
 
 <br>
 
@@ -312,15 +312,15 @@ Examples 12--17 render as,
 
 12. `r format_dcml(w)`
 
-12. `r format_dcml(w, big_mark = "thin")`
+12. `r format_dcml(w, big_mark = "thin", size = "small")`
 
-12. `r format_dcml(x, big_mark = "\\\\,")`
+12. `r format_dcml(x, big_mark = "\\\\,", size = "small")`
 
-12. `r format_dcml(y, small_mark = "\\\\,")`
+12. `r format_dcml(y, small_mark = "\\\\,", size = "small")`
 
-12. `r format_dcml(y, small_mark = "\\\\,", small_interval = 3)`
+12. `r format_dcml(y, small_mark = "\\\\,", small_interval = 3, size = "small")`
 
-12. `r format_dcml(z, 12, big_mark = "thin", small_mark = "\\\\,")`
+12. `r format_dcml(z, 12, big_mark = "thin", small_mark = "\\\\,", size = "small")`
 
 
 
@@ -365,11 +365,11 @@ format_text(txt, whitespace = "\\\\ ")
 
 Examples 18--20 render as, 
 
-18. `r format_text(txt)` 
+18. `r format_text(txt, size = "small")` 
 
-18. `r format_text(txt, whitespace = "\\\\:")`
+18. `r format_text(txt, whitespace = "\\\\:", size = "small")`
 
-18. `r format_text(txt, whitespace = "\\\\ ")` 
+18. `r format_text(txt, whitespace = "\\\\ ", size = "small")` 
 
 
 
