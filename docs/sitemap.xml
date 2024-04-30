@@ -4,16 +4,13 @@
     <loc>https://graphdr.github.io/formatdown/404.html</loc>
   </url>
   <url>
-    <loc>https://graphdr.github.io/formatdown/articles/format_integers_and_decimals.html</loc>
-  </url>
-  <url>
-    <loc>https://graphdr.github.io/formatdown/articles/format_powers_of_ten.html</loc>
+    <loc>https://graphdr.github.io/formatdown/articles/format_numbers.html</loc>
   </url>
   <url>
     <loc>https://graphdr.github.io/formatdown/articles/format_text.html</loc>
   </url>
   <url>
-    <loc>https://graphdr.github.io/formatdown/articles/format_units.html</loc>
+    <loc>https://graphdr.github.io/formatdown/articles/global_settings.html</loc>
   </url>
   <url>
     <loc>https://graphdr.github.io/formatdown/articles/index.html</loc>
@@ -46,16 +43,43 @@
     <loc>https://graphdr.github.io/formatdown/reference/atmosphere.html</loc>
   </url>
   <url>
+    <loc>https://graphdr.github.io/formatdown/reference/formatdown-deprecated.html</loc>
+  </url>
+  <url>
     <loc>https://graphdr.github.io/formatdown/reference/formatdown-package.html</loc>
+  </url>
+  <url>
+    <loc>https://graphdr.github.io/formatdown/reference/formatdown_options.html</loc>
+  </url>
+  <url>
+    <loc>https://graphdr.github.io/formatdown/reference/format_dcml.html</loc>
+  </url>
+  <url>
+    <loc>https://graphdr.github.io/formatdown/reference/format_decimal-deprecated.html</loc>
   </url>
   <url>
     <loc>https://graphdr.github.io/formatdown/reference/format_decimal.html</loc>
   </url>
   <url>
+    <loc>https://graphdr.github.io/formatdown/reference/format_engr.html</loc>
+  </url>
+  <url>
+    <loc>https://graphdr.github.io/formatdown/reference/format_numbers.html</loc>
+  </url>
+  <url>
+    <loc>https://graphdr.github.io/formatdown/reference/format_power-deprecated.html</loc>
+  </url>
+  <url>
     <loc>https://graphdr.github.io/formatdown/reference/format_power.html</loc>
   </url>
   <url>
+    <loc>https://graphdr.github.io/formatdown/reference/format_sci.html</loc>
+  </url>
+  <url>
     <loc>https://graphdr.github.io/formatdown/reference/format_text.html</loc>
+  </url>
+  <url>
+    <loc>https://graphdr.github.io/formatdown/reference/format_units-deprecated.html</loc>
   </url>
   <url>
     <loc>https://graphdr.github.io/formatdown/reference/format_units.html</loc>
