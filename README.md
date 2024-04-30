@@ -1,12 +1,5 @@
 
 <!-- Edit README.Rmd (not README.md) -->
-
-``` css
-.math {
-  font-size: small;
-}
-```
-
 <style type="text/css">
 .math {
   font-size: small;

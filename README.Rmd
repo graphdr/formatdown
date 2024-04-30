@@ -27,6 +27,7 @@ units(planck) <- "J Hz-1"
 ```
 
 ```{css}
+#| echo: false
 .math {
   font-size: small;
 }

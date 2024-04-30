@@ -62,9 +62,7 @@ knitr::kable(DT,
 )
 ```
 
-```{r child = "man/rmd/note-formatdown-rationale.Rmd"}
-``` 
-In this vignette, we discuss the primary formatting function `format_numbers()` and its convenience wrappers for scientific, engineering, and decimal notation.
+The rationale for the formatdown package is formatting numbers in power-of-ten notation in inline R code or tabulated columns of data frames. Other features of the package provide tools for typesetting non-power-of-ten columns to match. In this vignette, we discuss the primary formatting function `format_numbers()` and its convenience wrappers for scientific, engineering, and decimal notation.
 
 ## Types of notation
 
