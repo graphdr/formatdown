@@ -1,10 +1,5 @@
 
 <!-- Edit README.Rmd (not README.md) -->
-<style type="text/css">
-.math {
-  font-size: small;
-}
-</style>
 
 # formatdown <img src="man/figures/logo.png" align="right">
 
