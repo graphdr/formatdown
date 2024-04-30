@@ -310,7 +310,7 @@ format_dcml(z, 12, big_mark = "thin", small_mark = "thin")
 
 Examples 12--17 render as, 
 
-12. `r format_dcml(w)`
+12. `r format_dcml(w, size = "small")`
 
 12. `r format_dcml(w, big_mark = "thin", size = "small")`
 
