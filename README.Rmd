@@ -47,24 +47,13 @@ Formatting Numbers in R Markdown Documents
 [![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-
-
 Provides a small set of tools for formatting numbers in R-markdown documents. Converts a numerical vector to character strings in power-of-ten form, decimal form, or measurement-units form; all are math-delimited for rendering as inline equations. Useful for rendering numerical scalars using inline R code chunks or for rendering numerical columns in tables.  
-
-
 
 ## Introduction
 
-In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Planck's constant would be typeset as $6.63\times\!10^{-34}\,\mathrm{J\,Hz^{-1}}$ rather than the familiar forms we use in communicating with computers, such as `6.63*10^-34` or `6.63E-34`. 
+In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Planck's constant would be typeset as $6.63 \times 10^{-34} \mathrm{J\,Hz^{-1}}$ rather than the familiar forms we use in communicating with computers, such as `6.63*10^-34` or `6.63E-34`. 
 
 The functions in this package help an author convert large and small numbers to character strings, formatted using powers-of-ten notation. In addition, decimal numbers and text can be formatted with the same font face and size as the power-of-ten numbers for a consistent typeface across all columns of a data table. 
-
-
-
-
-
-
-
 
 Formatting tools include: 
 
@@ -88,7 +77,6 @@ Formatting tools include:
 
 : Convert a character vector to math-delimited character vector. Useful for creating a consistent typeface across all columns of a table. 
 
-
 ## Usage
 
 ```{r}
@@ -97,8 +85,6 @@ library("formatdown")
 library("data.table")
 library("knitr")
 ```
-
-
 
 *Scalar values.* &nbsp; Typically rendered inline:
 
@@ -150,7 +136,6 @@ formatdown_options(reset = TRUE)
 
 *Data frame*. &nbsp; Typically rendered in a table. We independently format  columns from the `metals` data frame included with formatdown. 
 
-
 ```{r}
 #| echo: false
 # formatdown_options(size = "small")
@@ -189,8 +174,6 @@ knitr::kable(DT,
 formatdown_options(reset = TRUE)
 ```
 
-
-
 ## Installation
 
 Install from CRAN. 
@@ -205,21 +188,10 @@ The development version can be installed from GitHub.  I suggest using the "pak"
 pak::pkg_install("graphdr/formatdown")
 ```
 
-
-
-
-
-
-
 ## Requirements
 
 - [`R`](https://www.r-project.org/) (\>= 3.5.0)
 - [`data.table`](https://rdatatable.gitlab.io/data.table/)  (\>= 1.9.8)
-
-
-
-
-
 
 ## Contributing
 
@@ -237,8 +209,6 @@ To contribute to formatdown,
 Participation in this open source project is subject to a [Code of
 Conduct](https://graphdr.github.io/formatdown/CONDUCT.html).
 
-
-
 ## Software credits
 
 - [`R`](https://www.r-project.org/) and [`RStudio`](https://posit.co/) for the working environment  
@@ -247,8 +217,5 @@ Conduct](https://graphdr.github.io/formatdown/CONDUCT.html).
 - [`units`](https://CRAN.R-project.org/package=units) for handling physical units 
 - [`wrapr`](https://CRAN.R-project.org/package=wrapr), [`checkmate`](https://CRAN.R-project.org/package=checkmate), and [`tinytest`](https://CRAN.R-project.org/package=tinytest) for programming tools
 - [`devtools`](https://CRAN.R-project.org/package=devtools) and [`pkgdown`](https://CRAN.R-project.org/package=pkgdown) for package building 
-
-
- 
 
 

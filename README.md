@@ -31,7 +31,7 @@ columns in tables.
 
 In professional technical prose, large and small numbers are generally
 typeset using powers of ten notation. For example, Planck’s constant
-would be typeset as $6.63\times\!10^{-34}\,\mathrm{J\,Hz^{-1}}$ rather
+would be typeset as $6.63 \times 10^{-34} \mathrm{J\,Hz^{-1}}$ rather
 than the familiar forms we use in communicating with computers, such as
 `6.63*10^-34` or `6.63E-34`.
 
