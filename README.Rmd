@@ -47,13 +47,13 @@ Formatting Numbers in R Markdown Documents
 [![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-Provides a small set of tools for formatting numbers in R-markdown documents. Converts a numerical vector to character strings in power-of-ten form, decimal form, or measurement-units form; all are math-delimited for rendering as inline equations. Useful for rendering numerical scalars using inline R code chunks or for rendering numerical columns in tables.  
+Provides a small set of tools for formatting numbers in R markdown documents (file type `.Rmd` or `.qmd`). Converts a numerical vector to *character strings* in power-of-ten form, decimal form, or measurement-units form; all are math-delimited within quotation marks for rendering as inline equations. Useful for rendering numerical scalars using inline R code chunks or for rendering numerical columns in tables.  
 
 ## Introduction
 
-In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Planck's constant would be typeset as $6.63 \times 10^{-34} \mathrm{J\,Hz^{-1}}$ rather than the familiar forms we use in communicating with computers, such as `6.63*10^-34` or `6.63E-34`. 
+In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Planck's constant would be typeset as $6.63 \times 10^{-34}\>\mathrm{J\,Hz^{-1}}$ rather than the familiar forms we use in communicating with computers, such as `6.63*10^-34` or `6.63E-34`. 
 
-The functions in this package help an author convert large and small numbers to character strings, formatted using powers-of-ten notation. In addition, decimal numbers and text can be formatted with the same font face and size as the power-of-ten numbers for a consistent typeface across all columns of a data table. 
+The functions in this package help an author of an R markdown document convert large and small numbers to character strings, formatted using powers-of-ten notation. In addition, decimal numbers and text can be formatted with the same font face and size as the power-of-ten numbers for a consistent typeface across all columns of a data table. 
 
 Formatting tools include: 
 
@@ -76,6 +76,11 @@ Formatting tools include:
 **`format_text()`**
 
 : Convert a character vector to math-delimited character vector. Useful for creating a consistent typeface across all columns of a table. 
+
+**`formatdown_options()`**
+
+: Global options are provided for arguments that users would likely prefer to set once in a document instead of repeating in every function call. For example, some users prefer a comma decimal marker (",") throughout a document.
+
 
 ## Usage
 
@@ -111,8 +116,6 @@ which, in an `.Rmd` or `.qmd` output document, are rendered using inline R code 
 ```{r}
 #| echo: false
 
-# formatdown_options(size = "small")
-
 x <- 101300
 sci <- format_sci(x)
 engr <- format_engr(x)
@@ -130,16 +133,11 @@ DT <- wrapr::build_frame(
 )
 setDT(DT)
 knitr::kable(DT, align = "r")
-
-formatdown_options(reset = TRUE)
 ```
+
+<br> 
 
 *Data frame*. &nbsp; Typically rendered in a table. We independently format  columns from the `metals` data frame included with formatdown. 
-
-```{r}
-#| echo: false
-# formatdown_options(size = "small")
-```
 
 ```{r}
 # View the data set
@@ -169,10 +167,51 @@ knitr::kable(DT,
 )
 ```
 
+<br>
+
+*Options*. &nbsp; For users who prefer a comma as the decimal mark, the argument can be set once using `formatdown_options()`, 
+
+```{r}
+formatdown_options(decimal_mark = ",")
+```
+
+Using the same code as above to format the metals data yields, 
+
 ```{r}
 #| echo: false
+
+# First column in text format
+DT <- copy(metals)
+DT$metal <- format_text(DT$metal)
+
+# Density and thermal conductivity in decimal form
+cols_we_want <- c("dens", "thrm_cond")
+DT[, cols_we_want] <- lapply(DT[, ..cols_we_want], function(x) format_dcml(x, 3))
+
+# Thermal expansion in engineering format
+DT$thrm_exp <- format_engr(DT$thrm_exp, 3)
+
+# Elastic modulus in units form
+units(DT$elast_mod) <- "Pa"
+units(DT$elast_mod) <- "GPa"
+DT$elast_mod <- format_dcml(DT$elast_mod, 3)
+
+# Render in document
+knitr::kable(DT,
+  align = "r",
+  caption = "Table 2: Changing the decimal mark",
+  col.names = c("Metal", "Density [kg/m$^3$]", "Therm. expan. [m/m K$^{-1}$]", "Therm. cond. [W/m K$^{-1}$]", "Elastic modulus")
+)
+```
+
+<br>
+
+To return to the default values, 
+
+```{r}
 formatdown_options(reset = TRUE)
 ```
+
 
 ## Installation
 
