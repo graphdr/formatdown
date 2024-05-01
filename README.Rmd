@@ -26,6 +26,8 @@ planck <- 6.62607015E-34
 units(planck) <- "J Hz-1"
 ```
 
+<!-- Correcting for problems with LaTeX math in the README file only -->
+
 ```{css}
 #| echo: false
 .math {

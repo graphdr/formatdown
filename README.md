@@ -1,5 +1,6 @@
 
 <!-- Edit README.Rmd (not README.md) -->
+<!-- Correcting for problems with LaTeX math in the README file only -->
 <style type="text/css">
 .math {
   font-size: small;
