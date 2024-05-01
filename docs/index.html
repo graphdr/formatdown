@@ -96,12 +96,12 @@
 <p>Formatting Numbers in R Markdown Documents</p>
 <!-- badges: start -->
 
-<p>Provides a small set of tools for formatting numbers in R-markdown documents. Converts a numerical vector to character strings in power-of-ten form, decimal form, or measurement-units form; all are math-delimited for rendering as inline equations. Useful for rendering numerical scalars using inline R code chunks or for rendering numerical columns in tables.</p>
+<p>Provides a small set of tools for formatting numbers in R markdown documents (file type <code>.Rmd</code> or <code>.qmd</code>). Converts a numerical vector to <em>character strings</em> in power-of-ten form, decimal form, or measurement-units form; all are math-delimited within quotation marks for rendering as inline equations. Useful for rendering numerical scalars using inline R code chunks or for rendering numerical columns in tables.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Planck’s constant would be typeset as <span class="math inline">6.63 × 10<sup>−34</sup>J Hz<sup>−1</sup></span> rather than the familiar forms we use in communicating with computers, such as <code>6.63*10^-34</code> or <code>6.63E-34</code>.</p>
-<p>The functions in this package help an author convert large and small numbers to character strings, formatted using powers-of-ten notation. In addition, decimal numbers and text can be formatted with the same font face and size as the power-of-ten numbers for a consistent typeface across all columns of a data table.</p>
+<p>In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Planck’s constant would be typeset as <span class="math inline">6.63 × 10<sup>−34</sup> J Hz<sup>−1</sup></span> rather than the familiar forms we use in communicating with computers, such as <code>6.63*10^-34</code> or <code>6.63E-34</code>.</p>
+<p>The functions in this package help an author of an R markdown document convert large and small numbers to character strings, formatted using powers-of-ten notation. In addition, decimal numbers and text can be formatted with the same font face and size as the power-of-ten numbers for a consistent typeface across all columns of a data table.</p>
 <p>Formatting tools include:</p>
 <p><strong><code><a href="reference/format_numbers.html">format_numbers()</a></code></strong><br>
 Convert a numeric vector to a math-delimited character vector in which the numbers can be formatted in scientific or engineering power-of-ten notation or in decimal form.</p>
@@ -113,6 +113,8 @@ Convenience function. A wrapper around <code><a href="reference/format_numbers.h
 Convenience function. A wrapper around <code><a href="reference/format_numbers.html">format_numbers()</a></code> for decimal notation.</p>
 <p><strong><code><a href="reference/format_text.html">format_text()</a></code></strong><br>
 Convert a character vector to math-delimited character vector. Useful for creating a consistent typeface across all columns of a table.</p>
+<p><strong><code><a href="reference/formatdown_options.html">formatdown_options()</a></code></strong><br>
+Global options are provided for arguments that users would likely prefer to set once in a document instead of repeating in every function call. For example, some users prefer a comma decimal marker (“,”) throughout a document.</p>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -168,6 +170,7 @@ Convert a character vector to math-delimited character vector. Useful for creati
 </tr>
 </tbody>
 </table>
+<p><br></p>
 <p><em>Data frame</em>.   Typically rendered in a table. We independently format columns from the <code>metals</code> data frame included with formatdown.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># View the data set</span></span>
@@ -262,15 +265,85 @@ Convert a character vector to math-delimited character vector. Useful for creati
 </tbody>
 </table>
 <p>Table 1: Properties of metals.</p>
+<p><br></p>
+<p><em>Options</em>.   For users who prefer a comma as the decimal mark, the argument can be set once using <code><a href="reference/formatdown_options.html">formatdown_options()</a></code>,</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/formatdown_options.html">formatdown_options</a></span><span class="op">(</span>decimal_mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code></pre></div>
+<p>Using the same code as above to format the metals data yields,</p>
+<table class="table">
+<colgroup>
+<col width="20%">
+<col width="16%">
+<col width="23%">
+<col width="23%">
+<col width="16%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">Metal</th>
+<th align="right">Density [kg/m<span class="math inline"><sup>3</sup></span>]</th>
+<th align="right">Therm. expan. [m/m K<span class="math inline"><sup>−1</sup></span>]</th>
+<th align="right">Therm. cond. [W/m K<span class="math inline"><sup>−1</sup></span>]</th>
+<th align="right">Elastic modulus</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right"><span class="math inline">aluminum 6061</span></td>
+<td align="right"><span class="math inline">2700</span></td>
+<td align="right"><span class="math inline">24, 3 × 10<sup>−6</sup></span></td>
+<td align="right"><span class="math inline">156</span></td>
+<td align="right"><span class="math inline">73, 1 GPa</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">copper</span></td>
+<td align="right"><span class="math inline">8900</span></td>
+<td align="right"><span class="math inline">16, 6 × 10<sup>−6</sup></span></td>
+<td align="right"><span class="math inline">393</span></td>
+<td align="right"><span class="math inline">117 GPa</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">lead</span></td>
+<td align="right"><span class="math inline">11300</span></td>
+<td align="right"><span class="math inline">52, 7 × 10<sup>−6</sup></span></td>
+<td align="right"><span class="math inline">37, 0</span></td>
+<td align="right"><span class="math inline">13, 8 GPa</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">platinum</span></td>
+<td align="right"><span class="math inline">21400</span></td>
+<td align="right"><span class="math inline">9, 00 × 10<sup>−6</sup></span></td>
+<td align="right"><span class="math inline">69, 2</span></td>
+<td align="right"><span class="math inline">147 GPa</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">steel 1020</span></td>
+<td align="right"><span class="math inline">7850</span></td>
+<td align="right"><span class="math inline">11, 3 × 10<sup>−6</sup></span></td>
+<td align="right"><span class="math inline">46, 7</span></td>
+<td align="right"><span class="math inline">207 GPa</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">titanium</span></td>
+<td align="right"><span class="math inline">4850</span></td>
+<td align="right"><span class="math inline">9, 36 × 10<sup>−6</sup></span></td>
+<td align="right"><span class="math inline">7, 44</span></td>
+<td align="right"><span class="math inline">102 GPa</span></td>
+</tr>
+</tbody>
+</table>
+<p>Table 2: Changing the decimal mark</p>
+<p><br></p>
+<p>To return to the default values,</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/formatdown_options.html">formatdown_options</a></span><span class="op">(</span>reset <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Install from CRAN.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"formatdown"</span><span class="op">)</span></span></code></pre></div>
 <p>The development version can be installed from GitHub. I suggest using the “pak” package:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"graphdr/formatdown"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
