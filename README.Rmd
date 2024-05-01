@@ -48,7 +48,7 @@ Provides a small set of tools for formatting numbers in R-markdown documents. Co
 
 ## Introduction
 
-In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Planck's constant would be typeset as $6.63\times 10^{-34}$ rather than the familiar forms we use in communicating with computers, such as `6.63*10^-34` or `6.63E-34`. 
+In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Planck's constant would be typeset as `r format_sci(planck, 3, size = "small")` rather than the familiar forms we use in communicating with computers, such as `6.63*10^-34` or `6.63E-34`. 
 
 The functions in this package help an author convert large and small numbers to character strings, formatted using powers-of-ten notation. In addition, decimal numbers and text can be formatted with the same font face and size as the power-of-ten numbers for a consistent typeface across all columns of a data table. 
 
