@@ -2,7 +2,8 @@
 #' Format values with measurement units
 #'
 #' This function is deprecated because it's a special case of the
-#' [format_numbers()] function.
+#' [format_numbers()] function. Users should finalize the manipulation of
+#' units (using the units package) before invoking a formatdown function.
 #'
 #' Format a vector of numbers as character strings with measurement units
 #' appended via the 'units' package.

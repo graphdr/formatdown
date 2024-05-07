@@ -7,4 +7,5 @@
 #' @importFrom settings options_manager stop_if_reserved reset
 #' @importFrom units as_units deparse_unit
 #' @importFrom wrapr stop_if_dot_args %?%
+#'
 NULL

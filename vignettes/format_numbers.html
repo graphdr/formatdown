@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Format numbers</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">
+
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
+}
+</style>
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Format numbers</h1>
+
+
+
+<table>
+<colgroup>
+<col width="7%" />
+<col width="22%" />
+<col width="18%" />
+<col width="7%" />
+<col width="24%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Prefix</th>
+<th align="center">Symbol</th>
+<th align="left">Value</th>
+<th align="left">Prefix</th>
+<th align="center">Symbol</th>
+<th align="left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">peta</td>
+<td align="center"><span class="math inline">\(\small
+\mathit{P}\)</span></td>
+<td align="left"><span class="math inline">\(\small
+10^{15}\)</span></td>
+<td align="left">milli</td>
+<td align="center"><span class="math inline">\(\small
+\mathit{m}\)</span></td>
+<td align="left"><span class="math inline">\(\small
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="left">tera</td>
+<td align="center"><span class="math inline">\(\small
+\mathit{T}\)</span></td>
+<td align="left"><span class="math inline">\(\small
+10^{12}\)</span></td>
+<td align="left">micro</td>
+<td align="center"><span class="math inline">\(\small
+\mathit{\mu}\)</span></td>
+<td align="left"><span class="math inline">\(\small
+10^{-6}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left">giga</td>
+<td align="center"><span class="math inline">\(\small
+\mathit{G}\)</span></td>
+<td align="left"><span class="math inline">\(\small 10^{9}\)</span></td>
+<td align="left">nano</td>
+<td align="center"><span class="math inline">\(\small
+\mathit{n}\)</span></td>
+<td align="left"><span class="math inline">\(\small
+10^{-9}\)</span></td>
+</tr>
+<tr class="even">
+<td align="left">mega</td>
+<td align="center"><span class="math inline">\(\small
+\mathit{M}\)</span></td>
+<td align="left"><span class="math inline">\(\small 10^{6}\)</span></td>
+<td align="left">pico</td>
+<td align="center"><span class="math inline">\(\small
+\mathit{p}\)</span></td>
+<td align="left"><span class="math inline">\(\small
+10^{-12}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left">kilo</td>
+<td align="center"><span class="math inline">\(\small
+\mathit{k}\)</span></td>
+<td align="left"><span class="math inline">\(\small 10^{3}\)</span></td>
+<td align="left">femto</td>
+<td align="center"><span class="math inline">\(\small
+\mathit{f}\)</span></td>
+<td align="left"><span class="math inline">\(\small
+10^{-15}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The rationale for the formatdown package is formatting numbers in
+power-of-ten notation in inline R code or tabulated columns of data
+frames. Other features of the package provide tools for typesetting
+non-power-of-ten columns to match. In this vignette, we discuss the
+primary formatting function <code>format_numbers()</code> and its
+convenience wrappers for scientific, engineering, and decimal
+notation.</p>
+<div id="types-of-notation" class="section level2">
+<h2>Types of notation</h2>
+<p>Notation to represent large and small numbers depends on the mode of
+communication. In a computer script, for example, we might encode the
+Avogadro constant as <code>N_A = 6.0221*10^23</code>. The asterisk (*)
+and caret (^) in this expression, however, communicate <em>instructions
+to a computer</em>, not <em>syntactical mathematics</em>. And while
+scientific E-notation (<code>6.0221E+23</code>) has currency in some
+discourse communities, power-of-ten notation, e.g., <span class="math inline">\(\small N_A = 6.0221 \times 10^{23}\)</span>, is
+the conventional format for professional technical communication.</p>
+<p>Power-of-ten notation is expressed,</p>
+<p><span class="math display">\[
+\small a \times 10^n,
+\]</span></p>
+<p>where <span class="math inline">\(\small a\)</span> is the
+coefficient in decimal form and the exponent <span class="math inline">\(\small n\)</span> is an integer. Two formats are
+in common use <span class="citation">(<a href="#ref-Chase:2021">Chase,
+2021, pp. 63–67</a>)</span>:</p>
+<ul>
+<li><p><em>scientific:</em>   <span class="math inline">\(\small
+1\leq{|a|} &lt; 10\)</span>, e.g., <span class="math inline">\(\small
+N_A =\)</span> <span class="math inline">\(\small 6.0221 \times
+10^{23}\)</span>.</p></li>
+<li><p><em>engineering:</em>   <span class="math inline">\(\small  1\leq{|a|} &lt; 1000\)</span> and <span class="math inline">\(\small n\)</span> is a multiple of 3, e.g., <span class="math inline">\(\small N_A =\)</span> <span class="math inline">\(\small 602.21 \times 10^{21}\)</span>.</p></li>
+</ul>
+<p>The utility of the engineering form follows from the SI prefixes for
+physical units such as “mega-”, “kilo-”, “milli-”, etc., corresponding
+to powers of 10 that are integer multiples of three.</p>
+<p><br></p>
+<p><em>Notes on syntax.</em>   Programming symbols are not necessarily
+mathematical symbols:</p>
+<ul>
+<li><p>asterisk (*). Programming symbol for multiplication, e.g.,
+<code>x = a * b</code> or <code>y = a * (b + c)</code>. In the grammar
+of mathematics, multiplication is indicated by the symbol (<span class="math inline">\(\times\)</span>) when needed.</p></li>
+<li><p>caret (^). Programming symbol for exponentiation, e.g.,
+<code>x = y^2</code> or <code>z = 10^-3</code>. In the grammar of
+mathematics, exponents are typeset as superscripts, e.g., <span class="math inline">\(\small x = y^2\)</span> or <span class="math inline">\(\small z = 10^{-3}\)</span>.</p></li>
+<li><p>multiplication (<span class="math inline">\(\small\times\)</span>). Mathematical symbol for
+multiplication, not to be confused with the letter “x”. Generally
+omitted when the meaning is clear, e.g., <span class="math inline">\(\small x=ab\)</span> or <span class="math inline">\(\small y=a(b+c)\)</span>, but conventionally
+included in power-of-ten notation, e.g., <span class="math inline">\(\small 6.0221 \times 10^{23}\)</span>. When a
+comma is used as the decimal marker, multiplication may be indicated by
+the half-high dot, e.g., <span class="math inline">\(\small 6,0221 \cdot
+10^{23}\)</span>.</p></li>
+</ul>
+<p><br></p>
+<p><em>Decimal subsets.</em>   In a vector of numbers formatted in
+power-of-ten form, the decimal form may be preferred for any subset of
+values with exponents near zero, e.g., <span class="math inline">\(\small n \in \{-1, 0, 1, 2\}\)</span>.</p>
+<table>
+<caption>Decimal form may be preferred for a subset</caption>
+<thead>
+<tr class="header">
+<th align="right">scientific notation</th>
+<th align="right">subset in decimal form</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small 3.12 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 3.12 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small 3.12 \times
+10^{-2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 3.12 \times
+10^{-2}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small 3.12 \times
+10^{-1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 0.312\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small 3.12 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 3.12\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small 3.12 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 31.2\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small 3.12 \times
+10^{2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 312\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small 3.12 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 3.12 \times
+10^{3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small 3.12 \times
+10^{4}\)</span></td>
+<td align="right"><span class="math inline">\(\small 3.12 \times
+10^{4}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p><em>Decimal columns.</em>   A table of numeric information can
+include columns formatted in both power-of-ten notation and decimal
+notation. For example, a table of atmospheric properties shown below has
+altitude in integer form, temperature in decimal form, and density in
+power-of-ten engineering notation (except for those values with
+exponents near zero).</p>
+<table>
+<caption>Properties of the atmosphere</caption>
+<thead>
+<tr class="header">
+<th align="right">Altitude (km)</th>
+<th align="right">Temperature (K)</th>
+<th align="right">Density (kg/m<span class="math inline">\(^3\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small 0\)</span></td>
+<td align="right"><span class="math inline">\(\small
+288.15\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.23\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small 10\)</span></td>
+<td align="right"><span class="math inline">\(\small
+223.25\)</span></td>
+<td align="right"><span class="math inline">\(\small 0.414\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small 20\)</span></td>
+<td align="right"><span class="math inline">\(\small
+216.65\)</span></td>
+<td align="right"><span class="math inline">\(\small 88.9 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small 30\)</span></td>
+<td align="right"><span class="math inline">\(\small
+226.51\)</span></td>
+<td align="right"><span class="math inline">\(\small 18.4 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small 40\)</span></td>
+<td align="right"><span class="math inline">\(\small
+250.35\)</span></td>
+<td align="right"><span class="math inline">\(\small 4.00 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small 50\)</span></td>
+<td align="right"><span class="math inline">\(\small
+270.65\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.03 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small 60\)</span></td>
+<td align="right"><span class="math inline">\(\small
+247.02\)</span></td>
+<td align="right"><span class="math inline">\(\small 310 \times
+10^{-6}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small 70\)</span></td>
+<td align="right"><span class="math inline">\(\small
+219.59\)</span></td>
+<td align="right"><span class="math inline">\(\small 82.8 \times
+10^{-6}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small 80\)</span></td>
+<td align="right"><span class="math inline">\(\small
+198.64\)</span></td>
+<td align="right"><span class="math inline">\(\small 18.5 \times
+10^{-6}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small 90\)</span></td>
+<td align="right"><span class="math inline">\(\small
+186.87\)</span></td>
+<td align="right"><span class="math inline">\(\small 3.43 \times
+10^{-6}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small 100\)</span></td>
+<td align="right"><span class="math inline">\(\small
+195.08\)</span></td>
+<td align="right"><span class="math inline">\(\small 560 \times
+10^{-9}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The purpose of the decimal format in formatdown is to match the font
+face and size of decimal columns to those of the power-of-ten columns.
+If no power-of-ten columns are used, of course, decimal columns can be
+displayed as-is or formatted using other R tools.</p>
+<p><br></p>
+<p><em>Packages.</em>   If you are writing your own script to follow
+along, we use the following packages in this vignette. Data frame
+operations are performed with data.table syntax. Some users may wish to
+translate the examples to use base R or dplyr syntax.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;formatdown&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;data.table&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;knitr&quot;</span>)</span></code></pre></div>
+</div>
+<div id="markup" class="section level2">
+<h2>Markup</h2>
+<p>We format numbers as inline math expressions delimited by
+<code>$ ... $</code> or the optional <code>\( ... \)</code>. For
+example, the Avogadro constant is marked up as</p>
+<pre><code>    $6.0221 \times 10^{23}$, </code></pre>
+<p>where the <code>\times</code> macro creates the multiplication symbol
+(<span class="math inline">\(\small\times\)</span>). This math markup,
+as an inline equation in an R markdown document, renders as: <span class="math inline">\(\small 6.0221 \times 10^{23}\)</span>. To
+<em>program</em> the markup, however, we enclose it in quote marks as a
+character string, that is,</p>
+<pre><code>    &quot;$6.0221 \\times 10^{23}$&quot;, </code></pre>
+<p>which requires us to “escape” the backslash in <code>\times</code> by
+adding an extra backslash. When the optional font size argument is
+assigned, formatdown adds a LaTeX-style sizing macro such as
+<code>\small</code> or <code>\large</code>, for example,</p>
+<pre><code>    &quot;$\\small 6.0221 \\times 10^{23}$&quot;, </code></pre>
+<p>where again the markup includes an extra backslash.</p>
+</div>
+<div id="format_sci" class="section level2">
+<h2><code>format_sci()</code></h2>
+<p>Converts numbers to character strings in power-of-ten form,</p>
+<pre><code>    &quot;$a \\times 10^{n}$&quot; </code></pre>
+<p>where <span class="math inline">\(\small a\)</span> is the
+coefficient and <span class="math inline">\(\small n\)</span> is the
+exponent. <code>format_sci()</code> is a wrapper for the more general
+function <code>format_numbers()</code>. For a subset of values with
+exponents near zero, e.g., <span class="math inline">\(\small n \in
+\{-1, 0, 1, 2\}\)</span>, the output is in decimal form,</p>
+<pre><code>    &quot;$a$&quot;</code></pre>
+<p><br></p>
+<p><em>Usage.</em>  </p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">format_sci</span>(x,</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>           <span class="at">digits =</span> <span class="dv">4</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>           ...,</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>           <span class="at">omit_power =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>           <span class="at">set_power =</span> <span class="cn">NULL</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>           <span class="at">delim          =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;delim&quot;</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>           <span class="at">size           =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;size&quot;</span>),</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>           <span class="at">decimal_mark   =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;decimal_mark&quot;</span>),</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>           <span class="at">small_mark     =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;small_mark&quot;</span>),</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>           <span class="at">small_interval =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;small_interval&quot;</span>), </span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>           <span class="at">whitespace     =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;whitespace&quot;</span>))</span></code></pre></div>
+<ul>
+<li>Arguments before the dots do not have to be named if argument order
+is maintained.</li>
+<li>Arguments after the dots (<code>...</code>) must be named.</li>
+<li>The arguments assigned via <code>formatdown_options()</code> can be
+reset by the user locally in a function call or globally using
+<code>formatdown_options()</code>.</li>
+</ul>
+<p><br></p>
+<p><em>Examples.</em>   These early examples are shown with default
+arguments. Arguments are explored more fully starting with <a href="#numeric-input">Numeric input</a> section.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># 1. Avogadro constant</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fl">6.0221e+23</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">format_sci</span>(L)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$6.022 \\times 10^{23}$&quot;</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co"># 2. Elementary charge</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>e <span class="ot">&lt;-</span> <span class="fl">1.602176634e-19</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="fu">format_sci</span>(e)</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$1.602 \\times 10^{-19}$&quot;</span></span></code></pre></div>
+<p>Examples 1 and 2 (in inline code chunks) render as,</p>
+<ol style="list-style-type: decimal">
+<li>The Avogadro constant is <span class="math inline">\(\small L
+=\)</span> <span class="math inline">\(\small 6.022 \times
+10^{23}\)</span> <span class="math inline">\(\small
+\mathit{mol}^{-1}\)</span>.</li>
+<li>The elementary charge constant is <span class="math inline">\(\small
+e =\)</span> <span class="math inline">\(\small 1.602 \times
+10^{-19}\)</span> <span class="math inline">\(\small C\)</span>.</li>
+</ol>
+</div>
+<div id="format_engr" class="section level2">
+<h2><code>format_engr()</code></h2>
+<p>Similar to <code>format_sci()</code> except using engineering
+notation, i.e., exponents are multiples of 3.</p>
+<p><br></p>
+<p><em>Usage.</em></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">format_engr</span>(x,</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>            <span class="at">digits =</span> <span class="dv">4</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>            ...,</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>            <span class="at">omit_power =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>            <span class="at">set_power =</span> <span class="cn">NULL</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>            <span class="at">delim          =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;delim&quot;</span>),</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>            <span class="at">size           =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;size&quot;</span>),</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>            <span class="at">decimal_mark   =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;decimal_mark&quot;</span>),</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>            <span class="at">small_mark     =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;small_mark&quot;</span>),</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>            <span class="at">small_interval =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;small_interval&quot;</span>), </span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>            <span class="at">whitespace     =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;whitespace&quot;</span>))</span></code></pre></div>
+<p><br></p>
+<p><em>Examples.</em>   (with default arguments)</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># 3. Avogadro constant</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">format_engr</span>(L)</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$602.2 \\times 10^{21}$&quot;</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co"># 4. Elementary charge</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="fu">format_engr</span>(e)</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$160.2 \\times 10^{-21}$&quot;</span></span></code></pre></div>
+<p>Examples 3 and 4 render as,</p>
+<ol start="3" style="list-style-type: decimal">
+<li>The Avogadro constant is <span class="math inline">\(\small L
+=\)</span> <span class="math inline">\(\small 602.2 \times
+10^{21}\)</span> <span class="math inline">\(\small
+\mathit{mol}^{-1}\)</span>.</li>
+<li>The elementary charge constant is <span class="math inline">\(\small
+e =\)</span> <span class="math inline">\(\small 160.2 \times
+10^{-21}\)</span> <span class="math inline">\(\small C\)</span>.</li>
+</ol>
+</div>
+<div id="format_dcml" class="section level2">
+<h2><code>format_dcml()</code></h2>
+<p>A wrapper for the more general function
+<code>format_numbers()</code>; converts numbers to character strings in
+decimal form,</p>
+<pre><code>    &quot;$a$&quot;</code></pre>
+<p>where <span class="math inline">\(\small a\)</span> is the decimal
+value.</p>
+<p><br></p>
+<p><em>Usage.</em></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">format_dcml</span>(x,</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>            <span class="at">digits =</span> <span class="dv">4</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>            ...,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>            <span class="at">size           =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;size&quot;</span>),</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>            <span class="at">delim          =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;delim&quot;</span>),</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>            <span class="at">decimal_mark   =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;decimal_mark&quot;</span>),</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>            <span class="at">big_mark       =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;big_mark&quot;</span>),</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>            <span class="at">big_interval   =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;big_interval&quot;</span>),</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>            <span class="at">small_mark     =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;small_mark&quot;</span>),</span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>            <span class="at">small_interval =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;small_interval&quot;</span>), </span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>            <span class="at">whitespace     =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;whitespace&quot;</span>))</span></code></pre></div>
+<p><br></p>
+<p><em>Examples.</em>   (with default arguments)</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># 5. Speed of light in a vacuum</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="dv">299792458</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="fu">format_dcml</span>(c)</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$299800000$&quot;</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co"># 6. Molar gas constant</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="fl">8.31446261815324</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="fu">format_dcml</span>(R)</span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$8.314$&quot;</span></span></code></pre></div>
+<p>Examples 5 and 6 render as,</p>
+<ol start="5" style="list-style-type: decimal">
+<li>The speed of light in a vacuum is <span class="math inline">\(\small
+c =\)</span> <span class="math inline">\(\small 299800000\)</span> <span class="math inline">\(\small\mathit{m/s}\)</span>.</li>
+<li>The molar gas constant is <span class="math inline">\(\small R
+=\)</span> <span class="math inline">\(\small 8.314\)</span> <span class="math inline">\(\small\mathit{J}\cdot\mathit{K}^{-1}\mathit{mol}^{-1}\)</span>.</li>
+</ol>
+</div>
+<div id="format_numbers" class="section level2">
+<h2><code>format_numbers()</code></h2>
+<p><code>format_numbers()</code> is the general-purpose formatting
+function called by <code>format_sci()</code>,
+<code>format_engr()</code>, and <code>format_dcml()</code>. The general
+function can be used instead of the convenience functions simply by
+setting its <code>format</code> argument to <code>&quot;sci&quot;</code>,
+<code>&quot;engr&quot;</code> (default), or <code>&quot;dcml&quot;</code>.</p>
+<p><br></p>
+<p><em>Usage.</em></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">format_numbers</span>(x,</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>               <span class="at">digits =</span> <span class="dv">4</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>               <span class="at">format =</span> <span class="st">&quot;engr&quot;</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>               ...,</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>               <span class="at">omit_power =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>               <span class="at">set_power =</span> <span class="cn">NULL</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>               <span class="at">delim          =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;delim&quot;</span>),</span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>               <span class="at">size           =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;size&quot;</span>),</span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>               <span class="at">decimal_mark   =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;decimal_mark&quot;</span>),</span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>               <span class="at">big_mark       =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;big_mark&quot;</span>),</span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>               <span class="at">small_mark     =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;small_mark&quot;</span>),</span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>               <span class="at">big_interval   =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;big_interval&quot;</span>),</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>               <span class="at">small_interval =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;small_interval&quot;</span>), </span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>               <span class="at">whitespace     =</span> <span class="fu">formatdown_options</span>(<span class="st">&quot;whitespace&quot;</span>))</span></code></pre></div>
+<p><em>Examples.</em>   Reproducing some of the earlier examples using
+<code>format_numbers()</code>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># 7. Scientific</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="fu">format_numbers</span>(L, <span class="at">format =</span> <span class="st">&quot;sci&quot;</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$6.022 \\times 10^{23}$&quot;</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co"># 8. Engineering</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="fu">format_numbers</span>(e, <span class="at">format =</span> <span class="st">&quot;engr&quot;</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$160.2 \\times 10^{-21}$&quot;</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co"># 9. Decimal</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="fu">format_numbers</span>(R, <span class="at">format =</span> <span class="st">&quot;dcml&quot;</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$8.314$&quot;</span></span></code></pre></div>
+<p>Examples 7–9 render as,</p>
+<ol start="7" style="list-style-type: decimal">
+<li>The Avogadro constant is <span class="math inline">\(\small L
+=\)</span> <span class="math inline">\(\small 6.022 \times
+10^{23}\)</span> <span class="math inline">\(\small
+\mathit{mol}^{-1}\)</span>.</li>
+<li>The elementary charge constant is <span class="math inline">\(\small
+e =\)</span> <span class="math inline">\(\small 160.2 \times
+10^{-21}\)</span> <span class="math inline">\(\small C\)</span>.</li>
+<li>The molar gas constant is <span class="math inline">\(\small R
+=\)</span> <span class="math inline">\(\small 8.314\)</span> <span class="math inline">\(\small\mathit{J}\cdot\mathit{K}^{-1}\mathit{mol}^{-1}\)</span>.</li>
+</ol>
+</div>
+<div id="numeric-input" class="section level2">
+<h2>Numeric input</h2>
+<p>This section begins our detailed discussion of arguments.</p>
+<p><em>Scalar input.</em>   Generally used with inline R code. For
+example, the following R markdown sentence, which includes some math
+markup and some inline R code,</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>    The Avogadro constant is $L = $ `r format_sci(L)` $\mathit{mol}^{-1}$. </span></code></pre></div>
+<p>renders as: The Avogadro constant is <span class="math inline">\(\small L =\)</span> <span class="math inline">\(\small 6.022 \times 10^{23}\)</span> <span class="math inline">\(\small\mathit{mol}^{-1}\)</span>.</p>
+<p><br></p>
+<p><em>Vector.</em>   A vector of numbers (or a data frame column) is
+marked up as follows,</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># 10. Sample vector</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">2.3333e-05</span>, <span class="fl">0.00034444</span>, <span class="fl">0.052222</span>, <span class="fl">0.63333</span>, <span class="fl">81.111</span>, <span class="fl">922.22</span>, <span class="dv">24444</span>, <span class="dv">311110</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>    <span class="dv">4222200</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="fu">format_engr</span>(x)</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$23.33 \\times 10^{-6}$&quot; &quot;$344.4 \\times 10^{-6}$&quot;</span></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="co">#&gt; [3] &quot;$52.22 \\times 10^{-3}$&quot; &quot;$0.6333$&quot;               </span></span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co">#&gt; [5] &quot;$81.11$&quot;                 &quot;$922.2$&quot;                </span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="co">#&gt; [7] &quot;$24.44 \\times 10^{3}$&quot;  &quot;$311.1 \\times 10^{3}$&quot; </span></span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a><span class="co">#&gt; [9] &quot;$4.222 \\times 10^{6}$&quot;</span></span></code></pre></div>
+<p>In a table, the output renders as,</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>DT <span class="ot">&lt;-</span> <span class="fu">data.table</span>(x, <span class="fu">format_engr</span>(x))</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(DT, <span class="at">align =</span> <span class="st">&quot;r&quot;</span>, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Unformatted&quot;</span>, <span class="st">&quot;Engr notation&quot;</span>), <span class="at">caption =</span> <span class="st">&quot;Example 10.&quot;</span>)</span></code></pre></div>
+<table>
+<caption>Example 10.</caption>
+<thead>
+<tr class="header">
+<th align="right">Unformatted</th>
+<th align="right">Engr notation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2.3300e-05</td>
+<td align="right"><span class="math inline">\(\small 23.33 \times
+10^{-6}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">3.4440e-04</td>
+<td align="right"><span class="math inline">\(\small 344.4 \times
+10^{-6}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">5.2222e-02</td>
+<td align="right"><span class="math inline">\(\small 52.22 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">6.3333e-01</td>
+<td align="right"><span class="math inline">\(\small
+0.6333\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">8.1111e+01</td>
+<td align="right"><span class="math inline">\(\small 81.11\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">9.2222e+02</td>
+<td align="right"><span class="math inline">\(\small 922.2\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">2.4444e+04</td>
+<td align="right"><span class="math inline">\(\small 24.44 \times
+10^{3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">3.1111e+05</td>
+<td align="right"><span class="math inline">\(\small 311.1 \times
+10^{3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">4.2222e+06</td>
+<td align="right"><span class="math inline">\(\small 4.222 \times
+10^{6}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>For values with exponents <span class="math inline">\(\small
+n\in\{-1, 0, 1, 2\}\)</span>, the default format is decimal; see <a href="#excluding-exponents">Excluding exponents</a>.</p>
+</div>
+<div id="units-input" class="section level2">
+<h2>Units input</h2>
+<p>The units R package (website: <a href="https://r-quantities.github.io/units/">Measurement Units for
+R</a>) provides measurement units for R vectors, converting vectors of
+class “numeric” to class “units” <span class="citation">(<a href="#ref-Pebesma+Mailund+Hiebert:2016:units">Pebesma et al.,
+2016</a>)</span>. For example</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co"># Number</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">10320</span></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="fu">class</span>(x)</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;numeric&quot;</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="co"># Convert to units class</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="fu">units</span>(x) <span class="ot">&lt;-</span> <span class="st">&quot;m&quot;</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a>x</span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="co">#&gt; 10320 [m]</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="fu">class</span>(x)</span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="co">#&gt; [1] &quot;units&quot;</span></span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a><span class="co"># Operations are reflected in the values and its units</span></span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a>y <span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a>y</span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a><span class="co">#&gt; 106502400 [m^2]</span></span>
+<span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" tabindex="-1"></a><span class="co"># Unit conversion is supported</span></span>
+<span id="cb19-19"><a href="#cb19-19" tabindex="-1"></a>z <span class="ot">&lt;-</span> y</span>
+<span id="cb19-20"><a href="#cb19-20" tabindex="-1"></a>z</span>
+<span id="cb19-21"><a href="#cb19-21" tabindex="-1"></a><span class="co">#&gt; 106502400 [m^2]</span></span>
+<span id="cb19-22"><a href="#cb19-22" tabindex="-1"></a><span class="fu">units</span>(z) <span class="ot">&lt;-</span> <span class="st">&quot;ft^2&quot;</span></span>
+<span id="cb19-23"><a href="#cb19-23" tabindex="-1"></a>z</span>
+<span id="cb19-24"><a href="#cb19-24" tabindex="-1"></a><span class="co">#&gt; 1146382293 [ft^2]</span></span></code></pre></div>
+<p>If an input argument to <code>format_numbers()</code> (or its
+convenience functions) is of class “units”, formatdown attempts to
+extract the units character string, format the number in the expected
+way, and append a units character string to the result. For example,</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co"># 11. Units-class inputs</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="fu">format_sci</span>(x)</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$1.032 \\times 10^{4}\\&gt;\\mathrm{m}$&quot;</span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="fu">format_sci</span>(y)</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$1.065 \\times 10^{8}\\&gt;\\mathrm{m^{2}}$&quot;</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="fu">format_sci</span>(z)</span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$1.146 \\times 10^{9}\\&gt;\\mathrm{ft^{2}}$&quot;</span></span></code></pre></div>
+<p>Example 11 renders as,</p>
+<ul>
+<li><span class="math inline">\(\small 1.032 \times
+10^{4}\&gt;\mathrm{m}\)</span></li>
+<li><span class="math inline">\(\small 1.065 \times
+10^{8}\&gt;\mathrm{m^{2}}\)</span></li>
+<li><span class="math inline">\(\small 1.146 \times
+10^{9}\&gt;\mathrm{ft^{2}}\)</span></li>
+</ul>
+<p>More complicated units can be managed. For example the Newtonian
+gravitational constant could be formatted as follows, where the
+exponents in the units definition are given in “implicit” form, that is,
+where <span class="math inline">\(\small m^3 kg^{-1} s^{-2}\)</span> is
+represented by <code>&quot;m3 kg-1 s-2&quot;</code>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>    G        <span class="ot">&lt;-</span> <span class="fl">6.6743e-11</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>    <span class="fu">units</span>(G) <span class="ot">&lt;-</span> <span class="st">&quot;m3 kg-1 s-2&quot;</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>    <span class="fu">format_sci</span>(G)</span></code></pre></div>
+<p>Applying a similar procedure to several physical constants and
+collecting the results in a data frame yields,</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="39%" />
+<col width="48%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">symbol</th>
+<th align="left">quantity</th>
+<th align="left">formatted_value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\small c\)</span></td>
+<td align="left"><span class="math inline">\(\small
+\mathrm{speed\&gt;of\&gt;light\&gt;in\&gt;a\&gt;vacuum}\)</span></td>
+<td align="left"><span class="math inline">\(\small 2.998 \times
+10^{8}\&gt;\mathrm{m\&gt;s^{-1}}\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\small h\)</span></td>
+<td align="left"><span class="math inline">\(\small
+\mathrm{Planck\&gt;constant}\)</span></td>
+<td align="left"><span class="math inline">\(\small 6.626 \times
+10^{-34}\&gt;\mathrm{J\&gt;Hz^{-1}}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\small \mu_0\)</span></td>
+<td align="left"><span class="math inline">\(\small
+\mathrm{vacuum\&gt;magnetic\&gt;permeability}\)</span></td>
+<td align="left"><span class="math inline">\(\small 1.257 \times
+10^{-6}\&gt;\mathrm{N\&gt;A^{-2}}\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\small G\)</span></td>
+<td align="left"><span class="math inline">\(\small
+\mathrm{Newtonian\&gt;gravitational\&gt;constant}\)</span></td>
+<td align="left"><span class="math inline">\(\small 6.674 \times
+10^{-11}\&gt;\mathrm{m^{3}\&gt;kg^{-1}\&gt;s^{-2}}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\small k_e\)</span></td>
+<td align="left"><span class="math inline">\(\small
+\mathrm{Coulomb\&gt;constant}\)</span></td>
+<td align="left"><span class="math inline">\(\small 8.988 \times
+10^{9}\&gt;\mathrm{m^{2}\&gt;N\&gt;C^{-2}}\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\small \sigma\)</span></td>
+<td align="left"><span class="math inline">\(\small
+\mathrm{Stefan-Boltzmann\&gt;constant}\)</span></td>
+<td align="left"><span class="math inline">\(\small 5.670 \times
+10^{-8}\&gt;\mathrm{W\&gt;K^{-4}\&gt;m^{-2}}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>This table is constructed simply to illustrate how formatdown returns
+a variety of units-class values with units appended to the formatted
+number.</p>
+<p>In a typical application, however, the numbers in a column have the
+same physical units and are formatted as a vector. For example,</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="co"># Example 12</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>DT <span class="ot">&lt;-</span> air_meas[, .(temp, pres, sp_gas, dens)]</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="co"># Examine data</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>DT[]</span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="co">#&gt;     temp   pres sp_gas  dens</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="co">#&gt;    &lt;num&gt;  &lt;num&gt;  &lt;int&gt; &lt;num&gt;</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="co">#&gt; 1: 294.1 101100    287 1.198</span></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="co">#&gt; 2: 294.1 101000    287 1.196</span></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="co">#&gt; 3: 294.6 101100    287 1.196</span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="co">#&gt; 4: 293.4 101000    287 1.200</span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a><span class="co">#&gt; 5: 293.9 101100    287 1.199</span></span>
+<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a><span class="co"># Assign units</span></span>
+<span id="cb22-15"><a href="#cb22-15" tabindex="-1"></a><span class="fu">units</span>(DT<span class="sc">$</span>temp) <span class="ot">&lt;-</span> <span class="st">&quot;K&quot;</span></span>
+<span id="cb22-16"><a href="#cb22-16" tabindex="-1"></a><span class="fu">units</span>(DT<span class="sc">$</span>pres) <span class="ot">&lt;-</span> <span class="st">&quot;Pa&quot;</span></span>
+<span id="cb22-17"><a href="#cb22-17" tabindex="-1"></a><span class="fu">units</span>(DT<span class="sc">$</span>sp_gas) <span class="ot">&lt;-</span> <span class="st">&quot;J kg-1 K-1&quot;</span></span>
+<span id="cb22-18"><a href="#cb22-18" tabindex="-1"></a><span class="fu">units</span>(DT<span class="sc">$</span>dens) <span class="ot">&lt;-</span> <span class="st">&quot;kg m-3&quot;</span></span>
+<span id="cb22-19"><a href="#cb22-19" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" tabindex="-1"></a><span class="co"># Format one column at a time</span></span>
+<span id="cb22-21"><a href="#cb22-21" tabindex="-1"></a>DT<span class="sc">$</span>temp <span class="ot">&lt;-</span> <span class="fu">format_dcml</span>(DT<span class="sc">$</span>temp)</span>
+<span id="cb22-22"><a href="#cb22-22" tabindex="-1"></a>DT<span class="sc">$</span>pres <span class="ot">&lt;-</span> <span class="fu">format_engr</span>(DT<span class="sc">$</span>pres)</span>
+<span id="cb22-23"><a href="#cb22-23" tabindex="-1"></a></span>
+<span id="cb22-24"><a href="#cb22-24" tabindex="-1"></a><span class="co"># Or format multiple columns in one pass</span></span>
+<span id="cb22-25"><a href="#cb22-25" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;sp_gas&quot;</span>, <span class="st">&quot;dens&quot;</span>)</span>
+<span id="cb22-26"><a href="#cb22-26" tabindex="-1"></a>DT[, (cols) <span class="sc">:=</span> <span class="fu">lapply</span>(.SD, format_dcml), .SDcols <span class="ot">=</span> cols]</span>
+<span id="cb22-27"><a href="#cb22-27" tabindex="-1"></a></span>
+<span id="cb22-28"><a href="#cb22-28" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(DT, <span class="at">align =</span> <span class="st">&quot;r&quot;</span>, <span class="at">caption =</span> <span class="st">&quot;Example 12.&quot;</span>)</span></code></pre></div>
+<table>
+<caption>Example 12.</caption>
+<colgroup>
+<col width="18%" />
+<col width="28%" />
+<col width="29%" />
+<col width="24%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">temp</th>
+<th align="right">pres</th>
+<th align="right">sp_gas</th>
+<th align="right">dens</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small
+294.1\&gt;\mathrm{K}\)</span></td>
+<td align="right"><span class="math inline">\(\small 101.1 \times
+10^{3}\&gt;\mathrm{Pa}\)</span></td>
+<td align="right"><span class="math inline">\(\small
+287.0\&gt;\mathrm{J\&gt;K^{-1}\&gt;kg^{-1}}\)</span></td>
+<td align="right"><span class="math inline">\(\small
+1.198\&gt;\mathrm{kg\&gt;m^{-3}}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small
+294.1\&gt;\mathrm{K}\)</span></td>
+<td align="right"><span class="math inline">\(\small 101.0 \times
+10^{3}\&gt;\mathrm{Pa}\)</span></td>
+<td align="right"><span class="math inline">\(\small
+287.0\&gt;\mathrm{J\&gt;K^{-1}\&gt;kg^{-1}}\)</span></td>
+<td align="right"><span class="math inline">\(\small
+1.196\&gt;\mathrm{kg\&gt;m^{-3}}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small
+294.6\&gt;\mathrm{K}\)</span></td>
+<td align="right"><span class="math inline">\(\small 101.1 \times
+10^{3}\&gt;\mathrm{Pa}\)</span></td>
+<td align="right"><span class="math inline">\(\small
+287.0\&gt;\mathrm{J\&gt;K^{-1}\&gt;kg^{-1}}\)</span></td>
+<td align="right"><span class="math inline">\(\small
+1.196\&gt;\mathrm{kg\&gt;m^{-3}}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small
+293.4\&gt;\mathrm{K}\)</span></td>
+<td align="right"><span class="math inline">\(\small 101.0 \times
+10^{3}\&gt;\mathrm{Pa}\)</span></td>
+<td align="right"><span class="math inline">\(\small
+287.0\&gt;\mathrm{J\&gt;K^{-1}\&gt;kg^{-1}}\)</span></td>
+<td align="right"><span class="math inline">\(\small
+1.200\&gt;\mathrm{kg\&gt;m^{-3}}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small
+293.9\&gt;\mathrm{K}\)</span></td>
+<td align="right"><span class="math inline">\(\small 101.1 \times
+10^{3}\&gt;\mathrm{Pa}\)</span></td>
+<td align="right"><span class="math inline">\(\small
+287.0\&gt;\mathrm{J\&gt;K^{-1}\&gt;kg^{-1}}\)</span></td>
+<td align="right"><span class="math inline">\(\small
+1.199\&gt;\mathrm{kg\&gt;m^{-3}}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="significant-digits" class="section level2">
+<h2>Significant digits</h2>
+<p>Significant digits are applied to the input argument using the base R
+function <code>signif()</code> before additional formatting is applied.
+For example,</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="co"># 13. Significant digits</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="fu">format_sci</span>(e, <span class="at">digits =</span> <span class="dv">5</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$1.6022 \\times 10^{-19}$&quot;</span></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="fu">format_sci</span>(e, <span class="at">digits =</span> <span class="dv">4</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$1.602 \\times 10^{-19}$&quot;</span></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="fu">format_sci</span>(e, <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$1.60 \\times 10^{-19}$&quot;</span></span></code></pre></div>
+<p>Example 13 renders as,</p>
+<ul>
+<li><span class="math inline">\(\small 1.6022 \times
+10^{-19}\)</span></li>
+<li><span class="math inline">\(\small 1.602 \times
+10^{-19}\)</span></li>
+<li><span class="math inline">\(\small 1.60 \times
+10^{-19}\)</span></li>
+</ul>
+</div>
+<div id="formats" class="section level2">
+<h2>Formats</h2>
+<p>The <code>format</code> argument appears in
+<code>format_numbers()</code> only. The default is “engr”. The format is
+preset in the <code>format_dcml()</code>, <code>format_engr()</code>,
+and <code>format_sci()</code> convenience functions.</p>
+<p>To compare the effects across many orders of magnitude, we display
+the same vector in different formats.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="co"># 14. Comparing formats</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">2.3333e-05</span>, <span class="fl">0.00034444</span>, <span class="fl">0.052222</span>, <span class="fl">0.63333</span>, <span class="fl">81.111</span>, <span class="fl">922.22</span>, <span class="dv">24444</span>, <span class="dv">311110</span>,</span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>    <span class="dv">4222200</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>dcml <span class="ot">&lt;-</span> <span class="fu">format_numbers</span>(x, <span class="dv">3</span>, <span class="at">format =</span> <span class="st">&quot;dcml&quot;</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a>sci <span class="ot">&lt;-</span> <span class="fu">format_numbers</span>(x, <span class="dv">3</span>, <span class="at">format =</span> <span class="st">&quot;sci&quot;</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a>engr <span class="ot">&lt;-</span> <span class="fu">format_numbers</span>(x, <span class="dv">3</span>, <span class="at">format =</span> <span class="st">&quot;engr&quot;</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a>DT <span class="ot">&lt;-</span> <span class="fu">data.table</span>(dcml, sci, engr)</span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(DT, <span class="at">align =</span> <span class="st">&quot;r&quot;</span>, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;decimal&quot;</span>, <span class="st">&quot;scientific&quot;</span>, <span class="st">&quot;engineering&quot;</span>),</span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;Example 14.&quot;</span>)</span></code></pre></div>
+<table>
+<caption>Example 14.</caption>
+<colgroup>
+<col width="24%" />
+<col width="37%" />
+<col width="37%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">decimal</th>
+<th align="right">scientific</th>
+<th align="right">engineering</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small
+0.0000233\)</span></td>
+<td align="right"><span class="math inline">\(\small 2.33 \times
+10^{-5}\)</span></td>
+<td align="right"><span class="math inline">\(\small 23.3 \times
+10^{-6}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small
+0.000344\)</span></td>
+<td align="right"><span class="math inline">\(\small 3.44 \times
+10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(\small 344 \times
+10^{-6}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small
+0.0522\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.22 \times
+10^{-2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 52.2 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small 0.633\)</span></td>
+<td align="right"><span class="math inline">\(\small 0.633\)</span></td>
+<td align="right"><span class="math inline">\(\small 0.633\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small 81.1\)</span></td>
+<td align="right"><span class="math inline">\(\small 81.1\)</span></td>
+<td align="right"><span class="math inline">\(\small 81.1\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small 922\)</span></td>
+<td align="right"><span class="math inline">\(\small 922\)</span></td>
+<td align="right"><span class="math inline">\(\small 922\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small 24400\)</span></td>
+<td align="right"><span class="math inline">\(\small 2.44 \times
+10^{4}\)</span></td>
+<td align="right"><span class="math inline">\(\small 24.4 \times
+10^{3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small
+311000\)</span></td>
+<td align="right"><span class="math inline">\(\small 3.11 \times
+10^{5}\)</span></td>
+<td align="right"><span class="math inline">\(\small 311 \times
+10^{3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small
+4220000\)</span></td>
+<td align="right"><span class="math inline">\(\small 4.22 \times
+10^{6}\)</span></td>
+<td align="right"><span class="math inline">\(\small 4.22 \times
+10^{6}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The values displayed without powers-of-ten notation in the scientific
+and engineering columns are determined by the <code>omit_power</code>
+argument discussed next.</p>
+</div>
+<div id="excluding-exponents" class="section level2">
+<h2>Excluding a range of exponents</h2>
+<p>When specifying power-of-ten notation, numbers with exponents lying
+within the range of the <code>omit_power</code> argument are typeset in
+decimal form. In engineering notation, the exponent is checked for lying
+within the range before and after the conversion to multiple-of-3
+exponents.</p>
+<p>To illustrate, we compare two <code>omit_power</code> settings in
+both scientific and engineering formats. In some columns, we set
+<code>omit_power = NULL</code>, which imposes power-of-ten notation on
+the entire vector.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="co"># 15. Effects of omit_power</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>DT <span class="ot">&lt;-</span> atmos[<span class="dv">3</span><span class="sc">:</span><span class="dv">12</span>, .(pres)]</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>DT[, sci_all <span class="sc">:=</span> <span class="fu">format_sci</span>(pres, <span class="dv">3</span>, <span class="at">omit_power =</span> <span class="cn">NULL</span>)]</span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>DT[, sci_omit <span class="sc">:=</span> <span class="fu">format_sci</span>(pres, <span class="dv">3</span>, <span class="at">omit_power =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>))]</span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>DT[, engr_all <span class="sc">:=</span> <span class="fu">format_engr</span>(pres, <span class="dv">3</span>, <span class="at">omit_power =</span> <span class="cn">NULL</span>)]</span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>DT[, engr_omit <span class="sc">:=</span> <span class="fu">format_engr</span>(pres, <span class="dv">3</span>, <span class="at">omit_power =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>))]</span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(DT, <span class="at">align =</span> <span class="st">&quot;r&quot;</span>, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Unformatted&quot;</span>, <span class="st">&quot;all scientific&quot;</span>, <span class="st">&quot;scientific w/ omit&quot;</span>,</span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a>    <span class="st">&quot;all engineering&quot;</span>, <span class="st">&quot;engineering w/ omit&quot;</span>), <span class="at">caption =</span> <span class="st">&quot;Example 15.&quot;</span>)</span></code></pre></div>
+<table>
+<caption>Example 15.</caption>
+<colgroup>
+<col width="9%" />
+<col width="22%" />
+<col width="22%" />
+<col width="22%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Unformatted</th>
+<th align="right">all scientific</th>
+<th align="right">scientific w/ omit</th>
+<th align="right">all engineering</th>
+<th align="right">engineering w/ omit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">5.529e+03</td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">1.197e+03</td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">2.870e+02</td>
+<td align="right"><span class="math inline">\(\small 2.87 \times
+10^{2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 2.87 \times
+10^{2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 287 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 287\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">8.000e+01</td>
+<td align="right"><span class="math inline">\(\small 8.00 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 8.00 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 80.0 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 80.0\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">2.200e+01</td>
+<td align="right"><span class="math inline">\(\small 2.20 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 2.20 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 22.0 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 22.0\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">5.220e+00</td>
+<td align="right"><span class="math inline">\(\small 5.22 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.22\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.22 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.22\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">1.050e+00</td>
+<td align="right"><span class="math inline">\(\small 1.05 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.05\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.05 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.05\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">1.840e-01</td>
+<td align="right"><span class="math inline">\(\small 1.84 \times
+10^{-1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 0.184\)</span></td>
+<td align="right"><span class="math inline">\(\small 184 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 0.184\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">3.200e-02</td>
+<td align="right"><span class="math inline">\(\small 3.20 \times
+10^{-2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 3.20 \times
+10^{-2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 32.0 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 32.0 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">4.540e-04</td>
+<td align="right"><span class="math inline">\(\small 4.54 \times
+10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(\small 4.54 \times
+10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(\small 454 \times
+10^{-6}\)</span></td>
+<td align="right"><span class="math inline">\(\small 454 \times
+10^{-6}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Comments:</p>
+<ul>
+<li>In the “scientific with omit” column, the three values <span class="math inline">\(\small (0.184, 1.05, 5.22)\)</span> are in decimal
+form because their exponents lie within the <code>omit_power</code>
+range <span class="math inline">\(\small \{-1, 0\}\)</span>.</li>
+<li>The same is true in the “engineering with omit” column because these
+exponents are in the omit range <em>before</em> converting to
+engineering form.</li>
+<li>The “engineering with omit” column also displays the values <span class="math inline">\((\small 22, 80, 287)\)</span> in decimal form
+because their exponents are in the omit range <em>after</em> converting
+to engineering notation.</li>
+</ul>
+<p><br></p>
+<p>If a single value is assigned, e.g., <code>omit_power = 0</code>, the
+argument is interpreted as <code>c(0, 0)</code>.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="co"># 16. Omit power used for a single value of exponent</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>DT <span class="ot">&lt;-</span> atmos[<span class="dv">3</span><span class="sc">:</span><span class="dv">12</span>, .(pres)]</span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>DT[, sci_all <span class="sc">:=</span> <span class="fu">format_sci</span>(pres, <span class="dv">3</span>, <span class="at">omit_power =</span> <span class="cn">NULL</span>)]</span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>DT[, sci_omit <span class="sc">:=</span> <span class="fu">format_sci</span>(pres, <span class="dv">3</span>, <span class="at">omit_power =</span> <span class="dv">0</span>)]</span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a>DT[, engr_all <span class="sc">:=</span> <span class="fu">format_engr</span>(pres, <span class="dv">3</span>, <span class="at">omit_power =</span> <span class="cn">NULL</span>)]</span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a>DT[, engr_omit <span class="sc">:=</span> <span class="fu">format_engr</span>(pres, <span class="dv">3</span>, <span class="at">omit_power =</span> <span class="dv">0</span>)]</span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(DT, <span class="at">align =</span> <span class="st">&quot;r&quot;</span>, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Unformatted&quot;</span>, <span class="st">&quot;all scientific&quot;</span>, <span class="st">&quot;scientific w/ omit&quot;</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a>    <span class="st">&quot;all engineering&quot;</span>, <span class="st">&quot;engineering w/ omit&quot;</span>), <span class="at">caption =</span> <span class="st">&quot;Example 16.&quot;</span>)</span></code></pre></div>
+<table>
+<caption>Example 16.</caption>
+<colgroup>
+<col width="9%" />
+<col width="22%" />
+<col width="22%" />
+<col width="22%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Unformatted</th>
+<th align="right">all scientific</th>
+<th align="right">scientific w/ omit</th>
+<th align="right">all engineering</th>
+<th align="right">engineering w/ omit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">5.529e+03</td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">1.197e+03</td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">2.870e+02</td>
+<td align="right"><span class="math inline">\(\small 2.87 \times
+10^{2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 2.87 \times
+10^{2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 287 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 287\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">8.000e+01</td>
+<td align="right"><span class="math inline">\(\small 8.00 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 8.00 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 80.0 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 80.0\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">2.200e+01</td>
+<td align="right"><span class="math inline">\(\small 2.20 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 2.20 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 22.0 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 22.0\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">5.220e+00</td>
+<td align="right"><span class="math inline">\(\small 5.22 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.22\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.22 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.22\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">1.050e+00</td>
+<td align="right"><span class="math inline">\(\small 1.05 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.05\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.05 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.05\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">1.840e-01</td>
+<td align="right"><span class="math inline">\(\small 1.84 \times
+10^{-1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.84 \times
+10^{-1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 184 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 184 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">3.200e-02</td>
+<td align="right"><span class="math inline">\(\small 3.20 \times
+10^{-2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 3.20 \times
+10^{-2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 32.0 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 32.0 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">4.540e-04</td>
+<td align="right"><span class="math inline">\(\small 4.54 \times
+10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(\small 4.54 \times
+10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(\small 454 \times
+10^{-6}\)</span></td>
+<td align="right"><span class="math inline">\(\small 454 \times
+10^{-6}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>Setting <code>omit_power = c(-Inf, Inf)</code> yields the same
+decimal result as <code>format = &quot;dcml&quot;</code> and overrides any other
+<code>format</code> setting. For example,</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="co"># 17. Different ways of creating a decimal format</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>(y <span class="ot">&lt;-</span> <span class="fl">0.00678</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.00678</span></span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>(p <span class="ot">&lt;-</span> <span class="fu">format_numbers</span>(y, <span class="dv">3</span>, <span class="st">&quot;sci&quot;</span>, <span class="at">omit_power =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="cn">Inf</span>)))</span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$0.00678$&quot;</span></span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>(q <span class="ot">&lt;-</span> <span class="fu">format_numbers</span>(y, <span class="dv">3</span>, <span class="st">&quot;dcml&quot;</span>))</span>
+<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$0.00678$&quot;</span></span>
+<span id="cb27-10"><a href="#cb27-10" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" tabindex="-1"></a>(r <span class="ot">&lt;-</span> <span class="fu">format_dcml</span>(y, <span class="dv">3</span>))</span>
+<span id="cb27-12"><a href="#cb27-12" tabindex="-1"></a><span class="co">#&gt; [1] &quot;$0.00678$&quot;</span></span>
+<span id="cb27-13"><a href="#cb27-13" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" tabindex="-1"></a><span class="fu">all.equal</span>(p, q)</span>
+<span id="cb27-15"><a href="#cb27-15" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb27-16"><a href="#cb27-16" tabindex="-1"></a><span class="fu">all.equal</span>(p, r)</span>
+<span id="cb27-17"><a href="#cb27-17" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<p>Example 17 (all cases) renders as,</p>
+<ul>
+<li><span class="math inline">\(\small 0.00678\)</span></li>
+</ul>
+</div>
+<div id="enforcing-exponent" class="section level2">
+<h2>Enforcing a specific exponent</h2>
+<p>When values in a table column span only a few orders of magnitude, an
+audience is sometimes better served by setting the notation to a
+constant power of ten. For example, here we show numbers in scientific
+format and compare to columns in which the exponents are set to fixed
+values. Assigning a value to <code>set_power</code> overrides
+<code>omit_power</code> and <code>format</code>.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="co"># 18. set_power argument</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>DT <span class="ot">&lt;-</span> atmos[alt <span class="sc">&lt;=</span> <span class="dv">40</span>, .(alt, pres, dens)]</span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>DT[, sci_pres <span class="sc">:=</span> <span class="fu">format_sci</span>(pres, <span class="dv">3</span>, <span class="at">omit_power =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">2</span>))]</span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a>DT[, set_pres <span class="sc">:=</span> <span class="fu">format_sci</span>(pres, <span class="dv">3</span>, <span class="at">omit_power =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">2</span>), <span class="at">set_power =</span> <span class="dv">3</span>)]</span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a>DT[, sci_dens <span class="sc">:=</span> <span class="fu">format_engr</span>(dens, <span class="dv">3</span>, <span class="at">omit_power =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">2</span>))]</span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a>DT[, set_dens <span class="sc">:=</span> <span class="fu">format_engr</span>(dens, <span class="dv">3</span>, <span class="at">omit_power =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">2</span>), <span class="at">set_power =</span> <span class="sc">-</span><span class="dv">2</span>)]</span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>DT[, pres <span class="sc">:=</span> <span class="cn">NULL</span>]</span>
+<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a>DT[, dens <span class="sc">:=</span> <span class="cn">NULL</span>]</span>
+<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(DT, <span class="at">align =</span> <span class="st">&quot;r&quot;</span>, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Altitude (km)&quot;</span>, <span class="st">&quot;Pressure (Pa)&quot;</span>, <span class="st">&quot;with set_power&quot;</span>,</span>
+<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a>    <span class="st">&quot;Density (kg/m$^{3}$)&quot;</span>, <span class="st">&quot;with set_power&quot;</span>), <span class="at">caption =</span> <span class="st">&quot;Example 18.&quot;</span>)</span></code></pre></div>
+<table>
+<caption>Example 18.</caption>
+<colgroup>
+<col width="10%" />
+<col width="21%" />
+<col width="22%" />
+<col width="22%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Altitude (km)</th>
+<th align="right">Pressure (Pa)</th>
+<th align="right">with set_power</th>
+<th align="right">Density (kg/m<span class="math inline">\(^{3}\)</span>)</th>
+<th align="right">with set_power</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right"><span class="math inline">\(\small 1.01 \times
+10^{5}\)</span></td>
+<td align="right"><span class="math inline">\(\small 101 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.23\)</span></td>
+<td align="right"><span class="math inline">\(\small 123 \times
+10^{-2}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right"><span class="math inline">\(\small 2.65 \times
+10^{4}\)</span></td>
+<td align="right"><span class="math inline">\(\small 26.5 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 0.414\)</span></td>
+<td align="right"><span class="math inline">\(\small 41.4 \times
+10^{-2}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">20</td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 88.9 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 8.89 \times
+10^{-2}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">30</td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 18.4 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.84 \times
+10^{-2}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">40</td>
+<td align="right"><span class="math inline">\(\small 287\)</span></td>
+<td align="right"><span class="math inline">\(\small 0.287 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 4.00 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 0.400 \times
+10^{-2}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="options" class="section level2">
+<h2>Options</h2>
+<p>Arguments assigned using <code>formatdown_options()</code> are
+described in the <a href="global_settings.html">Global settings</a>
+article.</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="unnumbered">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
+<div id="ref-Chase:2021" class="csl-entry">
+Chase, M. (2021). <em><span>Technical Mathematics</span></em>. <a href="https://openoregon.pressbooks.pub/techmath/chapter/module-11-scientific-notation/">https://openoregon.pressbooks.pub/techmath/chapter/module-11-scientific-notation/</a>
+</div>
+<div id="ref-Pebesma+Mailund+Hiebert:2016:units" class="csl-entry">
+Pebesma, E., Mailund, T., &amp; Hiebert, J. (2016). Measurement units in
+<span>R</span>. <em>R Journal</em>, <em>8</em>(2), 486–494. <a href="https://doi.org/10.32614/RJ-2016-061">https://doi.org/10.32614/RJ-2016-061</a>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

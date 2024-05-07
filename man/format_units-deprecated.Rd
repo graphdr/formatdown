@@ -36,7 +36,8 @@ A character vector of numbers with appended measurement units.
 }
 \description{
 This function is deprecated because it's a special case of the
-\code{\link[=format_numbers]{format_numbers()}} function.
+\code{\link[=format_numbers]{format_numbers()}} function. Users should finalize the manipulation of
+units (using the units package) before invoking a formatdown function.
 }
 \details{
 Format a vector of numbers as character strings with measurement units

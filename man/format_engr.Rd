@@ -13,6 +13,8 @@ format_engr(
   delim = formatdown_options("delim"),
   size = formatdown_options("size"),
   decimal_mark = formatdown_options("decimal_mark"),
+  small_mark = formatdown_options("small_mark"),
+  small_interval = formatdown_options("small_interval"),
   whitespace = formatdown_options("whitespace")
 )
 }
@@ -57,6 +59,17 @@ e.g., \code{"\\\\scriptsize"}, \code{"\\\\small"}, etc. Default is NULL.}
 Possible values are a period \code{"."} (default) or a comma \code{","}. Passed
 to \code{formatC(decimal.mark)}.}
 
+\item{small_mark}{Character, length 1, used as the mark between every
+\code{small_interval} number of digits to the right of the decimal marker to
+improve readability. Possible values are empty \code{""} (default) or
+\code{"thin"} to produce a LaTeX-style thin, horizontal space. One may also
+assign the thin-space markup itself \code{"\\\\\\\\,"}.
+Passed to \code{formatC(small.mark)}.}
+
+\item{small_interval}{Integer, length 1, that defines the number of digits
+(default 5) in groups separated by \code{small_mark}. Passed to
+\code{formatC(small.interval)}.}
+
 \item{whitespace}{Character, length 1, to define the LaTeX-style
 math-mode macro to preserve a horizontal space between words of text or
 between physical-unit abbreviations when formatting numbers of class
@@ -78,7 +91,7 @@ In engineering notation, all exponents are multiples of three.
 \code{format_engr()} is a wrapper for the more general function \code{format_numbers()}.
 Where defaults are defined by \code{formatdown_options()}, users may reassign
 the arguments locally in the function call or globally using
-\code{format_down_options()}.
+\code{formatdown_options()}.
 
 Arguments after the dots (\code{...}) must be referred to by name.
 }
@@ -147,8 +160,8 @@ format_sci(x, omit_power = 2, set_power = 2)
 
 # decimal format ignores set_power
 x <- 103400
-format_dcml(x)
-format_dcml(x, set_power = 3)
+format_numbers(x, format = "dcml")
+format_numbers(x, format = "dcml", set_power = 3)
 
 }
 \seealso{

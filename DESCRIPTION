@@ -1,6 +1,6 @@
 Package: formatdown
 Title: Formatting Numbers in 'rmarkdown' Documents
-Version: 0.1.3.9002
+Version: 0.1.4
 Language: en-US
 Authors@R: person("Richard", "Layton", email="graphdoctor@gmail.com", role=c("aut", "cre"))
 Description: Provides a small set of tools for formatting numbers in R-markdown 

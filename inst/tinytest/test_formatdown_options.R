@@ -109,7 +109,7 @@ test_formatdown_options <- function() {
   expect_equal(ans918, format_dcml(x, 10))
   formatdown_options(reset = TRUE)
 
-  # errors
+  # ERRORS  ------------------------
   expect_error(formatdown_options("x"))
   expect_error(formatdown_options("digits"))
   expect_error(formatdown_options("format"))
@@ -120,6 +120,12 @@ test_formatdown_options <- function() {
 
   # reset options to those before this test
   do.call(formatdown_options, prior_settings)
+
+  # confirm that rest-settings equal prior-settings
+  do_call_settings <- formatdown_options()
+  expect_equal(do_call_settings, prior_settings)
+
+
 
   # function output not printed
   invisible(NULL)

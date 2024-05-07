@@ -116,7 +116,7 @@ test_format_numbers <- function() {
   ans202 <- "$0.003221$"
   expect_equal(ans202, format_sci(x, omit_power = -3))
   expect_equal(ans202, format_engr(x, omit_power = -3))
-  expect_equal(ans202, format_dcml(x, omit_power = -3))
+  # expect_equal(ans202, format_dcml(x, omit_power = -3))
   expect_equal(ans202, format_dcml(x))
 
   x <- 5.222
@@ -161,7 +161,7 @@ test_format_numbers <- function() {
   # dcml ignores set_power; omit_power creates a decimal
   x <- 101300
   ans210 <- format_dcml(x)
-  expect_equal(ans210, format_dcml(x, set_power = 2))
+  # expect_equal(ans210, format_dcml(x, set_power = 2))
   expect_equal(ans210, format_engr(x, omit_power = 5))
 
   # Data frame,one column as vector
@@ -187,19 +187,36 @@ test_format_numbers <- function() {
            .SDcols = cols_we_want]
   expect_equal(DT, ans16)
 
+  # ERRORS  ------------------------
+  x <- 101300
 
-
-  # errors
-  # input class "numeric" or "units"
+  # arguments of incorrect class
   expect_error(format_numbers(x = TRUE))
-  # omit_power c(p, q) requires p LEQ q
-  expect_error(format_sci(101300, omit_power = c(3, -1)))
+  expect_error(format_numbers(x, digits = TRUE))
+  expect_error(format_sci(x, omit_power = TRUE))
+  expect_error(format_sci(x, set_power = TRUE))
 
+  # arguments not among allowed choices
+  expect_error(format_numbers(x = NULL))
+  expect_error(format_numbers(x, digits = NULL))
+  expect_error(format_numbers(x, digits = 22))
+  expect_error(format_numbers(x, format = NULL))
+  expect_error(format_numbers(x, format = "scientific"))
 
+  # arguments with incorrect relationship
+  expect_error(format_sci(x, omit_power = c(3, -1)))
 
+  # arguments of incorrect length
+  expect_error(format_numbers(x, digits = c(1, 2)))
+  expect_error(format_numbers(x, format = c("engr", "sci")))
+  expect_error(format_numbers(x, omit_power = c(-1, 0, 3)))
+  expect_error(format_numbers(x, set_power = c(-1, 2)))
 
-
-
+  # arguments after dots must be named
+  expect_error(format_numbers(x, 4, "engr", c(-1, 2)))
+  expect_error(format_sci(x, 4, c(-1, 2)))
+  expect_error(format_engr(x, 4, c(-1, 2)))
+  expect_error(format_dcml(x, 4, "$"))
 
   # function output not printed
   invisible(NULL)

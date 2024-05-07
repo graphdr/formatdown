@@ -62,6 +62,6 @@ format_sci(x, omit_power = 2, set_power = 2)
 
 # decimal format ignores set_power
 x <- 103400
-format_dcml(x)
-format_dcml(x, set_power = 3)
+format_numbers(x, format = "dcml")
+format_numbers(x, format = "dcml", set_power = 3)
 

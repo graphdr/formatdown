@@ -193,8 +193,8 @@ format_numbers <- function(x,
   checkmate::qassert(format, "S1")
   checkmate::assert_choice(format, choices = c("engr", "sci", "dcml"))
 
-  # omit_power: numeric, not missing, length 2, c(p, q) with p <= q
-  checkmate::qassert(omit_power, "N2")
+  # omit_power: numeric, length 2, c(p, q) with p <= q
+  checkmate::qassert(omit_power, "n2")
   if (!isTRUE(all(omit_power == cummax(omit_power)))) {
     stop("In `omit_power = c(p, q)`, `p` must be less than or equal to `q`.")
   }
@@ -312,7 +312,7 @@ format_numbers <- function(x,
 #' `format_sci()` is a wrapper for the more general function `format_numbers()`.
 #' Where defaults are defined by `formatdown_options()`, users may reassign
 #' the arguments locally in the function call or globally using
-#' `format_down_options()`.
+#' `formatdown_options()`.
 #'
 #' Arguments after the dots (`...`) must be referred to by name.
 #'
@@ -331,10 +331,15 @@ format_sci <- function(x,
                        set_power = NULL,
 
                        # options
-                       delim        = formatdown_options("delim"),
-                       size         = formatdown_options("size"),
-                       decimal_mark = formatdown_options("decimal_mark"),
-                       whitespace   = formatdown_options("whitespace")) {
+                       delim          = formatdown_options("delim"),
+                       size           = formatdown_options("size"),
+                       decimal_mark   = formatdown_options("decimal_mark"),
+                       small_mark     = formatdown_options("small_mark"),
+                       small_interval = formatdown_options("small_interval"),
+                       whitespace     = formatdown_options("whitespace")) {
+
+  # Arguments after dots must be named
+  arg_after_dots_named(...)
 
   # wrap format_numbers()
   output <- format_numbers(x          = x,
@@ -343,17 +348,17 @@ format_sci <- function(x,
                            set_power  = set_power,
 
                            # options
-                           delim        = delim,
-                           size         = size,
-                           decimal_mark = decimal_mark,
-                           whitespace   = whitespace,
+                           delim          = delim,
+                           size           = size,
+                           decimal_mark   = decimal_mark,
+                           small_mark     = small_mark,
+                           small_interval = small_interval,
+                           whitespace     = whitespace,
 
                            # wrapper pre-sets
                            format         = "sci",
                            big_mark       = formatdown_options("big_mark"),
-                           big_interval   = formatdown_options("big_interval"),
-                           small_mark     = formatdown_options("small_mark"),
-                           small_interval = formatdown_options("small_interval")
+                           big_interval   = formatdown_options("big_interval")
   )
 
   # enable printing (see data.table FAQ 2.23)
@@ -374,7 +379,7 @@ format_sci <- function(x,
 #' `format_engr()` is a wrapper for the more general function `format_numbers()`.
 #' Where defaults are defined by `formatdown_options()`, users may reassign
 #' the arguments locally in the function call or globally using
-#' `format_down_options()`.
+#' `formatdown_options()`.
 #'
 #' Arguments after the dots (`...`) must be referred to by name.
 #'
@@ -395,8 +400,13 @@ format_engr <- function(x,
                         # options
                         delim        = formatdown_options("delim"),
                         size         = formatdown_options("size"),
-                        decimal_mark = formatdown_options("decimal_mark"),
-                        whitespace   = formatdown_options("whitespace")) {
+                        decimal_mark   = formatdown_options("decimal_mark"),
+                        small_mark     = formatdown_options("small_mark"),
+                        small_interval = formatdown_options("small_interval"),
+                        whitespace     = formatdown_options("whitespace")) {
+
+  # Arguments after dots must be named
+  arg_after_dots_named(...)
 
   # wrap format_numbers()
   output <- format_numbers(x          = x,
@@ -407,15 +417,15 @@ format_engr <- function(x,
                            # options
                            delim        = delim,
                            size         = size,
-                           decimal_mark = decimal_mark,
-                           whitespace   = whitespace,
+                           decimal_mark   = decimal_mark,
+                           small_mark     = small_mark,
+                           small_interval = small_interval,
+                           whitespace     = whitespace,
 
                            # wrapper pre-sets
                            format         = "engr",
                            big_mark       = formatdown_options("big_mark"),
-                           big_interval   = formatdown_options("big_interval"),
-                           small_mark     = formatdown_options("small_mark"),
-                           small_interval = formatdown_options("small_interval")
+                           big_interval   = formatdown_options("big_interval")
   )
 
   # enable printing (see data.table FAQ 2.23)
@@ -437,7 +447,7 @@ format_engr <- function(x,
 #' `format_dcml()` is a wrapper for the more general function `format_numbers()`.
 #' Where defaults are defined by `formatdown_options()`, users may reassign
 #' the arguments locally in the function call or globally using
-#' `format_down_options()`.
+#' `formatdown_options()`.
 #'
 #' Arguments after the dots (`...`) must be referred to by name.
 #'
@@ -462,6 +472,9 @@ format_dcml <- function(x,
                         small_interval = formatdown_options("small_interval"),
                         whitespace     = formatdown_options("whitespace")) {
 
+  # Arguments after dots must be named
+  arg_after_dots_named(...)
+
   # wrap for format_numbers()
   output <- format_numbers(x      = x,
                            digits = digits,
@@ -476,7 +489,7 @@ format_dcml <- function(x,
                            small_interval = small_interval,
                            whitespace     = whitespace,
 
-                           # wrapper pre-sets
+                           # wrapper presets
                            format     = "dcml",
                            omit_power = NULL,
                            set_power  = NULL)

@@ -43,7 +43,6 @@ test_format_text<- function() {
   # face options c("plain", "italic", "bold", "sans", "mono")
   x <- "A"
   expect_equal(format_text(x), format_text(x, face = "plain"))
-  # expect_equal(format_text(x), format_text(x, face = NA_character_))
   ans6a <-"$\\mathrm{A}$"
   expect_equal(format_text(x, face = "plain"),  ans6a)
   ans6b <-"$\\mathit{A}$"
@@ -55,37 +54,6 @@ test_format_text<- function() {
   ans6e <-"$\\mathtt{A}$"
   expect_equal(format_text(x, face = "mono"),   ans6e)
 
-  # size options, choices = c("scriptsize", "small", "normalsize", "large", "huge")
-  x <- "A"
-  ans7z <-"$\\mathrm{A}$"
-  expect_equal(format_text(x),                       ans7z)
-  expect_equal(format_text(x, size = NA_character_), ans7z)
-
-  ans7a <-"$\\scriptsize \\mathrm{A}$"
-  expect_equal(format_text(x, size = "scriptsize"),  ans7a)
-
-  ans7b <-"$\\small \\mathrm{A}$"
-  expect_equal(format_text(x, size = "small"),       ans7b)
-
-  ans7c <-"$\\normalsize \\mathrm{A}$"
-  expect_equal(format_text(x, size = "normalsize"),  ans7c)
-
-  ans7d <-"$\\large \\mathrm{A}$"
-  expect_equal(format_text(x, size = "large"),       ans7d)
-
-  ans7e <-"$\\huge \\mathrm{A}$"
-  expect_equal(format_text(x, size = "huge"),        ans7e)
-
-  # Delimiter options
-  x   <- "a"
-  ans8 <- c("$\\mathrm{a}$")
-  expect_equal(format_text(x, delim = "$"), ans8)
-  expect_equal(format_text(x, delim = c("$", "$")), ans8)
-
-  ans9 <- c("\\(\\mathrm{a}\\)")
-  expect_equal(format_text(x, delim = "\\("), ans9)
-  expect_equal(format_text(x, delim = c("\\(", "\\)")), ans9)
-
   # Data frame, one column as vector
   x   <- air_meas[, (humid)]
   ans10 <- c("$\\mathrm{low}$",
@@ -95,45 +63,21 @@ test_format_text<- function() {
            "$\\mathrm{high}$")
   expect_equal(format_text(x), ans10)
 
-  # OPTIONS ------------------------
-  formatdown_options(size = "large", delim = "\\(")
-
-  ans11 <- formatdown_options("size")
-  expect_equal("large", ans11)
-
-  ans12 <- formatdown_options("delim")
-  expect_equal("\\(", ans12)
-
-  x <- "A"
-  ans13 <- "\\(\\large \\mathrm{A}\\)"
-  expect_equal(format_text(x), ans13)
-
-  # reset to defaults
-  formatdown_options(reset = TRUE)
-
   # ERRORS  ------------------------
-  # Errors for incorrect x argument
-  expect_error(format_text(x = air_meas))
+  x <- "hello world"
 
-  # Errors for incorrect face argument
-  expect_error(format_text(x, face = c(3, 4)))
-  expect_error(format_text(x, face = "bold.italic"))
+  # arguments of incorrect class
+  expect_error(format_text(x = air_meas))
   expect_error(format_text(x, face = TRUE))
 
-  # Errors for incorrect size argument
-  expect_error(format_text(x, size = c(3, 4)))
-  expect_error(format_text(x, size = "Huge"))
-  expect_error(format_text(x, size = TRUE))
-
-  # Errors for incorrect delim argument
-  expect_error(format_text(x, delim = c("")))
-  expect_error(format_text(x, delim = 1))
-  expect_error(format_text(x, delim = c("$", "$", "$")))
-  expect_error(format_text(x, delim = NA_character_))
+  # arguments not among allowed choices
+  expect_error(format_text(x, face = c("plain", "bold")))
+  expect_error(format_text(x, face = "bold.italic"))
 
   # arguments after dots must be named
-  expect_error(format_text(x, face = "plain", "small"))
-  expect_error(format_text(x, face = "plain", size = "small", "$"))
+  expect_error(format_text(x, "plain", "small"))
+  expect_error(format_text(x, "plain", size = "small", "$"))
+  expect_error(format_text(x, "plain", size = "small", delim = "$", "\\\\>"))
 
   # function output not printed
   invisible(NULL)

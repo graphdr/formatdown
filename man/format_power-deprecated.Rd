@@ -46,7 +46,8 @@ notation and delimited as inline math markup.
 }
 \description{
 This function is deprecated because it's a special case of the new
-\code{\link[=format_numbers]{format_numbers()}} function.
+\code{\link[=format_numbers]{format_numbers()}} function. In addition, the new function includes features
+not available in the deprecated function.
 }
 \details{
 Convert the elements of a numerical vector to character strings in which the

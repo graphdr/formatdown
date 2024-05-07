@@ -88,7 +88,7 @@ in an R markdown document.
 \code{format_dcml()} is a wrapper for the more general function \code{format_numbers()}.
 Where defaults are defined by \code{formatdown_options()}, users may reassign
 the arguments locally in the function call or globally using
-\code{format_down_options()}.
+\code{formatdown_options()}.
 
 Arguments after the dots (\code{...}) must be referred to by name.
 }
@@ -157,8 +157,8 @@ format_sci(x, omit_power = 2, set_power = 2)
 
 # decimal format ignores set_power
 x <- 103400
-format_dcml(x)
-format_dcml(x, set_power = 3)
+format_numbers(x, format = "dcml")
+format_numbers(x, format = "dcml", set_power = 3)
 
 }
 \seealso{

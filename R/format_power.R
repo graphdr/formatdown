@@ -2,7 +2,8 @@
 #' Format powers of ten
 #'
 #' This function is deprecated because it's a special case of the new
-#' [format_numbers()] function.
+#' [format_numbers()] function. In addition, the new function includes features
+#' not available in the deprecated function.
 #'
 #' Convert the elements of a numerical vector to character strings in which the
 #' numbers are formatted using powers-of-ten notation in scientific or

@@ -103,7 +103,6 @@ format_dcml(x)
 format_dcml(x, delim = "\\\\(")
 
 # size
-format_dcml(x)
 format_dcml(x, size = "small")
 format_dcml(x, size = "\\\\small")
 
@@ -122,20 +121,24 @@ format_dcml(y, 9, big_mark = "thin", big_interval = 3)
 format_dcml(y, 9, big_mark = "thin", big_interval = 5)
 
 # small_mark
-z <- 1.602176634e-9
+z <- 1.602176634e-8
 format_sci(z, 10)
 format_sci(z, 10, small_mark = "thin")
 format_sci(z, 10, small_mark = "\\\\\\\\,")
+format_engr(z, 10, small_mark = "thin")
 
 # small_interval
 format_sci(z, 10, small_mark = "thin", small_interval = 3)
 format_sci(z, 10, small_mark = "thin", small_interval = 5)
+format_engr(z, 10, small_mark = "thin", small_interval = 5)
 
 # whitespace in text
 p <- "Hello world!"
 format_text(p, whitespace = "\\\\\\\\:")
 
 # whitespace in physical units expression
+x <- pi
 units(x) <- "m/s"
 format_dcml(x, whitespace = "\\\\\\\\:")
+
 }
