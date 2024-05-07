@@ -14,7 +14,7 @@ rendering as inline equations in an R markdown document."><meta property="og:ima
     
     <a class="navbar-brand me-2" href="../index.html">formatdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,6 +74,8 @@ rendering as inline equations in an R markdown document.</p>
 <span>  delim <span class="op">=</span> <span class="fu"><a href="formatdown_options.html">formatdown_options</a></span><span class="op">(</span><span class="st">"delim"</span><span class="op">)</span>,</span>
 <span>  size <span class="op">=</span> <span class="fu"><a href="formatdown_options.html">formatdown_options</a></span><span class="op">(</span><span class="st">"size"</span><span class="op">)</span>,</span>
 <span>  decimal_mark <span class="op">=</span> <span class="fu"><a href="formatdown_options.html">formatdown_options</a></span><span class="op">(</span><span class="st">"decimal_mark"</span><span class="op">)</span>,</span>
+<span>  small_mark <span class="op">=</span> <span class="fu"><a href="formatdown_options.html">formatdown_options</a></span><span class="op">(</span><span class="st">"small_mark"</span><span class="op">)</span>,</span>
+<span>  small_interval <span class="op">=</span> <span class="fu"><a href="formatdown_options.html">formatdown_options</a></span><span class="op">(</span><span class="st">"small_interval"</span><span class="op">)</span>,</span>
 <span>  whitespace <span class="op">=</span> <span class="fu"><a href="formatdown_options.html">formatdown_options</a></span><span class="op">(</span><span class="st">"whitespace"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -136,6 +138,21 @@ Possible values are a period <code>"."</code> (default) or a comma <code>","</co
 to <code>formatC(decimal.mark)</code>.</p></dd>
 
 
+<dt>small_mark</dt>
+<dd><p>Character, length 1, used as the mark between every
+<code>small_interval</code> number of digits to the right of the decimal marker to
+improve readability. Possible values are empty <code>""</code> (default) or
+<code>"thin"</code> to produce a LaTeX-style thin, horizontal space. One may also
+assign the thin-space markup itself <code>"\\\\,"</code>.
+Passed to <code>formatC(small.mark)</code>.</p></dd>
+
+
+<dt>small_interval</dt>
+<dd><p>Integer, length 1, that defines the number of digits
+(default 5) in groups separated by <code>small_mark</code>. Passed to
+<code>formatC(small.interval)</code>.</p></dd>
+
+
 <dt>whitespace</dt>
 <dd><p>Character, length 1, to define the LaTeX-style
 math-mode macro to preserve a horizontal space between words of text or
@@ -158,7 +175,7 @@ in an R markdown document.</p>
 <code>format_engr()</code> is a wrapper for the more general function <code><a href="format_numbers.html">format_numbers()</a></code>.
 Where defaults are defined by <code><a href="formatdown_options.html">formatdown_options()</a></code>, users may reassign
 the arguments locally in the function call or globally using
-<code>format_down_options()</code>.</p>
+<code><a href="formatdown_options.html">formatdown_options()</a></code>.</p>
 <p>Arguments after the dots (<code>...</code>) must be referred to by name.</p>
     </div>
     <div class="section level2">
@@ -270,9 +287,9 @@ the arguments locally in the function call or globally using
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># decimal format ignores set_power</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">103400</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="format_dcml.html">format_dcml</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="format_numbers.html">format_numbers</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"dcml"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$103400$"</span>
-<span class="r-in"><span><span class="fu"><a href="format_dcml.html">format_dcml</a></span><span class="op">(</span><span class="va">x</span>, set_power <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="format_numbers.html">format_numbers</a></span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"dcml"</span>, set_power <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$103400$"</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

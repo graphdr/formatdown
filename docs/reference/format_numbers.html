@@ -18,7 +18,7 @@ notation."><meta property="og:image" content="https://graphdr.github.io/formatdo
     
     <a class="navbar-brand me-2" href="../index.html">formatdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -332,9 +332,9 @@ to the formatted numerical value inside the math delimiters.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># decimal format ignores set_power</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">103400</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="format_dcml.html">format_dcml</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"dcml"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$103400$"</span>
-<span class="r-in"><span><span class="fu"><a href="format_dcml.html">format_dcml</a></span><span class="op">(</span><span class="va">x</span>, set_power <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"dcml"</span>, set_power <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$103400$"</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

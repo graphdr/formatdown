@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">formatdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,15 +53,14 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="formatdown-development-version">formatdown (development version)<a class="anchor" aria-label="anchor" href="#formatdown-development-version"></a></h2>
-<p>2024-04-29</p>
-<ul><li>
-<code><a href="../reference/format_numbers.html">format_numbers()</a></code> replaces the now deprecated <code><a href="../reference/formatdown-deprecated.html">format_decimal()</a></code>, <code><a href="../reference/formatdown-deprecated.html">format_power()</a></code>, and <code><a href="../reference/formatdown-deprecated.html">format_units()</a></code>.</li>
-<li>add <code><a href="../reference/format_sci.html">format_sci()</a></code>, <code><a href="../reference/format_engr.html">format_engr()</a></code>, and <code><a href="../reference/format_dcml.html">format_dcml()</a></code> that wrap <code><a href="../reference/format_numbers.html">format_numbers()</a></code>
+<h2 class="pkg-version" data-toc-text="0.1.4" id="formatdown-014">formatdown 0.1.4<a class="anchor" aria-label="anchor" href="#formatdown-014"></a></h2>
+<p>2024-05-06</p>
+<ul><li>added <code><a href="../reference/formatdown_options.html">formatdown_options()</a></code> to set global options, including the ability to change the decimal marker to a comma instead of a period.</li>
+<li>deprecated <code><a href="../reference/formatdown-deprecated.html">format_decimal()</a></code>, <code><a href="../reference/formatdown-deprecated.html">format_power()</a></code>, and <code><a href="../reference/formatdown-deprecated.html">format_units()</a></code>
 </li>
-<li>add <code><a href="../reference/formatdown_options.html">formatdown_options()</a></code> for global options and update functions to use them.</li>
-<li>edit <code><a href="../reference/format_text.html">format_text()</a></code> to retain spaces in a character input</li>
-<li>update examples, tests, and vignettes to reflect changes</li>
+<li>added <code><a href="../reference/format_numbers.html">format_numbers()</a></code> and its convenience wrappers <code><a href="../reference/format_sci.html">format_sci()</a></code>, <code><a href="../reference/format_engr.html">format_engr()</a></code>, and <code><a href="../reference/format_dcml.html">format_dcml()</a></code> to replace the deprecated functions and take advantage of the new global options</li>
+<li>edited <code><a href="../reference/format_text.html">format_text()</a></code> to retain spaces in a character input</li>
+<li>updated examples, tests, and vignettes to reflect changes</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.3" id="formatdown-013">formatdown 0.1.3<a class="anchor" aria-label="anchor" href="#formatdown-013"></a></h2>
