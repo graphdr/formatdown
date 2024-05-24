@@ -108,8 +108,6 @@ which, in an `.Rmd` or `.qmd` output document, are rendered using inline R code 
 ```{r}
 #| echo: false
 
-formatdown_options(size = "small")
-
 x <- 101300
 sci <- format_sci(x)
 engr <- format_engr(x)

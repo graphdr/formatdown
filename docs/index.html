@@ -100,7 +100,7 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Planck’s constant would be typeset as <span class="math inline">6.63 × 10<sup>−34</sup> J Hz<sup>−1</sup></span> rather than the familiar forms we use in communicating with computers, such as <code>6.63*10^-34</code> or <code>6.63E-34</code>.</p>
+<p>In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Planck’s constant would be typeset as <span class="math inline">$\small 6.63 \times 10^{-34}\ \mathrm{J/Hz}$</span> rather than the familiar forms we use in communicating with computers, such as <code>6.63*10^-34</code> or <code>6.63E-34</code>.</p>
 <p>The functions in this package help an author of an R markdown document convert large and small numbers to character strings, formatted using powers-of-ten notation. In addition, decimal numbers and text can be formatted with the same font face and size as the power-of-ten numbers for a consistent typeface across all columns of a data table.</p>
 <p>Formatting tools include:</p>
 <p><strong><code><a href="reference/format_numbers.html">format_numbers()</a></code></strong><br>
@@ -154,19 +154,19 @@ Global options are provided for arguments that users would likely prefer to set 
 <tbody>
 <tr class="odd">
 <td align="right">scientific</td>
-<td align="right"><span class="math inline">1.013 × 10<sup>5</sup></span></td>
+<td align="right"><span class="math inline">$\small 1.013 \times 10^{5}$</span></td>
 </tr>
 <tr class="even">
 <td align="right">engineering</td>
-<td align="right"><span class="math inline">101.3 × 10<sup>3</sup></span></td>
+<td align="right"><span class="math inline">$\small 101.3 \times 10^{3}$</span></td>
 </tr>
 <tr class="odd">
 <td align="right">decimal</td>
-<td align="right"><span class="math inline">101300</span></td>
+<td align="right"><span class="math inline">$\small 101300$</span></td>
 </tr>
 <tr class="even">
 <td align="right">units</td>
-<td align="right"><span class="math inline">1013 hPa</span></td>
+<td align="right"><span class="math inline">$\small 1013\ \mathrm{hPa}$</span></td>
 </tr>
 </tbody>
 </table>
@@ -206,11 +206,11 @@ Global options are provided for arguments that users would likely prefer to set 
 <span>    <span class="st">"Elastic modulus"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
+<col width="22%">
+<col width="14%">
+<col width="21%">
 <col width="20%">
-<col width="16%">
-<col width="23%">
-<col width="23%">
-<col width="16%">
+<col width="19%">
 </colgroup>
 <thead><tr class="header">
 <th align="right">Metal</th>
@@ -221,46 +221,46 @@ Global options are provided for arguments that users would likely prefer to set 
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="right"><span class="math inline">aluminum 6061</span></td>
-<td align="right"><span class="math inline">2700</span></td>
-<td align="right"><span class="math inline">24.3 × 10<sup>−6</sup></span></td>
-<td align="right"><span class="math inline">156</span></td>
-<td align="right"><span class="math inline">73.1 GPa</span></td>
+<td align="right"><span class="math inline">$\small \mathrm{aluminum\ 6061}$</span></td>
+<td align="right"><span class="math inline">$\small 2700$</span></td>
+<td align="right"><span class="math inline">$\small 24.3 \times 10^{-6}$</span></td>
+<td align="right"><span class="math inline">$\small 156$</span></td>
+<td align="right"><span class="math inline">$\small 73.1\ \mathrm{GPa}$</span></td>
 </tr>
 <tr class="even">
-<td align="right"><span class="math inline">copper</span></td>
-<td align="right"><span class="math inline">8900</span></td>
-<td align="right"><span class="math inline">16.6 × 10<sup>−6</sup></span></td>
-<td align="right"><span class="math inline">393</span></td>
-<td align="right"><span class="math inline">117 GPa</span></td>
+<td align="right"><span class="math inline">$\small \mathrm{copper}$</span></td>
+<td align="right"><span class="math inline">$\small 8900$</span></td>
+<td align="right"><span class="math inline">$\small 16.6 \times 10^{-6}$</span></td>
+<td align="right"><span class="math inline">$\small 393$</span></td>
+<td align="right"><span class="math inline">$\small 117\ \mathrm{GPa}$</span></td>
 </tr>
 <tr class="odd">
-<td align="right"><span class="math inline">lead</span></td>
-<td align="right"><span class="math inline">11300</span></td>
-<td align="right"><span class="math inline">52.7 × 10<sup>−6</sup></span></td>
-<td align="right"><span class="math inline">37.0</span></td>
-<td align="right"><span class="math inline">13.8 GPa</span></td>
+<td align="right"><span class="math inline">$\small \mathrm{lead}$</span></td>
+<td align="right"><span class="math inline">$\small 11300$</span></td>
+<td align="right"><span class="math inline">$\small 52.7 \times 10^{-6}$</span></td>
+<td align="right"><span class="math inline">$\small 37.0$</span></td>
+<td align="right"><span class="math inline">$\small 13.8\ \mathrm{GPa}$</span></td>
 </tr>
 <tr class="even">
-<td align="right"><span class="math inline">platinum</span></td>
-<td align="right"><span class="math inline">21400</span></td>
-<td align="right"><span class="math inline">9.00 × 10<sup>−6</sup></span></td>
-<td align="right"><span class="math inline">69.2</span></td>
-<td align="right"><span class="math inline">147 GPa</span></td>
+<td align="right"><span class="math inline">$\small \mathrm{platinum}$</span></td>
+<td align="right"><span class="math inline">$\small 21400$</span></td>
+<td align="right"><span class="math inline">$\small 9.00 \times 10^{-6}$</span></td>
+<td align="right"><span class="math inline">$\small 69.2$</span></td>
+<td align="right"><span class="math inline">$\small 147\ \mathrm{GPa}$</span></td>
 </tr>
 <tr class="odd">
-<td align="right"><span class="math inline">steel 1020</span></td>
-<td align="right"><span class="math inline">7850</span></td>
-<td align="right"><span class="math inline">11.3 × 10<sup>−6</sup></span></td>
-<td align="right"><span class="math inline">46.7</span></td>
-<td align="right"><span class="math inline">207 GPa</span></td>
+<td align="right"><span class="math inline">$\small \mathrm{steel\ 1020}$</span></td>
+<td align="right"><span class="math inline">$\small 7850$</span></td>
+<td align="right"><span class="math inline">$\small 11.3 \times 10^{-6}$</span></td>
+<td align="right"><span class="math inline">$\small 46.7$</span></td>
+<td align="right"><span class="math inline">$\small 207\ \mathrm{GPa}$</span></td>
 </tr>
 <tr class="even">
-<td align="right"><span class="math inline">titanium</span></td>
-<td align="right"><span class="math inline">4850</span></td>
-<td align="right"><span class="math inline">9.36 × 10<sup>−6</sup></span></td>
-<td align="right"><span class="math inline">7.44</span></td>
-<td align="right"><span class="math inline">102 GPa</span></td>
+<td align="right"><span class="math inline">$\small \mathrm{titanium}$</span></td>
+<td align="right"><span class="math inline">$\small 4850$</span></td>
+<td align="right"><span class="math inline">$\small 9.36 \times 10^{-6}$</span></td>
+<td align="right"><span class="math inline">$\small 7.44$</span></td>
+<td align="right"><span class="math inline">$\small 102\ \mathrm{GPa}$</span></td>
 </tr>
 </tbody>
 </table>
@@ -272,11 +272,11 @@ Global options are provided for arguments that users would likely prefer to set 
 <p>Using the same code as above to format the metals data yields,</p>
 <table class="table">
 <colgroup>
+<col width="22%">
+<col width="14%">
+<col width="21%">
 <col width="20%">
-<col width="16%">
-<col width="23%">
-<col width="23%">
-<col width="16%">
+<col width="19%">
 </colgroup>
 <thead><tr class="header">
 <th align="right">Metal</th>
@@ -287,46 +287,46 @@ Global options are provided for arguments that users would likely prefer to set 
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="right"><span class="math inline">aluminum 6061</span></td>
-<td align="right"><span class="math inline">2700</span></td>
-<td align="right"><span class="math inline">24, 3 × 10<sup>−6</sup></span></td>
-<td align="right"><span class="math inline">156</span></td>
-<td align="right"><span class="math inline">73, 1 GPa</span></td>
+<td align="right"><span class="math inline">$\small \mathrm{aluminum\ 6061}$</span></td>
+<td align="right"><span class="math inline">$\small 2700$</span></td>
+<td align="right"><span class="math inline">$\small 24,3 \times 10^{-6}$</span></td>
+<td align="right"><span class="math inline">$\small 156$</span></td>
+<td align="right"><span class="math inline">$\small 73,1\ \mathrm{GPa}$</span></td>
 </tr>
 <tr class="even">
-<td align="right"><span class="math inline">copper</span></td>
-<td align="right"><span class="math inline">8900</span></td>
-<td align="right"><span class="math inline">16, 6 × 10<sup>−6</sup></span></td>
-<td align="right"><span class="math inline">393</span></td>
-<td align="right"><span class="math inline">117 GPa</span></td>
+<td align="right"><span class="math inline">$\small \mathrm{copper}$</span></td>
+<td align="right"><span class="math inline">$\small 8900$</span></td>
+<td align="right"><span class="math inline">$\small 16,6 \times 10^{-6}$</span></td>
+<td align="right"><span class="math inline">$\small 393$</span></td>
+<td align="right"><span class="math inline">$\small 117\ \mathrm{GPa}$</span></td>
 </tr>
 <tr class="odd">
-<td align="right"><span class="math inline">lead</span></td>
-<td align="right"><span class="math inline">11300</span></td>
-<td align="right"><span class="math inline">52, 7 × 10<sup>−6</sup></span></td>
-<td align="right"><span class="math inline">37, 0</span></td>
-<td align="right"><span class="math inline">13, 8 GPa</span></td>
+<td align="right"><span class="math inline">$\small \mathrm{lead}$</span></td>
+<td align="right"><span class="math inline">$\small 11300$</span></td>
+<td align="right"><span class="math inline">$\small 52,7 \times 10^{-6}$</span></td>
+<td align="right"><span class="math inline">$\small 37,0$</span></td>
+<td align="right"><span class="math inline">$\small 13,8\ \mathrm{GPa}$</span></td>
 </tr>
 <tr class="even">
-<td align="right"><span class="math inline">platinum</span></td>
-<td align="right"><span class="math inline">21400</span></td>
-<td align="right"><span class="math inline">9, 00 × 10<sup>−6</sup></span></td>
-<td align="right"><span class="math inline">69, 2</span></td>
-<td align="right"><span class="math inline">147 GPa</span></td>
+<td align="right"><span class="math inline">$\small \mathrm{platinum}$</span></td>
+<td align="right"><span class="math inline">$\small 21400$</span></td>
+<td align="right"><span class="math inline">$\small 9,00 \times 10^{-6}$</span></td>
+<td align="right"><span class="math inline">$\small 69,2$</span></td>
+<td align="right"><span class="math inline">$\small 147\ \mathrm{GPa}$</span></td>
 </tr>
 <tr class="odd">
-<td align="right"><span class="math inline">steel 1020</span></td>
-<td align="right"><span class="math inline">7850</span></td>
-<td align="right"><span class="math inline">11, 3 × 10<sup>−6</sup></span></td>
-<td align="right"><span class="math inline">46, 7</span></td>
-<td align="right"><span class="math inline">207 GPa</span></td>
+<td align="right"><span class="math inline">$\small \mathrm{steel\ 1020}$</span></td>
+<td align="right"><span class="math inline">$\small 7850$</span></td>
+<td align="right"><span class="math inline">$\small 11,3 \times 10^{-6}$</span></td>
+<td align="right"><span class="math inline">$\small 46,7$</span></td>
+<td align="right"><span class="math inline">$\small 207\ \mathrm{GPa}$</span></td>
 </tr>
 <tr class="even">
-<td align="right"><span class="math inline">titanium</span></td>
-<td align="right"><span class="math inline">4850</span></td>
-<td align="right"><span class="math inline">9, 36 × 10<sup>−6</sup></span></td>
-<td align="right"><span class="math inline">7, 44</span></td>
-<td align="right"><span class="math inline">102 GPa</span></td>
+<td align="right"><span class="math inline">$\small \mathrm{titanium}$</span></td>
+<td align="right"><span class="math inline">$\small 4850$</span></td>
+<td align="right"><span class="math inline">$\small 9,36 \times 10^{-6}$</span></td>
+<td align="right"><span class="math inline">$\small 7,44$</span></td>
+<td align="right"><span class="math inline">$\small 102\ \mathrm{GPa}$</span></td>
 </tr>
 </tbody>
 </table>
