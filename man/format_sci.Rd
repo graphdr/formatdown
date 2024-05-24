@@ -97,35 +97,23 @@ Arguments after the dots (\code{...}) must be referred to by name.
 \examples{
 # input: single number
 x <- 6.0221E+23
-format_numbers(x)
+format_sci(x)
 
 # input: units class
 x <- 103400
 units(x) <- "N m2 C-2"
-format_numbers(x)
+format_sci(x)
 
 # input: vector
 data("metals", package = "formatdown")
 x <- metals$dens
-format_numbers(x)
+format_sci(x)
 
 # significant digits
 x <- 9.75358e+5
-format_numbers(x, 2)
-format_numbers(x, 3)
-format_numbers(x, 4)
-
-# format & wrappers: format_engr(), format_sci(), format_dcml()
-x <- 6.0221E+23
-format_numbers(x, format = "engr")
-format_engr(x)
-
-format_numbers(x, format = "sci")
-format_sci(x)
-
-x <- 103400
-format_numbers(x, format = "dcml")
-format_dcml(x)
+format_sci(x, 2)
+format_sci(x, 3)
+format_sci(x, 4)
 
 # input: data frame
 x <- metals[, c("thrm_exp", "thrm_cond")]
@@ -145,8 +133,6 @@ format_sci(x, set_power = 3)
 
 # set_power overrides format
 x <- 6.0221E+23
-format_engr(x)
-format_engr(x, set_power = 24L)
 format_sci(x)
 format_sci(x, set_power = 24L)
 
@@ -157,10 +143,6 @@ format_sci(x, omit_power = 5, set_power = 2)
 format_sci(x, omit_power = 2)
 format_sci(x, omit_power = 2, set_power = 2)
 
-# decimal format ignores set_power
-x <- 103400
-format_numbers(x, format = "dcml")
-format_numbers(x, format = "dcml", set_power = 3)
 
 }
 \seealso{

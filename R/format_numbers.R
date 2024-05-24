@@ -321,7 +321,7 @@ format_numbers <- function(x,
 #' in an R markdown document.
 #'
 #' @inherit format_numbers
-#'
+#' @example man/examples/examples_format_sci.R
 #' @family format_*
 #' @export
 format_sci <- function(x,
