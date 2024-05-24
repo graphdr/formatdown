@@ -1,11 +1,11 @@
-## formatdown development
+# formatdown development
 
 2024--05--24
 
 - Change default whitespace argument to render correctly in the README page on GitHub
 
 
-## formatdown 0.1.4
+# formatdown 0.1.4
 
 2024--05--06
 
@@ -15,7 +15,7 @@
 - edited `format_text()` to retain spaces in a character input 
 - updated examples, tests, and vignettes to reflect changes
 
-## formatdown 0.1.3
+# formatdown 0.1.3
 
 2024--03--14
 
@@ -27,7 +27,7 @@
 - add package alias
 - update tests and vignettes to reflect changes
 
-## formatdown 0.1.2
+# formatdown 0.1.2
 
 2023--06--21
 
@@ -39,7 +39,7 @@
 - Add `format_units()` and vignette. 
 
 
-## formatdown 0.1.1
+# formatdown 0.1.1
 
 2022--11--21
 
