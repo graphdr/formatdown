@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">formatdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -722,19 +722,19 @@ way, and append a units character string to the result. For example,</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 11. Units-class inputs</span></span>
 <span><span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$1.032 \\times 10^{4}\\&gt;\\mathrm{m}$"</span></span>
+<span><span class="co">#&gt; [1] "$1.032 \\times 10^{4}\\ \\mathrm{m}$"</span></span>
 <span><span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$1.065 \\times 10^{8}\\&gt;\\mathrm{m^{2}}$"</span></span>
+<span><span class="co">#&gt; [1] "$1.065 \\times 10^{8}\\ \\mathrm{m^{2}}$"</span></span>
 <span><span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$1.146 \\times 10^{9}\\&gt;\\mathrm{ft^{2}}$"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "$1.146 \\times 10^{9}\\ \\mathrm{ft^{2}}$"</span></span></code></pre></div>
 <p>Example 11 renders as,</p>
 <ul>
-<li><span class="math inline">\(\small 1.032 \times
-10^{4}\&gt;\mathrm{m}\)</span></li>
-<li><span class="math inline">\(\small 1.065 \times
-10^{8}\&gt;\mathrm{m^{2}}\)</span></li>
-<li><span class="math inline">\(\small 1.146 \times
-10^{9}\&gt;\mathrm{ft^{2}}\)</span></li>
+<li><span class="math inline">\(\small 1.032 \times 10^{4}\
+\mathrm{m}\)</span></li>
+<li><span class="math inline">\(\small 1.065 \times 10^{8}\
+\mathrm{m^{2}}\)</span></li>
+<li><span class="math inline">\(\small 1.146 \times 10^{9}\
+\mathrm{ft^{2}}\)</span></li>
 </ul>
 <p>More complicated units can be managed. For example the Newtonian
 gravitational constant could be formatted as follows, where the
@@ -761,45 +761,45 @@ collecting the results in a data frame yields,</p>
 <tbody>
 <tr class="odd">
 <td align="left"><span class="math inline">\(\small c\)</span></td>
-<td align="left"><span class="math inline">\(\small
-\mathrm{speed\&gt;of\&gt;light\&gt;in\&gt;a\&gt;vacuum}\)</span></td>
-<td align="left"><span class="math inline">\(\small 2.998 \times
-10^{8}\&gt;\mathrm{m\&gt;s^{-1}}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathrm{speed\ of\
+light\ in\ a\ vacuum}\)</span></td>
+<td align="left"><span class="math inline">\(\small 2.998 \times 10^{8}\
+\mathrm{m\ s^{-1}}\)</span></td>
 </tr>
 <tr class="even">
 <td align="left"><span class="math inline">\(\small h\)</span></td>
-<td align="left"><span class="math inline">\(\small
-\mathrm{Planck\&gt;constant}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathrm{Planck\
+constant}\)</span></td>
 <td align="left"><span class="math inline">\(\small 6.626 \times
-10^{-34}\&gt;\mathrm{J\&gt;Hz^{-1}}\)</span></td>
+10^{-34}\ \mathrm{J\ Hz^{-1}}\)</span></td>
 </tr>
 <tr class="odd">
 <td align="left"><span class="math inline">\(\small \mu_0\)</span></td>
-<td align="left"><span class="math inline">\(\small
-\mathrm{vacuum\&gt;magnetic\&gt;permeability}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathrm{vacuum\
+magnetic\ permeability}\)</span></td>
 <td align="left"><span class="math inline">\(\small 1.257 \times
-10^{-6}\&gt;\mathrm{N\&gt;A^{-2}}\)</span></td>
+10^{-6}\ \mathrm{N\ A^{-2}}\)</span></td>
 </tr>
 <tr class="even">
 <td align="left"><span class="math inline">\(\small G\)</span></td>
-<td align="left"><span class="math inline">\(\small
-\mathrm{Newtonian\&gt;gravitational\&gt;constant}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathrm{Newtonian\
+gravitational\ constant}\)</span></td>
 <td align="left"><span class="math inline">\(\small 6.674 \times
-10^{-11}\&gt;\mathrm{m^{3}\&gt;kg^{-1}\&gt;s^{-2}}\)</span></td>
+10^{-11}\ \mathrm{m^{3}\ kg^{-1}\ s^{-2}}\)</span></td>
 </tr>
 <tr class="odd">
 <td align="left"><span class="math inline">\(\small k_e\)</span></td>
-<td align="left"><span class="math inline">\(\small
-\mathrm{Coulomb\&gt;constant}\)</span></td>
-<td align="left"><span class="math inline">\(\small 8.988 \times
-10^{9}\&gt;\mathrm{m^{2}\&gt;N\&gt;C^{-2}}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathrm{Coulomb\
+constant}\)</span></td>
+<td align="left"><span class="math inline">\(\small 8.988 \times 10^{9}\
+\mathrm{m^{2}\ N\ C^{-2}}\)</span></td>
 </tr>
 <tr class="even">
 <td align="left"><span class="math inline">\(\small \sigma\)</span></td>
 <td align="left"><span class="math inline">\(\small
-\mathrm{Stefan-Boltzmann\&gt;constant}\)</span></td>
+\mathrm{Stefan-Boltzmann\ constant}\)</span></td>
 <td align="left"><span class="math inline">\(\small 5.670 \times
-10^{-8}\&gt;\mathrm{W\&gt;K^{-4}\&gt;m^{-2}}\)</span></td>
+10^{-8}\ \mathrm{W\ K^{-4}\ m^{-2}}\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -853,54 +853,54 @@ same physical units and are formatted as a vector. For example,</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="right"><span class="math inline">\(\small
-294.1\&gt;\mathrm{K}\)</span></td>
+<td align="right"><span class="math inline">\(\small 294.1\
+\mathrm{K}\)</span></td>
 <td align="right"><span class="math inline">\(\small 101.1 \times
-10^{3}\&gt;\mathrm{Pa}\)</span></td>
-<td align="right"><span class="math inline">\(\small
-287.0\&gt;\mathrm{J\&gt;K^{-1}\&gt;kg^{-1}}\)</span></td>
-<td align="right"><span class="math inline">\(\small
-1.198\&gt;\mathrm{kg\&gt;m^{-3}}\)</span></td>
+10^{3}\ \mathrm{Pa}\)</span></td>
+<td align="right"><span class="math inline">\(\small 287.0\ \mathrm{J\
+K^{-1}\ kg^{-1}}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.198\ \mathrm{kg\
+m^{-3}}\)</span></td>
 </tr>
 <tr class="even">
-<td align="right"><span class="math inline">\(\small
-294.1\&gt;\mathrm{K}\)</span></td>
+<td align="right"><span class="math inline">\(\small 294.1\
+\mathrm{K}\)</span></td>
 <td align="right"><span class="math inline">\(\small 101.0 \times
-10^{3}\&gt;\mathrm{Pa}\)</span></td>
-<td align="right"><span class="math inline">\(\small
-287.0\&gt;\mathrm{J\&gt;K^{-1}\&gt;kg^{-1}}\)</span></td>
-<td align="right"><span class="math inline">\(\small
-1.196\&gt;\mathrm{kg\&gt;m^{-3}}\)</span></td>
+10^{3}\ \mathrm{Pa}\)</span></td>
+<td align="right"><span class="math inline">\(\small 287.0\ \mathrm{J\
+K^{-1}\ kg^{-1}}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.196\ \mathrm{kg\
+m^{-3}}\)</span></td>
 </tr>
 <tr class="odd">
-<td align="right"><span class="math inline">\(\small
-294.6\&gt;\mathrm{K}\)</span></td>
+<td align="right"><span class="math inline">\(\small 294.6\
+\mathrm{K}\)</span></td>
 <td align="right"><span class="math inline">\(\small 101.1 \times
-10^{3}\&gt;\mathrm{Pa}\)</span></td>
-<td align="right"><span class="math inline">\(\small
-287.0\&gt;\mathrm{J\&gt;K^{-1}\&gt;kg^{-1}}\)</span></td>
-<td align="right"><span class="math inline">\(\small
-1.196\&gt;\mathrm{kg\&gt;m^{-3}}\)</span></td>
+10^{3}\ \mathrm{Pa}\)</span></td>
+<td align="right"><span class="math inline">\(\small 287.0\ \mathrm{J\
+K^{-1}\ kg^{-1}}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.196\ \mathrm{kg\
+m^{-3}}\)</span></td>
 </tr>
 <tr class="even">
-<td align="right"><span class="math inline">\(\small
-293.4\&gt;\mathrm{K}\)</span></td>
+<td align="right"><span class="math inline">\(\small 293.4\
+\mathrm{K}\)</span></td>
 <td align="right"><span class="math inline">\(\small 101.0 \times
-10^{3}\&gt;\mathrm{Pa}\)</span></td>
-<td align="right"><span class="math inline">\(\small
-287.0\&gt;\mathrm{J\&gt;K^{-1}\&gt;kg^{-1}}\)</span></td>
-<td align="right"><span class="math inline">\(\small
-1.200\&gt;\mathrm{kg\&gt;m^{-3}}\)</span></td>
+10^{3}\ \mathrm{Pa}\)</span></td>
+<td align="right"><span class="math inline">\(\small 287.0\ \mathrm{J\
+K^{-1}\ kg^{-1}}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.200\ \mathrm{kg\
+m^{-3}}\)</span></td>
 </tr>
 <tr class="odd">
-<td align="right"><span class="math inline">\(\small
-293.9\&gt;\mathrm{K}\)</span></td>
+<td align="right"><span class="math inline">\(\small 293.9\
+\mathrm{K}\)</span></td>
 <td align="right"><span class="math inline">\(\small 101.1 \times
-10^{3}\&gt;\mathrm{Pa}\)</span></td>
-<td align="right"><span class="math inline">\(\small
-287.0\&gt;\mathrm{J\&gt;K^{-1}\&gt;kg^{-1}}\)</span></td>
-<td align="right"><span class="math inline">\(\small
-1.199\&gt;\mathrm{kg\&gt;m^{-3}}\)</span></td>
+10^{3}\ \mathrm{Pa}\)</span></td>
+<td align="right"><span class="math inline">\(\small 287.0\ \mathrm{J\
+K^{-1}\ kg^{-1}}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.199\ \mathrm{kg\
+m^{-3}}\)</span></td>
 </tr>
 </tbody>
 </table>

@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">formatdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -184,20 +184,20 @@ described in the <a href="format_text.html">Format text</a> article.</p>
 <span></span>
 <span><span class="co"># 3. Character input, default delimiters</span></span>
 <span><span class="fu"><a href="../reference/format_text.html">format_text</a></span><span class="op">(</span><span class="va">txt</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$\\mathrm{Hello\\&gt;world!}$"</span></span>
+<span><span class="co">#&gt; [1] "$\\mathrm{Hello\\ world!}$"</span></span>
 <span></span>
 <span><span class="co"># 4. Character input, alternate delimiters</span></span>
 <span><span class="fu"><a href="../reference/format_text.html">format_text</a></span><span class="op">(</span><span class="va">txt</span>, delim <span class="op">=</span> <span class="st">"\\("</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "\\(\\mathrm{Hello\\&gt;world!}\\)"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "\\(\\mathrm{Hello\\ world!}\\)"</span></span></code></pre></div>
 <p><br></p>
 <p>Examples 1–4 (in inline code chunks) render as,</p>
 <ol style="list-style-type: decimal">
 <li><p><span class="math inline">\(\small 101300\)</span></p></li>
 <li><p><span class="math inline">\(\small 101300\)</span></p></li>
-<li><p><span class="math inline">\(\small
-\mathrm{Hello\&gt;world!}\)</span></p></li>
-<li><p><span class="math inline">\(\small
-\mathrm{Hello\&gt;world!}\)</span></p></li>
+<li><p><span class="math inline">\(\small \mathrm{Hello\
+world!}\)</span></p></li>
+<li><p><span class="math inline">\(\small \mathrm{Hello\
+world!}\)</span></p></li>
 </ol>
 <p><br></p>
 </div>
@@ -230,11 +230,11 @@ font size is equivalent to <code>"normalsize"</code>.</p>
 <span></span>
 <span><span class="co"># 8. Character input, default size</span></span>
 <span><span class="fu"><a href="../reference/format_text.html">format_text</a></span><span class="op">(</span><span class="va">txt</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$\\mathrm{Hello\\&gt;world!}$"</span></span>
+<span><span class="co">#&gt; [1] "$\\mathrm{Hello\\ world!}$"</span></span>
 <span></span>
 <span><span class="co"># 9. Character input</span></span>
 <span><span class="fu"><a href="../reference/format_text.html">format_text</a></span><span class="op">(</span><span class="va">txt</span>, size <span class="op">=</span> <span class="st">"large"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$\\large \\mathrm{Hello\\&gt;world!}$"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "$\\large \\mathrm{Hello\\ world!}$"</span></span></code></pre></div>
 <p><br></p>
 <p>Examples 5–9 render as,</p>
 <ol start="5" style="list-style-type: decimal">
@@ -242,9 +242,10 @@ font size is equivalent to <code>"normalsize"</code>.</p>
 <li><p><span class="math inline">\(\small 101300\)</span></p></li>
 <li><p><span class="math inline">\(\small 6.022 \times
 10^{23}\)</span></p></li>
-<li><p><span class="math inline">\(\mathrm{Hello\&gt;world!}\)</span></p></li>
-<li><p><span class="math inline">\(\large
-\mathrm{Hello\&gt;world!}\)</span></p></li>
+<li><p><span class="math inline">\(\mathrm{Hello\
+world!}\)</span></p></li>
+<li><p><span class="math inline">\(\large \mathrm{Hello\
+world!}\)</span></p></li>
 </ol>
 <p><br></p>
 <p><em>Available sizes</em></p>
@@ -291,16 +292,16 @@ Large, LARGE, and Huge).</p>
 10^{3}\)</span></td>
 </tr>
 <tr class="odd">
-<td align="right"><span class="math inline">\(\scriptsize
-\mathrm{The\&gt;cat}\)</span></td>
-<td align="right"><span class="math inline">\(\small
-\mathrm{The\&gt;cat}\)</span></td>
-<td align="right"><span class="math inline">\(\normalsize
-\mathrm{The\&gt;cat}\)</span></td>
-<td align="right"><span class="math inline">\(\large
-\mathrm{The\&gt;cat}\)</span></td>
-<td align="right"><span class="math inline">\(\huge
-\mathrm{The\&gt;cat}\)</span></td>
+<td align="right"><span class="math inline">\(\scriptsize \mathrm{The\
+cat}\)</span></td>
+<td align="right"><span class="math inline">\(\small \mathrm{The\
+cat}\)</span></td>
+<td align="right"><span class="math inline">\(\normalsize \mathrm{The\
+cat}\)</span></td>
+<td align="right"><span class="math inline">\(\large \mathrm{The\
+cat}\)</span></td>
+<td align="right"><span class="math inline">\(\huge \mathrm{The\
+cat}\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -449,8 +450,8 @@ or <span class="math inline">\(\mathtt{\small\verb|"\\\\
 <p><br></p>
 <p>Examples 18–20 render as,</p>
 <ol start="18" style="list-style-type: decimal">
-<li><p><span class="math inline">\(\small
-\mathrm{Hello\&gt;world!}\)</span></p></li>
+<li><p><span class="math inline">\(\small \mathrm{Hello\
+world!}\)</span></p></li>
 <li><p><span class="math inline">\(\small
 \mathrm{Hello\:world!}\)</span></p></li>
 <li><p><span class="math inline">\(\small \mathrm{Hello\
@@ -715,8 +716,8 @@ and power-of-ten numbers.</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left"><span class="math inline">\(\small
-\mathrm{aluminum\&gt;6061}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathrm{aluminum\
+6061}\)</span></td>
 <td align="right"><span class="math inline">\(\small 2700\)</span></td>
 <td align="right"><span class="math inline">\(\small 24.3 \times
 10^{-6}\)</span></td>
@@ -755,8 +756,8 @@ and power-of-ten numbers.</p>
 10^{9}\)</span></td>
 </tr>
 <tr class="odd">
-<td align="left"><span class="math inline">\(\small
-\mathrm{steel\&gt;1020}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathrm{steel\
+1020}\)</span></td>
 <td align="right"><span class="math inline">\(\small 7850\)</span></td>
 <td align="right"><span class="math inline">\(\small 11.3 \times
 10^{-6}\)</span></td>

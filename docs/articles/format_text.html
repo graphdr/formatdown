@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">formatdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -161,22 +161,21 @@ Arguments are explored more fully starting with the next section.</p>
 <code class="sourceCode R"><span><span class="co"># 1. One string</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="st">"Alum 6061"</span></span>
 <span><span class="fu"><a href="../reference/format_text.html">format_text</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$\\mathrm{Alum\\&gt;6061}$"</span></span>
+<span><span class="co">#&gt; [1] "$\\mathrm{Alum\\ 6061}$"</span></span>
 <span></span>
 <span><span class="co"># 2. String vector</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Alum 6061"</span>, <span class="st">"Carbon steel"</span>, <span class="st">"Ni-Cr-Fe alloy"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/format_text.html">format_text</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$\\mathrm{Alum\\&gt;6061}$"      "$\\mathrm{Carbon\\&gt;steel}$"  </span></span>
-<span><span class="co">#&gt; [3] "$\\mathrm{Ni-Cr-Fe\\&gt;alloy}$"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "$\\mathrm{Alum\\ 6061}$"      "$\\mathrm{Carbon\\ steel}$"  </span></span>
+<span><span class="co">#&gt; [3] "$\\mathrm{Ni-Cr-Fe\\ alloy}$"</span></span></code></pre></div>
 <p>Examples 1 and 2 (in inline code chunks) render as,</p>
 <ol style="list-style-type: decimal">
-<li><span class="math inline">\(\small
-\mathrm{Alum\&gt;6061}\)</span></li>
+<li><span class="math inline">\(\small \mathrm{Alum\ 6061}\)</span></li>
 <li>
-<span class="math inline">\(\small \mathrm{Alum\&gt;6061}\)</span>,
-<span class="math inline">\(\small \mathrm{Carbon\&gt;steel}\)</span>,
-<span class="math inline">\(\small
-\mathrm{Ni-Cr-Fe\&gt;alloy}\)</span>
+<span class="math inline">\(\small \mathrm{Alum\ 6061}\)</span>,
+<span class="math inline">\(\small \mathrm{Carbon\ steel}\)</span>,
+<span class="math inline">\(\small \mathrm{Ni-Cr-Fe\
+alloy}\)</span>
 </li>
 </ol>
 </div>
@@ -221,9 +220,9 @@ character if possible. Starting with character class,</p>
 <code class="sourceCode R"><span><span class="co"># 7. Date class</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/format_text.html">format_text</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$\\mathrm{2024-05-07}$"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "$\\mathrm{2024-05-24}$"</span></span></code></pre></div>
 <p>Example 7 renders as:   <span class="math inline">\(\small
-\mathrm{2024-05-07}\)</span>.</p>
+\mathrm{2024-05-24}\)</span>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 8 Factor class</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"med"</span>, <span class="st">"high"</span><span class="op">)</span><span class="op">)</span></span>
@@ -274,28 +273,28 @@ rendered).</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left"><span class="math inline">\(\small
-\mathrm{One\&gt;day}\)</span></td>
-<td align="left"><span class="math inline">\(\small
-\mathit{One\&gt;day}\)</span></td>
-<td align="left"><span class="math inline">\(\small
-\mathbf{One\&gt;day}\)</span></td>
-<td align="left"><span class="math inline">\(\small
-\mathsf{One\&gt;day}\)</span></td>
-<td align="left"><span class="math inline">\(\small
-\mathtt{One\&gt;day}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathrm{One\
+day}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathit{One\
+day}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathbf{One\
+day}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathsf{One\
+day}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathtt{One\
+day}\)</span></td>
 </tr>
 <tr class="even">
-<td align="left"><span class="math inline">\(\small
-\mathrm{at\&gt;a}\)</span></td>
-<td align="left"><span class="math inline">\(\small
-\mathit{at\&gt;a}\)</span></td>
-<td align="left"><span class="math inline">\(\small
-\mathbf{at\&gt;a}\)</span></td>
-<td align="left"><span class="math inline">\(\small
-\mathsf{at\&gt;a}\)</span></td>
-<td align="left"><span class="math inline">\(\small
-\mathtt{at\&gt;a}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathrm{at\
+a}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathit{at\
+a}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathbf{at\
+a}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathsf{at\
+a}\)</span></td>
+<td align="left"><span class="math inline">\(\small \mathtt{at\
+a}\)</span></td>
 </tr>
 <tr class="odd">
 <td align="left"><span class="math inline">\(\small
@@ -324,11 +323,11 @@ option. For example,</p>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>Example 11 renders as:</p>
 <ul>
-<li>From <em>p</em>: <span class="math inline">\(\small
-\mathrm{Hello\&gt;world!}\)</span>
+<li>From <em>p</em>: <span class="math inline">\(\small \mathrm{Hello\
+world!}\)</span>
 </li>
-<li>From <em>q</em>: <span class="math inline">\(\small
-\mathrm{Hello\&gt;world!}\)</span>
+<li>From <em>q</em>: <span class="math inline">\(\small \mathrm{Hello\
+world!}\)</span>
 </li>
 </ul>
 </div>

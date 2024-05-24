@@ -14,7 +14,7 @@ font face of character columns to that of numerical columns in a table.'><meta p
     
     <a class="navbar-brand me-2" href="../index.html">formatdown</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -143,7 +143,7 @@ equation.</p>
 <span class="r-in"><span><span class="co"># input vector</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello world!"</span>, <span class="st">"Goodbye blues!"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">format_text</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$\\mathrm{Hello\\&gt;world!}$"   "$\\mathrm{Goodbye\\&gt;blues!}$"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$\\mathrm{Hello\\ world!}$"   "$\\mathrm{Goodbye\\ blues!}$"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># argument coerced to character string if possible</span></span></span>
 <span class="r-in"><span><span class="fu">format_text</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.2</span>, <span class="fl">2.3</span>, <span class="fl">3.4</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -159,13 +159,13 @@ equation.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># other font faces</span></span></span>
 <span class="r-in"><span><span class="fu">format_text</span><span class="op">(</span><span class="va">x</span>, face <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$\\mathit{Hello\\&gt;world!}$"   "$\\mathit{Goodbye\\&gt;blues!}$"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$\\mathit{Hello\\ world!}$"   "$\\mathit{Goodbye\\ blues!}$"</span>
 <span class="r-in"><span><span class="fu">format_text</span><span class="op">(</span><span class="va">x</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$\\mathbf{Hello\\&gt;world!}$"   "$\\mathbf{Goodbye\\&gt;blues!}$"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$\\mathbf{Hello\\ world!}$"   "$\\mathbf{Goodbye\\ blues!}$"</span>
 <span class="r-in"><span><span class="fu">format_text</span><span class="op">(</span><span class="va">x</span>, face <span class="op">=</span> <span class="st">"sans"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$\\mathsf{Hello\\&gt;world!}$"   "$\\mathsf{Goodbye\\&gt;blues!}$"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$\\mathsf{Hello\\ world!}$"   "$\\mathsf{Goodbye\\ blues!}$"</span>
 <span class="r-in"><span><span class="fu">format_text</span><span class="op">(</span><span class="va">x</span>, face <span class="op">=</span> <span class="st">"mono"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$\\mathtt{Hello\\&gt;world!}$"   "$\\mathtt{Goodbye\\&gt;blues!}$"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$\\mathtt{Hello\\ world!}$"   "$\\mathtt{Goodbye\\ blues!}$"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
