@@ -88,7 +88,7 @@ test_formatdown_options <- function() {
   formatdown_options(reset = TRUE)
 
   # whitespace
-  ans915 <- "\\\\>"
+  ans915 <- "\\\\ "
   expect_equal(ans915, formatdown_options("whitespace"))
 
   x <- "hello world"

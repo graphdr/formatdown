@@ -28,8 +28,7 @@ units(planck) <- "J Hz-1"
 
 <!-- Correcting for problems with LaTeX math in the README file only -->
 
-```{css}
-#| echo: false
+```{css, echo=FALSE}
 .math {
   font-size: small;
 }

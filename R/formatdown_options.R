@@ -8,7 +8,7 @@ formatdown_opts <- settings::options_manager(
   big_interval = 3,
   small_mark = "",
   small_interval = 5,
-  whitespace = "\\\\>"
+  whitespace = "\\\\ "
 )
 
 # User function is exported:

@@ -45,8 +45,8 @@ test_format_numbers <- function() {
   # Input of class units
   x <- 6.0221E+23
   units(x) <- "N m2 C-2"
-  ans104 <- "$602.2 \\times 10^{21}\\>\\mathrm{m^{2}\\>N\\>C^{-2}}$"
-  ans105 <- "$602.2 \\times 10^{21}\\>\\mathrm{N\\>m^{2}\\>C^{-2}}$"
+  ans104 <- "$602.2 \\times 10^{21}\\ \\mathrm{m^{2}\\ N\\ C^{-2}}$"
+  ans105 <- "$602.2 \\times 10^{21}\\ \\mathrm{N\\ m^{2}\\ C^{-2}}$"
   expect_true(format_numbers(x) %in% c(ans104, ans105))
 
   units(x) <- NULL

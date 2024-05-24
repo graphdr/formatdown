@@ -70,8 +70,8 @@ param_small_interval <- 'Integer, length 1, that defines the number of digits
 param_whitespace <- 'Character, length 1, to define the LaTeX-style
       math-mode macro to preserve a horizontal space between words of text or
       between physical-unit abbreviations when formatting numbers of class
-      "units". Default is `"\\\\\\\\>"`. Alternatives include `"\\\\\\\\:"` or
-        "`\\\\\\\\ `".'
+      "units". Default is `"\\\\\\\\ "`. Alternatives include `"\\\\\\\\:"` or
+        "`\\\\\\\\>`".'
 
 
 

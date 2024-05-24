@@ -64,30 +64,30 @@ test_delim <- function() {
   x <- 6.0221e+23
   units(x) <- "m"
 
-  ans110 <- "$602.2 \\times 10^{21}\\>\\mathrm{m}$"
+  ans110 <- "$602.2 \\times 10^{21}\\ \\mathrm{m}$"
   expect_equal(ans110, format_numbers(x))
   expect_equal(ans110, format_numbers(x, delim = "$"))
   expect_equal(ans110, format_numbers(x, delim = c("$", "$")))
 
-  ans111 <- "\\(602.2 \\times 10^{21}\\>\\mathrm{m}\\)"
+  ans111 <- "\\(602.2 \\times 10^{21}\\ \\mathrm{m}\\)"
   expect_equal(ans111, format_numbers(x, delim = "\\("))
   expect_equal(ans111, format_numbers(x, delim = c("\\(", "\\)")))
 
-  ans112 <- "\\[602.2 \\times 10^{21}\\>\\mathrm{m}\\]"
+  ans112 <- "\\[602.2 \\times 10^{21}\\ \\mathrm{m}\\]"
   expect_equal(ans112, format_numbers(x, delim = c("\\[", "\\]")))
 
   x <- "hello world"
 
-  ans113 <- "$\\mathrm{hello\\>world}$"
+  ans113 <- "$\\mathrm{hello\\ world}$"
   expect_equal(ans113, format_text(x))
   expect_equal(ans113, format_text(x, delim = "$"))
   expect_equal(ans113, format_text(x, delim = c("$", "$")))
 
-  ans114 <- "\\(\\mathrm{hello\\>world}\\)"
+  ans114 <- "\\(\\mathrm{hello\\ world}\\)"
   expect_equal(ans114, format_text(x, delim = "\\("))
   expect_equal(ans114, format_text(x, delim = c("\\(", "\\)")))
 
-  ans115 <- "\\[\\mathrm{hello\\>world}\\]"
+  ans115 <- "\\[\\mathrm{hello\\ world}\\]"
   expect_equal(ans115, format_text(x, delim = c("\\[", "\\]")))
 
   # vector input

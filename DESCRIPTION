@@ -1,6 +1,6 @@
 Package: formatdown
 Title: Formatting Numbers in 'rmarkdown' Documents
-Version: 0.1.4
+Version: 0.1.4.9001
 Language: en-US
 Authors@R: person("Richard", "Layton", email="graphdoctor@gmail.com", role=c("aut", "cre"))
 Description: Provides a small set of tools for formatting numbers in R-markdown 
@@ -15,7 +15,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
 LazyDataCompression: bzip2
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
 Imports:
     checkmate,
@@ -45,6 +45,3 @@ Collate:
     'formatdown-package.R'
     'roxygen.R'
     'utils.R'
-
-
-

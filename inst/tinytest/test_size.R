@@ -54,19 +54,19 @@ test_size <- function() {
 
   x <- "hello world"
 
-  ans107 <- "$\\scriptsize \\mathrm{hello\\>world}$"
+  ans107 <- "$\\scriptsize \\mathrm{hello\\ world}$"
   expect_equal(ans107, format_text(x, size = "scriptsize"))
 
-  ans108 <- "$\\small \\mathrm{hello\\>world}$"
+  ans108 <- "$\\small \\mathrm{hello\\ world}$"
   expect_equal(ans108, format_text(x, size = "small"))
 
-  ans109 <- "$\\normalsize \\mathrm{hello\\>world}$"
+  ans109 <- "$\\normalsize \\mathrm{hello\\ world}$"
   expect_equal(ans109, format_text(x, size = "normalsize"))
 
-  ans110 <- "$\\large \\mathrm{hello\\>world}$"
+  ans110 <- "$\\large \\mathrm{hello\\ world}$"
   expect_equal(ans110, format_text(x, size = "large"))
 
-  ans111 <- "$\\huge \\mathrm{hello\\>world}$"
+  ans111 <- "$\\huge \\mathrm{hello\\ world}$"
   expect_equal(ans111, format_text(x, size = "huge"))
 
   # vector input

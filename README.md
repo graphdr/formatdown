@@ -155,12 +155,12 @@ knitr::kable(DT, align = "r", caption = "Table 1: Properties of metals.", col.na
 
 |                     Metal | Density \[kg/m$^3$\] | Therm. expan. \[m/m K$^{-1}$\] | Therm. cond. \[W/m K$^{-1}$\] |      Elastic modulus |
 |--------------------------:|---------------------:|-------------------------------:|------------------------------:|---------------------:|
-| $\mathrm{aluminum\>6061}$ |               $2700$ |          $24.3 \times 10^{-6}$ |                         $156$ | $73.1\>\mathrm{GPa}$ |
-|         $\mathrm{copper}$ |               $8900$ |          $16.6 \times 10^{-6}$ |                         $393$ |  $117\>\mathrm{GPa}$ |
-|           $\mathrm{lead}$ |              $11300$ |          $52.7 \times 10^{-6}$ |                        $37.0$ | $13.8\>\mathrm{GPa}$ |
-|       $\mathrm{platinum}$ |              $21400$ |          $9.00 \times 10^{-6}$ |                        $69.2$ |  $147\>\mathrm{GPa}$ |
-|    $\mathrm{steel\>1020}$ |               $7850$ |          $11.3 \times 10^{-6}$ |                        $46.7$ |  $207\>\mathrm{GPa}$ |
-|       $\mathrm{titanium}$ |               $4850$ |          $9.36 \times 10^{-6}$ |                        $7.44$ |  $102\>\mathrm{GPa}$ |
+| $\mathrm{aluminum\ 6061}$ |               $2700$ |          $24.3 \times 10^{-6}$ |                         $156$ | $73.1\ \mathrm{GPa}$ |
+|         $\mathrm{copper}$ |               $8900$ |          $16.6 \times 10^{-6}$ |                         $393$ |  $117\ \mathrm{GPa}$ |
+|           $\mathrm{lead}$ |              $11300$ |          $52.7 \times 10^{-6}$ |                        $37.0$ | $13.8\ \mathrm{GPa}$ |
+|       $\mathrm{platinum}$ |              $21400$ |          $9.00 \times 10^{-6}$ |                        $69.2$ |  $147\ \mathrm{GPa}$ |
+|    $\mathrm{steel\ 1020}$ |               $7850$ |          $11.3 \times 10^{-6}$ |                        $46.7$ |  $207\ \mathrm{GPa}$ |
+|       $\mathrm{titanium}$ |               $4850$ |          $9.36 \times 10^{-6}$ |                        $7.44$ |  $102\ \mathrm{GPa}$ |
 
 Table 1: Properties of metals.
 
@@ -177,12 +177,12 @@ Using the same code as above to format the metals data yields,
 
 |                     Metal | Density \[kg/m$^3$\] | Therm. expan. \[m/m K$^{-1}$\] | Therm. cond. \[W/m K$^{-1}$\] |      Elastic modulus |
 |--------------------------:|---------------------:|-------------------------------:|------------------------------:|---------------------:|
-| $\mathrm{aluminum\>6061}$ |               $2700$ |          $24,3 \times 10^{-6}$ |                         $156$ | $73,1\>\mathrm{GPa}$ |
-|         $\mathrm{copper}$ |               $8900$ |          $16,6 \times 10^{-6}$ |                         $393$ |  $117\>\mathrm{GPa}$ |
-|           $\mathrm{lead}$ |              $11300$ |          $52,7 \times 10^{-6}$ |                        $37,0$ | $13,8\>\mathrm{GPa}$ |
-|       $\mathrm{platinum}$ |              $21400$ |          $9,00 \times 10^{-6}$ |                        $69,2$ |  $147\>\mathrm{GPa}$ |
-|    $\mathrm{steel\>1020}$ |               $7850$ |          $11,3 \times 10^{-6}$ |                        $46,7$ |  $207\>\mathrm{GPa}$ |
-|       $\mathrm{titanium}$ |               $4850$ |          $9,36 \times 10^{-6}$ |                        $7,44$ |  $102\>\mathrm{GPa}$ |
+| $\mathrm{aluminum\ 6061}$ |               $2700$ |          $24,3 \times 10^{-6}$ |                         $156$ | $73,1\ \mathrm{GPa}$ |
+|         $\mathrm{copper}$ |               $8900$ |          $16,6 \times 10^{-6}$ |                         $393$ |  $117\ \mathrm{GPa}$ |
+|           $\mathrm{lead}$ |              $11300$ |          $52,7 \times 10^{-6}$ |                        $37,0$ | $13,8\ \mathrm{GPa}$ |
+|       $\mathrm{platinum}$ |              $21400$ |          $9,00 \times 10^{-6}$ |                        $69,2$ |  $147\ \mathrm{GPa}$ |
+|    $\mathrm{steel\ 1020}$ |               $7850$ |          $11,3 \times 10^{-6}$ |                        $46,7$ |  $207\ \mathrm{GPa}$ |
+|       $\mathrm{titanium}$ |               $4850$ |          $9,36 \times 10^{-6}$ |                        $7,44$ |  $102\ \mathrm{GPa}$ |
 
 Table 2: Changing the decimal mark
 

@@ -72,8 +72,8 @@ Passed to \code{formatC(small.mark)}.}
 \item{whitespace}{Character, length 1, to define the LaTeX-style
 math-mode macro to preserve a horizontal space between words of text or
 between physical-unit abbreviations when formatting numbers of class
-"units". Default is \code{"\\\\\\\\>"}. Alternatives include \code{"\\\\\\\\:"} or
-"\verb{\\\\\\\\ }".}
+"units". Default is \code{"\\\\\\\\ "}. Alternatives include \code{"\\\\\\\\:"} or
+"\verb{\\\\\\\\>}".}
 }
 \value{
 A character vector in which numbers are formatted in decimal form
