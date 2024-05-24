@@ -27,8 +27,8 @@ tables.
 
 In professional technical prose, large and small numbers are generally
 typeset using powers of ten notation. For example, Planck’s constant
-would be typeset as $\small 6.63 \times 10^{-34}\ \mathrm{J/Hz}$ rather
-than the familiar forms we use in communicating with computers, such as
+would be typeset as $6.63 \times 10^{-34}\ \mathrm{J/Hz}$ rather than
+the familiar forms we use in communicating with computers, such as
 `6.63*10^-34` or `6.63E-34`.
 
 The functions in this package help an author of an R markdown document
