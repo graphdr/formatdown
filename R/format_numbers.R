@@ -237,9 +237,6 @@ format_numbers <- function(x,
     unit_space <- substr(whitespace, start = 2, stop = 100000L)
   }
 
-  # Set significant digits before processing
-  x <- signif(x, digits = digits)
-
   # Assign markup parameters
   size_markup <- get_size_markup(size)
   if(big_mark   == "thin") big_mark   <- "\\\\,"
@@ -262,6 +259,9 @@ format_numbers <- function(x,
   # Create the decimal coefficient
   DT[non_pow, coeff := x]
   DT[pow_10,  coeff := x / 10^exponent]
+
+  # Apply signif digits to the coefficient before formatC()
+  DT[, coeff := signif(coeff, digits = digits)]
 
   # Format the coefficient as character
   DT[, char_coeff := formatC(coeff,

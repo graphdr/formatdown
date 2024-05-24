@@ -5,12 +5,16 @@
 #' @param col_name Character, length 1, column name to work on
 #' @noRd
 omit_formatC_extras <- function(DT, col_name) {
+
   # Logical. Identify rows with trailing decimal points
   rows_we_want <- DT[, get(col_name)] %like% "[:.:]$"
+
   # Delete trailing decimal points if any
   DT[rows_we_want, (col_name) := sub("[:.:]", "", get(col_name))]
+
   # Trim space added by formatC if any
-  DT[, (col_name) := trimws(get(col_name), which = "both")]
+  DT[, (col_name) := trimws(get(col_name), which = "l")]
+  return(DT)
 }
 
 #' Surround elements of character vector with inline math delimiters
