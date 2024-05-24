@@ -100,7 +100,7 @@ format_numbers(x, digits = 4, format = "dcml")
 # With measurement units
 units(x) <- "Pa"
 units(x) <- "hPa"
-format_dcml(x, whitespace = "\\\\ ")
+format_dcml(x)
 #> [1] "$1013\\ \\mathrm{hPa}$"
 ```
 

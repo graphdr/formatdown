@@ -107,7 +107,7 @@ format_numbers(x, digits = 4, format = "dcml")
 # With measurement units
 units(x) <- "Pa"
 units(x) <- "hPa"
-format_dcml(x, whitespace = "\\\\ ")
+format_dcml(x)
 ```
 
 which, in an `.Rmd` or `.qmd` output document, are rendered using inline R code as
@@ -121,7 +121,7 @@ engr <- format_engr(x)
 dcml <- format_dcml(x)
 units(x) <- "Pa"
 units(x) <- "hPa"
-hPa <- format_dcml(x, whitespace = "\\\\ ")
+hPa <- format_dcml(x)
 
 DT <- wrapr::build_frame(
   "Format", "Rendered as" |
