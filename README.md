@@ -100,8 +100,8 @@ format_numbers(x, digits = 4, format = "dcml")
 # With measurement units
 units(x) <- "Pa"
 units(x) <- "hPa"
-format_dcml(x, whitespace = "\\\\:")
-#> [1] "$1013\\:\\mathrm{hPa}$"
+format_dcml(x, whitespace = "\\\\ ")
+#> [1] "$1013\\ \\mathrm{hPa}$"
 ```
 
 which, in an `.Rmd` or `.qmd` output document, are rendered using inline
@@ -112,7 +112,7 @@ R code as
 |  scientific | $1.013 \times 10^{5}$ |
 | engineering | $101.3 \times 10^{3}$ |
 |     decimal |              $101300$ |
-|       units |  $1013\:\mathrm{hPa}$ |
+|       units |  $1013\ \mathrm{hPa}$ |
 
 <br>
 
