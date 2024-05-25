@@ -215,9 +215,6 @@ format_numbers <- function(x,
 
   # big_mark, small_mark
 
-
-
-
   # intervals: integer-ish, length 1 (can be NA), equal to 0,1,2,...
   checkmate::qassert(big_interval  , "x1[0,)")
   checkmate::qassert(small_interval, "x1[0,)")

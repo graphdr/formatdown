@@ -34,7 +34,7 @@ The arguments that can be set with this function are as follows:
 \item \code{delim}:          Character, length 1 or 2, to define the left and right math
 markup delimiters. The default setting, \code{delim = "$"}, produces
 left and right delimiters \verb{$...$}. The alternate built-in
-setting, \code{delim = "\\("}, produces left and right delimiters
+setting, \code{delim = "\\\\("}, produces left and right delimiters
 \verb{\\\\( ... \\\\)}. Custom delimiters can be assigned in a vector of
 length 2 with left and right delimiter symbols, e.g.,
 \verb{c("\\\[", "\\\]")}. Special characters typically must be escaped.

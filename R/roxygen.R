@@ -30,7 +30,7 @@ param_set_power <- 'Integer, length 1. Formats all values in `x` with the same
 param_delim <- 'Character, length 1 or 2, to define the left and right math
         markup delimiters. The default setting, `delim = "$"`, produces
         left and right delimiters `$...$`. The alternate built-in
-        setting, `delim = "\\("`, produces left and right delimiters
+        setting, `delim = "\\\\("`, produces left and right delimiters
         `\\\\( ... \\\\)`. Custom delimiters can be assigned in a vector of
         length 2 with left and right delimiter symbols, e.g.,
         `c("\\\\[", "\\\\]")`. Special characters typically must be escaped.'
