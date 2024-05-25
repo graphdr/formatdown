@@ -7,8 +7,7 @@ output: github_document
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  tidy = TRUE
+  comment = "#>"
 )
 
 library("formatdown")

@@ -143,9 +143,11 @@ units(DT$elast_mod) <- "GPa"
 DT$elast_mod <- format_dcml(DT$elast_mod, 3)
 
 # Render in document
-knitr::kable(DT, align = "r", caption = "Table 1: Properties of metals.", col.names = c("Metal",
-    "Density [kg/m$^3$]", "Therm. expan. [m/m K$^{-1}$]", "Therm. cond. [W/m K$^{-1}$]",
-    "Elastic modulus"))
+knitr::kable(DT,
+  align = "r",
+  caption = "Table 1: Properties of metals.",
+  col.names = c("Metal", "Density [kg/m$^3$]", "Therm. expan. [m/m K$^{-1}$]", "Therm. cond. [W/m K$^{-1}$]", "Elastic modulus")
+)
 ```
 
 |                     Metal | Density \[kg/m$^3$\] | Therm. expan. \[m/m K$^{-1}$\] | Therm. cond. \[W/m K$^{-1}$\] |      Elastic modulus |
