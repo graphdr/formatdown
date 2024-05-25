@@ -1,8 +1,7 @@
 ## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  tidy = TRUE
+  comment = "#>"
 )
 
 # to knit "child" Rmd files

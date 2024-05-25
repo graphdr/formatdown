@@ -4,7 +4,7 @@
 
 - Change default whitespace argument to render correctly in the README page on GitHub
 - Revise wrapr::stop_if_dot_args() in functions, for more useful error message
-
+- Edited examples for reference pages
 
 # formatdown 0.1.4
 

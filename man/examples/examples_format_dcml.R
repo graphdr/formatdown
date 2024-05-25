@@ -3,6 +3,7 @@ x <- 103400
 format_dcml(x)
 
 # input: units class
+x <- 103400
 units(x) <- "N m2 C-2"
 format_dcml(x)
 
@@ -21,3 +22,7 @@ format_dcml(x, 4)
 x <- metals[, c("dens", "thrm_cond")]
 as.data.frame(apply(x, 2, format_dcml, digits = 3))
 
+# format_dcml() same as format_numbers(..., format = "dcml")
+x <- 103400
+format_dcml(x)
+format_numbers(x, format = "dcml")

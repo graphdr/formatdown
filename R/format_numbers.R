@@ -303,7 +303,7 @@ format_numbers <- function(x,
 
 
 
-#' Format scientific notation
+#' Format numbers in scientific notation
 #'
 #' Convert a numeric vector to a character vector in which the numbers are
 #' formatted in power-of-ten notation in scientific form and delimited for
@@ -316,11 +316,12 @@ format_numbers <- function(x,
 #'
 #' Arguments after the dots (`...`) must be referred to by name.
 #'
-#' @inherit format_numbers
 #' @return A character vector in which numbers are formatted in power-of-ten
 #' notation in scientific form and delimited for rendering as inline equations
 #' in an R markdown document.
+#'
 #' @example man/examples/examples_format_sci.R
+#' @inherit format_numbers
 #' @family format_*
 #' @export
 format_sci <- function(x,
@@ -382,11 +383,12 @@ format_sci <- function(x,
 #'
 #' Arguments after the dots (`...`) must be referred to by name.
 #'
-#' @inherit format_numbers
 #' @return A character vector in which numbers are formatted in power-of-ten
 #' notation in engineering form and delimited for rendering as inline equations
 #' in an R markdown document.
+#'
 #' @example man/examples/examples_format_engr.R
+#' @inherit format_numbers
 #' @family format_*
 #' @export
 format_engr <- function(x,
@@ -436,7 +438,7 @@ format_engr <- function(x,
 
 
 
-#' Format decimal notation
+#' Format numbers in decimal notation
 #'
 #' Convert a numeric vector to a character vector in which the numbers are
 #' formatted in decimal form and delimited for rendering as inline equations
@@ -449,11 +451,11 @@ format_engr <- function(x,
 #'
 #' Arguments after the dots (`...`) must be referred to by name.
 #'
-#' @inherit format_numbers
-#'
 #' @return A character vector in which numbers are formatted in decimal form
 #' and delimited for rendering as inline equations in an R markdown document.
 #'
+#' @example man/examples/examples_format_dcml.R
+#' @inherit format_numbers
 #' @family format_*
 #' @export
 format_dcml <- function(x,
