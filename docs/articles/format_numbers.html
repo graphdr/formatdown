@@ -444,7 +444,7 @@ reset by the user locally in a function call or globally using
 arguments. Arguments are explored more fully starting with <a href="#numeric-input">Numeric input</a> section.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 1. Avogadro constant</span></span>
-<span><span class="va">L</span> <span class="op">&lt;-</span> <span class="fl">6.0221e+23</span></span>
+<span><span class="va">L</span> <span class="op">&lt;-</span> <span class="fl">6.0221E+23</span></span>
 <span><span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">L</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "$6.022 \\times 10^{23}$"</span></span>
 <span></span>
@@ -616,8 +616,7 @@ markup and some inline R code,</p>
 marked up as follows,</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 10. Sample vector</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.3333e-05</span>, <span class="fl">0.00034444</span>, <span class="fl">0.052222</span>, <span class="fl">0.63333</span>, <span class="fl">81.111</span>, <span class="fl">922.22</span>, <span class="fl">24444</span>, <span class="fl">311110</span>,</span>
-<span>    <span class="fl">4222200</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.3333e-5</span>, <span class="fl">3.4444e-4</span>, <span class="fl">5.2222e-2</span>, <span class="fl">6.3333e-1</span>, <span class="fl">8.1111e+1</span>, <span class="fl">9.2222e+2</span>, <span class="fl">2.4444e+4</span>, <span class="fl">3.1111e+5</span>, <span class="fl">4.2222e+6</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "$23.33 \\times 10^{-6}$" "$344.4 \\times 10^{-6}$"</span></span>
 <span><span class="co">#&gt; [3] "$52.22 \\times 10^{-3}$" "$0.6333$"               </span></span>
@@ -627,7 +626,11 @@ marked up as follows,</p>
 <p>In a table, the output renders as,</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>, align <span class="op">=</span> <span class="st">"r"</span>, col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Unformatted"</span>, <span class="st">"Engr notation"</span><span class="op">)</span>, caption <span class="op">=</span> <span class="st">"Example 10."</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
+<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Unformatted"</span>, <span class="st">"Engr notation"</span><span class="op">)</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"Example 10."</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>Example 10.</caption>
 <thead><tr class="header">
@@ -940,14 +943,16 @@ and <code><a href="../reference/format_sci.html">format_sci()</a></code> conveni
 the same vector in different formats.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 14. Comparing formats</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.3333e-05</span>, <span class="fl">0.00034444</span>, <span class="fl">0.052222</span>, <span class="fl">0.63333</span>, <span class="fl">81.111</span>, <span class="fl">922.22</span>, <span class="fl">24444</span>, <span class="fl">311110</span>,</span>
-<span>    <span class="fl">4222200</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.3333e-5</span>, <span class="fl">3.4444e-4</span>, <span class="fl">5.2222e-2</span>, <span class="fl">6.3333e-1</span>, <span class="fl">8.1111e+1</span>, <span class="fl">9.2222e+2</span>, <span class="fl">2.4444e+4</span>, <span class="fl">3.1111e+5</span>, <span class="fl">4.2222e+6</span><span class="op">)</span></span>
 <span><span class="va">dcml</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_numbers.html">format_numbers</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, format <span class="op">=</span> <span class="st">"dcml"</span><span class="op">)</span></span>
 <span><span class="va">sci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_numbers.html">format_numbers</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, format <span class="op">=</span> <span class="st">"sci"</span><span class="op">)</span></span>
 <span><span class="va">engr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_numbers.html">format_numbers</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, format <span class="op">=</span> <span class="st">"engr"</span><span class="op">)</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">dcml</span>, <span class="va">sci</span>, <span class="va">engr</span><span class="op">)</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>, align <span class="op">=</span> <span class="st">"r"</span>, col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"decimal"</span>, <span class="st">"scientific"</span>, <span class="st">"engineering"</span><span class="op">)</span>,</span>
-<span>    caption <span class="op">=</span> <span class="st">"Example 14."</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
+<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"decimal"</span>, <span class="st">"scientific"</span>, <span class="st">"engineering"</span><span class="op">)</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"Example 14."</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>Example 14.</caption>
 <colgroup>
@@ -1048,8 +1053,17 @@ the entire vector.</p>
 <span><span class="va">DT</span><span class="op">[</span>, <span class="va">sci_omit</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">DT</span><span class="op">[</span>, <span class="va">engr_all</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">DT</span><span class="op">[</span>, <span class="va">engr_omit</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>, align <span class="op">=</span> <span class="st">"r"</span>, col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Unformatted"</span>, <span class="st">"all scientific"</span>, <span class="st">"scientific w/ omit"</span>,</span>
-<span>    <span class="st">"all engineering"</span>, <span class="st">"engineering w/ omit"</span><span class="op">)</span>, caption <span class="op">=</span> <span class="st">"Example 15."</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
+<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Unformatted"</span>,</span>
+<span>    <span class="st">"all scientific"</span>,</span>
+<span>    <span class="st">"scientific w/ omit"</span>,</span>
+<span>    <span class="st">"all engineering"</span>,</span>
+<span>    <span class="st">"engineering w/ omit"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"Example 15."</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>Example 15.</caption>
 <colgroup>
@@ -1192,8 +1206,17 @@ argument is interpreted as <code>c(0, 0)</code>.</p>
 <span><span class="va">DT</span><span class="op">[</span>, <span class="va">sci_omit</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">DT</span><span class="op">[</span>, <span class="va">engr_all</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">DT</span><span class="op">[</span>, <span class="va">engr_omit</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>, align <span class="op">=</span> <span class="st">"r"</span>, col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Unformatted"</span>, <span class="st">"all scientific"</span>, <span class="st">"scientific w/ omit"</span>,</span>
-<span>    <span class="st">"all engineering"</span>, <span class="st">"engineering w/ omit"</span><span class="op">)</span>, caption <span class="op">=</span> <span class="st">"Example 16."</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
+<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Unformatted"</span>,</span>
+<span>    <span class="st">"all scientific"</span>,</span>
+<span>    <span class="st">"scientific w/ omit"</span>,</span>
+<span>    <span class="st">"all engineering"</span>,</span>
+<span>    <span class="st">"engineering w/ omit"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"Example 16."</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>Example 16.</caption>
 <colgroup>
@@ -1322,7 +1345,7 @@ decimal result as <code>format = "dcml"</code> and overrides any other
 <code>format</code> setting. For example,</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 17. Different ways of creating a decimal format</span></span>
-<span><span class="op">(</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">0.00678</span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">6.78e-3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.00678</span></span>
 <span></span>
 <span><span class="op">(</span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_numbers.html">format_numbers</a></span><span class="op">(</span><span class="va">y</span>, <span class="fl">3</span>, <span class="st">"sci"</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="cn">Inf</span>, <span class="cn">Inf</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -1361,8 +1384,11 @@ values. Assigning a value to <code>set_power</code> overrides
 <span><span class="va">DT</span><span class="op">[</span>, <span class="va">set_dens</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">dens</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, set_power <span class="op">=</span> <span class="op">-</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">DT</span><span class="op">[</span>, <span class="va">pres</span> <span class="op">:=</span> <span class="cn">NULL</span><span class="op">]</span></span>
 <span><span class="va">DT</span><span class="op">[</span>, <span class="va">dens</span> <span class="op">:=</span> <span class="cn">NULL</span><span class="op">]</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>, align <span class="op">=</span> <span class="st">"r"</span>, col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Altitude (km)"</span>, <span class="st">"Pressure (Pa)"</span>, <span class="st">"with set_power"</span>,</span>
-<span>    <span class="st">"Density (kg/m$^{3}$)"</span>, <span class="st">"with set_power"</span><span class="op">)</span>, caption <span class="op">=</span> <span class="st">"Example 18."</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
+<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Altitude (km)"</span>, <span class="st">"Pressure (Pa)"</span>, <span class="st">"with set_power"</span>, <span class="st">"Density (kg/m$^{3}$)"</span>, <span class="st">"with set_power"</span><span class="op">)</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"Example 18."</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>Example 18.</caption>
 <colgroup>

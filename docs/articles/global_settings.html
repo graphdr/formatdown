@@ -436,15 +436,15 @@ or <span class="math inline">\(\mathtt{\small\verb|"\\\\
 <p><br></p>
 <p><em>Examples.</em></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># 18. Character input, default space '\&gt;'</span></span>
+<code class="sourceCode R"><span><span class="co"># 18. Character input, default space "\&gt;"</span></span>
 <span><span class="fu"><a href="../reference/format_text.html">format_text</a></span><span class="op">(</span><span class="va">txt</span>, whitespace <span class="op">=</span> <span class="st">"\\\\&gt;"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "$\\mathrm{Hello\\&gt;world!}$"</span></span>
 <span></span>
-<span><span class="co"># 19. Character input, alternate space '\:'</span></span>
+<span><span class="co"># 19. Character input, alternate space "\:"</span></span>
 <span><span class="fu"><a href="../reference/format_text.html">format_text</a></span><span class="op">(</span><span class="va">txt</span>, whitespace <span class="op">=</span> <span class="st">"\\\\:"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "$\\mathrm{Hello\\:world!}$"</span></span>
 <span></span>
-<span><span class="co"># 20. Character input, alternate space '\ '</span></span>
+<span><span class="co"># 20. Character input, alternate space "\ "</span></span>
 <span><span class="fu"><a href="../reference/format_text.html">format_text</a></span><span class="op">(</span><span class="va">txt</span>, whitespace <span class="op">=</span> <span class="st">"\\\\ "</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "$\\mathrm{Hello\\ world!}$"</span></span></code></pre></div>
 <p><br></p>
@@ -497,7 +497,7 @@ world!}\)</span></p></li>
 <span><span class="va">DT</span><span class="op">[</span>, <span class="va">temp_visc</span> <span class="op">:=</span> <span class="cn">NULL</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co"># Will appear with big_mark spacing, change from Pa to kPa</span></span>
-<span><span class="va">DT</span><span class="op">$</span><span class="va">bulk_mod_kPa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_dcml.html">format_dcml</a></span><span class="op">(</span><span class="va">DT</span><span class="op">$</span><span class="va">bulk_mod</span><span class="op">/</span><span class="fl">1000</span>, <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">DT</span><span class="op">$</span><span class="va">bulk_mod_kPa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_dcml.html">format_dcml</a></span><span class="op">(</span><span class="va">DT</span><span class="op">$</span><span class="va">bulk_mod</span> <span class="op">/</span> <span class="fl">1000</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">DT</span><span class="op">$</span><span class="va">bulk_mod</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>, align <span class="op">=</span> <span class="st">"r"</span>, caption <span class="op">=</span> <span class="st">"Example 21."</span><span class="op">)</span></span></code></pre></div>

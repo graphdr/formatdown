@@ -195,7 +195,7 @@ character if possible. Starting with character class,</p>
 \mathrm{NA}\)</span>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 4. Numeric class</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">3e-05</span>, <span class="fl">4.56e+10</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">3E-5</span>, <span class="fl">4.56E+10</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/format_text.html">format_text</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "$\\mathrm{10}$"       "$\\mathrm{3e-05}$"    "$\\mathrm{4.56e+10}$"</span></span></code></pre></div>
 <p>Example 4 renders as:   <span class="math inline">\(\small
@@ -211,7 +211,7 @@ character if possible. Starting with character class,</p>
 \mathrm{TRUE}\)</span>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 6. Complex class</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">+</span> <span class="op">(</span><span class="fl">0</span><span class="op">+</span><span class="fl">3i</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">3i</span></span>
 <span><span class="fu"><a href="../reference/format_text.html">format_text</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "$\\mathrm{2+3i}$"</span></span></code></pre></div>
 <p>Example 6 renders as:   <span class="math inline">\(\small

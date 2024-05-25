@@ -201,9 +201,11 @@ Global options are provided for arguments that users would likely prefer to set 
 <span><span class="va">DT</span><span class="op">$</span><span class="va">elast_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/format_dcml.html">format_dcml</a></span><span class="op">(</span><span class="va">DT</span><span class="op">$</span><span class="va">elast_mod</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Render in document</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>, align <span class="op">=</span> <span class="st">"r"</span>, caption <span class="op">=</span> <span class="st">"Table 1: Properties of metals."</span>, col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Metal"</span>,</span>
-<span>    <span class="st">"Density [kg/m$^3$]"</span>, <span class="st">"Therm. expan. [m/m K$^{-1}$]"</span>, <span class="st">"Therm. cond. [W/m K$^{-1}$]"</span>,</span>
-<span>    <span class="st">"Elastic modulus"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
+<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"Table 1: Properties of metals."</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Metal"</span>, <span class="st">"Density [kg/m$^3$]"</span>, <span class="st">"Therm. expan. [m/m K$^{-1}$]"</span>, <span class="st">"Therm. cond. [W/m K$^{-1}$]"</span>, <span class="st">"Elastic modulus"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="20%">
