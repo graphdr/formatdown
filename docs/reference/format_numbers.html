@@ -261,24 +261,6 @@ to the formatted numerical value inside the math delimiters.</p>
 <span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, <span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$975.4 \\times 10^{3}$"</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># format &amp; wrappers: format_engr(), format_sci(), format_dcml()</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">6.0221E+23</span></span></span>
-<span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"engr"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$602.2 \\times 10^{21}$"</span>
-<span class="r-in"><span><span class="fu"><a href="format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$602.2 \\times 10^{21}$"</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"sci"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$6.022 \\times 10^{23}$"</span>
-<span class="r-in"><span><span class="fu"><a href="format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$6.022 \\times 10^{23}$"</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">103400</span></span></span>
-<span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"dcml"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$103400$"</span>
-<span class="r-in"><span><span class="fu"><a href="format_dcml.html">format_dcml</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$103400$"</span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># input: data frame</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">metals</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"thrm_exp"</span>, <span class="st">"thrm_cond"</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span>, <span class="va">format_sci</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -292,45 +274,37 @@ to the formatted numerical value inside the math delimiters.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># omit_power</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">103400</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">x</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="co"># default</span></span></span>
+<span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"sci"</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="co"># default</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$1.034 \\times 10^{5}$"</span>
-<span class="r-in"><span><span class="fu"><a href="format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">x</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"sci"</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$103400$"</span>
-<span class="r-in"><span><span class="fu"><a href="format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">x</span>, omit_power <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="co"># equivalent to omit_power = c(5, 5)</span></span></span>
+<span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"sci"</span>, omit_power <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="co"># equivalent to omit_power = c(5, 5)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$103400$"</span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1.2</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">x</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$1.200 \\times 10^{0}$"</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># set_power</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">x</span>, set_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="co"># default</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$1.200$"</span>
-<span class="r-in"><span><span class="fu"><a href="format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">x</span>, set_power <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$0.001200 \\times 10^{3}$"</span>
+<span class="r-in"><span><span class="co"># omit_power = NULL, power-of-ten notation for all elements</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.2</span>, <span class="fl">103400</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"sci"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$1.200$"                "$1.034 \\times 10^{5}$"</span>
+<span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"sci"</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$1.200 \\times 10^{0}$" "$1.034 \\times 10^{5}$"</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># set_power overrides format</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">6.0221E+23</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$602.2 \\times 10^{21}$"</span>
-<span class="r-in"><span><span class="fu"><a href="format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">x</span>, set_power <span class="op">=</span> <span class="fl">24L</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$0.6022 \\times 10^{24}$"</span>
-<span class="r-in"><span><span class="fu"><a href="format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$6.022 \\times 10^{23}$"</span>
-<span class="r-in"><span><span class="fu"><a href="format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">x</span>, set_power <span class="op">=</span> <span class="fl">24L</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$0.6022 \\times 10^{24}$"</span>
+<span class="r-in"><span><span class="co"># set_power overrides default scientific exponent</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">103400</span></span></span>
+<span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"sci"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$1.034 \\times 10^{5}$"</span>
+<span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"sci"</span>, set_power <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$10.34 \\times 10^{4}$"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># set_power overrides omit_power</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">101300</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">x</span>, omit_power <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$101300$"</span>
-<span class="r-in"><span><span class="fu"><a href="format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">x</span>, omit_power <span class="op">=</span> <span class="fl">5</span>, set_power <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$1013 \\times 10^{2}$"</span>
-<span class="r-in"><span><span class="fu"><a href="format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">x</span>, omit_power <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$1.013 \\times 10^{5}$"</span>
-<span class="r-in"><span><span class="fu"><a href="format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">x</span>, omit_power <span class="op">=</span> <span class="fl">2</span>, set_power <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$1013 \\times 10^{2}$"</span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">103400</span></span></span>
+<span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"sci"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$1.034 \\times 10^{5}$"</span>
+<span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"sci"</span>, omit_power <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$103400$"</span>
+<span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"sci"</span>, omit_power <span class="op">=</span> <span class="fl">5</span>, set_power <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$10.34 \\times 10^{4}$"</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># decimal format ignores set_power</span></span></span>
+<span class="r-in"><span><span class="co"># decimal format overrides set_power</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">103400</span></span></span>
 <span class="r-in"><span><span class="fu">format_numbers</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"dcml"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$103400$"</span>
