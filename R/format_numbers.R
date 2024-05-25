@@ -143,7 +143,7 @@ format_numbers <- function(x,
   # Overhead ----------------------------------------------------------------
 
   # Arguments after dots must be named
-  arg_after_dots_named(...)
+  wrapr::stop_if_dot_args(substitute(list(...)), "format_numbers()")
 
   # Indicate these are not unbound symbols (R CMD check Note)
   size_markup <- NULL
@@ -316,11 +316,10 @@ format_numbers <- function(x,
 #'
 #' Arguments after the dots (`...`) must be referred to by name.
 #'
+#' @inherit format_numbers
 #' @return A character vector in which numbers are formatted in power-of-ten
 #' notation in scientific form and delimited for rendering as inline equations
 #' in an R markdown document.
-#'
-#' @inherit format_numbers
 #' @example man/examples/examples_format_sci.R
 #' @family format_*
 #' @export
@@ -339,7 +338,7 @@ format_sci <- function(x,
                        whitespace     = formatdown_options("whitespace")) {
 
   # Arguments after dots must be named
-  arg_after_dots_named(...)
+  wrapr::stop_if_dot_args(substitute(list(...)), "format_sci()")
 
   # wrap format_numbers()
   output <- format_numbers(x          = x,
@@ -356,9 +355,9 @@ format_sci <- function(x,
                            whitespace     = whitespace,
 
                            # wrapper pre-sets
-                           format         = "sci",
-                           big_mark       = formatdown_options("big_mark"),
-                           big_interval   = formatdown_options("big_interval")
+                           format       = "sci",
+                           big_mark     = formatdown_options("big_mark"),
+                           big_interval = formatdown_options("big_interval")
   )
 
   # enable printing (see data.table FAQ 2.23)
@@ -384,11 +383,10 @@ format_sci <- function(x,
 #' Arguments after the dots (`...`) must be referred to by name.
 #'
 #' @inherit format_numbers
-#'
 #' @return A character vector in which numbers are formatted in power-of-ten
 #' notation in engineering form and delimited for rendering as inline equations
 #' in an R markdown document.
-#'
+#' @example man/examples/examples_format_engr.R
 #' @family format_*
 #' @export
 format_engr <- function(x,
@@ -398,15 +396,15 @@ format_engr <- function(x,
                         set_power = NULL,
 
                         # options
-                        delim        = formatdown_options("delim"),
-                        size         = formatdown_options("size"),
+                        delim          = formatdown_options("delim"),
+                        size           = formatdown_options("size"),
                         decimal_mark   = formatdown_options("decimal_mark"),
                         small_mark     = formatdown_options("small_mark"),
                         small_interval = formatdown_options("small_interval"),
                         whitespace     = formatdown_options("whitespace")) {
 
   # Arguments after dots must be named
-  arg_after_dots_named(...)
+  wrapr::stop_if_dot_args(substitute(list(...)), "format_engr()")
 
   # wrap format_numbers()
   output <- format_numbers(x          = x,
@@ -415,17 +413,17 @@ format_engr <- function(x,
                            set_power  = set_power,
 
                            # options
-                           delim        = delim,
-                           size         = size,
+                           delim          = delim,
+                           size           = size,
                            decimal_mark   = decimal_mark,
                            small_mark     = small_mark,
                            small_interval = small_interval,
                            whitespace     = whitespace,
 
                            # wrapper pre-sets
-                           format         = "engr",
-                           big_mark       = formatdown_options("big_mark"),
-                           big_interval   = formatdown_options("big_interval")
+                           format       = "engr",
+                           big_mark     = formatdown_options("big_mark"),
+                           big_interval = formatdown_options("big_interval")
   )
 
   # enable printing (see data.table FAQ 2.23)
@@ -473,7 +471,7 @@ format_dcml <- function(x,
                         whitespace     = formatdown_options("whitespace")) {
 
   # Arguments after dots must be named
-  arg_after_dots_named(...)
+  wrapr::stop_if_dot_args(substitute(list(...)), "format_dcml()")
 
   # wrap for format_numbers()
   output <- format_numbers(x      = x,

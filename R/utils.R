@@ -95,16 +95,3 @@ param_assert_mark <- function(mark) {
   checkmate::assert_choice(mark, choices = c("thin", "\\\\,", "")
   )
 }
-
-# Arguments after dots must be named
-#'
-#' @param ... Not used
-#' @noRd
-arg_after_dots_named <- function(...){
-stop_if_dots_text <- paste(
-  "Arguments after ... must be named.\n",
-  "* Did you forget to write `arg_name = value`\n",
-  "  for one of the arguments after the dots?*"
-)
-wrapr::stop_if_dot_args(substitute(list(...)), stop_if_dots_text)
-}

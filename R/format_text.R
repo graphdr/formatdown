@@ -61,7 +61,7 @@ format_text <- function(x,
   # Overhead ----------------------------------------------------------------
 
   # Arguments after dots must be named
-  arg_after_dots_named(...)
+  wrapr::stop_if_dot_args(substitute(list(...)), "format_text()")
 
   # Indicate these are not unbound symbols (R CMD check Note)
   value <- NULL
