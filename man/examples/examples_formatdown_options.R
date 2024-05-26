@@ -26,11 +26,25 @@ do.call(formatdown_options, old_settings)
 # delim
 x <- 101300
 format_dcml(x)
+# equivalent to
+format_dcml(x, delim = c("$", "$"))
+# built-in alternate
 format_dcml(x, delim = "\\(")
+# equivalent to
+format_dcml(x, delim = c("\\(", "\\)"))
 
 # size
 format_dcml(x, size = "small")
+# equivalent to
 format_dcml(x, size = "\\small")
+# other possible values
+format_dcml(x, size = "scriptsize")
+format_dcml(x, size = "large")
+format_dcml(x, size = "huge")
+# default NULL
+format_dcml(x, size = NULL)
+# renders equivalent to
+format_dcml(x, size = "normalsize")
 
 # decimal_mark
 y <- 6.02214076E+10
@@ -40,6 +54,7 @@ format_sci(y, 5, decimal_mark = ",")
 # big_mark
 format_dcml(y, 9)
 format_dcml(y, 9, big_mark = "thin")
+# equivalent to
 format_dcml(y, 9, big_mark = "\\\\,")
 
 # big_interval
@@ -60,10 +75,16 @@ format_engr(z, 10, small_mark = "thin", small_interval = 5)
 
 # whitespace in text
 p <- "Hello world!"
+format_text(p)
+# equivalent to
+format_text(p, whitespace = "\\\\ ")
+# alternates
 format_text(p, whitespace = "\\\\:")
+format_text(p, whitespace = "\\\\>")
 
 # whitespace in physical units expression
 x <- pi
 units(x) <- "m/s"
-format_dcml(x, whitespace = "\\\\:")
-
+format_dcml(x)
+# equivalent to
+format_dcml(x, whitespace = "\\\\ ")
