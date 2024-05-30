@@ -52,6 +52,7 @@ formatdown_options(delim = "$",
                    small_mark = "",
                    small_interval = 5,
                    whitespace = "\\\\>", 
+                   multiply_mark = "\\times", 
                    reset = FALSE)
 ```
 
@@ -372,14 +373,34 @@ Examples 18--20 render as,
 
 
 
+## Multiplication symbol
 
+The default symbol used in power of ten notation is "$\small\times$", as in $\small 3.14 \times 10^{-3}$. An alternate---often used when the decimal marker is a comma---is the centered dot, e.g., $\small 3,14 \cdot 10^{-3}$. 
 
+The symbol is set using the `multiply_mark` argument. The default setting is `"\\times"`; the alternate, centered-dot setting, is `"\\cdot"`. 
 
+<br>
+
+*Examples.*
+
+```{r}
+# 21. Alternate multiplication symbol
+y <- 1.602176634e-19
+format_sci(y, 5, decimal_mark = ",", multiply_mark = "\\cdot")
+```
+
+<br>
+
+Example 21 renders as:
+
+21. `r format_sci(y, 5, decimal_mark = ",", multiply_mark = "\\cdot", size = "small")`
+
+<br>
 
 ## Applications
 
 
-*Example 21.*
+*Example 22.*
 
 In this example, we format different columns of a data frame using `decimal_mark`, `big_mark` and `small_mark`. 
 
@@ -415,7 +436,7 @@ DT[, temp_visc := NULL]
 DT$bulk_mod_kPa <- format_dcml(DT$bulk_mod / 1000, 4)
 DT$bulk_mod <- NULL
 
-knitr::kable(DT, align = "r", caption = "Example 21.")
+knitr::kable(DT, align = "r", caption = "Example 22.")
 
 # Set package options to default values
 formatdown_options(reset = TRUE)
@@ -423,7 +444,7 @@ formatdown_options(reset = TRUE)
 
 <br>
 
-*Example 22.*
+*Example 23.*
 
 Same table, but using power of ten formatting. 
 
@@ -444,7 +465,7 @@ DT[, (cols) := lapply(.SD, function(x) format_dcml(x)), .SDcols = cols]
 DT$bulk_mod <- format_engr(DT$bulk_mod, 3)
 DT$visc <- format_engr(DT$visc, 4, set_power = -3)
 
-knitr::kable(DT, align = "r", caption = "Example 22.")
+knitr::kable(DT, align = "r", caption = "Example 23.")
 ```
 
 ```{r}
@@ -454,7 +475,7 @@ formatdown_options(reset = TRUE)
 
 <br>
 
-*Example 23.*
+*Example 24.*
 
 The `metals` data set includes columns of text and  decimal and power-of-ten numbers. 
 
@@ -481,7 +502,7 @@ DT[, (cols) := lapply(.SD, function(x) format_dcml(x)), .SDcols = cols]
 cols <- c("elast_mod", "thrm_exp")
 DT[, (cols) := lapply(.SD, function(x) format_engr(x, 3)), .SDcols = cols]
 
-knitr::kable(DT, align = "lrrrr", caption = "Example 23.")
+knitr::kable(DT, align = "lrrrr", caption = "Example 24.")
 ```
 
 ```{r}

@@ -18,7 +18,8 @@ format_numbers(
   big_interval = formatdown_options("big_interval"),
   small_mark = formatdown_options("small_mark"),
   small_interval = formatdown_options("small_interval"),
-  whitespace = formatdown_options("whitespace")
+  whitespace = formatdown_options("whitespace"),
+  multiply_mark = formatdown_options("multiply_mark")
 )
 }
 \arguments{
@@ -94,6 +95,11 @@ math-mode macro to preserve a horizontal space between words of text or
 between physical-unit abbreviations when formatting numbers of class
 "units". Default is \code{"\\\\\\\\ "}. Alternatives include \code{"\\\\\\\\:"} or
 "\verb{\\\\\\\\>}".}
+
+\item{multiply_mark}{Character, length 1, to define the multiplication symbol
+in power of ten notation. Possible values are \code{"\\\\times"} (default)
+or the centered dot \code{"\\\\cdot"} which is often used when the decimal
+mark is a comma.}
 }
 \value{
 A character vector in which numbers are formatted in power-of-ten

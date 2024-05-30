@@ -109,6 +109,13 @@ test_formatdown_options <- function() {
   expect_equal(ans918, format_dcml(x, 10))
   formatdown_options(reset = TRUE)
 
+  # multiply_mark
+  x <- 6.0221e+23
+  formatdown_options(decimal_mark = ",", multiply_mark = "\\cdot")
+  ans919 <- "$6,022 \\cdot 10^{23}$"
+  expect_equal(ans919, format_sci(x))
+  formatdown_options(reset = TRUE)
+
   # ERRORS  ------------------------
   expect_error(formatdown_options("x"))
   expect_error(formatdown_options("digits"))

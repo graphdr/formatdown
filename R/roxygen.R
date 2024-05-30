@@ -68,10 +68,13 @@ param_small_interval <- 'Integer, length 1, that defines the number of digits
         `formatC(small.interval)`.'
 
 param_whitespace <- 'Character, length 1, to define the LaTeX-style
-      math-mode macro to preserve a horizontal space between words of text or
-      between physical-unit abbreviations when formatting numbers of class
-      "units". Default is `"\\\\\\\\ "`. Alternatives include `"\\\\\\\\:"` or
+        math-mode macro to preserve a horizontal space between words of text or
+        between physical-unit abbreviations when formatting numbers of class
+        "units". Default is `"\\\\\\\\ "`. Alternatives include `"\\\\\\\\:"` or
         "`\\\\\\\\>`".'
 
-
+param_multiply_mark <- 'Character, length 1, to define the multiplication symbol
+        in power of ten notation. Possible values are `"\\\\times"` (default)
+        or the centered dot `"\\\\cdot"` which is often used when the decimal
+        mark is a comma.'
 

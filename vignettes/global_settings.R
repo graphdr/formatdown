@@ -144,6 +144,11 @@ format_text(txt, whitespace = "\\\\:")
 format_text(txt, whitespace = "\\\\ ")
 
 ## -----------------------------------------------------------------------------
+# 21. Alternate multiplication symbol
+y <- 1.602176634e-19
+format_sci(y, 5, decimal_mark = ",", multiply_mark = "\\cdot")
+
+## -----------------------------------------------------------------------------
 formatdown_options(size = "small")
 
 ## -----------------------------------------------------------------------------
@@ -173,7 +178,7 @@ DT[, temp_visc := NULL]
 DT$bulk_mod_kPa <- format_dcml(DT$bulk_mod / 1000, 4)
 DT$bulk_mod <- NULL
 
-knitr::kable(DT, align = "r", caption = "Example 21.")
+knitr::kable(DT, align = "r", caption = "Example 22.")
 
 # Set package options to default values
 formatdown_options(reset = TRUE)
@@ -193,7 +198,7 @@ DT[, (cols) := lapply(.SD, function(x) format_dcml(x)), .SDcols = cols]
 DT$bulk_mod <- format_engr(DT$bulk_mod, 3)
 DT$visc <- format_engr(DT$visc, 4, set_power = -3)
 
-knitr::kable(DT, align = "r", caption = "Example 22.")
+knitr::kable(DT, align = "r", caption = "Example 23.")
 
 ## -----------------------------------------------------------------------------
 formatdown_options(reset = TRUE)
@@ -219,7 +224,7 @@ DT[, (cols) := lapply(.SD, function(x) format_dcml(x)), .SDcols = cols]
 cols <- c("elast_mod", "thrm_exp")
 DT[, (cols) := lapply(.SD, function(x) format_engr(x, 3)), .SDcols = cols]
 
-knitr::kable(DT, align = "lrrrr", caption = "Example 23.")
+knitr::kable(DT, align = "lrrrr", caption = "Example 24.")
 
 ## -----------------------------------------------------------------------------
 formatdown_options(reset = TRUE)

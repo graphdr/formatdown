@@ -88,3 +88,8 @@ units(x) <- "m/s"
 format_dcml(x)
 # equivalent to
 format_dcml(x, whitespace = "\\\\ ")
+
+# multiply_mark
+x <- 101300
+format_engr(x, decimal_mark = ".", multiply_mark = "\\times")
+format_engr(x, decimal_mark = ",", multiply_mark = "\\cdot")

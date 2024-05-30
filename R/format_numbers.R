@@ -117,6 +117,7 @@ get_units_suffix <- function(units_string, whitespace) {
 #' @param small_mark     `r param_small_mark`
 #' @param small_interval `r param_small_interval`
 #' @param whitespace     `r param_whitespace`
+#' @param multiply_mark  `r param_multiply_mark`
 #'
 #' @return A character vector in which numbers are formatted in power-of-ten
 #' or decimal notation and delimited for rendering as inline equations
@@ -138,7 +139,8 @@ format_numbers <- function(x,
                            big_interval   = formatdown_options("big_interval"),
                            small_mark     = formatdown_options("small_mark"),
                            small_interval = formatdown_options("small_interval"),
-                           whitespace     = formatdown_options("whitespace")) {
+                           whitespace     = formatdown_options("whitespace"),
+                           multiply_mark  = formatdown_options("multiply_mark")) {
 
   # Overhead ----------------------------------------------------------------
 
@@ -221,6 +223,10 @@ format_numbers <- function(x,
   if (isTRUE(big_interval < 1))   {big_mark   = ""}
   if (isTRUE(small_interval < 1)) {small_mark = ""}
 
+  # multiply_mark: character, not missing, length 1, two options
+  checkmate::qassert(multiply_mark, "S1")
+  checkmate::assert_choice(multiply_mark, choices = c("\\times", "\\cdot"))
+
   # Initial processing -----------------------------------------
 
   # Set units flag
@@ -278,7 +284,7 @@ format_numbers <- function(x,
   # Construct various string values
   # Desired character output is in the value column
   DT[non_pow, value := char_coeff]
-  DT[pow_10, value := paste0(char_coeff, " \\times ", "10^{", exponent, "}")]
+  DT[pow_10, value := paste0(char_coeff, " ", multiply_mark, " ", "10^{", exponent, "}")]
   DT[is.na(x), value := "\\mathrm{NA}"]
 
   # Add units suffix if any
@@ -333,7 +339,8 @@ format_sci <- function(x,
                        decimal_mark   = formatdown_options("decimal_mark"),
                        small_mark     = formatdown_options("small_mark"),
                        small_interval = formatdown_options("small_interval"),
-                       whitespace     = formatdown_options("whitespace")) {
+                       whitespace     = formatdown_options("whitespace"),
+                       multiply_mark  = formatdown_options("multiply_mark")) {
 
   # Arguments after dots must be named
   wrapr::stop_if_dot_args(substitute(list(...)), "format_sci()")
@@ -351,6 +358,7 @@ format_sci <- function(x,
                            small_mark     = small_mark,
                            small_interval = small_interval,
                            whitespace     = whitespace,
+                           multiply_mark  = multiply_mark,
 
                            # wrapper pre-sets
                            format       = "sci",
@@ -400,7 +408,8 @@ format_engr <- function(x,
                         decimal_mark   = formatdown_options("decimal_mark"),
                         small_mark     = formatdown_options("small_mark"),
                         small_interval = formatdown_options("small_interval"),
-                        whitespace     = formatdown_options("whitespace")) {
+                        whitespace     = formatdown_options("whitespace"),
+                        multiply_mark  = formatdown_options("multiply_mark")) {
 
   # Arguments after dots must be named
   wrapr::stop_if_dot_args(substitute(list(...)), "format_engr()")
@@ -418,6 +427,7 @@ format_engr <- function(x,
                            small_mark     = small_mark,
                            small_interval = small_interval,
                            whitespace     = whitespace,
+                           multiply_mark  = multiply_mark,
 
                            # wrapper pre-sets
                            format       = "engr",
@@ -489,7 +499,8 @@ format_dcml <- function(x,
                            # wrapper presets
                            format     = "dcml",
                            omit_power = NULL,
-                           set_power  = NULL)
+                           set_power  = NULL,
+                           multiply_mark = formatdown_options("multiply_mark"))
 
   # enable printing (see data.table FAQ 2.23)
   output[]
