@@ -76,7 +76,8 @@ rendering as inline equations in an R markdown document.</p>
 <span>  decimal_mark <span class="op">=</span> <span class="fu"><a href="formatdown_options.html">formatdown_options</a></span><span class="op">(</span><span class="st">"decimal_mark"</span><span class="op">)</span>,</span>
 <span>  small_mark <span class="op">=</span> <span class="fu"><a href="formatdown_options.html">formatdown_options</a></span><span class="op">(</span><span class="st">"small_mark"</span><span class="op">)</span>,</span>
 <span>  small_interval <span class="op">=</span> <span class="fu"><a href="formatdown_options.html">formatdown_options</a></span><span class="op">(</span><span class="st">"small_interval"</span><span class="op">)</span>,</span>
-<span>  whitespace <span class="op">=</span> <span class="fu"><a href="formatdown_options.html">formatdown_options</a></span><span class="op">(</span><span class="st">"whitespace"</span><span class="op">)</span></span>
+<span>  whitespace <span class="op">=</span> <span class="fu"><a href="formatdown_options.html">formatdown_options</a></span><span class="op">(</span><span class="st">"whitespace"</span><span class="op">)</span>,</span>
+<span>  multiply_mark <span class="op">=</span> <span class="fu"><a href="formatdown_options.html">formatdown_options</a></span><span class="op">(</span><span class="st">"multiply_mark"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -159,6 +160,13 @@ math-mode macro to preserve a horizontal space between words of text or
 between physical-unit abbreviations when formatting numbers of class
 "units". Default is <code>"\\\\ "</code>. Alternatives include <code>"\\\\:"</code> or
 "<code>\\\\&gt;</code>".</p></dd>
+
+
+<dt>multiply_mark</dt>
+<dd><p>Character, length 1, to define the multiplication symbol
+in power of ten notation. Possible values are <code>"\\times"</code> (default)
+or the centered dot <code>"\\cdot"</code> which is often used when the decimal
+mark is a comma.</p></dd>
 
 </dl></div>
     <div class="section level2">
