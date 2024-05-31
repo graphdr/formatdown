@@ -10,6 +10,7 @@ knitr::opts_knit$set(root.dir = "../")
 library(formatdown)
 library(data.table)
 library(knitr)
+library(stringr)
 
 options(
   datatable.print.nrows = 15,
@@ -164,6 +165,11 @@ format_sci(y)
 format_sci(z)
 
 ## -----------------------------------------------------------------------------
+G <- 6.6743e-11
+units(G) <- "m3 kg-1 s-2"
+format_sci(G)
+
+## -----------------------------------------------------------------------------
 c <- 299792458
 units(c) <- "m/s"
 format_c <- format_sci(c, size = "small")
@@ -189,20 +195,20 @@ units(sigma) <- "W m-2 K-4"
 format_sigma <- format_sci(sigma, size = "small")
 
 symbol <- c(
+  "$\\small G$",
   "$\\small c$",
   "$\\small h$",
   "$\\small \\mu_0$",
-  "$\\small G$",
   "$\\small k_e$",
   "$\\small \\sigma$"
 )
 
 quantity <- format_text(
   c(
+    "Newtonian gravitational constant",
     "speed of light in a vacuum",
     "Planck constant",
     "vacuum magnetic permeability",
-    "Newtonian gravitational constant",
     "Coulomb constant",
     "Stefan-Boltzmann constant"
   ),
@@ -210,16 +216,16 @@ quantity <- format_text(
 )
 
 formatted_value <- c(
+  format_G,
   format_c,
   format_h,
   format_mu,
-  format_G,
   format_ke,
   format_sigma
 )
 
 DT <- data.table(symbol, quantity, formatted_value)
-knitr::kable(DT)
+knitr::kable(DT, caption = "Illustrating a variety of measurement units")
 
 ## -----------------------------------------------------------------------------
 formatdown_options(size = "small")
@@ -237,21 +243,109 @@ units(DT$pres) <- "Pa"
 units(DT$sp_gas) <- "J kg-1 K-1"
 units(DT$dens) <- "kg m-3"
 
+# Make a copy to preserve DT as-is for a subsequent example
+x <- copy(DT)
+
 # Format one column at a time
-DT$temp <- format_dcml(DT$temp)
-DT$pres <- format_engr(DT$pres)
+x$temp <- format_dcml(x$temp)
+x$pres <- format_engr(x$pres)
 
 # Or format multiple columns in one pass
 cols <- c("sp_gas", "dens")
-DT[, (cols) := lapply(.SD, format_dcml), .SDcols = cols]
+x[, (cols) := lapply(.SD, format_dcml), .SDcols = cols]
 
-knitr::kable(DT, align = "r", caption = "Example 12.")
+knitr::kable(x, align = "r", caption = "Example 12.")
 
 ## -----------------------------------------------------------------------------
 formatdown_options(reset = TRUE)
 
 ## -----------------------------------------------------------------------------
-# 13. Significant digits
+formatdown_options(size = "small")
+
+## -----------------------------------------------------------------------------
+# Example 13. 
+y <- copy(DT)
+
+## -----------------------------------------------------------------------------
+# Preserve column names 
+col_names <- names(y)
+col_names
+
+# Preserve units and surround by square brackets for display
+unit_list <- sapply(y, units::deparse_unit)
+unit_list <- paste0("[", unit_list, "]")
+unit_list
+
+## -----------------------------------------------------------------------------
+# Drop units from values 
+y <- units::drop_units(y)
+
+# Format numerical columns 
+y$temp <- format_dcml(y$temp)
+y$pres <- format_engr(y$pres)
+cols <- c("sp_gas", "dens")
+y[, (cols) := lapply(.SD, format_dcml), .SDcols = cols]
+
+## -----------------------------------------------------------------------------
+knitr::kable(y, 
+             caption = "Example 13.", 
+             col.names = unit_list, 
+             align = "r") |> 
+  kableExtra::add_header_above(header = col_names, line = FALSE, align = "r")
+
+## -----------------------------------------------------------------------------
+formatdown_options(reset = TRUE)
+
+## -----------------------------------------------------------------------------
+# Example 14. 
+unit_row <- DT[1]
+unit_row
+
+# By columns, remove numbers, retain formatted units
+for (jj in names(unit_row)) {
+  # Select column
+  q <- unit_row[, get(jj)]
+  # Format the number with its units
+  q <- format_numbers(q)
+  # Regular expression to identify characters between the $ sign and \\mathrm
+  regex <- "(?<=\\$).*?(?=\\\\mathrm)"
+  # Remove those characters, leaving the formatted unit string
+  unit_row[, jj] <- stringr::str_remove(q, regex)
+}
+# Convert the data frame row to a vector
+unit_vec <- unname(unlist(unit_row[1]))
+unit_vec
+
+## -----------------------------------------------------------------------------
+# Insert parentheses just inside the math delimiters
+unit_vec <- stringr::str_replace_all(unit_vec, "\\$", "")
+# Add parentheses around units and reinstate the math delimiters
+unit_vec <- paste0("$\\left(", unit_vec, "\\right)$")
+unit_vec
+
+## -----------------------------------------------------------------------------
+# Make the column names presentable
+col_names <- names(DT) |>
+  stringr::str_replace("temp"  , "Temperature")  |>
+  stringr::str_replace("pres"  , "Pressure")     |>
+  stringr::str_replace("sp_gas", "Gas constant") |>
+  stringr::str_replace("dens"  , "Density")
+
+# Re-using the formatted data frame "y" from the previous example
+# The unit vector is used for table col.name
+knitr::kable(y, 
+             caption = "Example 14.", 
+             col.names = unit_vec, 
+             align = "r") |> 
+  # Adjust the font size
+  kableExtra::kable_styling(font_size = 13) |>
+  # Make the units row a slightly smaller font size
+  kableExtra::row_spec(0, font_size = 10) |>
+  # Add a header above the units with the variable names
+  kableExtra::add_header_above(header = col_names, line = FALSE, align = "r")
+
+## -----------------------------------------------------------------------------
+# 15. Significant digits
 format_sci(e, digits = 5)
 format_sci(e, digits = 4)
 format_sci(e, digits = 3)
@@ -260,7 +354,7 @@ format_sci(e, digits = 3)
 formatdown_options(size = "small")
 
 ## -----------------------------------------------------------------------------
-# 14. Comparing formats
+# 16. Comparing formats
 x <- c(2.3333e-5, 3.4444e-4, 5.2222e-2, 6.3333e-1, 8.1111e+1, 9.2222e+2, 2.4444e+4, 3.1111e+5, 4.2222e+6)
 dcml <- format_numbers(x, 3, format = "dcml")
 sci <- format_numbers(x, 3, format = "sci")
@@ -269,7 +363,7 @@ DT <- data.table(dcml, sci, engr)
 knitr::kable(DT,
   align = "r",
   col.names = c("decimal", "scientific", "engineering"),
-  caption = "Example 14."
+  caption = "Example 16."
 )
 
 ## -----------------------------------------------------------------------------
@@ -279,7 +373,7 @@ formatdown_options(reset = TRUE)
 formatdown_options(size = "small")
 
 ## -----------------------------------------------------------------------------
-# 15. Effects of omit_power
+# 17. Effects of omit_power
 DT <- atmos[3:12, .(pres)]
 DT[, sci_all := format_sci(pres, 3, omit_power = NULL)]
 DT[, sci_omit := format_sci(pres, 3, omit_power = c(-1, 0))]
@@ -294,11 +388,11 @@ knitr::kable(DT,
     "all engineering",
     "engineering w/ omit"
   ),
-  caption = "Example 15."
+  caption = "Example 17."
 )
 
 ## -----------------------------------------------------------------------------
-# 16. Omit power used for a single value of exponent
+# 18. Omit power used for a single value of exponent
 DT <- atmos[3:12, .(pres)]
 DT[, sci_all := format_sci(pres, 3, omit_power = NULL)]
 DT[, sci_omit := format_sci(pres, 3, omit_power = 0)]
@@ -313,14 +407,14 @@ knitr::kable(DT,
     "all engineering",
     "engineering w/ omit"
   ),
-  caption = "Example 16."
+  caption = "Example 18."
 )
 
 ## -----------------------------------------------------------------------------
 formatdown_options(reset = TRUE)
 
 ## -----------------------------------------------------------------------------
-# 17. Different ways of creating a decimal format
+# 19. Different ways of creating a decimal format
 (y <- 6.78e-3)
 
 (p <- format_numbers(y, 3, "sci", omit_power = c(-Inf, Inf)))
@@ -336,7 +430,7 @@ all.equal(p, r)
 formatdown_options(size = "small")
 
 ## -----------------------------------------------------------------------------
-# 18. set_power argument
+# 20. set_power argument
 DT <- atmos[alt <= 40, .(alt, pres, dens)]
 DT[, sci_pres := format_sci(pres, 3, omit_power = c(-1, 2))]
 DT[, set_pres := format_sci(pres, 3, omit_power = c(-1, 2), set_power = 3)]
@@ -347,7 +441,7 @@ DT[, dens := NULL]
 knitr::kable(DT,
   align = "r",
   col.names = c("Altitude (km)", "Pressure (Pa)", "with set_power", "Density (kg/m$^{3}$)", "with set_power"),
-  caption = "Example 18."
+  caption = "Example 20."
 )
 
 ## -----------------------------------------------------------------------------

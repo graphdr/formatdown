@@ -75,6 +75,6 @@ param_whitespace <- 'Character, length 1, to define the LaTeX-style
 
 param_multiply_mark <- 'Character, length 1, to define the multiplication symbol
         in power of ten notation. Possible values are `"\\\\times"` (default)
-        or the centered dot `"\\\\cdot"` which is often used when the decimal
+        or a half-high dot `"\\\\cdot"` which is often used when the decimal
         mark is a comma.'
 

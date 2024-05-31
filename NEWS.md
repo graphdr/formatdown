@@ -5,6 +5,7 @@
 - Add option for centered-dot multiplication symbol, often used with comma decimal marker
 - Change default whitespace argument to render correctly in the README page on GitHub
 - Revise wrapr::stop_if_dot_args() in functions, for more useful error message
+- Use stringr package in vignette to place formatted units in table header
 - Expanded the number of examples
 
 # formatdown 0.1.4

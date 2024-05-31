@@ -1,6 +1,6 @@
 Package: formatdown
 Title: Formatting Numbers in 'rmarkdown' Documents
-Version: 0.1.4.9001
+Version: 0.1.4.9002
 Language: en-US
 Authors@R: person("Richard", "Layton", email="graphdoctor@gmail.com", role=c("aut", "cre"))
 Description: Provides a small set of tools for formatting numbers in R-markdown 
@@ -25,8 +25,10 @@ Imports:
     wrapr
 Suggests: 
     covr,
+    kableExtra, 
     knitr,
     rmarkdown,
+    stringr, 
     tinytest
 VignetteBuilder: knitr
 URL: https://github.com/graphdr/formatdown/, 

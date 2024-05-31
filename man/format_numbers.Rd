@@ -98,7 +98,7 @@ between physical-unit abbreviations when formatting numbers of class
 
 \item{multiply_mark}{Character, length 1, to define the multiplication symbol
 in power of ten notation. Possible values are \code{"\\\\times"} (default)
-or the centered dot \code{"\\\\cdot"} which is often used when the decimal
+or a half-high dot \code{"\\\\cdot"} which is often used when the decimal
 mark is a comma.}
 }
 \value{

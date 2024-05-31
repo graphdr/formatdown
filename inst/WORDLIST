@@ -9,7 +9,9 @@ MathJax
 Maurer
 McGraw
 NIST
+README
 YYYY
+args
 cdot
 coercible
 cond
@@ -32,4 +34,6 @@ qquad
 repo
 rmarkdown
 scriptsize
+stringr
 ver
+wrapr

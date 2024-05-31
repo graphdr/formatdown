@@ -42,19 +42,10 @@ Formatting tools include:
 **`format_numbers()`**  
 Convert a numeric vector to a math-delimited character vector in which
 the numbers can be formatted in scientific or engineering power-of-ten
-notation or in decimal form.
-
-**`format_sci()`**  
-Convenience function. A wrapper around `format_numbers()` for scientific
-notation.
-
-**`format_engr()`**  
-Convenience function. A wrapper around `format_numbers()` for
-engineering notation.
-
-**`format_dcml()`**  
-Convenience function. A wrapper around `format_numbers()` for decimal
-notation.
+notation or in decimal form. Three convenience functions that wrap
+`format_numbers()` are provided as well: `format_sci()` for scientific
+notation, `format_engr()` for engineering notation, and `format_dcml()`
+for decimal notation.
 
 **`format_text()`**  
 Convert a character vector to math-delimited character vector. Useful
@@ -164,22 +155,23 @@ Table 1: Properties of metals.
 <br>
 
 *Options*.   For users who prefer a comma as the decimal mark, the
-argument can be set once using `formatdown_options()`,
+argument can be set once using `formatdown_options()`. If desired, we
+can also change the multiplication symbol to a half-high dot.
 
 ``` r
-formatdown_options(decimal_mark = ",")
+formatdown_options(decimal_mark = ",", multiply_mark = "\\cdot")
 ```
 
 Using the same code as above to format the metals data yields,
 
 |                     Metal | Density \[kg/m$^3$\] | Therm. expan. \[m/m K$^{-1}$\] | Therm. cond. \[W/m K$^{-1}$\] |      Elastic modulus |
 |--------------------------:|---------------------:|-------------------------------:|------------------------------:|---------------------:|
-| $\mathrm{aluminum\ 6061}$ |               $2700$ |          $24,3 \times 10^{-6}$ |                         $156$ | $73,1\ \mathrm{GPa}$ |
-|         $\mathrm{copper}$ |               $8900$ |          $16,6 \times 10^{-6}$ |                         $393$ |  $117\ \mathrm{GPa}$ |
-|           $\mathrm{lead}$ |              $11300$ |          $52,7 \times 10^{-6}$ |                        $37,0$ | $13,8\ \mathrm{GPa}$ |
-|       $\mathrm{platinum}$ |              $21400$ |          $9,00 \times 10^{-6}$ |                        $69,2$ |  $147\ \mathrm{GPa}$ |
-|    $\mathrm{steel\ 1020}$ |               $7850$ |          $11,3 \times 10^{-6}$ |                        $46,7$ |  $207\ \mathrm{GPa}$ |
-|       $\mathrm{titanium}$ |               $4850$ |          $9,36 \times 10^{-6}$ |                        $7,44$ |  $102\ \mathrm{GPa}$ |
+| $\mathrm{aluminum\ 6061}$ |               $2700$ |           $24,3 \cdot 10^{-6}$ |                         $156$ | $73,1\ \mathrm{GPa}$ |
+|         $\mathrm{copper}$ |               $8900$ |           $16,6 \cdot 10^{-6}$ |                         $393$ |  $117\ \mathrm{GPa}$ |
+|           $\mathrm{lead}$ |              $11300$ |           $52,7 \cdot 10^{-6}$ |                        $37,0$ | $13,8\ \mathrm{GPa}$ |
+|       $\mathrm{platinum}$ |              $21400$ |           $9,00 \cdot 10^{-6}$ |                        $69,2$ |  $147\ \mathrm{GPa}$ |
+|    $\mathrm{steel\ 1020}$ |               $7850$ |           $11,3 \cdot 10^{-6}$ |                        $46,7$ |  $207\ \mathrm{GPa}$ |
+|       $\mathrm{titanium}$ |               $4850$ |           $9,36 \cdot 10^{-6}$ |                        $7,44$ |  $102\ \mathrm{GPa}$ |
 
 Table 2: Changing the decimal mark
 
