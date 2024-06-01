@@ -263,11 +263,11 @@ formatdown_options(reset = TRUE)
 formatdown_options(size = "small")
 
 ## -----------------------------------------------------------------------------
-# Example 13. 
+# Example 13.
 y <- copy(DT)
 
 ## -----------------------------------------------------------------------------
-# Preserve column names 
+# Preserve column names
 col_names <- names(y)
 col_names
 
@@ -277,27 +277,28 @@ unit_list <- paste0("[", unit_list, "]")
 unit_list
 
 ## -----------------------------------------------------------------------------
-# Drop units from values 
+# Drop units from values
 y <- units::drop_units(y)
 
-# Format numerical columns 
+# Format numerical columns
 y$temp <- format_dcml(y$temp)
 y$pres <- format_engr(y$pres)
 cols <- c("sp_gas", "dens")
 y[, (cols) := lapply(.SD, format_dcml), .SDcols = cols]
 
 ## -----------------------------------------------------------------------------
-knitr::kable(y, 
-             caption = "Example 13.", 
-             col.names = unit_list, 
-             align = "r") |> 
+knitr::kable(y,
+  caption = "Example 13.",
+  col.names = unit_list,
+  align = "r"
+) |>
   kableExtra::add_header_above(header = col_names, line = FALSE, align = "r")
 
 ## -----------------------------------------------------------------------------
 formatdown_options(reset = TRUE)
 
 ## -----------------------------------------------------------------------------
-# Example 14. 
+# Example 14.
 unit_row <- DT[1]
 unit_row
 
@@ -326,17 +327,18 @@ unit_vec
 ## -----------------------------------------------------------------------------
 # Make the column names presentable
 col_names <- names(DT) |>
-  stringr::str_replace("temp"  , "Temperature")  |>
-  stringr::str_replace("pres"  , "Pressure")     |>
+  stringr::str_replace("temp", "Temperature") |>
+  stringr::str_replace("pres", "Pressure") |>
   stringr::str_replace("sp_gas", "Gas constant") |>
-  stringr::str_replace("dens"  , "Density")
+  stringr::str_replace("dens", "Density")
 
 # Re-using the formatted data frame "y" from the previous example
 # The unit vector is used for table col.name
-knitr::kable(y, 
-             caption = "Example 14.", 
-             col.names = unit_vec, 
-             align = "r") |> 
+knitr::kable(y,
+  caption = "Example 14.",
+  col.names = unit_vec,
+  align = "r"
+) |>
   # Adjust the font size
   kableExtra::kable_styling(font_size = 13) |>
   # Make the units row a slightly smaller font size

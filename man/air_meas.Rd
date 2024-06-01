@@ -5,7 +5,9 @@
 \alias{air_meas}
 \title{Air density measurements}
 \format{
-Classes data.table and data.frame:	5 observations of 7 variables:
+Classes data.table and data.frame with	5 observations
+of 7 variables:
+
 \describe{
 \item{date}{"Date" class format "YYYY-MM-DD".}
 \item{trial}{Character, label "a" through "e".}

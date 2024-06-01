@@ -5,7 +5,9 @@
 \alias{water}
 \title{Properties of water}
 \format{
-Classes data.table and data.frame:	11 observations of 5 variables:
+Classes data.table and data.frame with 11 observations
+of 5 variables:
+
 \describe{
 \item{temp}{Numeric, temperature (K)}
 \item{dens}{Numeric, density (kg m\eqn{^{-3}}{^{-3}})}

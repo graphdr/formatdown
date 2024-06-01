@@ -5,7 +5,9 @@
 \alias{atmos}
 \title{Properties of standard atmosphere}
 \format{
-Classes data.table and data.frame: 9 observations of 5 variables:
+Classes data.table and data.frame with 20 observations
+of 5 variables:
+
 \describe{
 \item{alt}{Numeric, altitude (km)}
 \item{temp}{Numeric, air temperature (K)}

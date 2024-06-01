@@ -5,7 +5,9 @@
 \alias{metals}
 \title{Properties of metals}
 \format{
-Classes data.table and data.frame:	6 observations of  5 variables:
+Classes data.table and data.frame with	6 observations
+of 5 variables:
+
 \describe{
 \item{metal}{Character, name of material}
 \item{dens}{Numeric, density (kg m\eqn{^{-3}}{^{-3}})}

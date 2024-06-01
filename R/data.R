@@ -6,7 +6,9 @@
 #'
 #' @usage data(air_meas, package = "formatdown")
 #'
-#' @format Classes data.table and data.frame:	5 observations of 7 variables:
+#' @format Classes data.table and data.frame with	`r nrow(air_meas)` observations
+#' of `r ncol(air_meas)` variables:
+#'
 #'   \describe{
 #'    \item{date}{"Date" class format "YYYY-MM-DD".}
 #'    \item{trial}{Character, label "a" through "e".}
@@ -27,7 +29,9 @@
 #'
 #' @usage data(atmos, package = "formatdown")
 #'
-#' @format Classes data.table and data.frame: 9 observations of 5 variables:
+#' @format Classes data.table and data.frame with `r nrow(atmos)` observations
+#' of `r ncol(atmos)` variables:
+#'
 #' \describe{
 #'  \item{alt}{Numeric, altitude (km)}
 #'  \item{temp}{Numeric, air temperature (K)}
@@ -49,7 +53,9 @@
 #'
 #' @usage data(metals, package = "formatdown")
 #'
-#' @format Classes data.table and data.frame:	6 observations of  5 variables:
+#' @format Classes data.table and data.frame with	`r nrow(metals)` observations
+#' of `r ncol(metals)` variables:
+#'
 #' \describe{
 #'  \item{metal}{Character, name of material}
 #'  \item{dens}{Numeric, density (kg m\eqn{^{-3}}{^{-3}})}
@@ -73,7 +79,9 @@
 #'
 #' @usage data(water, package = "formatdown")
 #'
-#' @format Classes data.table and data.frame:	11 observations of 5 variables:
+#' @format Classes data.table and data.frame with `r nrow(water)` observations
+#' of `r ncol(water)` variables:
+#'
 #' \describe{
 #'  \item{temp}{Numeric, temperature (K)}
 #'  \item{dens}{Numeric, density (kg m\eqn{^{-3}}{^{-3}})}
