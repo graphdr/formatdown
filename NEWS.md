@@ -6,6 +6,7 @@
 - Change default whitespace argument to render correctly in the README page on GitHub
 - Revise wrapr::stop_if_dot_args() in functions, for more useful error message
 - Use stringr package in vignette to place formatted units in table header
+- Correct typos in data Rd files
 - Expanded the number of examples
 
 # formatdown 0.1.4
