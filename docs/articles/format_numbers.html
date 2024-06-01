@@ -692,8 +692,8 @@ n\in\{-1, 0, 1, 2\}\)</span>, the default format is decimal; see <a href="#exclu
 <div class="section level2">
 <h2 id="units-input">Units input<a class="anchor" aria-label="anchor" href="#units-input"></a>
 </h2>
-<p>The units R package (website: <a href="https://r-quantities.github.io/units/" class="external-link">Measurement Units for
-R</a>) provides measurement units for R vectors, converting vectors of
+<p>The <a href="https://r-quantities.github.io/units/" class="external-link">units</a> R
+package provides measurement units for R vectors, converting vectors of
 class “numeric” to class “units” <span class="citation">(<a href="#ref-Pebesma+Mailund+Hiebert:2016:units">Pebesma et al.,
 2016</a>)</span>. For example</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
@@ -812,10 +812,567 @@ constant}\)</span></td>
 </tr>
 </tbody>
 </table>
-<p>In a typical application, however, the numbers in a column have the
-same physical units and are formatted as a vector. For example,</p>
+</div>
+<div class="section level2">
+<h2 id="significant-digits">Significant digits<a class="anchor" aria-label="anchor" href="#significant-digits"></a>
+</h2>
+<p>Significant digits are applied to the input argument using the base R
+function <code><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif()</a></code> before additional formatting is applied.
+For example,</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Example 12</span></span>
+<code class="sourceCode R"><span><span class="co"># 12. Significant digits</span></span>
+<span><span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">e</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "$1.6022 \\times 10^{-19}$"</span></span>
+<span><span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">e</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "$1.602 \\times 10^{-19}$"</span></span>
+<span><span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">e</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "$1.60 \\times 10^{-19}$"</span></span></code></pre></div>
+<p>Example 12 renders as,</p>
+<ul>
+<li><span class="math inline">\(\small 1.6022 \times
+10^{-19}\)</span></li>
+<li><span class="math inline">\(\small 1.602 \times
+10^{-19}\)</span></li>
+<li><span class="math inline">\(\small 1.60 \times
+10^{-19}\)</span></li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="formats">Formats<a class="anchor" aria-label="anchor" href="#formats"></a>
+</h2>
+<p>The <code>format</code> argument appears in
+<code><a href="../reference/format_numbers.html">format_numbers()</a></code> only. The default is “engr”. The format is
+preset in the <code><a href="../reference/format_dcml.html">format_dcml()</a></code>, <code><a href="../reference/format_engr.html">format_engr()</a></code>,
+and <code><a href="../reference/format_sci.html">format_sci()</a></code> convenience functions.</p>
+<p>To compare the effects across many orders of magnitude, we display
+the same vector in different formats.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># 13. Comparing formats</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.3333e-5</span>, <span class="fl">3.4444e-4</span>, <span class="fl">5.2222e-2</span>, <span class="fl">6.3333e-1</span>, <span class="fl">8.1111e+1</span>, <span class="fl">9.2222e+2</span>, <span class="fl">2.4444e+4</span>, <span class="fl">3.1111e+5</span>, <span class="fl">4.2222e+6</span><span class="op">)</span></span>
+<span><span class="va">dcml</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_numbers.html">format_numbers</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, format <span class="op">=</span> <span class="st">"dcml"</span><span class="op">)</span></span>
+<span><span class="va">sci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_numbers.html">format_numbers</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, format <span class="op">=</span> <span class="st">"sci"</span><span class="op">)</span></span>
+<span><span class="va">engr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_numbers.html">format_numbers</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, format <span class="op">=</span> <span class="st">"engr"</span><span class="op">)</span></span>
+<span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">dcml</span>, <span class="va">sci</span>, <span class="va">engr</span><span class="op">)</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
+<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"decimal"</span>, <span class="st">"scientific"</span>, <span class="st">"engineering"</span><span class="op">)</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"Example 13."</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<caption>Example 13.</caption>
+<colgroup>
+<col width="24%">
+<col width="37%">
+<col width="37%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">decimal</th>
+<th align="right">scientific</th>
+<th align="right">engineering</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small
+0.0000233\)</span></td>
+<td align="right"><span class="math inline">\(\small 2.33 \times
+10^{-5}\)</span></td>
+<td align="right"><span class="math inline">\(\small 23.3 \times
+10^{-6}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small
+0.000344\)</span></td>
+<td align="right"><span class="math inline">\(\small 3.44 \times
+10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(\small 344 \times
+10^{-6}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small
+0.0522\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.22 \times
+10^{-2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 52.2 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small 0.633\)</span></td>
+<td align="right"><span class="math inline">\(\small 0.633\)</span></td>
+<td align="right"><span class="math inline">\(\small 0.633\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small 81.1\)</span></td>
+<td align="right"><span class="math inline">\(\small 81.1\)</span></td>
+<td align="right"><span class="math inline">\(\small 81.1\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small 922\)</span></td>
+<td align="right"><span class="math inline">\(\small 922\)</span></td>
+<td align="right"><span class="math inline">\(\small 922\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small 24400\)</span></td>
+<td align="right"><span class="math inline">\(\small 2.44 \times
+10^{4}\)</span></td>
+<td align="right"><span class="math inline">\(\small 24.4 \times
+10^{3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(\small
+311000\)</span></td>
+<td align="right"><span class="math inline">\(\small 3.11 \times
+10^{5}\)</span></td>
+<td align="right"><span class="math inline">\(\small 311 \times
+10^{3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(\small
+4220000\)</span></td>
+<td align="right"><span class="math inline">\(\small 4.22 \times
+10^{6}\)</span></td>
+<td align="right"><span class="math inline">\(\small 4.22 \times
+10^{6}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The values displayed without powers-of-ten notation in the scientific
+and engineering columns are determined by the <code>omit_power</code>
+argument discussed next.</p>
+</div>
+<div class="section level2">
+<h2 id="excluding-exponents">Excluding a range of exponents<a class="anchor" aria-label="anchor" href="#excluding-exponents"></a>
+</h2>
+<p>When specifying power-of-ten notation, numbers with exponents lying
+within the range of the <code>omit_power</code> argument are typeset in
+decimal form. In engineering notation, the exponent is checked for lying
+within the range before and after the conversion to multiple-of-3
+exponents.</p>
+<p>To illustrate, we compare two <code>omit_power</code> settings in
+both scientific and engineering formats. In some columns, we set
+<code>omit_power = NULL</code>, which imposes power-of-ten notation on
+the entire vector.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># 14. Effects of omit_power</span></span>
+<span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="va">atmos</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">12</span>, <span class="fu">.</span><span class="op">(</span><span class="va">pres</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">sci_all</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">sci_omit</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">engr_all</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">engr_omit</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
+<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Unformatted"</span>,</span>
+<span>    <span class="st">"all scientific"</span>,</span>
+<span>    <span class="st">"scientific w/ omit"</span>,</span>
+<span>    <span class="st">"all engineering"</span>,</span>
+<span>    <span class="st">"engineering w/ omit"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"Example 14."</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<caption>Example 14.</caption>
+<colgroup>
+<col width="9%">
+<col width="22%">
+<col width="22%">
+<col width="22%">
+<col width="22%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">Unformatted</th>
+<th align="right">all scientific</th>
+<th align="right">scientific w/ omit</th>
+<th align="right">all engineering</th>
+<th align="right">engineering w/ omit</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">5.529e+03</td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">1.197e+03</td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">2.870e+02</td>
+<td align="right"><span class="math inline">\(\small 2.87 \times
+10^{2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 2.87 \times
+10^{2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 287 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 287\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">8.000e+01</td>
+<td align="right"><span class="math inline">\(\small 8.00 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 8.00 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 80.0 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 80.0\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">2.200e+01</td>
+<td align="right"><span class="math inline">\(\small 2.20 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 2.20 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 22.0 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 22.0\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">5.220e+00</td>
+<td align="right"><span class="math inline">\(\small 5.22 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.22\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.22 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.22\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">1.050e+00</td>
+<td align="right"><span class="math inline">\(\small 1.05 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.05\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.05 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.05\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">1.840e-01</td>
+<td align="right"><span class="math inline">\(\small 1.84 \times
+10^{-1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 0.184\)</span></td>
+<td align="right"><span class="math inline">\(\small 184 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 0.184\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">3.200e-02</td>
+<td align="right"><span class="math inline">\(\small 3.20 \times
+10^{-2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 3.20 \times
+10^{-2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 32.0 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 32.0 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">4.540e-04</td>
+<td align="right"><span class="math inline">\(\small 4.54 \times
+10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(\small 4.54 \times
+10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(\small 454 \times
+10^{-6}\)</span></td>
+<td align="right"><span class="math inline">\(\small 454 \times
+10^{-6}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Comments:</p>
+<ul>
+<li>In the “scientific with omit” column, the three values <span class="math inline">\(\small (0.184, 1.05, 5.22)\)</span> are in decimal
+form because their exponents lie within the <code>omit_power</code>
+range <span class="math inline">\(\small \{-1, 0\}\)</span>.</li>
+<li>The same is true in the “engineering with omit” column because these
+exponents are in the omit range <em>before</em> converting to
+engineering form.</li>
+<li>The “engineering with omit” column also displays the values <span class="math inline">\((\small 22, 80, 287)\)</span> in decimal form
+because their exponents are in the omit range <em>after</em> converting
+to engineering notation.</li>
+</ul>
+<p><br></p>
+<p>If a single value is assigned, e.g., <code>omit_power = 0</code>, the
+argument is interpreted as <code>c(0, 0)</code>.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># 15. Omit power used for a single value of exponent</span></span>
+<span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="va">atmos</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">12</span>, <span class="fu">.</span><span class="op">(</span><span class="va">pres</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">sci_all</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">sci_omit</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">engr_all</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">engr_omit</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
+<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Unformatted"</span>,</span>
+<span>    <span class="st">"all scientific"</span>,</span>
+<span>    <span class="st">"scientific w/ omit"</span>,</span>
+<span>    <span class="st">"all engineering"</span>,</span>
+<span>    <span class="st">"engineering w/ omit"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"Example 15."</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<caption>Example 15.</caption>
+<colgroup>
+<col width="9%">
+<col width="22%">
+<col width="22%">
+<col width="22%">
+<col width="22%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">Unformatted</th>
+<th align="right">all scientific</th>
+<th align="right">scientific w/ omit</th>
+<th align="right">all engineering</th>
+<th align="right">engineering w/ omit</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">5.529e+03</td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">1.197e+03</td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">2.870e+02</td>
+<td align="right"><span class="math inline">\(\small 2.87 \times
+10^{2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 2.87 \times
+10^{2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 287 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 287\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">8.000e+01</td>
+<td align="right"><span class="math inline">\(\small 8.00 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 8.00 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 80.0 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 80.0\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">2.200e+01</td>
+<td align="right"><span class="math inline">\(\small 2.20 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 2.20 \times
+10^{1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 22.0 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 22.0\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">5.220e+00</td>
+<td align="right"><span class="math inline">\(\small 5.22 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.22\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.22 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.22\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">1.050e+00</td>
+<td align="right"><span class="math inline">\(\small 1.05 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.05\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.05 \times
+10^{0}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.05\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">1.840e-01</td>
+<td align="right"><span class="math inline">\(\small 1.84 \times
+10^{-1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.84 \times
+10^{-1}\)</span></td>
+<td align="right"><span class="math inline">\(\small 184 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 184 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">3.200e-02</td>
+<td align="right"><span class="math inline">\(\small 3.20 \times
+10^{-2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 3.20 \times
+10^{-2}\)</span></td>
+<td align="right"><span class="math inline">\(\small 32.0 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 32.0 \times
+10^{-3}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">4.540e-04</td>
+<td align="right"><span class="math inline">\(\small 4.54 \times
+10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(\small 4.54 \times
+10^{-4}\)</span></td>
+<td align="right"><span class="math inline">\(\small 454 \times
+10^{-6}\)</span></td>
+<td align="right"><span class="math inline">\(\small 454 \times
+10^{-6}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>Setting <code>omit_power = c(-Inf, Inf)</code> yields the same
+decimal result as <code>format = "dcml"</code> and overrides any other
+<code>format</code> setting. For example,</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># 16. Different ways of creating a decimal format</span></span>
+<span><span class="op">(</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">6.78e-3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.00678</span></span>
+<span></span>
+<span><span class="op">(</span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_numbers.html">format_numbers</a></span><span class="op">(</span><span class="va">y</span>, <span class="fl">3</span>, <span class="st">"sci"</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="cn">Inf</span>, <span class="cn">Inf</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "$0.00678$"</span></span>
+<span></span>
+<span><span class="op">(</span><span class="va">q</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_numbers.html">format_numbers</a></span><span class="op">(</span><span class="va">y</span>, <span class="fl">3</span>, <span class="st">"dcml"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "$0.00678$"</span></span>
+<span></span>
+<span><span class="op">(</span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_dcml.html">format_dcml</a></span><span class="op">(</span><span class="va">y</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "$0.00678$"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">p</span>, <span class="va">q</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">p</span>, <span class="va">r</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<p>Example 16 (all cases) renders as,</p>
+<ul>
+<li><span class="math inline">\(\small 0.00678\)</span></li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="enforcing-exponent">Enforcing a specific exponent<a class="anchor" aria-label="anchor" href="#enforcing-exponent"></a>
+</h2>
+<p>When values in a table column span only a few orders of magnitude, an
+audience is sometimes better served by setting the notation to a
+constant power of ten. For example, here we show numbers in scientific
+format and compare to columns in which the exponents are set to fixed
+values. Assigning a value to <code>set_power</code> overrides
+<code>omit_power</code> and <code>format</code>.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># 17. set_power argument</span></span>
+<span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="va">atmos</span><span class="op">[</span><span class="va">alt</span> <span class="op">&lt;=</span> <span class="fl">40</span>, <span class="fu">.</span><span class="op">(</span><span class="va">alt</span>, <span class="va">pres</span>, <span class="va">dens</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">sci_pres</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">set_pres</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, set_power <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">sci_dens</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">dens</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">set_dens</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">dens</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, set_power <span class="op">=</span> <span class="op">-</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">pres</span> <span class="op">:=</span> <span class="cn">NULL</span><span class="op">]</span></span>
+<span><span class="va">DT</span><span class="op">[</span>, <span class="va">dens</span> <span class="op">:=</span> <span class="cn">NULL</span><span class="op">]</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
+<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Altitude (km)"</span>, <span class="st">"Pressure (Pa)"</span>, <span class="st">"with set_power"</span>, <span class="st">"Density (kg/m$^{3}$)"</span>, <span class="st">"with set_power"</span><span class="op">)</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"Example 17."</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<caption>Example 17.</caption>
+<colgroup>
+<col width="10%">
+<col width="21%">
+<col width="22%">
+<col width="22%">
+<col width="23%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">Altitude (km)</th>
+<th align="right">Pressure (Pa)</th>
+<th align="right">with set_power</th>
+<th align="right">Density (kg/m<span class="math inline">\(^{3}\)</span>)</th>
+<th align="right">with set_power</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right"><span class="math inline">\(\small 1.01 \times
+10^{5}\)</span></td>
+<td align="right"><span class="math inline">\(\small 101 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.23\)</span></td>
+<td align="right"><span class="math inline">\(\small 123 \times
+10^{-2}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right"><span class="math inline">\(\small 2.65 \times
+10^{4}\)</span></td>
+<td align="right"><span class="math inline">\(\small 26.5 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 0.414\)</span></td>
+<td align="right"><span class="math inline">\(\small 41.4 \times
+10^{-2}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">20</td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 5.53 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 88.9 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 8.89 \times
+10^{-2}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">30</td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.20 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 18.4 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 1.84 \times
+10^{-2}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">40</td>
+<td align="right"><span class="math inline">\(\small 287\)</span></td>
+<td align="right"><span class="math inline">\(\small 0.287 \times
+10^{3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 4.00 \times
+10^{-3}\)</span></td>
+<td align="right"><span class="math inline">\(\small 0.400 \times
+10^{-2}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="tables-with-units">Tables with units<a class="anchor" aria-label="anchor" href="#tables-with-units"></a>
+</h2>
+<p>In a typical data table, the numbers in a column have the same
+physical units and are formatted as a vector. For example,</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Example 18</span></span>
 <span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="va">air_meas</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">temp</span>, <span class="va">pres</span>, <span class="va">sp_gas</span>, <span class="va">dens</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co"># Examine data</span></span>
@@ -845,9 +1402,9 @@ same physical units and are formatted as a vector. For example,</p>
 <span><span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sp_gas"</span>, <span class="st">"dens"</span><span class="op">)</span></span>
 <span><span class="va">x</span><span class="op">[</span>, <span class="op">(</span><span class="va">cols</span><span class="op">)</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">.SD</span>, <span class="va">format_dcml</span><span class="op">)</span>, .SDcols <span class="op">=</span> <span class="va">cols</span><span class="op">]</span></span>
 <span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">x</span>, align <span class="op">=</span> <span class="st">"r"</span>, caption <span class="op">=</span> <span class="st">"Example 12."</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">x</span>, align <span class="op">=</span> <span class="st">"r"</span>, caption <span class="op">=</span> <span class="st">"Example 18."</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
-<caption>Example 12.</caption>
+<caption>Example 18.</caption>
 <colgroup>
 <col width="18%">
 <col width="28%">
@@ -917,12 +1474,12 @@ m^{-3}}\)</span></td>
 <p><em>Placing units in the table header.</em>   An alternate convention
 is to include the units in the header row only. Here we start with a
 data frame with unit-class columns.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Example 13.</span></span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Example 19.</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span></span></code></pre></div>
 <p>First we preserve the columns names and associated measurement
 units.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Preserve column names</span></span>
 <span><span class="va">col_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
 <span><span class="va">col_names</span></span>
@@ -935,7 +1492,7 @@ units.</p>
 <span><span class="co">#&gt; [1] "[K]"          "[Pa]"         "[J K-1 kg-1]" "[kg m-3]"</span></span></code></pre></div>
 <p>Drop the units from the numerical columns and format the columns in
 the usual way.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Drop units from values</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://r-quantities.github.io/units/reference/drop_units.html" class="external-link">drop_units</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
 <span></span>
@@ -947,16 +1504,16 @@ the usual way.</p>
 <p>Use <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> and
 <code><a href="https://rdrr.io/pkg/kableExtra/man/add_header_above.html" class="external-link">kableExtra::add_header_above()</a></code> to create a two-level header
 with column names and units.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">y</span>,</span>
-<span>  caption <span class="op">=</span> <span class="st">"Example 13."</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"Example 19."</span>,</span>
 <span>  col.names <span class="op">=</span> <span class="va">unit_list</span>,</span>
 <span>  align <span class="op">=</span> <span class="st">"r"</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/add_header_above.html" class="external-link">add_header_above</a></span><span class="op">(</span>header <span class="op">=</span> <span class="va">col_names</span>, line <span class="op">=</span> <span class="cn">FALSE</span>, align <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>
-Example 13.
+Example 19.
 </caption>
 <thead>
 <tr>
@@ -1079,8 +1636,8 @@ kg^{-1}}\right)\)</span>.</p>
 <p>We start by extracting the first row of the data table, formatting
 each column using <code><a href="../reference/format_numbers.html">format_numbers()</a></code>, then removing the
 numerical characters leaving only the math-markup units characters.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Example 14.</span></span>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Example 20.</span></span>
 <span><span class="va">unit_row</span> <span class="op">&lt;-</span> <span class="va">DT</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">unit_row</span></span>
 <span><span class="co">#&gt;         temp        pres       sp_gas           dens</span></span>
@@ -1104,7 +1661,7 @@ numerical characters leaving only the math-markup units characters.</p>
 <span><span class="co">#&gt; [1] "$\\mathrm{K}$"                    "$\\mathrm{Pa}$"                  </span></span>
 <span><span class="co">#&gt; [3] "$\\mathrm{J\\ K^{-1}\\ kg^{-1}}$" "$\\mathrm{kg\\ m^{-3}}$"</span></span></code></pre></div>
 <p>Insert parentheses around the unit expressions.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Insert parentheses just inside the math delimiters</span></span>
 <span><span class="va">unit_vec</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace_all</a></span><span class="op">(</span><span class="va">unit_vec</span>, <span class="st">"\\$"</span>, <span class="st">""</span><span class="op">)</span></span>
 <span><span class="co"># Add parentheses around units and reinstate the math delimiters</span></span>
@@ -1116,7 +1673,7 @@ numerical characters leaving only the math-markup units characters.</p>
 <span><span class="co">#&gt; [4] "$\\left(\\mathrm{kg\\ m^{-3}}\\right)$"</span></span></code></pre></div>
 <p>Tidy the column names and use <code>kableExtra()</code> to format the
 table.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Make the column names presentable</span></span>
 <span><span class="va">col_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">DT</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace</a></span><span class="op">(</span><span class="st">"temp"</span>, <span class="st">"Temperature"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -1127,19 +1684,19 @@ table.</p>
 <span><span class="co"># Re-using the formatted data frame "y" from the previous example</span></span>
 <span><span class="co"># The unit vector is used for table col.name</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">y</span>,</span>
-<span>  caption <span class="op">=</span> <span class="st">"Example 14."</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">"Example 20."</span>,</span>
 <span>  col.names <span class="op">=</span> <span class="va">unit_vec</span>,</span>
 <span>  align <span class="op">=</span> <span class="st">"r"</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co"># Adjust the font size</span></span>
 <span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html" class="external-link">kable_styling</a></span><span class="op">(</span>font_size <span class="op">=</span> <span class="fl">13</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co"># Make the units row a slightly smaller font size</span></span>
-<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/row_spec.html" class="external-link">row_spec</a></span><span class="op">(</span><span class="fl">0</span>, font_size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/row_spec.html" class="external-link">row_spec</a></span><span class="op">(</span><span class="fl">0</span>, font_size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co"># Add a header above the units with the variable names</span></span>
 <span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/add_header_above.html" class="external-link">add_header_above</a></span><span class="op">(</span>header <span class="op">=</span> <span class="va">col_names</span>, line <span class="op">=</span> <span class="cn">FALSE</span>, align <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span></span></code></pre></div>
 <table class="table table" style="font-size: 13px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-Example 14.
+Example 20.
 </caption>
 <thead>
 <tr>
@@ -1165,17 +1722,17 @@ Density
 </th>
 </tr>
 <tr>
-<th style="text-align:right;font-size: 10px;">
+<th style="text-align:right;font-size: 11px;">
 <span class="math inline">\(\left(\mathrm{K}\right)\)</span>
 </th>
-<th style="text-align:right;font-size: 10px;">
+<th style="text-align:right;font-size: 11px;">
 <span class="math inline">\(\left(\mathrm{Pa}\right)\)</span>
 </th>
-<th style="text-align:right;font-size: 10px;">
+<th style="text-align:right;font-size: 11px;">
 <span class="math inline">\(\left(\mathrm{J\ K^{-1}\
 kg^{-1}}\right)\)</span>
 </th>
-<th style="text-align:right;font-size: 10px;">
+<th style="text-align:right;font-size: 11px;">
 <span class="math inline">\(\left(\mathrm{kg\ m^{-3}}\right)\)</span>
 </th>
 </tr>
@@ -1249,787 +1806,6 @@ kg^{-1}}\right)\)</span>
 </td>
 <td style="text-align:right;">
 <span class="math inline">\(\small 1.199\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-<p>Note: On my screen, there appears to be a baseline shift between the
-first and second units symbol, e.g., between “J” and “K” and between
-“kg” and “m”. I’m not sure what the possible cause could be.</p>
-</div>
-<div class="section level2">
-<h2 id="significant-digits">Significant digits<a class="anchor" aria-label="anchor" href="#significant-digits"></a>
-</h2>
-<p>Significant digits are applied to the input argument using the base R
-function <code><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif()</a></code> before additional formatting is applied.
-For example,</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># 15. Significant digits</span></span>
-<span><span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">e</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$1.6022 \\times 10^{-19}$"</span></span>
-<span><span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">e</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$1.602 \\times 10^{-19}$"</span></span>
-<span><span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">e</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$1.60 \\times 10^{-19}$"</span></span></code></pre></div>
-<p>Example 15 renders as,</p>
-<ul>
-<li><span class="math inline">\(\small 1.6022 \times
-10^{-19}\)</span></li>
-<li><span class="math inline">\(\small 1.602 \times
-10^{-19}\)</span></li>
-<li><span class="math inline">\(\small 1.60 \times
-10^{-19}\)</span></li>
-</ul>
-</div>
-<div class="section level2">
-<h2 id="formats">Formats<a class="anchor" aria-label="anchor" href="#formats"></a>
-</h2>
-<p>The <code>format</code> argument appears in
-<code><a href="../reference/format_numbers.html">format_numbers()</a></code> only. The default is “engr”. The format is
-preset in the <code><a href="../reference/format_dcml.html">format_dcml()</a></code>, <code><a href="../reference/format_engr.html">format_engr()</a></code>,
-and <code><a href="../reference/format_sci.html">format_sci()</a></code> convenience functions.</p>
-<p>To compare the effects across many orders of magnitude, we display
-the same vector in different formats.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># 16. Comparing formats</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.3333e-5</span>, <span class="fl">3.4444e-4</span>, <span class="fl">5.2222e-2</span>, <span class="fl">6.3333e-1</span>, <span class="fl">8.1111e+1</span>, <span class="fl">9.2222e+2</span>, <span class="fl">2.4444e+4</span>, <span class="fl">3.1111e+5</span>, <span class="fl">4.2222e+6</span><span class="op">)</span></span>
-<span><span class="va">dcml</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_numbers.html">format_numbers</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, format <span class="op">=</span> <span class="st">"dcml"</span><span class="op">)</span></span>
-<span><span class="va">sci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_numbers.html">format_numbers</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, format <span class="op">=</span> <span class="st">"sci"</span><span class="op">)</span></span>
-<span><span class="va">engr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_numbers.html">format_numbers</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, format <span class="op">=</span> <span class="st">"engr"</span><span class="op">)</span></span>
-<span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">dcml</span>, <span class="va">sci</span>, <span class="va">engr</span><span class="op">)</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
-<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
-<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"decimal"</span>, <span class="st">"scientific"</span>, <span class="st">"engineering"</span><span class="op">)</span>,</span>
-<span>  caption <span class="op">=</span> <span class="st">"Example 16."</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<caption>
-Example 16.
-</caption>
-<thead><tr>
-<th style="text-align:right;">
-decimal
-</th>
-<th style="text-align:right;">
-scientific
-</th>
-<th style="text-align:right;">
-engineering
-</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-<span class="math inline">\(\small 0.0000233\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 2.33 \times 10^{-5}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 23.3 \times 10^{-6}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-<span class="math inline">\(\small 0.000344\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 3.44 \times 10^{-4}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 344 \times 10^{-6}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-<span class="math inline">\(\small 0.0522\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.22 \times 10^{-2}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 52.2 \times 10^{-3}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-<span class="math inline">\(\small 0.633\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 0.633\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 0.633\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-<span class="math inline">\(\small 81.1\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 81.1\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 81.1\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-<span class="math inline">\(\small 922\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 922\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 922\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-<span class="math inline">\(\small 24400\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 2.44 \times 10^{4}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 24.4 \times 10^{3}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-<span class="math inline">\(\small 311000\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 3.11 \times 10^{5}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 311 \times 10^{3}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-<span class="math inline">\(\small 4220000\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 4.22 \times 10^{6}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 4.22 \times 10^{6}\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p>The values displayed without powers-of-ten notation in the scientific
-and engineering columns are determined by the <code>omit_power</code>
-argument discussed next.</p>
-</div>
-<div class="section level2">
-<h2 id="excluding-exponents">Excluding a range of exponents<a class="anchor" aria-label="anchor" href="#excluding-exponents"></a>
-</h2>
-<p>When specifying power-of-ten notation, numbers with exponents lying
-within the range of the <code>omit_power</code> argument are typeset in
-decimal form. In engineering notation, the exponent is checked for lying
-within the range before and after the conversion to multiple-of-3
-exponents.</p>
-<p>To illustrate, we compare two <code>omit_power</code> settings in
-both scientific and engineering formats. In some columns, we set
-<code>omit_power = NULL</code>, which imposes power-of-ten notation on
-the entire vector.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># 17. Effects of omit_power</span></span>
-<span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="va">atmos</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">12</span>, <span class="fu">.</span><span class="op">(</span><span class="va">pres</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">DT</span><span class="op">[</span>, <span class="va">sci_all</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">DT</span><span class="op">[</span>, <span class="va">sci_omit</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">DT</span><span class="op">[</span>, <span class="va">engr_all</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">DT</span><span class="op">[</span>, <span class="va">engr_omit</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
-<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
-<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"Unformatted"</span>,</span>
-<span>    <span class="st">"all scientific"</span>,</span>
-<span>    <span class="st">"scientific w/ omit"</span>,</span>
-<span>    <span class="st">"all engineering"</span>,</span>
-<span>    <span class="st">"engineering w/ omit"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  caption <span class="op">=</span> <span class="st">"Example 17."</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<caption>
-Example 17.
-</caption>
-<thead><tr>
-<th style="text-align:right;">
-Unformatted
-</th>
-<th style="text-align:right;">
-all scientific
-</th>
-<th style="text-align:right;">
-scientific w/ omit
-</th>
-<th style="text-align:right;">
-all engineering
-</th>
-<th style="text-align:right;">
-engineering w/ omit
-</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-5.529e+03
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.53 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.53 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.53 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.53 \times 10^{3}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1.197e+03
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.20 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.20 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.20 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.20 \times 10^{3}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2.870e+02
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 2.87 \times 10^{2}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 2.87 \times 10^{2}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 287 \times 10^{0}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 287\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-8.000e+01
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 8.00 \times 10^{1}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 8.00 \times 10^{1}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 80.0 \times 10^{0}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 80.0\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2.200e+01
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 2.20 \times 10^{1}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 2.20 \times 10^{1}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 22.0 \times 10^{0}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 22.0\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5.220e+00
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.22 \times 10^{0}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.22\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.22 \times 10^{0}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.22\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1.050e+00
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.05 \times 10^{0}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.05\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.05 \times 10^{0}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.05\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1.840e-01
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.84 \times 10^{-1}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 0.184\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 184 \times 10^{-3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 0.184\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3.200e-02
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 3.20 \times 10^{-2}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 3.20 \times 10^{-2}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 32.0 \times 10^{-3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 32.0 \times 10^{-3}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4.540e-04
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 4.54 \times 10^{-4}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 4.54 \times 10^{-4}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 454 \times 10^{-6}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 454 \times 10^{-6}\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Comments:</p>
-<ul>
-<li>In the “scientific with omit” column, the three values <span class="math inline">\(\small (0.184, 1.05, 5.22)\)</span> are in decimal
-form because their exponents lie within the <code>omit_power</code>
-range <span class="math inline">\(\small \{-1, 0\}\)</span>.</li>
-<li>The same is true in the “engineering with omit” column because these
-exponents are in the omit range <em>before</em> converting to
-engineering form.</li>
-<li>The “engineering with omit” column also displays the values <span class="math inline">\((\small 22, 80, 287)\)</span> in decimal form
-because their exponents are in the omit range <em>after</em> converting
-to engineering notation.</li>
-</ul>
-<p><br></p>
-<p>If a single value is assigned, e.g., <code>omit_power = 0</code>, the
-argument is interpreted as <code>c(0, 0)</code>.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># 18. Omit power used for a single value of exponent</span></span>
-<span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="va">atmos</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">12</span>, <span class="fu">.</span><span class="op">(</span><span class="va">pres</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">DT</span><span class="op">[</span>, <span class="va">sci_all</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">DT</span><span class="op">[</span>, <span class="va">sci_omit</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">DT</span><span class="op">[</span>, <span class="va">engr_all</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">DT</span><span class="op">[</span>, <span class="va">engr_omit</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
-<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
-<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"Unformatted"</span>,</span>
-<span>    <span class="st">"all scientific"</span>,</span>
-<span>    <span class="st">"scientific w/ omit"</span>,</span>
-<span>    <span class="st">"all engineering"</span>,</span>
-<span>    <span class="st">"engineering w/ omit"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  caption <span class="op">=</span> <span class="st">"Example 18."</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<caption>
-Example 18.
-</caption>
-<thead><tr>
-<th style="text-align:right;">
-Unformatted
-</th>
-<th style="text-align:right;">
-all scientific
-</th>
-<th style="text-align:right;">
-scientific w/ omit
-</th>
-<th style="text-align:right;">
-all engineering
-</th>
-<th style="text-align:right;">
-engineering w/ omit
-</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-5.529e+03
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.53 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.53 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.53 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.53 \times 10^{3}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1.197e+03
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.20 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.20 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.20 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.20 \times 10^{3}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2.870e+02
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 2.87 \times 10^{2}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 2.87 \times 10^{2}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 287 \times 10^{0}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 287\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-8.000e+01
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 8.00 \times 10^{1}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 8.00 \times 10^{1}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 80.0 \times 10^{0}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 80.0\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2.200e+01
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 2.20 \times 10^{1}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 2.20 \times 10^{1}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 22.0 \times 10^{0}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 22.0\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5.220e+00
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.22 \times 10^{0}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.22\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.22 \times 10^{0}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.22\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1.050e+00
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.05 \times 10^{0}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.05\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.05 \times 10^{0}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.05\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1.840e-01
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.84 \times 10^{-1}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.84 \times 10^{-1}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 184 \times 10^{-3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 184 \times 10^{-3}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3.200e-02
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 3.20 \times 10^{-2}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 3.20 \times 10^{-2}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 32.0 \times 10^{-3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 32.0 \times 10^{-3}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4.540e-04
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 4.54 \times 10^{-4}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 4.54 \times 10^{-4}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 454 \times 10^{-6}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 454 \times 10^{-6}\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-<p>Setting <code>omit_power = c(-Inf, Inf)</code> yields the same
-decimal result as <code>format = "dcml"</code> and overrides any other
-<code>format</code> setting. For example,</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># 19. Different ways of creating a decimal format</span></span>
-<span><span class="op">(</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">6.78e-3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.00678</span></span>
-<span></span>
-<span><span class="op">(</span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_numbers.html">format_numbers</a></span><span class="op">(</span><span class="va">y</span>, <span class="fl">3</span>, <span class="st">"sci"</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="cn">Inf</span>, <span class="cn">Inf</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$0.00678$"</span></span>
-<span></span>
-<span><span class="op">(</span><span class="va">q</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_numbers.html">format_numbers</a></span><span class="op">(</span><span class="va">y</span>, <span class="fl">3</span>, <span class="st">"dcml"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$0.00678$"</span></span>
-<span></span>
-<span><span class="op">(</span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_dcml.html">format_dcml</a></span><span class="op">(</span><span class="va">y</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "$0.00678$"</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">p</span>, <span class="va">q</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">p</span>, <span class="va">r</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
-<p>Example 19 (all cases) renders as,</p>
-<ul>
-<li><span class="math inline">\(\small 0.00678\)</span></li>
-</ul>
-</div>
-<div class="section level2">
-<h2 id="enforcing-exponent">Enforcing a specific exponent<a class="anchor" aria-label="anchor" href="#enforcing-exponent"></a>
-</h2>
-<p>When values in a table column span only a few orders of magnitude, an
-audience is sometimes better served by setting the notation to a
-constant power of ten. For example, here we show numbers in scientific
-format and compare to columns in which the exponents are set to fixed
-values. Assigning a value to <code>set_power</code> overrides
-<code>omit_power</code> and <code>format</code>.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># 20. set_power argument</span></span>
-<span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="va">atmos</span><span class="op">[</span><span class="va">alt</span> <span class="op">&lt;=</span> <span class="fl">40</span>, <span class="fu">.</span><span class="op">(</span><span class="va">alt</span>, <span class="va">pres</span>, <span class="va">dens</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">DT</span><span class="op">[</span>, <span class="va">sci_pres</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">DT</span><span class="op">[</span>, <span class="va">set_pres</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_sci.html">format_sci</a></span><span class="op">(</span><span class="va">pres</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, set_power <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">DT</span><span class="op">[</span>, <span class="va">sci_dens</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">dens</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">DT</span><span class="op">[</span>, <span class="va">set_dens</span> <span class="op">:=</span> <span class="fu"><a href="../reference/format_engr.html">format_engr</a></span><span class="op">(</span><span class="va">dens</span>, <span class="fl">3</span>, omit_power <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, set_power <span class="op">=</span> <span class="op">-</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">DT</span><span class="op">[</span>, <span class="va">pres</span> <span class="op">:=</span> <span class="cn">NULL</span><span class="op">]</span></span>
-<span><span class="va">DT</span><span class="op">[</span>, <span class="va">dens</span> <span class="op">:=</span> <span class="cn">NULL</span><span class="op">]</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">DT</span>,</span>
-<span>  align <span class="op">=</span> <span class="st">"r"</span>,</span>
-<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Altitude (km)"</span>, <span class="st">"Pressure (Pa)"</span>, <span class="st">"with set_power"</span>, <span class="st">"Density (kg/m$^{3}$)"</span>, <span class="st">"with set_power"</span><span class="op">)</span>,</span>
-<span>  caption <span class="op">=</span> <span class="st">"Example 20."</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<caption>
-Example 20.
-</caption>
-<thead><tr>
-<th style="text-align:right;">
-Altitude (km)
-</th>
-<th style="text-align:right;">
-Pressure (Pa)
-</th>
-<th style="text-align:right;">
-with set_power
-</th>
-<th style="text-align:right;">
-Density (kg/m<span class="math inline">\(^{3}\)</span>)
-</th>
-<th style="text-align:right;">
-with set_power
-</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.01 \times 10^{5}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 101 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.23\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 123 \times 10^{-2}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 2.65 \times 10^{4}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 26.5 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 0.414\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 41.4 \times 10^{-2}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-20
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.53 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 5.53 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 88.9 \times 10^{-3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 8.89 \times 10^{-2}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-30
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.20 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.20 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 18.4 \times 10^{-3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 1.84 \times 10^{-2}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-40
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 287\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 0.287 \times 10^{3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 4.00 \times 10^{-3}\)</span>
-</td>
-<td style="text-align:right;">
-<span class="math inline">\(\small 0.400 \times 10^{-2}\)</span>
 </td>
 </tr>
 </tbody>
