@@ -426,7 +426,7 @@ For values with exponents $\small n\in\{-1, 0, 1, 2\}$, the default format is de
 
 ## Units input
 
-The units R package (website: [Measurement Units for R](https://r-quantities.github.io/units/)) provides measurement units for R vectors, converting vectors of class "numeric" to class "units" [@Pebesma+Mailund+Hiebert:2016:units]. For example
+The [units](https://r-quantities.github.io/units/) R package provides measurement units for R vectors, converting vectors of class "numeric" to class "units" [@Pebesma+Mailund+Hiebert:2016:units]. For example
 
 ```{r}
 # Number
@@ -537,8 +537,39 @@ knitr::kable(DT, caption = "Illustrating a variety of measurement units")
 
 
 
-In a typical application, however, the numbers in a column have the same physical units and are formatted as a vector. For example, 
 
+
+
+
+
+## Significant digits {#significant-digits}
+
+Significant digits are applied to the input argument using the base R function `signif()` before additional formatting is applied.  For example, 
+
+
+```{r}
+# 12. Significant digits
+format_sci(e, digits = 5)
+format_sci(e, digits = 4)
+format_sci(e, digits = 3)
+```
+
+Example 12 renders as, 
+
+- `r format_sci(e, digits = 5, size = "small")`
+- `r format_sci(e, digits = 4, size = "small")`
+- `r format_sci(e, digits = 3, size = "small")`
+
+
+
+
+
+
+## Formats {#formats}
+
+The `format` argument appears in `format_numbers()` only. The default is "engr". The format is preset in the `format_dcml()`, `format_engr()`, and `format_sci()` convenience functions. 
+
+To compare the effects across many orders of magnitude, we display the same vector in different formats.
 
 ```{r}
 #| echo: false
@@ -546,7 +577,158 @@ formatdown_options(size = "small")
 ```
 
 ```{r}
-# Example 12
+# 13. Comparing formats
+x <- c(2.3333e-5, 3.4444e-4, 5.2222e-2, 6.3333e-1, 8.1111e+1, 9.2222e+2, 2.4444e+4, 3.1111e+5, 4.2222e+6)
+dcml <- format_numbers(x, 3, format = "dcml")
+sci <- format_numbers(x, 3, format = "sci")
+engr <- format_numbers(x, 3, format = "engr")
+DT <- data.table(dcml, sci, engr)
+knitr::kable(DT,
+  align = "r",
+  col.names = c("decimal", "scientific", "engineering"),
+  caption = "Example 13."
+)
+```
+
+```{r}
+#| echo: false
+formatdown_options(reset = TRUE)
+```
+
+The values displayed without powers-of-ten notation in the scientific and engineering columns are determined by the `omit_power` argument discussed next.  
+
+## Excluding a range of exponents {#excluding-exponents}
+
+When specifying power-of-ten notation, numbers with exponents lying within the range of the `omit_power` argument are typeset in decimal form. In engineering notation, the exponent is checked for lying within the range before and after the conversion to multiple-of-3 exponents.  
+
+To illustrate, we compare two `omit_power` settings in both scientific and engineering formats. In some columns, we set `omit_power = NULL`, which imposes power-of-ten notation on the entire vector. 
+
+```{r}
+#| echo: false
+formatdown_options(size = "small")
+```
+
+```{r}
+# 14. Effects of omit_power
+DT <- atmos[3:12, .(pres)]
+DT[, sci_all := format_sci(pres, 3, omit_power = NULL)]
+DT[, sci_omit := format_sci(pres, 3, omit_power = c(-1, 0))]
+DT[, engr_all := format_engr(pres, 3, omit_power = NULL)]
+DT[, engr_omit := format_engr(pres, 3, omit_power = c(-1, 0))]
+knitr::kable(DT,
+  align = "r",
+  col.names = c(
+    "Unformatted",
+    "all scientific",
+    "scientific w/ omit",
+    "all engineering",
+    "engineering w/ omit"
+  ),
+  caption = "Example 14."
+)
+```
+
+Comments: 
+
+- In the "scientific with omit" column, the three values $\small (0.184, 1.05, 5.22)$ are in decimal form because their exponents lie within the `omit_power` range $\small \{-1, 0\}$. 
+- The same is true in the "engineering with omit" column because these exponents are in the omit range  *before* converting to engineering form. 
+- The "engineering with omit" column also displays the values $(\small 22, 80, 287)$ in decimal form because their exponents are in the omit range *after* converting to engineering notation. 
+
+<br>
+
+If a single value is assigned, e.g., `omit_power = 0`, the argument is interpreted as `c(0, 0)`.
+
+```{r}
+# 15. Omit power used for a single value of exponent
+DT <- atmos[3:12, .(pres)]
+DT[, sci_all := format_sci(pres, 3, omit_power = NULL)]
+DT[, sci_omit := format_sci(pres, 3, omit_power = 0)]
+DT[, engr_all := format_engr(pres, 3, omit_power = NULL)]
+DT[, engr_omit := format_engr(pres, 3, omit_power = 0)]
+knitr::kable(DT,
+  align = "r",
+  col.names = c(
+    "Unformatted",
+    "all scientific",
+    "scientific w/ omit",
+    "all engineering",
+    "engineering w/ omit"
+  ),
+  caption = "Example 15."
+)
+```
+
+```{r}
+#| echo: false
+formatdown_options(reset = TRUE)
+```
+
+<br>
+
+Setting `omit_power = c(-Inf, Inf)` yields the same decimal result as `format = "dcml"` and overrides any other `format` setting. For example, 
+
+```{r}
+# 16. Different ways of creating a decimal format
+(y <- 6.78e-3)
+
+(p <- format_numbers(y, 3, "sci", omit_power = c(-Inf, Inf)))
+
+(q <- format_numbers(y, 3, "dcml"))
+
+(r <- format_dcml(y, 3))
+
+all.equal(p, q)
+all.equal(p, r)
+```
+
+Example 16 (all cases) renders as, 
+
+- `r format_numbers(y, 3, "dcml", size = "small")`
+
+
+
+## Enforcing a specific exponent {#enforcing-exponent}
+
+When values in a table column span only a few orders of magnitude, an audience is sometimes better served by setting the notation to a constant power of ten. For example, here we show numbers in scientific format and compare to columns in which the exponents are set to fixed values. Assigning a value to `set_power` overrides `omit_power` and  `format`. 
+
+```{r}
+#| echo: false
+formatdown_options(size = "small")
+```
+
+```{r}
+# 17. set_power argument
+DT <- atmos[alt <= 40, .(alt, pres, dens)]
+DT[, sci_pres := format_sci(pres, 3, omit_power = c(-1, 2))]
+DT[, set_pres := format_sci(pres, 3, omit_power = c(-1, 2), set_power = 3)]
+DT[, sci_dens := format_engr(dens, 3, omit_power = c(-1, 2))]
+DT[, set_dens := format_engr(dens, 3, omit_power = c(-1, 2), set_power = -2)]
+DT[, pres := NULL]
+DT[, dens := NULL]
+knitr::kable(DT,
+  align = "r",
+  col.names = c("Altitude (km)", "Pressure (Pa)", "with set_power", "Density (kg/m$^{3}$)", "with set_power"),
+  caption = "Example 17."
+)
+```
+
+```{r}
+#| echo: false
+formatdown_options(reset = TRUE)
+```
+
+
+## Tables with units
+
+In a typical data table, the numbers in a column have the same physical units and are formatted as a vector. For example, 
+
+```{r}
+#| echo: false
+formatdown_options(size = "small")
+```
+
+```{r}
+# Example 18
 DT <- air_meas[, .(temp, pres, sp_gas, dens)]
 
 # Examine data
@@ -569,14 +751,13 @@ x$pres <- format_engr(x$pres)
 cols <- c("sp_gas", "dens")
 x[, (cols) := lapply(.SD, format_dcml), .SDcols = cols]
 
-knitr::kable(x, align = "r", caption = "Example 12.")
+knitr::kable(x, align = "r", caption = "Example 18.")
 ```
 
 ```{r}
 #| echo: false
 formatdown_options(reset = TRUE)
 ```
-
 
 <br>
 
@@ -588,7 +769,7 @@ formatdown_options(size = "small")
 ```
 
 ```{r}
-# Example 13.
+# Example 19.
 y <- copy(DT)
 ```
 
@@ -622,7 +803,7 @@ Use `knitr::kable()` and `kableExtra::add_header_above()` to create a two-level 
 
 ```{r}
 knitr::kable(y,
-  caption = "Example 13.",
+  caption = "Example 19.",
   col.names = unit_list,
   align = "r"
 ) |>
@@ -641,7 +822,7 @@ formatdown_options(reset = TRUE)
 We start by extracting the first row of the data table, formatting each column using `format_numbers()`, then removing the numerical characters leaving only the math-markup units characters. 
 
 ```{r}
-# Example 14.
+# Example 20.
 unit_row <- DT[1]
 unit_row
 
@@ -684,199 +865,18 @@ col_names <- names(DT) |>
 # Re-using the formatted data frame "y" from the previous example
 # The unit vector is used for table col.name
 knitr::kable(y,
-  caption = "Example 14.",
+  caption = "Example 20.",
   col.names = unit_vec,
   align = "r"
 ) |>
   # Adjust the font size
   kableExtra::kable_styling(font_size = 13) |>
   # Make the units row a slightly smaller font size
-  kableExtra::row_spec(0, font_size = 10) |>
+  kableExtra::row_spec(0, font_size = 11) |>
   # Add a header above the units with the variable names
   kableExtra::add_header_above(header = col_names, line = FALSE, align = "r")
 ```
 
-<br>
-
-Note: On my screen, there appears to be a baseline shift between the first and second units symbol, e.g., between "J" and "K" and between "kg" and "m". I'm not sure what the possible cause could be. 
-
-
-
-
-## Significant digits {#significant-digits}
-
-Significant digits are applied to the input argument using the base R function `signif()` before additional formatting is applied.  For example, 
-
-
-```{r}
-# 15. Significant digits
-format_sci(e, digits = 5)
-format_sci(e, digits = 4)
-format_sci(e, digits = 3)
-```
-
-Example 15 renders as, 
-
-- `r format_sci(e, digits = 5, size = "small")`
-- `r format_sci(e, digits = 4, size = "small")`
-- `r format_sci(e, digits = 3, size = "small")`
-
-
-
-
-
-
-## Formats {#formats}
-
-The `format` argument appears in `format_numbers()` only. The default is "engr". The format is preset in the `format_dcml()`, `format_engr()`, and `format_sci()` convenience functions. 
-
-To compare the effects across many orders of magnitude, we display the same vector in different formats.
-
-```{r}
-#| echo: false
-formatdown_options(size = "small")
-```
-
-```{r}
-# 16. Comparing formats
-x <- c(2.3333e-5, 3.4444e-4, 5.2222e-2, 6.3333e-1, 8.1111e+1, 9.2222e+2, 2.4444e+4, 3.1111e+5, 4.2222e+6)
-dcml <- format_numbers(x, 3, format = "dcml")
-sci <- format_numbers(x, 3, format = "sci")
-engr <- format_numbers(x, 3, format = "engr")
-DT <- data.table(dcml, sci, engr)
-knitr::kable(DT,
-  align = "r",
-  col.names = c("decimal", "scientific", "engineering"),
-  caption = "Example 16."
-)
-```
-
-```{r}
-#| echo: false
-formatdown_options(reset = TRUE)
-```
-
-The values displayed without powers-of-ten notation in the scientific and engineering columns are determined by the `omit_power` argument discussed next.  
-
-## Excluding a range of exponents {#excluding-exponents}
-
-When specifying power-of-ten notation, numbers with exponents lying within the range of the `omit_power` argument are typeset in decimal form. In engineering notation, the exponent is checked for lying within the range before and after the conversion to multiple-of-3 exponents.  
-
-To illustrate, we compare two `omit_power` settings in both scientific and engineering formats. In some columns, we set `omit_power = NULL`, which imposes power-of-ten notation on the entire vector. 
-
-```{r}
-#| echo: false
-formatdown_options(size = "small")
-```
-
-```{r}
-# 17. Effects of omit_power
-DT <- atmos[3:12, .(pres)]
-DT[, sci_all := format_sci(pres, 3, omit_power = NULL)]
-DT[, sci_omit := format_sci(pres, 3, omit_power = c(-1, 0))]
-DT[, engr_all := format_engr(pres, 3, omit_power = NULL)]
-DT[, engr_omit := format_engr(pres, 3, omit_power = c(-1, 0))]
-knitr::kable(DT,
-  align = "r",
-  col.names = c(
-    "Unformatted",
-    "all scientific",
-    "scientific w/ omit",
-    "all engineering",
-    "engineering w/ omit"
-  ),
-  caption = "Example 17."
-)
-```
-
-Comments: 
-
-- In the "scientific with omit" column, the three values $\small (0.184, 1.05, 5.22)$ are in decimal form because their exponents lie within the `omit_power` range $\small \{-1, 0\}$. 
-- The same is true in the "engineering with omit" column because these exponents are in the omit range  *before* converting to engineering form. 
-- The "engineering with omit" column also displays the values $(\small 22, 80, 287)$ in decimal form because their exponents are in the omit range *after* converting to engineering notation. 
-
-<br>
-
-If a single value is assigned, e.g., `omit_power = 0`, the argument is interpreted as `c(0, 0)`.
-
-```{r}
-# 18. Omit power used for a single value of exponent
-DT <- atmos[3:12, .(pres)]
-DT[, sci_all := format_sci(pres, 3, omit_power = NULL)]
-DT[, sci_omit := format_sci(pres, 3, omit_power = 0)]
-DT[, engr_all := format_engr(pres, 3, omit_power = NULL)]
-DT[, engr_omit := format_engr(pres, 3, omit_power = 0)]
-knitr::kable(DT,
-  align = "r",
-  col.names = c(
-    "Unformatted",
-    "all scientific",
-    "scientific w/ omit",
-    "all engineering",
-    "engineering w/ omit"
-  ),
-  caption = "Example 18."
-)
-```
-
-```{r}
-#| echo: false
-formatdown_options(reset = TRUE)
-```
-
-<br>
-
-Setting `omit_power = c(-Inf, Inf)` yields the same decimal result as `format = "dcml"` and overrides any other `format` setting. For example, 
-
-```{r}
-# 19. Different ways of creating a decimal format
-(y <- 6.78e-3)
-
-(p <- format_numbers(y, 3, "sci", omit_power = c(-Inf, Inf)))
-
-(q <- format_numbers(y, 3, "dcml"))
-
-(r <- format_dcml(y, 3))
-
-all.equal(p, q)
-all.equal(p, r)
-```
-
-Example 19 (all cases) renders as, 
-
-- `r format_numbers(y, 3, "dcml", size = "small")`
-
-
-
-## Enforcing a specific exponent {#enforcing-exponent}
-
-When values in a table column span only a few orders of magnitude, an audience is sometimes better served by setting the notation to a constant power of ten. For example, here we show numbers in scientific format and compare to columns in which the exponents are set to fixed values. Assigning a value to `set_power` overrides `omit_power` and  `format`. 
-
-```{r}
-#| echo: false
-formatdown_options(size = "small")
-```
-
-```{r}
-# 20. set_power argument
-DT <- atmos[alt <= 40, .(alt, pres, dens)]
-DT[, sci_pres := format_sci(pres, 3, omit_power = c(-1, 2))]
-DT[, set_pres := format_sci(pres, 3, omit_power = c(-1, 2), set_power = 3)]
-DT[, sci_dens := format_engr(dens, 3, omit_power = c(-1, 2))]
-DT[, set_dens := format_engr(dens, 3, omit_power = c(-1, 2), set_power = -2)]
-DT[, pres := NULL]
-DT[, dens := NULL]
-knitr::kable(DT,
-  align = "r",
-  col.names = c("Altitude (km)", "Pressure (Pa)", "with set_power", "Density (kg/m$^{3}$)", "with set_power"),
-  caption = "Example 20."
-)
-```
-
-```{r}
-#| echo: false
-formatdown_options(reset = TRUE)
-```
 
 
 
