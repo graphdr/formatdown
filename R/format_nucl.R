@@ -90,7 +90,7 @@ format_nucl <- function(x,
   # left-join atomic numbers
   DT <- element_set[DT, , on = c("symbol", "mass_number")]
 
-  # identify rows with errors
+  # identify rows with incorrect symbol or mass
   z_na <- is.na(DT$atomic_number)
 
   # replace NA atomic numbers with "Z" for output
@@ -111,11 +111,12 @@ format_nucl <- function(x,
 
     DT[, value := paste0("^{\\small ", mass_number  , "}",
                          "_{\\small ", atomic_number, "}",
-                         symbol)]
+                         "\\small\\! ", symbol)]
 
   } else {# omit atomic number
 
-    DT[, value := paste0("^{\\small ", mass_number, "}", symbol)]
+    DT[, value := paste0("^{\\small ", mass_number, "}",
+                         "\\small\\! ", symbol)]
 
   }
 

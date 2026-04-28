@@ -27,9 +27,9 @@ Data sets included with formatdown
   : Air density measurements
 - [`atmos`](https://graphdr.github.io/formatdown/reference/atmos.md) :
   Properties of standard atmosphere
+- [`element_set`](https://graphdr.github.io/formatdown/reference/element_set.md)
+  : Chemical elements
 - [`metals`](https://graphdr.github.io/formatdown/reference/metals.md) :
   Properties of metals
 - [`water`](https://graphdr.github.io/formatdown/reference/water.md) :
   Properties of water
-- [`element_set`](https://graphdr.github.io/formatdown/reference/element_set.md)
-  : Chemical elements
