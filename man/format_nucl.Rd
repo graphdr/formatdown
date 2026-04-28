@@ -21,10 +21,10 @@ number. For example, carbon 12 in hyphenated notation is the
 character string \code{"C-12"}.}
 
 \item{face}{Font face. Determines the font face macro inside the math
-delimiters. Possible values are "plain" (default), "italic", "bold",
-"sans", or "mono". One may assign instead the corresponding LaTeX-style
-markup itself, e.g., \verb{\\mathrm}, \verb{\\mathit}, \verb{\\mathbf}, \verb{\\mathsf}, or
-\verb{\\mathtt}.}
+delimiters. Possible values are \code{"plain"} (default), \code{"italic"},
+\code{"bold"}, \code{"sans"}, or \code{"mono"}. One may assign instead the
+corresponding LaTeX-style markup itself, e.g., \verb{\\mathrm},
+\verb{\\mathit}, \verb{\\mathbf}, \verb{\\mathsf}, or \verb{\\mathtt}.}
 
 \item{...}{Not used for values; forces subsequent arguments to be
 referable only by name.}

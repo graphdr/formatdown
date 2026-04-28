@@ -75,7 +75,7 @@ or a half-high dot \code{"\\\\cdot"} which is often used when the decimal
 mark is a comma.
 \item \code{Z}:              Logical, length 1, default FALSE, used to determine whether or
 not the atomic number subscript is used in formatting nuclear
-notation of isotopes.,
+notation of isotopes.
 \item \code{warn}:           Logical, length 1, default TRUE, used to determine whether or
 not a warning is issued when an input for a chemical element in
 hyphenated notation contains an error in the element symbol or the

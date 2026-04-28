@@ -88,7 +88,7 @@ param_warn <- 'Logical, length 1, default TRUE, used to determine whether or
         mass number of the isotope.'
 
 param_face <- 'Font face. Determines the font face macro inside the math
-        delimiters. Possible values are "plain" (default), "italic", "bold",
-        "sans", or "mono". One may assign instead the corresponding LaTeX-style
-        markup itself, e.g., `\\mathrm`, `\\mathit`, `\\mathbf`, `\\mathsf`, or
-        `\\mathtt`.'
+        delimiters. Possible values are `"plain"` (default), `"italic"`,
+        `"bold"`, `"sans"`, or `"mono"`. One may assign instead the
+        corresponding LaTeX-style markup itself, e.g., `\\mathrm`,
+        `\\mathit`, `\\mathbf`, `\\mathsf`, or `\\mathtt`.'

@@ -54,8 +54,10 @@ formatdown_opts <- settings::options_manager(
 #' @example man/examples/examples_formatdown_options.R
 #' @export
 formatdown_options <- function(..., reset = FALSE) {
-  # rest is Boolean, not missing, length 1
+
+  # reset is Boolean, not missing, length 1
   checkmate::qassert(reset, "B1")
+
   if (reset) {
     settings::reset(formatdown_opts)
   } else {
