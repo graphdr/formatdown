@@ -40,7 +40,7 @@ formatdown_opts <- settings::options_manager(
 #' - `small_interval`: `r param_small_interval`
 #' - `whitespace`:     `r param_whitespace`
 #' - `multiply_mark`:  `r param_multiply_mark`
-#' - `Z`:              `r param_Z`,
+#' - `Z`:              `r param_Z`
 #' - `warn`:           `r param_warn`
 #'
 #'
