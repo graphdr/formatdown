@@ -98,8 +98,8 @@ number 92) are typeset with and without atomic numbers as shown below.
 The latter form, without <em>Z</em>, is the default in formatdown.</p>
 <table class="table">
 <colgroup>
-<col width="36%">
-<col width="37%">
+<col width="35%">
+<col width="38%">
 <col width="26%">
 </colgroup>
 <thead><tr class="header">
@@ -112,18 +112,18 @@ The latter form, without <em>Z</em>, is the default in formatdown.</p>
 <td align="center">
 <span class="math inline">$\small\mathrm{C}$</span>–<span class="math inline">$\small\mathrm{12}$</span>
 </td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
-12}_{\small\ 6}C}$</span></td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
+12}\_{\small\ 6}C}$</span></td>
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
 12}C}$</span></td>
 </tr>
 <tr class="even">
 <td align="center">
 <span class="math inline">$\small\mathrm{U}$</span>–<span class="math inline">$\small\mathrm{235}$</span>
 </td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
-235}_{\small\ 92}U}$</span></td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
+235}\_{\small\ 92}U}$</span></td>
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
 235}U}$</span></td>
 </tr>
 </tbody>
@@ -198,15 +198,15 @@ using inline code chunks in an Rmd script.</p>
 <code class="sourceCode R"><span><span class="co"># 1. Carbon-12</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="st">"C-12"</span></span>
 <span><span class="fu"><a href="../reference/format_nucl.html">format_nucl</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "\\(\\mathrm{^{\\small\\ 12}C}\\)"</span></span></code></pre></div>
-<p>Example 1 renders as: <span class="math inline">$\mathrm{^{\small\
+<span><span class="co">#&gt; [1] "\\(\\mathrm{\\^{\\small\\ 12}C}\\)"</span></span></code></pre></div>
+<p>Example 1 renders as: <span class="math inline">$\mathrm{\^{\small\
 12}C}$</span>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 2. Uranium-235</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="st">"U-235"</span></span>
 <span><span class="fu"><a href="../reference/format_nucl.html">format_nucl</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "\\(\\mathrm{^{\\small\\ 235}U}\\)"</span></span></code></pre></div>
-<p>Example 2 renders as: <span class="math inline">$\mathrm{^{\small\
+<span><span class="co">#&gt; [1] "\\(\\mathrm{\\^{\\small\\ 235}U}\\)"</span></span></code></pre></div>
+<p>Example 2 renders as: <span class="math inline">$\mathrm{\^{\small\
 235}U}$</span></p>
 <p><br></p>
 </div>
@@ -218,15 +218,15 @@ data set), we can set the optional <em>Z</em> argument to TRUE.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 3. Carbon-12</span></span>
 <span><span class="fu"><a href="../reference/format_nucl.html">format_nucl</a></span><span class="op">(</span><span class="va">x</span>, Z <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "\\(\\mathrm{^{\\small\\ 12}_{\\small\\ 6}C}\\)"</span></span></code></pre></div>
-<p>Example 3 renders as: <span class="math inline">$\mathrm{^{\small\
-12}_{\small\ 6}C}$</span></p>
+<span><span class="co">#&gt; [1] "\\(\\mathrm{\\^{\\small\\ 12}\\_{\\small\\ 6}C}\\)"</span></span></code></pre></div>
+<p>Example 3 renders as: <span class="math inline">$\mathrm{\^{\small\
+12}\_{\small\ 6}C}$</span></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 4. Uranium-235</span></span>
 <span><span class="fu"><a href="../reference/format_nucl.html">format_nucl</a></span><span class="op">(</span><span class="va">y</span>, Z <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "\\(\\mathrm{^{\\small\\ 235}_{\\small\\ 92}U}\\)"</span></span></code></pre></div>
-<p>Example 4 renders as: <span class="math inline">$\mathrm{^{\small\
-235}_{\small\ 92}U}$</span></p>
+<span><span class="co">#&gt; [1] "\\(\\mathrm{\\^{\\small\\ 235}\\_{\\small\\ 92}U}\\)"</span></span></code></pre></div>
+<p>Example 4 renders as: <span class="math inline">$\mathrm{\^{\small\
+235}\_{\small\ 92}U}$</span></p>
 <p><br></p>
 <p>The <em>Z</em> argument can also be set globally using
 <code><a href="../reference/formatdown_options.html">formatdown_options()</a></code>, saving the effort of using the
@@ -236,13 +236,13 @@ data set), we can set the optional <em>Z</em> argument to TRUE.</p>
 <span></span>
 <span><span class="co"># 5. Carbon-12</span></span>
 <span><span class="fu"><a href="../reference/format_nucl.html">format_nucl</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
-<p>Example 5 renders as: <span class="math inline">$\mathrm{^{\small\
-12}_{\small\ 6}C}$</span></p>
+<p>Example 5 renders as: <span class="math inline">$\mathrm{\^{\small\
+12}\_{\small\ 6}C}$</span></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 6. Uranium-235</span></span>
 <span><span class="fu"><a href="../reference/format_nucl.html">format_nucl</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></code></pre></div>
-<p>Example 6 renders as: <span class="math inline">$\mathrm{^{\small\
-235}_{\small\ 92}U}$</span></p>
+<p>Example 6 renders as: <span class="math inline">$\mathrm{\^{\small\
+235}\_{\small\ 92}U}$</span></p>
 <p><br></p>
 <p>To reset the default option,</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -282,52 +282,52 @@ data set), we can set the optional <em>Z</em> argument to TRUE.</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left"><span class="math inline">$\mathrm{^{\small\
-4}_{\small\ 2}He}$</span></td>
-<td align="left"><span class="math inline">$\mathit{^{\small\
-4}_{\small\ 2}He}$</span></td>
-<td align="left"><span class="math inline">$\mathbf{^{\small\
-4}_{\small\ 2}He}$</span></td>
-<td align="left"><span class="math inline">$\mathsf{^{\small\
-4}_{\small\ 2}He}$</span></td>
-<td align="left"><span class="math inline">$\mathtt{^{\small\
-4}_{\small\ 2}He}$</span></td>
+<td align="left"><span class="math inline">$\mathrm{\^{\small\
+4}\_{\small\ 2}He}$</span></td>
+<td align="left"><span class="math inline">$\mathit{\^{\small\
+4}\_{\small\ 2}He}$</span></td>
+<td align="left"><span class="math inline">$\mathbf{\^{\small\
+4}\_{\small\ 2}He}$</span></td>
+<td align="left"><span class="math inline">$\mathsf{\^{\small\
+4}\_{\small\ 2}He}$</span></td>
+<td align="left"><span class="math inline">$\mathtt{\^{\small\
+4}\_{\small\ 2}He}$</span></td>
 </tr>
 <tr class="even">
-<td align="left"><span class="math inline">$\mathrm{^{\small\
-12}_{\small\ 6}C}$</span></td>
-<td align="left"><span class="math inline">$\mathit{^{\small\
-12}_{\small\ 6}C}$</span></td>
-<td align="left"><span class="math inline">$\mathbf{^{\small\
-12}_{\small\ 6}C}$</span></td>
-<td align="left"><span class="math inline">$\mathsf{^{\small\
-12}_{\small\ 6}C}$</span></td>
-<td align="left"><span class="math inline">$\mathtt{^{\small\
-12}_{\small\ 6}C}$</span></td>
+<td align="left"><span class="math inline">$\mathrm{\^{\small\
+12}\_{\small\ 6}C}$</span></td>
+<td align="left"><span class="math inline">$\mathit{\^{\small\
+12}\_{\small\ 6}C}$</span></td>
+<td align="left"><span class="math inline">$\mathbf{\^{\small\
+12}\_{\small\ 6}C}$</span></td>
+<td align="left"><span class="math inline">$\mathsf{\^{\small\
+12}\_{\small\ 6}C}$</span></td>
+<td align="left"><span class="math inline">$\mathtt{\^{\small\
+12}\_{\small\ 6}C}$</span></td>
 </tr>
 <tr class="odd">
-<td align="left"><span class="math inline">$\mathrm{^{\small\
-204}_{\small\ 82}Pb}$</span></td>
-<td align="left"><span class="math inline">$\mathit{^{\small\
-204}_{\small\ 82}Pb}$</span></td>
-<td align="left"><span class="math inline">$\mathbf{^{\small\
-204}_{\small\ 82}Pb}$</span></td>
-<td align="left"><span class="math inline">$\mathsf{^{\small\
-204}_{\small\ 82}Pb}$</span></td>
-<td align="left"><span class="math inline">$\mathtt{^{\small\
-204}_{\small\ 82}Pb}$</span></td>
+<td align="left"><span class="math inline">$\mathrm{\^{\small\
+204}\_{\small\ 82}Pb}$</span></td>
+<td align="left"><span class="math inline">$\mathit{\^{\small\
+204}\_{\small\ 82}Pb}$</span></td>
+<td align="left"><span class="math inline">$\mathbf{\^{\small\
+204}\_{\small\ 82}Pb}$</span></td>
+<td align="left"><span class="math inline">$\mathsf{\^{\small\
+204}\_{\small\ 82}Pb}$</span></td>
+<td align="left"><span class="math inline">$\mathtt{\^{\small\
+204}\_{\small\ 82}Pb}$</span></td>
 </tr>
 <tr class="even">
-<td align="left"><span class="math inline">$\mathrm{^{\small\
-235}_{\small\ 92}U}$</span></td>
-<td align="left"><span class="math inline">$\mathit{^{\small\
-235}_{\small\ 92}U}$</span></td>
-<td align="left"><span class="math inline">$\mathbf{^{\small\
-235}_{\small\ 92}U}$</span></td>
-<td align="left"><span class="math inline">$\mathsf{^{\small\
-235}_{\small\ 92}U}$</span></td>
-<td align="left"><span class="math inline">$\mathtt{^{\small\
-235}_{\small\ 92}U}$</span></td>
+<td align="left"><span class="math inline">$\mathrm{\^{\small\
+235}\_{\small\ 92}U}$</span></td>
+<td align="left"><span class="math inline">$\mathit{\^{\small\
+235}\_{\small\ 92}U}$</span></td>
+<td align="left"><span class="math inline">$\mathbf{\^{\small\
+235}\_{\small\ 92}U}$</span></td>
+<td align="left"><span class="math inline">$\mathsf{\^{\small\
+235}\_{\small\ 92}U}$</span></td>
+<td align="left"><span class="math inline">$\mathtt{\^{\small\
+235}\_{\small\ 92}U}$</span></td>
 </tr>
 </tbody>
 </table>
@@ -364,13 +364,13 @@ with 354 rows.</p>
 <code class="sourceCode R"><span><span class="co"># 8. Hydrogen isotopes</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"H-1"</span>, <span class="st">"H-2"</span>, <span class="st">"H-3"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/format_nucl.html">format_nucl</a></span><span class="op">(</span><span class="va">x</span>, Z <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "\\(\\mathrm{^{\\small\\ 1}_{\\small\\ 1}H}\\)"</span></span>
-<span><span class="co">#&gt; [2] "\\(\\mathrm{^{\\small\\ 2}_{\\small\\ 1}H}\\)"</span></span>
-<span><span class="co">#&gt; [3] "\\(\\mathrm{^{\\small\\ 3}_{\\small\\ 1}H}\\)"</span></span></code></pre></div>
-<p>Example 8 renders as: <span class="math inline">$\mathrm{^{\small\
-1}_{\small\ 1}H}$</span>, <span class="math inline">$\mathrm{^{\small\
-2}_{\small\ 1}H}$</span>, <span class="math inline">$\mathrm{^{\small\
-3}_{\small\ 1}H}$</span></p>
+<span><span class="co">#&gt; [1] "\\(\\mathrm{\\^{\\small\\ 1}\\_{\\small\\ 1}H}\\)"</span></span>
+<span><span class="co">#&gt; [2] "\\(\\mathrm{\\^{\\small\\ 2}\\_{\\small\\ 1}H}\\)"</span></span>
+<span><span class="co">#&gt; [3] "\\(\\mathrm{\\^{\\small\\ 3}\\_{\\small\\ 1}H}\\)"</span></span></code></pre></div>
+<p>Example 8 renders as: <span class="math inline">$\mathrm{\^{\small\
+1}\_{\small\ 1}H}$</span>, <span class="math inline">$\mathrm{\^{\small\
+2}\_{\small\ 1}H}$</span>, <span class="math inline">$\mathrm{\^{\small\
+3}\_{\small\ 1}H}$</span></p>
 <p><br></p>
 <p><strong>Warning of input errors.</strong>   The data set of isotopes
 is also used to warn of the following input errors:</p>
@@ -387,12 +387,12 @@ the second has an incorrect mass number.</p>
 <span><span class="fu"><a href="../reference/format_nucl.html">format_nucl</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in format_nucl(x): Incorrect chemical symbol or mass number in</span></span>
 <span><span class="co">#&gt; c("Carbon-12", "C-40")</span></span>
-<span><span class="co">#&gt; [1] "\\(\\mathrm{^{\\small\\ 12}Carbon}\\)"</span></span>
-<span><span class="co">#&gt; [2] "\\(\\mathrm{^{\\small\\ 40}C}\\)"     </span></span>
-<span><span class="co">#&gt; [3] "\\(\\mathrm{^{\\small\\ 12}C}\\)"</span></span></code></pre></div>
-<p>Example 9 renders as <span class="math inline">$\mathrm{^{\small\
-12}Carbon}$</span>, <span class="math inline">$\mathrm{^{\small\
-40}C}$</span>, <span class="math inline">$\mathrm{^{\small\
+<span><span class="co">#&gt; [1] "\\(\\mathrm{\\^{\\small\\ 12}Carbon}\\)"</span></span>
+<span><span class="co">#&gt; [2] "\\(\\mathrm{\\^{\\small\\ 40}C}\\)"     </span></span>
+<span><span class="co">#&gt; [3] "\\(\\mathrm{\\^{\\small\\ 12}C}\\)"</span></span></code></pre></div>
+<p>Example 9 renders as <span class="math inline">$\mathrm{\^{\small\
+12}Carbon}$</span>, <span class="math inline">$\mathrm{\^{\small\
+40}C}$</span>, <span class="math inline">$\mathrm{\^{\small\
 12}C}$</span></p>
 <p>If we use the atomic number argument, the letter <em>Z</em> is placed
 in the subscript.</p>
@@ -401,11 +401,13 @@ in the subscript.</p>
 <span><span class="fu"><a href="../reference/format_nucl.html">format_nucl</a></span><span class="op">(</span><span class="va">x</span>, Z <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in format_nucl(x, Z = TRUE): Incorrect chemical symbol or mass number</span></span>
 <span><span class="co">#&gt; in c("Carbon-12", "C-40")</span></span>
-<span><span class="co">#&gt; [1] "\\(\\mathrm{^{\\small\\ 12}_{\\small\\ Z}Carbon}\\)"</span></span>
-<span><span class="co">#&gt; [2] "\\(\\mathrm{^{\\small\\ 40}_{\\small\\ Z}C}\\)"     </span></span>
-<span><span class="co">#&gt; [3] "\\(\\mathrm{^{\\small\\ 12}_{\\small\\ 6}C}\\)"</span></span></code></pre></div>
-<p>Example 10 renders as <span class="math inline">$\mathrm{^{\small\
-12}_{\small\ Z}Carbon}$</span>, <span class="math inline">$\mathrm{^{\small\ 40}_{\small\ Z}C}$</span>, <span class="math inline">$\mathrm{^{\small\ 12}_{\small\ 6}C}$</span></p>
+<span><span class="co">#&gt; [1] "\\(\\mathrm{\\^{\\small\\ 12}\\_{\\small\\ Z}Carbon}\\)"</span></span>
+<span><span class="co">#&gt; [2] "\\(\\mathrm{\\^{\\small\\ 40}\\_{\\small\\ Z}C}\\)"     </span></span>
+<span><span class="co">#&gt; [3] "\\(\\mathrm{\\^{\\small\\ 12}\\_{\\small\\ 6}C}\\)"</span></span></code></pre></div>
+<p>Example 10 renders as <span class="math inline">$\mathrm{\^{\small\
+12}\_{\small\ Z}Carbon}$</span>, <span class="math inline">$\mathrm{\^{\small\ 40}\_{\small\ Z}C}$</span>,
+<span class="math inline">$\mathrm{\^{\small\ 12}\_{\small\
+6}C}$</span></p>
 <p>The third entry of the output vector is correctly formatted. The “Z”
 subscript in the other two entries is a hint (in addition to the
 warning) that the hyphenated input contains errors.</p>
@@ -418,8 +420,8 @@ warning using the <code>warn</code> argument.</p>
 <code class="sourceCode R"><span><span class="co"># 11. General nuclear form</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"E-A"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/format_nucl.html">format_nucl</a></span><span class="op">(</span><span class="va">x</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "\\(\\mathrm{^{\\small\\ A}E}\\)"</span></span></code></pre></div>
-<p>Example 11 renders as: <span class="math inline">$\mathrm{^{\small\
+<span><span class="co">#&gt; [1] "\\(\\mathrm{\\^{\\small\\ A}E}\\)"</span></span></code></pre></div>
+<p>Example 11 renders as: <span class="math inline">$\mathrm{\^{\small\
 A}E}$</span></p>
 <p>As noted earlier, the usual <code>Z</code> argument in this case
 places a <em>Z</em> in the subscript position.</p>
@@ -427,18 +429,18 @@ places a <em>Z</em> in the subscript position.</p>
 <code class="sourceCode R"><span><span class="co"># 12. General nuclear form with atomic number symbol</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"E-A"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/format_nucl.html">format_nucl</a></span><span class="op">(</span><span class="va">x</span>, Z <span class="op">=</span> <span class="cn">TRUE</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "\\(\\mathrm{^{\\small\\ A}_{\\small\\ Z}E}\\)"</span></span></code></pre></div>
-<p>Example 12 renders as: <span class="math inline">$\mathrm{^{\small\
-A}_{\small\ Z}E}$</span></p>
+<span><span class="co">#&gt; [1] "\\(\\mathrm{\\^{\\small\\ A}\\_{\\small\\ Z}E}\\)"</span></span></code></pre></div>
+<p>Example 12 renders as: <span class="math inline">$\mathrm{\^{\small\
+A}\_{\small\ Z}E}$</span></p>
 <p>Some authors prefer using <em>X</em> for the general element
 symbol,</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 13. Alternate general form.</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"X-A"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/format_nucl.html">format_nucl</a></span><span class="op">(</span><span class="va">x</span>, Z <span class="op">=</span> <span class="cn">TRUE</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "\\(\\mathrm{^{\\small\\ A}_{\\small\\ Z}X}\\)"</span></span></code></pre></div>
-<p>Example 13 renders as: <span class="math inline">$\mathrm{^{\small\
-A}_{\small\ Z}X}$</span></p>
+<span><span class="co">#&gt; [1] "\\(\\mathrm{\\^{\\small\\ A}\\_{\\small\\ Z}X}\\)"</span></span></code></pre></div>
+<p>Example 13 renders as: <span class="math inline">$\mathrm{\^{\small\
+A}\_{\small\ Z}X}$</span></p>
 </div>
 <div class="section level2">
 <h2 id="inputs">Inputs<a class="anchor" aria-label="anchor" href="#inputs"></a>
@@ -451,8 +453,8 @@ code,</p>
 <span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>    a close second at 28%.</span></code></pre></div>
 <p>renders as:</p>
 <blockquote>
-<p>The most common isotope of Germanium is <span class="math inline">$\mathrm{^{\small\ 74}Ge}$</span> with a naturally
-occurring frequency of 36% though <span class="math inline">$\mathrm{^{\small\ 72}Ge}$</span> is a close second
+<p>The most common isotope of Germanium is <span class="math inline">$\mathrm{\^{\small\ 74}Ge}$</span> with a naturally
+occurring frequency of 36% though <span class="math inline">$\mathrm{\^{\small\ 72}Ge}$</span> is a close second
 at 28%.</p>
 </blockquote>
 <p><br></p>
@@ -462,10 +464,10 @@ frame column) is marked up as follows,</p>
 <code class="sourceCode R"><span><span class="co"># 14. Sample vector</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"H-1"</span>, <span class="st">"H-2"</span>, <span class="st">"He-3"</span>, <span class="st">"He-4"</span>, <span class="st">"Li-6"</span>, <span class="st">"Li-7"</span>, <span class="st">"Be-9"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/format_nucl.html">format_nucl</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "\\(\\mathrm{^{\\small\\ 1}H}\\)"  "\\(\\mathrm{^{\\small\\ 2}H}\\)" </span></span>
-<span><span class="co">#&gt; [3] "\\(\\mathrm{^{\\small\\ 3}He}\\)" "\\(\\mathrm{^{\\small\\ 4}He}\\)"</span></span>
-<span><span class="co">#&gt; [5] "\\(\\mathrm{^{\\small\\ 6}Li}\\)" "\\(\\mathrm{^{\\small\\ 7}Li}\\)"</span></span>
-<span><span class="co">#&gt; [7] "\\(\\mathrm{^{\\small\\ 9}Be}\\)"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "\\(\\mathrm{\\^{\\small\\ 1}H}\\)"  "\\(\\mathrm{\\^{\\small\\ 2}H}\\)" </span></span>
+<span><span class="co">#&gt; [3] "\\(\\mathrm{\\^{\\small\\ 3}He}\\)" "\\(\\mathrm{\\^{\\small\\ 4}He}\\)"</span></span>
+<span><span class="co">#&gt; [5] "\\(\\mathrm{\\^{\\small\\ 6}Li}\\)" "\\(\\mathrm{\\^{\\small\\ 7}Li}\\)"</span></span>
+<span><span class="co">#&gt; [7] "\\(\\mathrm{\\^{\\small\\ 9}Be}\\)"</span></span></code></pre></div>
 <p>In a table, the output can be rendered as,</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="../reference/format_nucl.html">format_nucl</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
@@ -483,37 +485,37 @@ frame column) is marked up as follows,</p>
 <tbody>
 <tr class="odd">
 <td align="center">H-1</td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
 1}H}$</span></td>
 </tr>
 <tr class="even">
 <td align="center">H-2</td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
 2}H}$</span></td>
 </tr>
 <tr class="odd">
 <td align="center">He-3</td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
 3}He}$</span></td>
 </tr>
 <tr class="even">
 <td align="center">He-4</td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
 4}He}$</span></td>
 </tr>
 <tr class="odd">
 <td align="center">Li-6</td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
 6}Li}$</span></td>
 </tr>
 <tr class="even">
 <td align="center">Li-7</td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
 7}Li}$</span></td>
 </tr>
 <tr class="odd">
 <td align="center">Be-9</td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
 9}Be}$</span></td>
 </tr>
 </tbody>
@@ -537,38 +539,38 @@ frame column) is marked up as follows,</p>
 <tbody>
 <tr class="odd">
 <td align="center">H-1</td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
-1}_{\small\ 1}H}$</span></td>
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
+1}\_{\small\ 1}H}$</span></td>
 </tr>
 <tr class="even">
 <td align="center">H-2</td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
-2}_{\small\ 1}H}$</span></td>
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
+2}\_{\small\ 1}H}$</span></td>
 </tr>
 <tr class="odd">
 <td align="center">He-3</td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
-3}_{\small\ 2}He}$</span></td>
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
+3}\_{\small\ 2}He}$</span></td>
 </tr>
 <tr class="even">
 <td align="center">He-4</td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
-4}_{\small\ 2}He}$</span></td>
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
+4}\_{\small\ 2}He}$</span></td>
 </tr>
 <tr class="odd">
 <td align="center">Li-6</td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
-6}_{\small\ 3}Li}$</span></td>
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
+6}\_{\small\ 3}Li}$</span></td>
 </tr>
 <tr class="even">
 <td align="center">Li-7</td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
-7}_{\small\ 3}Li}$</span></td>
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
+7}\_{\small\ 3}Li}$</span></td>
 </tr>
 <tr class="odd">
 <td align="center">Be-9</td>
-<td align="center"><span class="math inline">$\mathrm{^{\small\
-9}_{\small\ 4}Be}$</span></td>
+<td align="center"><span class="math inline">$\mathrm{\^{\small\
+9}\_{\small\ 4}Be}$</span></td>
 </tr>
 </tbody>
 </table>
