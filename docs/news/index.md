@@ -1,0 +1,89 @@
+# Changelog
+
+## formatdown 0.1.5
+
+2026–04–27
+
+- Added
+  [`format_nucl()`](https://graphdr.github.io/formatdown/reference/format_nucl.md)
+  for formatting chemical isotopes in nuclear notation
+- Added vignette for formatting isotopes
+- Removed deprecated functions
+
+2025–03–19
+
+- Issue [\#10](https://github.com/graphdr/formatdown/issues/10). Correct
+  for case when x = 0, eliminate occurrence of:
+
+  `format_numbers(0, format = "sci")`  
+  `[1] "$NaN \\times 10^{-Inf}$"`
+
+2024–05–26
+
+- Add option for centered-dot multiplication symbol, often used with
+  comma decimal marker
+- Change default whitespace argument to render correctly in the README
+  page on GitHub
+- Revise wrapr::stop_if_dot_args() in functions, for more useful error
+  message
+- Use stringr package in vignette to place formatted units in table
+  header
+- Correct typos in data Rd files
+- Expanded the number of examples
+
+## formatdown 0.1.4
+
+2024–05–06
+
+- added
+  [`formatdown_options()`](https://graphdr.github.io/formatdown/reference/formatdown_options.md)
+  to set global options, including the ability to change the decimal
+  marker to a comma instead of a period.
+- deprecated `format_decimal()`, `format_power()`, and `format_units()`
+- added
+  [`format_numbers()`](https://graphdr.github.io/formatdown/reference/format_numbers.md)
+  and its convenience wrappers
+  [`format_sci()`](https://graphdr.github.io/formatdown/reference/format_sci.md),
+  [`format_engr()`](https://graphdr.github.io/formatdown/reference/format_engr.md),
+  and
+  [`format_dcml()`](https://graphdr.github.io/formatdown/reference/format_dcml.md)
+  to replace the deprecated functions and take advantage of the new
+  global options
+- edited
+  [`format_text()`](https://graphdr.github.io/formatdown/reference/format_text.md)
+  to retain spaces in a character input
+- updated examples, tests, and vignettes to reflect changes
+
+## formatdown 0.1.3
+
+2024–03–14
+
+- add
+  [`format_text()`](https://graphdr.github.io/formatdown/reference/format_text.md)
+  function
+- add `size` argument to `format_power()`
+- add [`signif()`](https://rdrr.io/r/base/Round.html) to
+  `format_power()` to enforce significant digits in output before
+  applying [`formatC()`](https://rdrr.io/r/base/formatc.html)
+- correct issue with `omit_power()` argument
+- correct issue with numbers \< machine eps
+- add package alias
+- update tests and vignettes to reflect changes
+
+## formatdown 0.1.2
+
+2023–06–21
+
+- Add arguments `delim` and `set_power` to `format_power()`.
+- Fixed a bug to remove extra spaces added by
+  [`formatC()`](https://rdrr.io/r/base/formatc.html).
+- Add data sets `atmos`, `metals`, and `water`.
+- Rename `density` data set to `air_meas`.
+- Add `format_decimal()` and vignette.
+- Add `format_units()` and vignette.
+
+## formatdown 0.1.1
+
+2022–11–21
+
+- Initial CRAN release
