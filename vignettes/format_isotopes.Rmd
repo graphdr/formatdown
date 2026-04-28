@@ -28,6 +28,7 @@ options(
   datatable.print.topn = 5,
   datatable.print.class = TRUE
 )
+formatdown_options(delim = "\\(")
 ```
 
 In this vignette, I discuss the `format_nucl()` function for converting isotopes from _hyphenated_ notation to _nuclear_ notation. 
@@ -83,13 +84,13 @@ library("knitr")
 
 We format isotopes as inline math expressions delimited by `$ ... $` or the optional `\( ... \)`. For example, carbon 12 is marked up as 
 
-        $\mathrm{^{\small\ 12}C}$,
+        \(\mathrm{^{\small\ 12}C}\),
 
 where the `\mathrm{}` macro creates serif, non-italic text, the carat (`^{}`) creates the superscript for the mass number, the `\small` macro reduces the font size of the superscript, and the space macro (`\_ `) separates the small macro from the mass number. Rendering this expression in an Rmd script as a *LaTeX-style inline equation* yields: $\mathrm{^{\small\ 12}C}$.
 
 To *program* the markup, however, we enclose it in quote marks as a character string, that is, 
 
-        "$\\mathrm{^{\\small\\ 12}C}$", 
+        "\\(\\mathrm{^{\\small\\ 12}C}\\)", 
 
 which requires us to "escape" the backslash in `\mathrm`, `\small`, etc.,  by adding extra backslashes. Rendering this expression in an Rmd script as an *inline R code chunk* yields the same result: `r "$\\mathrm{^{\\small\\ 12}C}$"`. 
 
@@ -106,11 +107,11 @@ Denoting *E* as the element symbol (H, He, Li, Be, ...) and *A* as the mass numb
 
 to a character string in the markup form, 
 
-        "$\\mathrm{^{\\small\\ A}E}$", 
+        "\\(\\mathrm{^{\\small\\ A}E}\\)", 
 
 If the option for including the atomic number *Z* is used, the markup form includes the atomic number as a subscript using the underscore macro (`_{}`), 
 
-        "$\\mathrm{^{\\small\\ A}_{\\small\\ Z}E}$".
+        "\\(\\mathrm{^{\\small\\ A}_{\\small\\ Z}E}\\)".
 
 <br>
 
@@ -181,7 +182,7 @@ The *Z* argument can also be set globally using `formatdown_options()`, saving t
 ```{r}
 #| results: false
 
-formatdown_options("Z" = TRUE)
+formatdown_options(Z = TRUE)
 
 # 5. Carbon-12
 format_nucl(x)
@@ -204,7 +205,7 @@ To reset the default option,
 
 ```{r}
 # reset the Z option only
-formatdown_options("Z" = FALSE)
+formatdown_options(Z = FALSE)
 ```
 
 
