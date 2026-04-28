@@ -11,13 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" sizes="any" href="favicon.ico">
 <link rel="manifest" href="site.webmanifest">
-<!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
-  window.MathJax = {
-    chtml: {
-      fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
-    }
-  };
-</script><script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -80,7 +74,7 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Planck’s constant would be typeset as <span class="math inline">\(6.63 \times 10^{-34}\)</span> J/Hz rather than the familiar forms we use in communicating with computers, such as <code>6.63*10^-34</code> or <code>6.63E-34</code>.</p>
+<p>In professional technical prose, large and small numbers are generally typeset using powers of ten notation. For example, Planck’s constant would be typeset as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6.63</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>34</mn></mrow></msup></mrow><annotation encoding="application/x-tex">6.63 \times 10^{-34}</annotation></semantics></math> J/Hz rather than the familiar forms we use in communicating with computers, such as <code>6.63*10^-34</code> or <code>6.63E-34</code>.</p>
 <p>The functions in this package help an author of an R markdown document convert large and small numbers to character strings, formatted using powers-of-ten notation. In addition, decimal numbers and text can be formatted with the same font face and size as the power-of-ten numbers for a consistent typeface across all columns of a data table.</p>
 <p>Formatting tools include:</p>
 <p><strong><code><a href="reference/format_numbers.html">format_numbers()</a></code></strong><br>
@@ -128,19 +122,19 @@ Global options are provided for arguments that users would likely prefer to set 
 <tbody>
 <tr>
 <td align="right">scientific</td>
-<td align="right"><span class="math inline">\(1.013 \times 10^{5}\)</span></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.013</mn><mo>×</mo><msup><mn>10</mn><mn>5</mn></msup></mrow><annotation encoding="application/x-tex">1.013 \times 10^{5}</annotation></semantics></math></td>
 </tr>
 <tr>
 <td align="right">engineering</td>
-<td align="right"><span class="math inline">\(101.3 \times 10^{3}\)</span></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>101.3</mn><mo>×</mo><msup><mn>10</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">101.3 \times 10^{3}</annotation></semantics></math></td>
 </tr>
 <tr>
 <td align="right">decimal</td>
-<td align="right"><span class="math inline">\(101300\)</span></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>101300</mn><annotation encoding="application/x-tex">101300</annotation></semantics></math></td>
 </tr>
 <tr>
 <td align="right">units</td>
-<td align="right"><span class="math inline">\(1013\ \mathrm{hPa}\)</span></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1013</mn><mspace width="0.222em"></mspace><mrow><mi mathvariant="normal">h</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">a</mi></mrow></mrow><annotation encoding="application/x-tex">1013\ \mathrm{hPa}</annotation></semantics></math></td>
 </tr>
 </tbody>
 </table>
@@ -190,53 +184,53 @@ Global options are provided for arguments that users would likely prefer to set 
 </colgroup>
 <thead><tr>
 <th align="right">Metal</th>
-<th align="right">Density [kg/m<span class="math inline">\(^3\)</span>]</th>
-<th align="right">Therm. expan. [m/m K<span class="math inline">\(^{-1}\)</span>]</th>
-<th align="right">Therm. cond. [W/m K<span class="math inline">\(^{-1}\)</span>]</th>
+<th align="right">Density [kg/m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mn>3</mn></msup><annotation encoding="application/x-tex">^3</annotation></semantics></math>]</th>
+<th align="right">Therm. expan. [m/m K<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">^{-1}</annotation></semantics></math>]</th>
+<th align="right">Therm. cond. [W/m K<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">^{-1}</annotation></semantics></math>]</th>
 <th align="right">Elastic modulus</th>
 </tr></thead>
 <tbody>
 <tr>
-<td align="right"><span class="math inline">\(\mathrm{aluminum\ 6061}\)</span></td>
-<td align="right"><span class="math inline">\(2700\)</span></td>
-<td align="right"><span class="math inline">\(24.3 \times 10^{-6}\)</span></td>
-<td align="right"><span class="math inline">\(156\)</span></td>
-<td align="right"><span class="math inline">\(73.1\ \mathrm{GPa}\)</span></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">a</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">m</mi><mspace width="0.222em"></mspace><mn mathvariant="normal">6061</mn></mrow><annotation encoding="application/x-tex">\mathrm{aluminum\ 6061}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2700</mn><annotation encoding="application/x-tex">2700</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>24.3</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">24.3 \times 10^{-6}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>156</mn><annotation encoding="application/x-tex">156</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>73.1</mn><mspace width="0.222em"></mspace><mrow><mi mathvariant="normal">G</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">a</mi></mrow></mrow><annotation encoding="application/x-tex">73.1\ \mathrm{GPa}</annotation></semantics></math></td>
 </tr>
 <tr>
-<td align="right"><span class="math inline">\(\mathrm{copper}\)</span></td>
-<td align="right"><span class="math inline">\(8900\)</span></td>
-<td align="right"><span class="math inline">\(16.6 \times 10^{-6}\)</span></td>
-<td align="right"><span class="math inline">\(393\)</span></td>
-<td align="right"><span class="math inline">\(117\ \mathrm{GPa}\)</span></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">r</mi></mrow><annotation encoding="application/x-tex">\mathrm{copper}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>8900</mn><annotation encoding="application/x-tex">8900</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>16.6</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">16.6 \times 10^{-6}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>393</mn><annotation encoding="application/x-tex">393</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>117</mn><mspace width="0.222em"></mspace><mrow><mi mathvariant="normal">G</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">a</mi></mrow></mrow><annotation encoding="application/x-tex">117\ \mathrm{GPa}</annotation></semantics></math></td>
 </tr>
 <tr>
-<td align="right"><span class="math inline">\(\mathrm{lead}\)</span></td>
-<td align="right"><span class="math inline">\(11300\)</span></td>
-<td align="right"><span class="math inline">\(52.7 \times 10^{-6}\)</span></td>
-<td align="right"><span class="math inline">\(37.0\)</span></td>
-<td align="right"><span class="math inline">\(13.8\ \mathrm{GPa}\)</span></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">l</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">d</mi></mrow><annotation encoding="application/x-tex">\mathrm{lead}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>11300</mn><annotation encoding="application/x-tex">11300</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>52.7</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">52.7 \times 10^{-6}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>37.0</mn><annotation encoding="application/x-tex">37.0</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>13.8</mn><mspace width="0.222em"></mspace><mrow><mi mathvariant="normal">G</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">a</mi></mrow></mrow><annotation encoding="application/x-tex">13.8\ \mathrm{GPa}</annotation></semantics></math></td>
 </tr>
 <tr>
-<td align="right"><span class="math inline">\(\mathrm{platinum}\)</span></td>
-<td align="right"><span class="math inline">\(21400\)</span></td>
-<td align="right"><span class="math inline">\(9.00 \times 10^{-6}\)</span></td>
-<td align="right"><span class="math inline">\(69.2\)</span></td>
-<td align="right"><span class="math inline">\(147\ \mathrm{GPa}\)</span></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">p</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">m</mi></mrow><annotation encoding="application/x-tex">\mathrm{platinum}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>21400</mn><annotation encoding="application/x-tex">21400</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>9.00</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">9.00 \times 10^{-6}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>69.2</mn><annotation encoding="application/x-tex">69.2</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>147</mn><mspace width="0.222em"></mspace><mrow><mi mathvariant="normal">G</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">a</mi></mrow></mrow><annotation encoding="application/x-tex">147\ \mathrm{GPa}</annotation></semantics></math></td>
 </tr>
 <tr>
-<td align="right"><span class="math inline">\(\mathrm{steel\ 1020}\)</span></td>
-<td align="right"><span class="math inline">\(7850\)</span></td>
-<td align="right"><span class="math inline">\(11.3 \times 10^{-6}\)</span></td>
-<td align="right"><span class="math inline">\(46.7\)</span></td>
-<td align="right"><span class="math inline">\(207\ \mathrm{GPa}\)</span></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">s</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">l</mi><mspace width="0.222em"></mspace><mn mathvariant="normal">1020</mn></mrow><annotation encoding="application/x-tex">\mathrm{steel\ 1020}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>7850</mn><annotation encoding="application/x-tex">7850</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>11.3</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">11.3 \times 10^{-6}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>46.7</mn><annotation encoding="application/x-tex">46.7</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>207</mn><mspace width="0.222em"></mspace><mrow><mi mathvariant="normal">G</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">a</mi></mrow></mrow><annotation encoding="application/x-tex">207\ \mathrm{GPa}</annotation></semantics></math></td>
 </tr>
 <tr>
-<td align="right"><span class="math inline">\(\mathrm{titanium}\)</span></td>
-<td align="right"><span class="math inline">\(4850\)</span></td>
-<td align="right"><span class="math inline">\(9.36 \times 10^{-6}\)</span></td>
-<td align="right"><span class="math inline">\(7.44\)</span></td>
-<td align="right"><span class="math inline">\(102\ \mathrm{GPa}\)</span></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">t</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">m</mi></mrow><annotation encoding="application/x-tex">\mathrm{titanium}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>4850</mn><annotation encoding="application/x-tex">4850</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>9.36</mn><mo>×</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">9.36 \times 10^{-6}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>7.44</mn><annotation encoding="application/x-tex">7.44</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>102</mn><mspace width="0.222em"></mspace><mrow><mi mathvariant="normal">G</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">a</mi></mrow></mrow><annotation encoding="application/x-tex">102\ \mathrm{GPa}</annotation></semantics></math></td>
 </tr>
 </tbody>
 </table>
@@ -256,53 +250,53 @@ Global options are provided for arguments that users would likely prefer to set 
 </colgroup>
 <thead><tr>
 <th align="right">Metal</th>
-<th align="right">Density [kg/m<span class="math inline">\(^3\)</span>]</th>
-<th align="right">Therm. expan. [m/m K<span class="math inline">\(^{-1}\)</span>]</th>
-<th align="right">Therm. cond. [W/m K<span class="math inline">\(^{-1}\)</span>]</th>
+<th align="right">Density [kg/m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mn>3</mn></msup><annotation encoding="application/x-tex">^3</annotation></semantics></math>]</th>
+<th align="right">Therm. expan. [m/m K<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">^{-1}</annotation></semantics></math>]</th>
+<th align="right">Therm. cond. [W/m K<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">^{-1}</annotation></semantics></math>]</th>
 <th align="right">Elastic modulus</th>
 </tr></thead>
 <tbody>
 <tr>
-<td align="right"><span class="math inline">\(\mathrm{aluminum\ 6061}\)</span></td>
-<td align="right"><span class="math inline">\(2700\)</span></td>
-<td align="right"><span class="math inline">\(24,3 \cdot 10^{-6}\)</span></td>
-<td align="right"><span class="math inline">\(156\)</span></td>
-<td align="right"><span class="math inline">\(73,1\ \mathrm{GPa}\)</span></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">a</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">m</mi><mspace width="0.222em"></mspace><mn mathvariant="normal">6061</mn></mrow><annotation encoding="application/x-tex">\mathrm{aluminum\ 6061}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2700</mn><annotation encoding="application/x-tex">2700</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>24</mn><mo>,</mo><mn>3</mn><mo>⋅</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">24,3 \cdot 10^{-6}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>156</mn><annotation encoding="application/x-tex">156</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>73</mn><mo>,</mo><mn>1</mn><mspace width="0.222em"></mspace><mrow><mi mathvariant="normal">G</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">a</mi></mrow></mrow><annotation encoding="application/x-tex">73,1\ \mathrm{GPa}</annotation></semantics></math></td>
 </tr>
 <tr>
-<td align="right"><span class="math inline">\(\mathrm{copper}\)</span></td>
-<td align="right"><span class="math inline">\(8900\)</span></td>
-<td align="right"><span class="math inline">\(16,6 \cdot 10^{-6}\)</span></td>
-<td align="right"><span class="math inline">\(393\)</span></td>
-<td align="right"><span class="math inline">\(117\ \mathrm{GPa}\)</span></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">r</mi></mrow><annotation encoding="application/x-tex">\mathrm{copper}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>8900</mn><annotation encoding="application/x-tex">8900</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>16</mn><mo>,</mo><mn>6</mn><mo>⋅</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">16,6 \cdot 10^{-6}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>393</mn><annotation encoding="application/x-tex">393</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>117</mn><mspace width="0.222em"></mspace><mrow><mi mathvariant="normal">G</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">a</mi></mrow></mrow><annotation encoding="application/x-tex">117\ \mathrm{GPa}</annotation></semantics></math></td>
 </tr>
 <tr>
-<td align="right"><span class="math inline">\(\mathrm{lead}\)</span></td>
-<td align="right"><span class="math inline">\(11300\)</span></td>
-<td align="right"><span class="math inline">\(52,7 \cdot 10^{-6}\)</span></td>
-<td align="right"><span class="math inline">\(37,0\)</span></td>
-<td align="right"><span class="math inline">\(13,8\ \mathrm{GPa}\)</span></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">l</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">d</mi></mrow><annotation encoding="application/x-tex">\mathrm{lead}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>11300</mn><annotation encoding="application/x-tex">11300</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>52</mn><mo>,</mo><mn>7</mn><mo>⋅</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">52,7 \cdot 10^{-6}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>37</mn><mo>,</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">37,0</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>13</mn><mo>,</mo><mn>8</mn><mspace width="0.222em"></mspace><mrow><mi mathvariant="normal">G</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">a</mi></mrow></mrow><annotation encoding="application/x-tex">13,8\ \mathrm{GPa}</annotation></semantics></math></td>
 </tr>
 <tr>
-<td align="right"><span class="math inline">\(\mathrm{platinum}\)</span></td>
-<td align="right"><span class="math inline">\(21400\)</span></td>
-<td align="right"><span class="math inline">\(9,00 \cdot 10^{-6}\)</span></td>
-<td align="right"><span class="math inline">\(69,2\)</span></td>
-<td align="right"><span class="math inline">\(147\ \mathrm{GPa}\)</span></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">p</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">m</mi></mrow><annotation encoding="application/x-tex">\mathrm{platinum}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>21400</mn><annotation encoding="application/x-tex">21400</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>9</mn><mo>,</mo><mn>00</mn><mo>⋅</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">9,00 \cdot 10^{-6}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>69</mn><mo>,</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">69,2</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>147</mn><mspace width="0.222em"></mspace><mrow><mi mathvariant="normal">G</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">a</mi></mrow></mrow><annotation encoding="application/x-tex">147\ \mathrm{GPa}</annotation></semantics></math></td>
 </tr>
 <tr>
-<td align="right"><span class="math inline">\(\mathrm{steel\ 1020}\)</span></td>
-<td align="right"><span class="math inline">\(7850\)</span></td>
-<td align="right"><span class="math inline">\(11,3 \cdot 10^{-6}\)</span></td>
-<td align="right"><span class="math inline">\(46,7\)</span></td>
-<td align="right"><span class="math inline">\(207\ \mathrm{GPa}\)</span></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">s</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">l</mi><mspace width="0.222em"></mspace><mn mathvariant="normal">1020</mn></mrow><annotation encoding="application/x-tex">\mathrm{steel\ 1020}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>7850</mn><annotation encoding="application/x-tex">7850</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>11</mn><mo>,</mo><mn>3</mn><mo>⋅</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">11,3 \cdot 10^{-6}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>46</mn><mo>,</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">46,7</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>207</mn><mspace width="0.222em"></mspace><mrow><mi mathvariant="normal">G</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">a</mi></mrow></mrow><annotation encoding="application/x-tex">207\ \mathrm{GPa}</annotation></semantics></math></td>
 </tr>
 <tr>
-<td align="right"><span class="math inline">\(\mathrm{titanium}\)</span></td>
-<td align="right"><span class="math inline">\(4850\)</span></td>
-<td align="right"><span class="math inline">\(9,36 \cdot 10^{-6}\)</span></td>
-<td align="right"><span class="math inline">\(7,44\)</span></td>
-<td align="right"><span class="math inline">\(102\ \mathrm{GPa}\)</span></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">t</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">m</mi></mrow><annotation encoding="application/x-tex">\mathrm{titanium}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>4850</mn><annotation encoding="application/x-tex">4850</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>9</mn><mo>,</mo><mn>36</mn><mo>⋅</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">9,36 \cdot 10^{-6}</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>7</mn><mo>,</mo><mn>44</mn></mrow><annotation encoding="application/x-tex">7,44</annotation></semantics></math></td>
+<td align="right"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>102</mn><mspace width="0.222em"></mspace><mrow><mi mathvariant="normal">G</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">a</mi></mrow></mrow><annotation encoding="application/x-tex">102\ \mathrm{GPa}</annotation></semantics></math></td>
 </tr>
 </tbody>
 </table>
