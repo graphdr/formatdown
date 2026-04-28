@@ -3,8 +3,6 @@ url: https://graphdr.github.io/formatdown/
 template:
   bootstrap: 5
   bootswatch: spacelab
-
-template:
   math-rendering: katex
 
 navbar:
