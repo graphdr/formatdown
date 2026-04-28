@@ -156,6 +156,7 @@ format_sci(x, omit_power = 5, set_power = 4)
 Other format_*: 
 \code{\link{format_dcml}()},
 \code{\link{format_engr}()},
+\code{\link{format_nucl}()},
 \code{\link{format_numbers}()},
 \code{\link{format_text}()}
 }

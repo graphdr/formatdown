@@ -21,3 +21,5 @@
 ^\.github$
 ^\.github/workflows$
 ^CRAN-SUBMISSION$
+^\.positai$
+^\.claude$

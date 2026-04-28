@@ -1,3 +1,5 @@
+AZE
+AZX
 Avallone
 Baumeister
 CMD
@@ -10,6 +12,8 @@ Maurer
 McGraw
 NIST
 README
+Rmd
+Rstudio
 YYYY
 args
 cdot
@@ -28,12 +32,11 @@ mathtt
 milli
 mol
 monospace
-normalsize
+oganesson
 pak
 qquad
 repo
 rmarkdown
-scriptsize
 stringr
 ver
 wrapr

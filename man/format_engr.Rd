@@ -166,6 +166,7 @@ format_engr(x, omit_power = 3, set_power = 3)
 \seealso{
 Other format_*: 
 \code{\link{format_dcml}()},
+\code{\link{format_nucl}()},
 \code{\link{format_numbers}()},
 \code{\link{format_sci}()},
 \code{\link{format_text}()}

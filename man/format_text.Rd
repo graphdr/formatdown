@@ -14,15 +14,17 @@ format_text(
 )
 }
 \arguments{
-\item{x}{Vector to be formatted.}
+\item{x}{Text to be formatted. Can be a single string,
+a vector, or a column of a data frame.}
 
 \item{face}{Font face. Determines the font face macro inside the math
 delimiters. Possible values are "plain" (default), "italic", "bold",
 "sans", or "mono". One may assign instead the corresponding LaTeX-style
-markup itself, e.g., \verb{\\\\mathrm}, \verb{\\\\mathit}, \verb{\\\\mathbf}, \verb{\\\\mathsf}, or
-\verb{\\\\mathtt}.}
+markup itself, e.g., \verb{\\mathrm}, \verb{\\mathit}, \verb{\\mathbf}, \verb{\\mathsf}, or
+\verb{\\mathtt}.}
 
-\item{...}{Not used, force later arguments to be used by name.}
+\item{...}{Not used for values; forces subsequent arguments to be
+referable only by name.}
 
 \item{size, delim, whitespace}{Used to format the math-delimited character
 strings. For details, see the help page for \code{formatdown_options()}.}
@@ -78,6 +80,7 @@ format_text(x, face = "mono")
 Other format_*: 
 \code{\link{format_dcml}()},
 \code{\link{format_engr}()},
+\code{\link{format_nucl}()},
 \code{\link{format_numbers}()},
 \code{\link{format_sci}()}
 }

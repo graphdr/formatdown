@@ -125,6 +125,7 @@ format_numbers(x, format = "dcml")
 \seealso{
 Other format_*: 
 \code{\link{format_engr}()},
+\code{\link{format_nucl}()},
 \code{\link{format_numbers}()},
 \code{\link{format_sci}()},
 \code{\link{format_text}()}

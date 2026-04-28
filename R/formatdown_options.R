@@ -1,15 +1,17 @@
 # Internal function not exported:
 
 formatdown_opts <- settings::options_manager(
-  delim = "$",
-  size = NULL,
-  decimal_mark = ".",
-  big_mark = "",
-  big_interval = 3,
-  small_mark = "",
+  delim          = "$",
+  size           = NULL,
+  decimal_mark   = ".",
+  big_mark       = "",
+  big_interval   = 3,
+  small_mark     = "",
   small_interval = 5,
-  whitespace = "\\\\ ",
-  multiply_mark = "\\times"
+  whitespace     = "\\\\ ",
+  multiply_mark  = "\\times",
+  Z              = FALSE,
+  warn           = TRUE
 )
 
 # User function is exported:
@@ -38,6 +40,9 @@ formatdown_opts <- settings::options_manager(
 #' - `small_interval`: `r param_small_interval`
 #' - `whitespace`:     `r param_whitespace`
 #' - `multiply_mark`:  `r param_multiply_mark`
+#' - `Z`:              `r param_Z`,
+#' - `warn`:           `r param_warn`
+#'
 #'
 #' @param reset Logical vector of length 1; if TRUE, reset all options to their
 #'     default values.

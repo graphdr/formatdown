@@ -13,6 +13,8 @@ navbar:
         href: articles/format_numbers.html
       - text: Format text
         href: articles/format_text.html
+      - text: Format isotopes
+        href: articles/format_isotopes.html
       - text: Global settings
         href: articles/global_settings.html
 
@@ -36,6 +38,7 @@ reference:
     - atmos
     - metals
     - water
+    - element_set
 
 news:
   cran_dates: false

@@ -196,6 +196,7 @@ format_numbers(x, format = "dcml", set_power = 3)
 Other format_*: 
 \code{\link{format_dcml}()},
 \code{\link{format_engr}()},
+\code{\link{format_nucl}()},
 \code{\link{format_sci}()},
 \code{\link{format_text}()}
 }

@@ -1,4 +1,17 @@
-# formatdown 0.1.4.900x (development)
+# formatdown 0.1.5
+
+2026--04--27
+
+- Added `format_nucl()` for formatting chemical isotopes in nuclear notation 
+- Added vignette for formatting isotopes
+- Removed deprecated functions
+
+2025--03--19
+
+- Issue #10. Correct for case when x = 0, eliminate occurrence of:
+
+    `format_numbers(0, format = "sci")`  
+    `[1] "$NaN \\times 10^{-Inf}$"`
 
 2024--05--26
 

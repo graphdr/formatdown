@@ -1,4 +1,27 @@
 
+#' Chemical elements
+#'
+#' Table of 118 chemical elements with name, symbol, atomic number, and
+#' mass numbers. Elements with more than one possible mass number have
+#' separate rows for each isotope.
+#'
+#' In "AZE" or "AZX" notation, "A" is the mass number, "Z" is the atomic number,
+#' and "E" or "X" is the element symbol.
+#'
+#' @usage data(element_set, package = "formatdown")
+#'
+#' @format Classes data.table and data.frame with	`r nrow(element_set)`
+#' observations of `r ncol(element_set)` variables:
+#'
+#'   \describe{
+#'    \item{element}{Character, element name, hydrogen (atomic number 1)
+#'                   through oganesson (atomic number 118).}
+#'    \item{symbol}{Character, element symbol.}
+#'    \item{atomic_number}{Character, 1-118.}
+#'    \item{mass_number}{Character, 1-294.}
+#'    }
+"element_set"
+
 #' Air density measurements
 #'
 #' Table of air properties at room temperature and pressure, simulating multiple

@@ -53,6 +53,7 @@ formatdown_options(delim = "$",
                    small_interval = 5,
                    whitespace = "\\\\>", 
                    multiply_mark = "\\times", 
+                   Z = FALSE, 
                    reset = FALSE)
 ```
 

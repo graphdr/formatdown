@@ -32,15 +32,12 @@ get_math_markup <- function(face) {
 #' rendering (in an R markdown or Quarto markdown document) as an inline
 #' equation.
 #'
-#' @param x Vector to be formatted.
+#' @param x Text to be formatted. Can be a single string,
+#'          a vector, or a column of a data frame.
 #'
-#' @param ... Not used, force later arguments to be used by name.
+#' @param ... `r param_dots`
 #'
-#' @param face Font face. Determines the font face macro inside the math
-#'   delimiters. Possible values are "plain" (default), "italic", "bold",
-#'   "sans", or "mono". One may assign instead the corresponding LaTeX-style
-#'   markup itself, e.g., `\\mathrm`, `\\mathit`, `\\mathbf`, `\\mathsf`, or
-#'   `\\mathtt`.
+#' @param face `r param_face`
 #'
 #' @param size,delim,whitespace Used to format the math-delimited character
 #'   strings. For details, see the help page for `formatdown_options()`.
@@ -107,7 +104,7 @@ format_text <- function(x,
   DT[, value := gsub(" ", whitespace, value)]
   DT[is.na(x), value := NA_character_]
 
-# Add math markup
+  # Add math markup
   DT[, value := paste0(math_markup, "{", value, "}")]
 
   # Prep for output

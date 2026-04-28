@@ -78,3 +78,17 @@ param_multiply_mark <- 'Character, length 1, to define the multiplication symbol
         or a half-high dot `"\\\\cdot"` which is often used when the decimal
         mark is a comma.'
 
+param_Z <- 'Logical, length 1, default FALSE, used to determine whether or
+        not the atomic number subscript is used in formatting nuclear
+        notation of isotopes.'
+
+param_warn <- 'Logical, length 1, default TRUE, used to determine whether or
+        not a warning is issued when an input for a chemical element in
+        hyphenated notation contains an error in the element symbol or the
+        mass number of the isotope.'
+
+param_face <- 'Font face. Determines the font face macro inside the math
+        delimiters. Possible values are "plain" (default), "italic", "bold",
+        "sans", or "mono". One may assign instead the corresponding LaTeX-style
+        markup itself, e.g., `\\mathrm`, `\\mathit`, `\\mathbf`, `\\mathsf`, or
+        `\\mathtt`.'

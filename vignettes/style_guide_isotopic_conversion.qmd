@@ -1,0 +1,59 @@
+---
+title: "convert hyphenated isotopic data to nuclear notation"
+format: docx
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+Use this script in Rstudio to convert isotopic data from the hyphenated notation, e.g. Ba-137m, to nuclear notation, e.g. $^{137m}Ba$.
+
+First you need to load your data. Modify the example below to identify your data by the correct name and file location (path).
+
+Your data will only be converted after rendering. A Word document will be created in the directory where you have this script.
+
+```{r}
+#| label: libraries
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 8
+
+library(formatdown)
+library(dplyr)
+library(stringr)
+library(knitr)
+```
+
+```{r}
+#| label: isotopes
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 8
+
+# Load your data, and call it "data" or modify everything below to match.
+# The script assumes your data columns are called "Nuclide" and "Activity". 
+# You can modify this script to only use this chunk or the next chunk, depending on whether you have numbers to convert, activity to convert, or both.
+# 
+#  Change the example data to load your data.
+#  
+data <- data.frame("Nuclide" = c("Nb-93m", "Ni-63", "Cd-113", "Th-234", 
+"Ag-108m", "Y-90", "Cm-245", "Th-228", "Th-229", "Cm-248"))
+
+# Locate dash in RN's
+df <- data.frame("Nuclide" = data$Nuclide)
+
+pos_dash <- str_locate(df$Nuclide, "-")[, 1]
+RN_length <- str_length(df$Nuclide)
+
+# X is the element symbol, e.g. Ba
+# A is the isotope number, including, if needed m for metastable, e.g. 137m
+
+df$X <- str_sub(df$Nuclide, start = 1, end = pos_dash - 1)
+df$A <- str_sub(df$Nuclide, start = pos_dash + 1, end = RN_length)
+
+isotope <- paste0("$", "^{", df$A, "}", df$X, "$")
+
+knitr::kable(isotope, row.names = FALSE)
+```

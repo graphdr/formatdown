@@ -21,8 +21,6 @@ options(
 )
 ```
 
-<!-- Correcting for problems with LaTeX math in the README file only -->
-
 # formatdown  <img src="man/figures/logo.png" align="right">
 
 Formatting Numbers in R Markdown Documents
@@ -231,5 +229,6 @@ Conduct](https://graphdr.github.io/formatdown/CONDUCT.html).
 - [`units`](https://CRAN.R-project.org/package=units) for handling physical units 
 - [`wrapr`](https://CRAN.R-project.org/package=wrapr), [`checkmate`](https://CRAN.R-project.org/package=checkmate), and [`tinytest`](https://CRAN.R-project.org/package=tinytest) for programming tools
 - [`devtools`](https://CRAN.R-project.org/package=devtools) and [`pkgdown`](https://CRAN.R-project.org/package=pkgdown) for package building 
+
 
 
