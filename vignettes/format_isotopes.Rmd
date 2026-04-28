@@ -25,6 +25,11 @@ options(
 )
 ```
 
+![](../man/figures/bus_periodic_table.jpg){width=70%}    
+<small>*The Periodic Table, yeah ...* by Aubrey is licensed under <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a></small>
+
+<br>
+
 In this vignette, I discuss the `format_nucl()` function for converting isotopes from _hyphenated_ notation to _nuclear_ notation. 
 
 ## Types of notation
