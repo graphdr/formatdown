@@ -4,6 +4,9 @@ template:
   bootstrap: 5
   bootswatch: spacelab
 
+template:
+  math-rendering: katex
+
 navbar:
   title: ~
   left:
@@ -36,9 +39,9 @@ reference:
     contents :
     - air_meas
     - atmos
+    - element_set
     - metals
     - water
-    - element_set
 
 news:
   cran_dates: false
