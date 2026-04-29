@@ -37,7 +37,7 @@ In this vignette, I discuss the `format_nucl()` function for converting isotopes
 In *hyphenated* notation, chemical elements are expressed,   
 
 $$
-\small\mathrm{E}{-}\small\mathrm{A}, 
+\mathrm{E}{-}\mathrm{A}, 
 $$
 
 where *E* is the element symbol and *A* is its mass number, e.g., __H-1__, __H-2__, __He-3__, __He-4__, etc. 
@@ -45,19 +45,20 @@ where *E* is the element symbol and *A* is its mass number, e.g., __H-1__, __H-2
 In *nuclear* notation, the element symbol has a preceding superscript for the mass number and (optionally) a preceding subscript for the atomic number *Z*, 
 
 $$
-\mathrm{^{\small\ A}E}\ \ \mathrm{or}\ \mathrm{^{\small\ A}_{\small\ Z}E}
+\mathrm{^{A}E}\ \ \mathrm{or}\ \mathrm{^{A}_{Z}E}
 $$
 
-For example, carbon 12 (atomic number 6) and uranium 235 (atomic number 92) are typeset with and without atomic numbers as shown below. The latter form, without *Z*, is the default in formatdown. 
+For example, carbon 12 (atomic number 6) and uranium 238 (atomic number 92) are typeset with and without atomic numbers as shown below. The latter form, without *Z*, is the default in formatdown. 
 
 ```{r}
 #| echo: false
 
 hyphenated <- c(
-  "$\\small\\mathrm{C}$--$\\small\\mathrm{12}$",
-  "$\\small\\mathrm{U}$--$\\small\\mathrm{235}$"
+  "$\\mathrm{C}$--$\\mathrm{12}$",
+  "$\\mathrm{Fe}$--$\\mathrm{54}$",
+  "$\\mathrm{U}$--$\\mathrm{238}$"
 )
-x <- c("C-12", "U-235")
+x <- c("C-12", "Fe-54", "U-238")
 nuclear <- format_nucl(x)
 with_Z <- format_nucl(x, Z = TRUE)
 DT <- data.table(hyphenated, with_Z, nuclear)
@@ -83,15 +84,15 @@ library("knitr")
 
 We format isotopes as inline math expressions delimited by `$ ... $` or the optional `$ ... $`. For example, carbon 12 is marked up as 
 
-        $\mathrm{^{\small\ 12}C}$,
+        $\mathrm{^{12}C}$,
 
-where the `\mathrm{}` macro creates serif, non-italic text, the carat (`^{}`) creates the superscript for the mass number, the `\small` macro reduces the font size of the superscript, and the space macro (`\_ `) separates the small macro from the mass number. Rendering this expression in an Rmd script as a *LaTeX-style inline equation* yields: $\mathrm{^{\small\ 12}C}$.
+where the `\mathrm{}` macro creates serif, non-italic text and the carat `^{}` creates the superscript for the mass number. Rendering this expression in an Rmd script as a *LaTeX-style inline equation* yields: $\mathrm{^{\small\ 12}C}$.
 
 To *program* the markup, however, we enclose it in quote marks as a character string, that is, 
 
-        "$\\mathrm{^{\\small\\ 12}C}$", 
+        "$\\mathrm{^{12}C}$", 
 
-which requires us to "escape" the backslash in `\mathrm`, `\small`, etc.,  by adding extra backslashes. Rendering this expression in an Rmd script as an *inline R code chunk* yields the same result: `r "$\\mathrm{^{\\small\\ 12}C}$"`. 
+which requires us to "escape" the backslash in `\mathrm` by adding extra backslashes. Rendering this expression in an Rmd script as an *inline R code chunk* yields the same result: `r "$\\mathrm{^{12}C}$"`. 
 
 
 
@@ -106,11 +107,11 @@ Denoting *E* as the element symbol (H, He, Li, Be, ...) and *A* as the mass numb
 
 to a character string in the markup form, 
 
-        "$\\mathrm{^{\\small\\ A}E}$", 
+        "$\\mathrm{^{A}E}$", 
 
-If the option for including the atomic number *Z* is used, the markup form includes the atomic number as a subscript using the underscore macro (`_{}`), 
+If the option for including the atomic number *Z* is used, the markup form includes the atomic number as a subscript using the underscore macro `_{}`, 
 
-        "$\\mathrm{^{\\small\\ A}_{\\small\\ Z}E}$".
+        "$\\mathrm{^{A}_{Z}E}$".
 
 <br>
 
@@ -136,23 +137,23 @@ format_nucl(x,
 
 
 
-*Examples.* &nbsp; Scalar and vector examples are usually rendered using inline code chunks in an Rmd script. 
+*Examples.* &nbsp; Scalar values are typically rendered using inline code chunks in an Rmd script. 
 
 ```{r}
 # 1. Carbon-12
 x <- "C-12"
 format_nucl(x)
-```
 
-Example 1 renders as:  `r format_nucl(x)`. 
-
-```{r}
-# 2. Uranium-235
-y <- "U-235"
+# 2. Uranium-238
+y <- "U-238"
 format_nucl(y)
 ```
 
-Example 2 renders as: `r format_nucl(y)`
+Examples 1 and 2 (in inline code chunks) render as,
+
+1. `r format_nucl("C-12")` is the most abundant isotope of carbon. 
+
+2. The most common isotope of naturally-occurring uranium is `r format_nucl("U-238")`. 
 
 <br>
 
@@ -160,43 +161,48 @@ Example 2 renders as: `r format_nucl(y)`
 
 To include the atomic number (automatically obtained from a built-in data set), we can set the optional *Z* argument to TRUE.
 
+<br>
+
 *Examples.* &nbsp; 
 
 ```{r}
 # 3. Carbon-12
+x <- "C-12"
 format_nucl(x, Z = TRUE)
-```
 
-Example 3 renders as: `r format_nucl(x, Z = TRUE)`
-
-```{r}
-# 4. Uranium-235
+# 4. Uranium-238
+y <- "U-238"
 format_nucl(y, Z = TRUE)
 ```
 
-Example 4 renders as: `r format_nucl(y, Z = TRUE)`
+Examples 3 and 4 (in inline code chunks) render as,
+
+3. `r format_nucl("C-12", Z = TRUE)` is the most abundant isotope of carbon. 
+
+4. The most common isotope of naturally-occurring uranium is `r format_nucl("U-238", Z = TRUE)`. 
+
+<br>
+
+
+
 
 The *Z* argument can also be set globally using `formatdown_options()`, saving the effort of using the *Z* argument in every function call.  
 
 ```{r}
-#| results: false
-
 formatdown_options(Z = TRUE)
 
 # 5. Carbon-12
 format_nucl(x)
-```
 
-Example 5 renders as: `r format_nucl(x)`
-
-```{r}
-#| results: false
-
-# 6. Uranium-235
+# 6. Uranium-238
 format_nucl(y)
 ```
 
-Example 6 renders as: `r format_nucl(y)`
+Examples 5 and 6 (in inline code chunks) render as,
+
+5. `r format_nucl("C-12")` is the most abundant isotope of carbon. 
+
+6. The most common isotope of naturally-occurring uranium is `r format_nucl("U-238")`. 
 
 <br>
 
@@ -212,11 +218,9 @@ formatdown_options(Z = FALSE)
 
 Format the same column of text using each of the five possible `face` arguments for comparison. 
 
-*Examples.* &nbsp; 
-
 ```{r}
 # 7. Compare available typefaces
-x <- c("He-4", "C-12", "Pb-204", "U-235")
+x <- c("He-4", "C-12", "Pb-204", "U-238")
 plain <- format_nucl(x, face = "plain", Z = TRUE)
 italic <- format_nucl(x, face = "italic", Z = TRUE)
 bold <- format_nucl(x, face = "bold", Z = TRUE)

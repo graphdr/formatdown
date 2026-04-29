@@ -50,6 +50,12 @@ for decimal notation.
 Convert a character vector to math-delimited character vector. Useful
 for creating a consistent typeface across all columns of a table.
 
+**`format_nucl()`**  
+Convert a character vector of chemical isotopes in hyphenated form to a
+math-delimited character vector in nuclear form: each element symbol
+with its mass number superscript and the optional atomic number
+subscript.
+
 **`formatdown_options()`**  
 Global options are provided for arguments that users would likely prefer
 to set once in a document instead of repeating in every function call.
