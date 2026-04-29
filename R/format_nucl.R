@@ -109,14 +109,13 @@ format_nucl <- function(x,
 
   if (Z) {# include atomic number
 
-    DT[, value := paste0("^{\\small ", mass_number  , "}",
-                         "_{\\small ", atomic_number, "}",
-                         "\\small\\! ", symbol)]
+    DT[, value := paste0("^{", mass_number  , "}",
+                         "_{", atomic_number, "}",
+                         symbol)]
 
   } else {# omit atomic number
 
-    DT[, value := paste0("^{\\small ", mass_number, "}",
-                         "\\small\\! ", symbol)]
+    DT[, value := paste0("^{", mass_number, "}", symbol)]
 
   }
 
