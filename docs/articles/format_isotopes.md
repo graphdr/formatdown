@@ -15,7 +15,7 @@ notation.
 
 In *hyphenated* notation, chemical elements are expressed,
 
-\small\mathrm{E}{-}\small\mathrm{A},
+\mathrm{E}{-}\mathrm{A},
 
 where *E* is the element symbol and *A* is its mass number, e.g.,
 **H-1**, **H-2**, **He-3**, **He-4**, etc.
@@ -24,17 +24,17 @@ In *nuclear* notation, the element symbol has a preceding superscript
 for the mass number and (optionally) a preceding subscript for the
 atomic number *Z*,
 
-\mathrm{^{\small\\ A}E}\\ \\ \mathrm{or}\\ \mathrm{^{\small\\
-A}\_{\small\\ Z}E}
+\mathrm{^{A}E}\\ \\ \mathrm{or}\\ \mathrm{^{A}\_{Z}E}
 
-For example, carbon 12 (atomic number 6) and uranium 235 (atomic number
+For example, carbon 12 (atomic number 6) and uranium 238 (atomic number
 92) are typeset with and without atomic numbers as shown below. The
 latter form, without *Z*, is the default in formatdown.
 
-| hyphenated | nuclear (with Z) | nuclear (omit Z) |
-|:--:|:--:|:--:|
-| \small\mathrm{C}–\small\mathrm{12} | \mathrm{^{12}\_{6}C} | \mathrm{^{12}C} |
-| \small\mathrm{U}–\small\mathrm{235} | \mathrm{^{235}\_{92}U} | \mathrm{^{235}U} |
+|       hyphenated        |    nuclear (with Z)    | nuclear (omit Z) |
+|:-----------------------:|:----------------------:|:----------------:|
+| \mathrm{C}–\mathrm{12}  |  \mathrm{^{12}\_{6}C}  | \mathrm{^{12}C}  |
+| \mathrm{Fe}–\mathrm{54} | \mathrm{^{54}\_{26}Fe} | \mathrm{^{54}Fe} |
+| \mathrm{U}–\mathrm{238} | \mathrm{^{238}\_{92}U} | \mathrm{^{238}U} |
 
 *Packages.*   If you are writing your own script to follow along, we use
 the following packages in this vignette. Data frame operations are
@@ -53,24 +53,21 @@ library("knitr")
 We format isotopes as inline math expressions delimited by `$ ... $` or
 the optional `$ ... $`. For example, carbon 12 is marked up as
 
-        $\mathrm{^{\small\ 12}C}$,
+        $\mathrm{^{12}C}$,
 
-where the `\mathrm{}` macro creates serif, non-italic text, the carat
-(`^{}`) creates the superscript for the mass number, the `\small` macro
-reduces the font size of the superscript, and the space macro (`\_`)
-separates the small macro from the mass number. Rendering this
+where the `\mathrm{}` macro creates serif, non-italic text and the carat
+`^{}` creates the superscript for the mass number. Rendering this
 expression in an Rmd script as a *LaTeX-style inline equation* yields:
 \mathrm{^{\small\\ 12}C}.
 
 To *program* the markup, however, we enclose it in quote marks as a
 character string, that is,
 
-        "$\\mathrm{^{\\small\\ 12}C}$", 
+        "$\\mathrm{^{12}C}$", 
 
-which requires us to “escape” the backslash in `\mathrm`, `\small`,
-etc., by adding extra backslashes. Rendering this expression in an Rmd
-script as an *inline R code chunk* yields the same result:
-\mathrm{^{\small\\ 12}C}.
+which requires us to “escape” the backslash in `\mathrm` by adding extra
+backslashes. Rendering this expression in an Rmd script as an *inline R
+code chunk* yields the same result: \mathrm{^{12}C}.
 
 ## `format_nucl()`
 
@@ -83,13 +80,13 @@ converts a string from the hyphenated text form,
 
 to a character string in the markup form,
 
-        "$\\mathrm{^{\\small\\ A}E}$", 
+        "$\\mathrm{^{A}E}$", 
 
 If the option for including the atomic number *Z* is used, the markup
 form includes the atomic number as a subscript using the underscore
-macro (`_{}`),
+macro `_{}`,
 
-        "$\\mathrm{^{\\small\\ A}_{\\small\\ Z}E}$".
+        "$\\mathrm{^{A}_{Z}E}$".
 
   
 
@@ -115,8 +112,8 @@ format_nucl(x,
 
   
 
-*Examples.*   Scalar and vector examples are usually rendered using
-inline code chunks in an Rmd script.
+*Examples.*   Scalar values are typically rendered using inline code
+chunks in an Rmd script.
 
 ``` r
 
@@ -124,19 +121,19 @@ inline code chunks in an Rmd script.
 x <- "C-12"
 format_nucl(x)
 #> [1] "$\\mathrm{^{12}C}$"
-```
 
-Example 1 renders as: \mathrm{^{12}C}.
-
-``` r
-
-# 2. Uranium-235
-y <- "U-235"
+# 2. Uranium-238
+y <- "U-238"
 format_nucl(y)
-#> [1] "$\\mathrm{^{235}U}$"
+#> [1] "$\\mathrm{^{238}U}$"
 ```
 
-Example 2 renders as: \mathrm{^{235}U}
+Examples 1 and 2 (in inline code chunks) render as,
+
+1.  \mathrm{^{12}C} is the most abundant isotope of carbon.
+
+2.  The most common isotope of naturally-occurring uranium is
+    \mathrm{^{238}U}.
 
   
 
@@ -145,25 +142,31 @@ Example 2 renders as: \mathrm{^{235}U}
 To include the atomic number (automatically obtained from a built-in
 data set), we can set the optional *Z* argument to TRUE.
 
+  
+
 *Examples.*  
 
 ``` r
 
 # 3. Carbon-12
+x <- "C-12"
 format_nucl(x, Z = TRUE)
 #> [1] "$\\mathrm{^{12}_{6}C}$"
-```
 
-Example 3 renders as: \mathrm{^{12}\_{6}C}
-
-``` r
-
-# 4. Uranium-235
+# 4. Uranium-238
+y <- "U-238"
 format_nucl(y, Z = TRUE)
-#> [1] "$\\mathrm{^{235}_{92}U}$"
+#> [1] "$\\mathrm{^{238}_{92}U}$"
 ```
 
-Example 4 renders as: \mathrm{^{235}\_{92}U}
+Examples 3 and 4 (in inline code chunks) render as,
+
+3.  \mathrm{^{12}\_{6}C} is the most abundant isotope of carbon.
+
+4.  The most common isotope of naturally-occurring uranium is
+    \mathrm{^{238}\_{92}U}.
+
+  
 
 The *Z* argument can also be set globally using
 [`formatdown_options()`](https://graphdr.github.io/formatdown/reference/formatdown_options.md),
@@ -175,17 +178,19 @@ formatdown_options(Z = TRUE)
 
 # 5. Carbon-12
 format_nucl(x)
-```
+#> [1] "$\\mathrm{^{12}_{6}C}$"
 
-Example 5 renders as: \mathrm{^{12}\_{6}C}
-
-``` r
-
-# 6. Uranium-235
+# 6. Uranium-238
 format_nucl(y)
+#> [1] "$\\mathrm{^{238}_{92}U}$"
 ```
 
-Example 6 renders as: \mathrm{^{235}\_{92}U}
+Examples 5 and 6 (in inline code chunks) render as,
+
+5.  \mathrm{^{12}\_{6}C} is the most abundant isotope of carbon.
+
+6.  The most common isotope of naturally-occurring uranium is
+    \mathrm{^{238}\_{92}U}.
 
   
 
@@ -202,12 +207,10 @@ formatdown_options(Z = FALSE)
 Format the same column of text using each of the five possible `face`
 arguments for comparison.
 
-*Examples.*  
-
 ``` r
 
 # 7. Compare available typefaces
-x <- c("He-4", "C-12", "Pb-204", "U-235")
+x <- c("He-4", "C-12", "Pb-204", "U-238")
 plain <- format_nucl(x, face = "plain", Z = TRUE)
 italic <- format_nucl(x, face = "italic", Z = TRUE)
 bold <- format_nucl(x, face = "bold", Z = TRUE)
@@ -222,7 +225,7 @@ knitr::kable(DT, align = "l", caption = "Example 7.")
 | \mathrm{^{4}\_{2}He} | \mathit{^{4}\_{2}He} | \mathbf{^{4}\_{2}He} | \mathsf{^{4}\_{2}He} | \mathtt{^{4}\_{2}He} |
 | \mathrm{^{12}\_{6}C} | \mathit{^{12}\_{6}C} | \mathbf{^{12}\_{6}C} | \mathsf{^{12}\_{6}C} | \mathtt{^{12}\_{6}C} |
 | \mathrm{^{204}\_{82}Pb} | \mathit{^{204}\_{82}Pb} | \mathbf{^{204}\_{82}Pb} | \mathsf{^{204}\_{82}Pb} | \mathtt{^{204}\_{82}Pb} |
-| \mathrm{^{235}\_{92}U} | \mathit{^{235}\_{92}U} | \mathbf{^{235}\_{92}U} | \mathsf{^{235}\_{92}U} | \mathtt{^{235}\_{92}U} |
+| \mathrm{^{238}\_{92}U} | \mathit{^{238}\_{92}U} | \mathbf{^{238}\_{92}U} | \mathsf{^{238}\_{92}U} | \mathtt{^{238}\_{92}U} |
 
 Example 7. {.table}
 

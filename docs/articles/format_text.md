@@ -161,10 +161,10 @@ Example 6 renders as:   \small \mathrm{2+3i}.
 # 7. Date class
 x <- Sys.Date()
 format_text(x)
-#> [1] "$\\mathrm{2026-04-28}$"
+#> [1] "$\\mathrm{2026-04-29}$"
 ```
 
-Example 7 renders as:   \small \mathrm{2026-04-28}.
+Example 7 renders as:   \small \mathrm{2026-04-29}.
 
 ``` r
 
