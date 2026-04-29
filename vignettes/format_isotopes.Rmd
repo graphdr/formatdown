@@ -25,8 +25,8 @@ options(
 )
 ```
 
-![](../man/figures/bus_periodic_table.jpg){width=70%}    
-<small>*The Periodic Table, yeah ...* by Aubrey is licensed under <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a></small>
+![](../man/figures/binding-energy.png){width=100%}    
+<small>*Curve of Binding Energy* by J. Brew is licensed under <a href=" https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a></small>
 
 <br>
 
@@ -136,7 +136,7 @@ format_nucl(x,
 
 
 
-*Examples.*  &nbsp; Scalar and vector examples are usually rendered using inline code chunks in an Rmd script. 
+*Examples.* &nbsp; Scalar and vector examples are usually rendered using inline code chunks in an Rmd script. 
 
 ```{r}
 # 1. Carbon-12
@@ -160,6 +160,7 @@ Example 2 renders as: `r format_nucl(y)`
 
 To include the atomic number (automatically obtained from a built-in data set), we can set the optional *Z* argument to TRUE.
 
+*Examples.* &nbsp; 
 ```{r}
 # 3. Carbon-12
 format_nucl(x, Z = TRUE)
@@ -173,8 +174,6 @@ format_nucl(y, Z = TRUE)
 ```
 
 Example 4 renders as: `r format_nucl(y, Z = TRUE)`
-
-<br>
 
 The *Z* argument can also be set globally using `formatdown_options()`, saving the effort of using the *Z* argument in every function call.  
 
@@ -212,6 +211,7 @@ formatdown_options(Z = FALSE)
 
 Format the same column of text using each of the five possible `face` arguments for comparison. 
 
+*Examples.* &nbsp; 
 ```{r}
 # 7. Compare available typefaces
 x <- c("He-4", "C-12", "Pb-204", "U-235")
@@ -245,7 +245,7 @@ View the help page for the data set by typing
     ? element_set  
 ```
 
-For example, the three isotopes of hydrogen are expressed, 
+*Examples.* &nbsp; For example, the three isotopes of hydrogen are expressed, 
 
 ```{r}
 # 8. Hydrogen isotopes
@@ -264,7 +264,7 @@ __Warning of input errors.__ &nbsp; The data set of isotopes is also used to war
 - hyphenated input symbol fails to match a standard element symbol
 - hyphenated mass number fails to match a known isotope
 
-In this example, the first entry has an incorrect element symbol and the second has an incorrect mass number.  
+*Examples.* &nbsp; In this example, the first entry has an incorrect element symbol and the second has an incorrect mass number.  
 
 ```{r}
 # 9. Input errors
@@ -274,7 +274,7 @@ format_nucl(x)
 
 Example 9 renders as `r format_nucl(x)`
 
-If we use the atomic number argument, the letter *Z* is placed in the subscript. 
+*Examples.* &nbsp; If we use the atomic number argument, the letter *Z* is placed in the subscript. 
 
 ```{r}
 # 10. Symbol for atomic number
@@ -289,6 +289,7 @@ The third entry of the output vector is correctly formatted. The "Z" subscript i
 
 __Notating a general form.__ &nbsp; That an unrecognized input in hyphenated form is still formatted allows us to create a nuclear notation is general form. In such a case, we can turn off the warning using the `warn` argument. 
 
+*Examples.* &nbsp; 
 ```{r}
 # 11. General nuclear form
 x <- c("E-A")
@@ -297,7 +298,7 @@ format_nucl(x, warn = FALSE)
 
 Example 11 renders as: `r format_nucl(x, warn = FALSE)`
 
-As noted earlier, the usual `Z` argument in this case places a *Z* in the subscript position. 
+*Examples.* &nbsp; As noted earlier, the usual `Z` argument in this case places a *Z* in the subscript position. 
 
 ```{r}
 # 12. General nuclear form with atomic number symbol
@@ -307,7 +308,7 @@ format_nucl(x, Z = TRUE, warn = FALSE)
 
 Example 12 renders as: `r format_nucl(x, Z = TRUE, warn = FALSE)`
 
-Some authors prefer using *X* for the general element symbol, 
+*Examples.* &nbsp; Some authors prefer using *X* for the general element symbol, 
 
 ```{r}
 # 13. Alternate general form.
@@ -343,13 +344,14 @@ renders as:
 
 *Vector.* &nbsp; A vector of isotopes in hyphenated form (or a data frame column) is marked up as follows, 
 
+*Examples.* &nbsp; 
 ```{r}
 # 14. Sample vector
 x <- c("H-1", "H-2", "He-3", "He-4", "Li-6", "Li-7", "Be-9")
 format_nucl(x)
 ```
 
-In a table, the output can be rendered as,   
+*Examples.* &nbsp; In a table, the output can be rendered as,   
 
 ```{r}
 DT <- data.table(x, format_nucl(x))
@@ -362,7 +364,7 @@ knitr::kable(DT,
 
 <br>
 
-Adding atomic numbers yields,  
+*Examples.* &nbsp;  Adding atomic numbers yields,  
 
 ```{r}
 # 15. Table with Z
