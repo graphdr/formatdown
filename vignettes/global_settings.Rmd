@@ -30,8 +30,9 @@ options(
 )
 ```
 
-![](../man/figures/options-img.png){width=70%}    
-<small>*option* by Mike Lawrence is licensed under <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0 DEED</a></small>
+![](../man/figures/options-img.png){width=100%}    
+<small>*Option* by Mike Lawrence is licensed under 
+<a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0 DEED</a></small>
 
 <br>
 
