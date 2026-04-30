@@ -99,7 +99,7 @@ formatdown_options("size", "decimal_mark")
 
 Delimiters are characters that surround a formatted expression such that R Markdown renders it as an inline math expression. 
 
-Sometimes the default `$ ... $` delimiters fail to render correctly. I encountered this once using `kableExtra::kbl()` in a `.qmd` document. The solution, suggested by the MathJax consortium [@Cervone:2018], is to use the delimiter pair `\( ... \)`, hence the built-in alternate, `delim = "\\("`. 
+Sometimes the default `$ ... $` delimiters fail to render correctly. I encountered this once using `kableExtra::kbl()` in a `.qmd` document. The solution, suggested by [@Mathjax:2024], is to use the delimiter pair `\( ... \)`, hence the built-in alternate, `delim = "\\("`. 
 
 Left and right custom delimiters can be assigned in a vector, e.g., `c("\\[", "\\]")`.
 

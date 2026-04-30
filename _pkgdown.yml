@@ -8,7 +8,7 @@ template:
 navbar:
   title: ~
   left:
-    - text: Vignettes
+    - text: Articles
       menu:
       - text: Format numbers
         href: articles/format_numbers.html

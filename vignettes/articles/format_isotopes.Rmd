@@ -1,14 +1,16 @@
 ---
 title: "Format isotopes"
-vignette: >
-  %\VignetteIndexEntry{Format isotopes}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
-output: rmarkdown::html_vignette
-bibliography: ../inst/REFERENCES.bib
-csl: ../inst/information-science-and-technology.csl
+csl: ../../inst/information-science-and-technology.csl
+bibliography: ../../inst/REFERENCES.bib
 link-citations: yes
 ---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 ```{r setup}
 #| include: false
@@ -25,7 +27,7 @@ options(
 )
 ```
 
-![](../man/figures/binding-energy.png){width=100%}    
+![](../../man/figures/binding-energy.png){width=100%}    
 <small>*Curve of Binding Energy* by J. Brew is licensed under <a href=" https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a></small>
 
 <br>

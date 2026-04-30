@@ -17,25 +17,37 @@ get_size_markup <- function(size) {
 
 # Determine indices to decimal (non-power) rows
 assign_non_power_rows <- function(DT, format, omit_power, set_power) {
+
   # Indicate these are not unbound symbols (R CMD check Note)
   exponent <- NULL
   exp_raw <- NULL
   omit <- NULL
+  x <- NULL
+
   # Create default
   DT[, omit := FALSE]
-  # Cases for omit TRUE
+
+   # Cases for omit TRUE
   DT[exponent %between% omit_power, omit := TRUE]
+
+  # recompute for engr
   if (format == "engr") {
     DT[, exponent := floor(exp_raw / 3) * 3]
     DT[exponent %between% omit_power, omit := TRUE]
   }
-  # Identify the non-power rows
-  non_pow <- DT$omit
+
+  # Issue #10, when x = 0 Log10(0) yields Inf
+  DT[x == 0, omit := TRUE]
+
   # Override all if set_power has been assigned
   if (isTRUE(!is_null_or_na(set_power))) {
     DT[, exponent := set_power]
-    non_pow <- FALSE
+    DT[x != 0, omit := FALSE]
   }
+
+  # Identify the non-power rows
+  non_pow <- DT$omit
+
   return(non_pow)
 }
 

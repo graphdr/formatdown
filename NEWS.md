@@ -2,6 +2,7 @@
 
 2026--04--27
 
+- Corrected issue #10, when x = 0, power of ten notation omitted.
 - Added `format_nucl()` for formatting chemical isotopes in nuclear notation 
 - Added vignette for formatting isotopes
 - Removed deprecated functions

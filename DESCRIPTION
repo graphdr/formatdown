@@ -35,3 +35,4 @@ URL: https://github.com/graphdr/formatdown/,
      https://graphdr.github.io/formatdown/, 
      https://CRAN.R-project.org/package=formatdown
 BugReports: https://github.com/graphdr/formatdown/issues
+Config/Needs/website: rmarkdown
