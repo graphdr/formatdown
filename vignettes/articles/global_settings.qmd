@@ -1,13 +1,9 @@
 ---
 title: "Global settings"
-vignette: >
-  %\VignetteIndexEntry{Global settings}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
-output: rmarkdown::html_vignette
-bibliography: ../inst/REFERENCES.bib
-csl: ../inst/information-science-and-technology.csl
-link-citations: yes
+format: gfm
+csl: ../../inst/information-science-and-technology.csl
+bibliography: ../../inst/REFERENCES.bib
+link-citations: true
 ---
 
 ```{r setup, include = FALSE}
@@ -15,9 +11,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-
-# to knit "child" Rmd files
-knitr::opts_knit$set(root.dir = "../")
 
 library(formatdown)
 library(data.table)
@@ -30,9 +23,7 @@ options(
 )
 ```
 
-![](../man/figures/options-img.png){width=100%}    
-<small>*Option* by Mike Lawrence is licensed under 
-<a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0 DEED</a></small>
+![](options-img.png "*Option* by Mike Lawrence is licensed under CC by 2.0 DEED"){fig-alt="An image of the word 'option'." fig-align="left" width=80%}
 
 <br>
 

@@ -27,6 +27,7 @@ Suggests:
     covr,
     kableExtra, 
     knitr,
+    markdown,
     rmarkdown,
     stringr, 
     tinytest

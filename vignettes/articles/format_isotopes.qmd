@@ -1,20 +1,18 @@
 ---
 title: "Format isotopes"
+format: gfm
 csl: ../../inst/information-science-and-technology.csl
 bibliography: ../../inst/REFERENCES.bib
-link-citations: yes
+link-citations: true
 ---
 
-```{r, include = FALSE}
+```{r setup}
+#| include: false
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-```
-
-```{r setup}
-#| include: false
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 library(formatdown)
 library(data.table)
@@ -22,15 +20,30 @@ library(knitr)
 
 options(
   datatable.print.nrows = 15,
-  datatable.print.topn = 5,
+  datatable.print.topn = 3,
   datatable.print.class = TRUE
 )
 ```
 
-![](../../man/figures/binding-energy.png){width=100%}    
-<small>*Curve of Binding Energy* by J. Brew is licensed under <a href=" https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a></small>
 
-<br>
+```{r}
+#| echo: false
+
+hyphenated <- c(
+  "$\\mathrm{C}$--$\\mathrm{12}$",
+  "$\\mathrm{Fe}$--$\\mathrm{54}$",
+  "$\\mathrm{U}$--$\\mathrm{238}$"
+)
+x <- c("C-12", "Fe-54", "U-238")
+nuclear <- format_nucl(x)
+with_Z <- format_nucl(x, Z = TRUE)
+DT <- data.table(hyphenated, nuclear, with_Z)
+setnames(DT,
+  old = c("hyphenated", "nuclear", "with_Z"),
+  new = c("hyphenated notation", "nuclear notation", "nuclear notation (optional)")
+)
+knitr::kable(DT, align = "ccc")
+```
 
 In this vignette, I discuss the `format_nucl()` function for converting isotopes from _hyphenated_ notation to _nuclear_ notation. 
 
@@ -50,26 +63,8 @@ $$
 \mathrm{^{A}E}\ \ \mathrm{or}\ \mathrm{^{A}_{Z}E}
 $$
 
-For example, carbon 12 (atomic number 6) and uranium 238 (atomic number 92) are typeset with and without atomic numbers as shown below. The latter form, without *Z*, is the default in formatdown. 
+For example, carbon-12 (atomic number *Z* = 6), iron-54 (*Z* = 54) and uranium-238 (*Z* = 92) are typeset with and without atomic numbers as shown in the table at the top of the page.  The notation without *Z* is the default in formatdown. 
 
-```{r}
-#| echo: false
-
-hyphenated <- c(
-  "$\\mathrm{C}$--$\\mathrm{12}$",
-  "$\\mathrm{Fe}$--$\\mathrm{54}$",
-  "$\\mathrm{U}$--$\\mathrm{238}$"
-)
-x <- c("C-12", "Fe-54", "U-238")
-nuclear <- format_nucl(x)
-with_Z <- format_nucl(x, Z = TRUE)
-DT <- data.table(hyphenated, with_Z, nuclear)
-setnames(DT,
-  old = c("with_Z", "nuclear"),
-  new = c("nuclear (with Z)", "nuclear (omit Z)")
-)
-knitr::kable(DT, align = "ccc")
-```
 
 *Packages.* &nbsp; If you are writing your own script to follow along, we use the following packages in this vignette. Data frame operations are performed with data.table syntax. Some users may wish to translate the examples to use  base R or dplyr syntax.  
 
