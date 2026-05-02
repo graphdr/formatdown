@@ -1,0 +1,14 @@
+pandoc: 3.8.3
+pkgdown: 2.2.0
+pkgdown_sha: ~
+articles:
+  articles/format_isotopes: format_isotopes.html
+  articles/format_numbers: format_numbers.html
+  articles/format_text: format_text.html
+  formatdown: formatdown.html
+  articles/global_settings: global_settings.html
+  style_guide_isotopic_conversion: style_guide_isotopic_conversion.docx
+last_built: 2026-05-02T23:02Z
+urls:
+  reference: https://graphdr.github.io/formatdown/reference
+  article: https://graphdr.github.io/formatdown/articles
