@@ -1,3 +1,7 @@
+# formatdown (development version)
+
+- Currently same as 0.2.0
+
 # formatdown 0.2.0
 
 ## new features
