@@ -1,0 +1,12 @@
+clone_and_merge	clone_and_merge
+defaults	defaults
+inlist	inlist
+inrange	inlist
+is_setting	is_setting
+options_manager	options_manager
+package-settings	settings
+reset	reset
+reset_options	reset_options
+reset_par	reset_par
+settings	settings
+stop_if_reserved	stop_if_reserved

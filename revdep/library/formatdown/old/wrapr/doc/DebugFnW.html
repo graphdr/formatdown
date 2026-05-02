@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="John Mount, Nina Zumel" />
+
+<meta name="date" content="2023-08-19" />
+
+<title>Debug Vignette</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Debug Vignette</h1>
+<h4 class="author">John Mount, Nina Zumel</h4>
+<h4 class="date">2023-08-19</h4>
+
+
+
+<p>This vignette demonstrates debugging a user-created function with the
+<code>DebugFnW</code> call. For our example, we will use a simple
+function that takes an argument <code>i</code> and returns the
+<code>i</code>th index of a ten-element vector:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># load package</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;wrapr&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># user function</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(i) { (<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)[[i]] }</span></code></pre></div>
+<p>Let’s imagine that we are calling this function deep within another
+process; perhaps we are calling it repeatedly, on a long sequence of
+(possibly unknown to us) inputs.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>inputs <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">9</span>,<span class="dv">0</span>,<span class="dv">8</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">tryCatch</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="cf">for</span>(x <span class="cf">in</span> inputs) {</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>     <span class="fu">f</span>(x)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  },</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="at">error =</span> <span class="cf">function</span>(e) { <span class="fu">print</span>(e) })</span></code></pre></div>
+<pre><code>## &lt;simpleError in (1:10)[[i]]: attempt to select less than one element in get1index &lt;real&gt;&gt;</code></pre>
+<p>Oops! We’ve crashed, and if this loop were deep in another process,
+we wouldn’t know why, or where. If we suspect that the function
+<code>f</code> is the cause, then we can wrap <code>f</code> using
+<code>wrapr:DebugFn</code>.</p>
+<p><code>DebugFnW(saveDest, fn)</code> wraps its function argument
+<code>fn</code>, captures any arguments that cause it to fail, and saved
+those arguments and other state to a specified destination
+<code>saveDest</code>.</p>
+<p>The state data is written to:</p>
+<ul>
+<li>a random temp file (if <code>saveDest</code> is null)</li>
+<li>a user chosen file (if <code>saveDest</code> is character)</li>
+<li>a <code>globalenv()</code> variable (if <code>saveDest</code> is a
+name, as produced by <code>as.name()</code> or
+<code>quote()</code>)</li>
+<li>passed to a user function (if <code>saveDest</code> is a
+function).</li>
+</ul>
+<p>Here, we wrap <code>f</code> and save error state into the global
+variable <code>lastError</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># wrap function with writeBack</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">DebugFnW</span>(<span class="fu">as.name</span>(<span class="st">&#39;lastError&#39;</span>), f)</span></code></pre></div>
+<p>Now we run the same loop as above, with the wrapped function
+<code>df</code> (note that the <code>tryCatch</code> is not strictly
+needed, this is just for running this example in a vignette).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># capture error (Note: tryCatch not needed for user code!)</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">tryCatch</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="cf">for</span>(x <span class="cf">in</span> inputs) {</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>     <span class="fu">df</span>(x)</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  },</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="at">error =</span> <span class="cf">function</span>(e) { <span class="fu">print</span>(e) })</span></code></pre></div>
+<pre><code>## &lt;simpleError in value[[3L]](cond): wrapr::DebugFnW: wrote error to globalenv() variable &#39;lastError&#39;
+##  You can reproduce the error with:
+##  &#39;do.call(p$fn, p$args)&#39; (replace &#39;p&#39; with actual variable name)&gt;</code></pre>
+<p>We can then examine the error. Note in particular that
+<code>lastError$fn_name</code> records the name of the function that
+crashed, and <code>lastError$args</code> records the arguments that the
+function was called with. Also in these examples we are wrapping our
+code with a <code>tryCatch</code> block to capture exceptions; this is
+only to allow the <code>knitr</code> sheet to continue and <em>not</em>
+needed to use the debugging wrappers effectively.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># examine error</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">str</span>(lastError)</span></code></pre></div>
+<pre><code>## List of 4
+##  $ fn       :function (i)  
+##   ..- attr(*, &quot;srcref&quot;)= &#39;srcref&#39; int [1:8] 5 6 5 32 6 32 5 5
+##   .. ..- attr(*, &quot;srcfile&quot;)=Classes &#39;srcfilecopy&#39;, &#39;srcfile&#39; &lt;environment: 0x7fd4452ee520&gt; 
+##  $ args     :List of 1
+##   ..$ : num 0
+##  $ namedargs: language df(x)
+##  $ fn_name  : chr &quot;f&quot;</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>lastError<span class="sc">$</span>args</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] 0</code></pre>
+<p>In many situations, just knowing the arguments is enough information
+(“Oops, we tried to index the vector from zero!”). In more complicated
+cases, we can set a debug point on the offending function, and then call
+it again with the failing arguments in order to track down the bug.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># redo call, perhaps debugging</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">tryCatch</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="fu">do.call</span>(lastError<span class="sc">$</span>fn_name, lastError<span class="sc">$</span>args),</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="at">error =</span> <span class="cf">function</span>(e) { <span class="fu">print</span>(e) })</span></code></pre></div>
+<pre><code>## &lt;simpleError in (1:10)[[i]]: attempt to select less than one element in get1index &lt;real&gt;&gt;</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># clean up</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="st">&#39;lastError&#39;</span>)</span></code></pre></div>
+<p>In many cases you may prefer to save the failing state into an
+external file rather than into the current runtime environment. Below we
+show example code for saving state to an RDS file.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>saveDest <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">tempfile</span>(<span class="st">&#39;debug&#39;</span>),<span class="st">&#39;.RDS&#39;</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co"># wrap function with saveDeest</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">DebugFnW</span>(saveDest,f)</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co"># capture error (Note: tryCatch not needed for user code!)</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="fu">tryCatch</span>(</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>  <span class="cf">for</span>(x <span class="cf">in</span> inputs) {</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>    <span class="fu">df</span>(x)</span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>  },</span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>  <span class="at">error =</span> <span class="cf">function</span>(e) { <span class="fu">print</span>(e) })</span></code></pre></div>
+<p>We can later read that file back into R, for debugging.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># load data</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>lastError <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(saveDest)</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co"># examine error</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="fu">str</span>(lastError)</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co"># redo call, perhaps debugging</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="fu">tryCatch</span>(</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>  <span class="fu">do.call</span>(lastError<span class="sc">$</span>fn_name, lastError<span class="sc">$</span>args),</span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>  <span class="at">error =</span> <span class="cf">function</span>(e) { <span class="fu">print</span>(e) })</span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co"># clean up</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="fu">file.remove</span>(saveDest)</span></code></pre></div>
+<p>For more practice, please view <a href="https://youtu.be/zFEC9-1XSN8?list=PLAKBwakacHbQT51nPHex1on3YNCCmggZA">our
+video on wrapper debugging</a>.</p>
+<p>Note: <code>wrapr</code> debug functionality rehashes some of the
+capabilities of <code>dump.frames</code> (see
+<code>help(dump.frames)</code>). Roughly <code>dump.frames</code>
+catches the exception (so trying to step or continue re-throws, and
+arguments may have moved from their starting values) and
+<code>wrapr</code> catches the call causing the exception in a state
+<em>prior</em> to starting the calculation (so arguments should be at
+their starting values). We have found some cases where
+<code>wrapr</code> is a bit more convenient in how it interacts with the
+<code>RStudio</code> visual debugger (please see this <a href="https://youtu.be/2NCj4Hacm8E?list=PLAKBwakacHbQT51nPHex1on3YNCCmggZA">screencast</a>
+for some comparison). Also, please see <a href="https://win-vector.com/2012/10/09/error-handling-in-r/">this
+article</a> for use of <code>tryCatch</code> and
+<code>withRestarts</code>.</p>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

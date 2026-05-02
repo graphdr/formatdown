@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="John Mount" />
+
+<meta name="date" content="2023-08-19" />
+
+<title>Multiple Assignment</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Multiple Assignment</h1>
+<h4 class="author">John Mount</h4>
+<h4 class="date">2023-08-19</h4>
+
+
+
+<p><a href="https://github.com/WinVector/wrapr"><code>wrapr</code></a>
+now supplies a name based multiple assignment notation for <a href="https://www.r-project.org"><code>R</code></a>.</p>
+<p>In <code>R</code> there are many functions that return named lists or
+other structures keyed by names. Let’s start with a simple example:
+<code>base::split()</code>.</p>
+<p>First some example data.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">c</span>(<span class="st">&#39;train&#39;</span>, <span class="st">&#39;calibrate&#39;</span>, <span class="st">&#39;test&#39;</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(d)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">x</th>
+<th align="left">group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">train</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">calibrate</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="left">test</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="left">train</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="left">calibrate</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="left">test</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="left">train</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="left">calibrate</td>
+</tr>
+<tr class="odd">
+<td align="right">9</td>
+<td align="left">test</td>
+</tr>
+</tbody>
+</table>
+<p>One way to use <code>base::split()</code> is to call it on a
+<code>data.frame</code> and then unpack the desired portions from the
+returned value.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>parts <span class="ot">&lt;-</span> <span class="fu">split</span>(d, d<span class="sc">$</span>group)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> parts<span class="sc">$</span>train</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>calibrate_data <span class="ot">&lt;-</span> parts<span class="sc">$</span>calibrate</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> parts<span class="sc">$</span>test</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(train_data)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">x</th>
+<th align="left">group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="right">1</td>
+<td align="left">train</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="right">4</td>
+<td align="left">train</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="right">7</td>
+<td align="left">train</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(calibrate_data)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">x</th>
+<th align="left">group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2</td>
+<td align="right">2</td>
+<td align="left">calibrate</td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="right">5</td>
+<td align="left">calibrate</td>
+</tr>
+<tr class="odd">
+<td align="left">8</td>
+<td align="right">8</td>
+<td align="left">calibrate</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(test_data)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">x</th>
+<th align="left">group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">3</td>
+<td align="right">3</td>
+<td align="left">test</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="right">6</td>
+<td align="left">test</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="right">9</td>
+<td align="left">test</td>
+</tr>
+</tbody>
+</table>
+<p>If we use a multiple assignment notation we can collect some steps
+together, and avoid possibly leaving a possibly large temporary variable
+such as <code>parts</code> in our environment.</p>
+<p>Let’s clear out our earlier results.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">&#39;train_data&#39;</span>, <span class="st">&#39;calibrate_data&#39;</span>, <span class="st">&#39;test_data&#39;</span>, <span class="st">&#39;parts&#39;</span>))</span></code></pre></div>
+<p>And now let’s apply <code>split()</code> and unpack the results in
+one step.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">library</span>(wrapr)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>to[</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  train_data <span class="ot">&lt;-</span> train,</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  calibrate_data <span class="ot">&lt;-</span> calibrate,</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  test_data <span class="ot">&lt;-</span> test</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>  ] <span class="ot">&lt;-</span> <span class="fu">split</span>(d, d<span class="sc">$</span>group)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(train_data)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">x</th>
+<th align="left">group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="right">1</td>
+<td align="left">train</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="right">4</td>
+<td align="left">train</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="right">7</td>
+<td align="left">train</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(calibrate_data)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">x</th>
+<th align="left">group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2</td>
+<td align="right">2</td>
+<td align="left">calibrate</td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="right">5</td>
+<td align="left">calibrate</td>
+</tr>
+<tr class="odd">
+<td align="left">8</td>
+<td align="right">8</td>
+<td align="left">calibrate</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(test_data)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">x</th>
+<th align="left">group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">3</td>
+<td align="right">3</td>
+<td align="left">test</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="right">6</td>
+<td align="left">test</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="right">9</td>
+<td align="left">test</td>
+</tr>
+</tbody>
+</table>
+<p>The semantics of <code>[]&lt;-</code> imply that an object named
+“<code>to</code>” is left in our workspace as a side effect. However,
+this object is small and if there is already an object name
+<code>to</code> in the workspace that is not of class
+<code>Unpacker</code> the unpacking is aborted prior to overwriting
+anything. The unpacker two modes: <code>unpack</code> (a function that
+needs a dot in pipes) and <code>to</code> (an eager function factory
+that does not require a dot in pipes). The side-effect can be avoided by
+using <code>:=</code> for assigment.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">&#39;train_data&#39;</span>, <span class="st">&#39;calibrate_data&#39;</span>, <span class="st">&#39;test_data&#39;</span>, <span class="st">&#39;to&#39;</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>to[</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  train_data <span class="ot">&lt;-</span> train,</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  calibrate_data <span class="ot">&lt;-</span> calibrate,</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  test_data <span class="ot">&lt;-</span> test</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  ] <span class="sc">:=</span> <span class="fu">split</span>(d, d<span class="sc">$</span>group)</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="fu">ls</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;LEFT_NAME&quot;       &quot;OTHER_SYMBOL&quot;    &quot;X&quot;               &quot;Y&quot;              
+##  [5] &quot;a&quot;               &quot;angle&quot;           &quot;b&quot;               &quot;calibrate_data&quot; 
+##  [9] &quot;d&quot;               &quot;d2&quot;              &quot;df&quot;              &quot;f&quot;              
+## [13] &quot;inputs&quot;          &quot;l&quot;               &quot;plotb&quot;           &quot;test_data&quot;      
+## [17] &quot;title&quot;           &quot;train_data&quot;      &quot;variable&quot;        &quot;variable_name&quot;  
+## [21] &quot;variable_string&quot; &quot;x&quot;               &quot;xvar&quot;            &quot;xvariable&quot;      
+## [25] &quot;yvar&quot;            &quot;yvariable&quot;</code></pre>
+<p>Also the side-effect can be avoided by using alternate non-array
+update notations.</p>
+<p>We will demonstrate a few of these. First is pipe to array
+notation.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">&#39;train_data&#39;</span>, <span class="st">&#39;calibrate_data&#39;</span>, <span class="st">&#39;test_data&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">split</span>(d, d<span class="sc">$</span>group) <span class="sc">%.&gt;%</span> to[</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  train_data <span class="ot">&lt;-</span> train,</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  calibrate_data <span class="ot">&lt;-</span> calibrate,</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  test_data <span class="ot">&lt;-</span> test</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  ]</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="fu">ls</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;LEFT_NAME&quot;       &quot;OTHER_SYMBOL&quot;    &quot;X&quot;               &quot;Y&quot;              
+##  [5] &quot;a&quot;               &quot;angle&quot;           &quot;b&quot;               &quot;calibrate_data&quot; 
+##  [9] &quot;d&quot;               &quot;d2&quot;              &quot;df&quot;              &quot;f&quot;              
+## [13] &quot;inputs&quot;          &quot;l&quot;               &quot;plotb&quot;           &quot;test_data&quot;      
+## [17] &quot;title&quot;           &quot;train_data&quot;      &quot;variable&quot;        &quot;variable_name&quot;  
+## [21] &quot;variable_string&quot; &quot;x&quot;               &quot;xvar&quot;            &quot;xvariable&quot;      
+## [25] &quot;yvar&quot;            &quot;yvariable&quot;</code></pre>
+<p>Note the above is the <a href="https://journal.r-project.org/archive/2018/RJ-2018-042/index.html"><code>wrapr</code>
+dot arrow pipe</a> (which requires explicit dots to denote pipe
+targets). In this case it is dispatching on the class of the right-hand
+side argument to get the effect. This is a common feature of the wrapr
+dot arrow pipe. We could get a similar effect by using right-assigment
+“<code>-&gt;</code>” instead of the pipe.</p>
+<p>We can also use a pipe function notation.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">&#39;train_data&#39;</span>, <span class="st">&#39;calibrate_data&#39;</span>, <span class="st">&#39;test_data&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">split</span>(d, d<span class="sc">$</span>group) <span class="sc">%.&gt;%</span> <span class="fu">to</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  train_data <span class="ot">&lt;-</span> train,</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  calibrate_data <span class="ot">&lt;-</span> calibrate,</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>  test_data <span class="ot">&lt;-</span> test</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>)</span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="fu">ls</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;LEFT_NAME&quot;       &quot;OTHER_SYMBOL&quot;    &quot;X&quot;               &quot;Y&quot;              
+##  [5] &quot;a&quot;               &quot;angle&quot;           &quot;b&quot;               &quot;calibrate_data&quot; 
+##  [9] &quot;d&quot;               &quot;d2&quot;              &quot;df&quot;              &quot;f&quot;              
+## [13] &quot;inputs&quot;          &quot;l&quot;               &quot;plotb&quot;           &quot;test_data&quot;      
+## [17] &quot;title&quot;           &quot;train_data&quot;      &quot;variable&quot;        &quot;variable_name&quot;  
+## [21] &quot;variable_string&quot; &quot;x&quot;               &quot;xvar&quot;            &quot;xvariable&quot;      
+## [25] &quot;yvar&quot;            &quot;yvariable&quot;</code></pre>
+<p>Notice piping to <code>to()</code> is like piping to
+<code>to[]</code>, no dot is needed.</p>
+<p>We can not currently use the <code>magrittr</code> pipe in the above
+as in that case the unpacked results are lost in a temporary
+intermediate environment <code>magrittr</code> uses during
+execution.</p>
+<p>A more conventional functional form is given in
+<code>unpack()</code>. <code>unpack()</code> requires a dot in
+<code>wrapr</code> pipelines.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">&#39;train_data&#39;</span>, <span class="st">&#39;calibrate_data&#39;</span>, <span class="st">&#39;test_data&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">split</span>(d, d<span class="sc">$</span>group) <span class="sc">%.&gt;%</span> <span class="fu">unpack</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  .,</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>  train_data <span class="ot">&lt;-</span> train,</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>  calibrate_data <span class="ot">&lt;-</span> calibrate,</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>  test_data <span class="ot">&lt;-</span> test</span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>)</span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="fu">ls</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;LEFT_NAME&quot;       &quot;OTHER_SYMBOL&quot;    &quot;X&quot;               &quot;Y&quot;              
+##  [5] &quot;a&quot;               &quot;angle&quot;           &quot;b&quot;               &quot;calibrate_data&quot; 
+##  [9] &quot;d&quot;               &quot;d2&quot;              &quot;df&quot;              &quot;f&quot;              
+## [13] &quot;inputs&quot;          &quot;l&quot;               &quot;plotb&quot;           &quot;test_data&quot;      
+## [17] &quot;title&quot;           &quot;train_data&quot;      &quot;variable&quot;        &quot;variable_name&quot;  
+## [21] &quot;variable_string&quot; &quot;x&quot;               &quot;xvar&quot;            &quot;xvariable&quot;      
+## [25] &quot;yvar&quot;            &quot;yvariable&quot;</code></pre>
+<p>Unpack also support the pipe to array and assign to array notations.
+In addition, with <code>unpack()</code> we could also use the
+conventional function notation.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">&#39;train_data&#39;</span>, <span class="st">&#39;calibrate_data&#39;</span>, <span class="st">&#39;test_data&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">unpack</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>  <span class="fu">split</span>(d, d<span class="sc">$</span>group),</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>  train_data <span class="ot">&lt;-</span> train,</span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>  calibrate_data <span class="ot">&lt;-</span> calibrate,</span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>  test_data <span class="ot">&lt;-</span> test</span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>)</span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a><span class="fu">ls</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;LEFT_NAME&quot;       &quot;OTHER_SYMBOL&quot;    &quot;X&quot;               &quot;Y&quot;              
+##  [5] &quot;a&quot;               &quot;angle&quot;           &quot;b&quot;               &quot;calibrate_data&quot; 
+##  [9] &quot;d&quot;               &quot;d2&quot;              &quot;df&quot;              &quot;f&quot;              
+## [13] &quot;inputs&quot;          &quot;l&quot;               &quot;plotb&quot;           &quot;test_data&quot;      
+## [17] &quot;title&quot;           &quot;train_data&quot;      &quot;variable&quot;        &quot;variable_name&quot;  
+## [21] &quot;variable_string&quot; &quot;x&quot;               &quot;xvar&quot;            &quot;xvariable&quot;      
+## [25] &quot;yvar&quot;            &quot;yvariable&quot;</code></pre>
+<p><code>to()</code> can not be directly used as a function. It is
+<em>strongly</em> suggested that the objects returned by
+<code>to[]</code>, <code>to()</code>, and <code>unpack[]</code> <em>not
+ever</em> be stored in variables, but instead only produced, used, and
+discarded. The issue these are objects of class
+<code>&quot;UnpackTarget&quot;</code> and have the upack destination names already
+bound in. This means if one of these is used in code: a user reading the
+code can not tell where the side-effects are going without examining the
+contents of the object.</p>
+<p>The assignments in the unpacking block can be any of
+<code>&lt;-</code>, <code>=</code>, <code>:=</code>, or even
+<code>-&gt;</code> (though the last one assigns left to right).</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">&#39;train_data&#39;</span>, <span class="st">&#39;calibrate_data&#39;</span>, <span class="st">&#39;test_data&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">unpack</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>  <span class="fu">split</span>(d, d<span class="sc">$</span>group),</span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>  <span class="at">train_data =</span> train,</span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>  <span class="at">calibrate_data =</span> calibrate,</span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a>  <span class="at">test_data =</span> test</span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a>)</span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a><span class="fu">ls</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;LEFT_NAME&quot;       &quot;OTHER_SYMBOL&quot;    &quot;X&quot;               &quot;Y&quot;              
+##  [5] &quot;a&quot;               &quot;angle&quot;           &quot;b&quot;               &quot;calibrate_data&quot; 
+##  [9] &quot;d&quot;               &quot;d2&quot;              &quot;df&quot;              &quot;f&quot;              
+## [13] &quot;inputs&quot;          &quot;l&quot;               &quot;plotb&quot;           &quot;test_data&quot;      
+## [17] &quot;title&quot;           &quot;train_data&quot;      &quot;variable&quot;        &quot;variable_name&quot;  
+## [21] &quot;variable_string&quot; &quot;x&quot;               &quot;xvar&quot;            &quot;xvariable&quot;      
+## [25] &quot;yvar&quot;            &quot;yvariable&quot;</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">&#39;train_data&#39;</span>, <span class="st">&#39;calibrate_data&#39;</span>, <span class="st">&#39;test_data&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">unpack</span>(</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>  <span class="fu">split</span>(d, d<span class="sc">$</span>group),</span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>  train <span class="ot">-&gt;</span> train_data,</span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>  calibrate <span class="ot">-&gt;</span> calibrate_data,</span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a>  test <span class="ot">-&gt;</span> test_data</span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a>)</span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a><span class="fu">ls</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;LEFT_NAME&quot;       &quot;OTHER_SYMBOL&quot;    &quot;X&quot;               &quot;Y&quot;              
+##  [5] &quot;a&quot;               &quot;angle&quot;           &quot;b&quot;               &quot;calibrate_data&quot; 
+##  [9] &quot;d&quot;               &quot;d2&quot;              &quot;df&quot;              &quot;f&quot;              
+## [13] &quot;inputs&quot;          &quot;l&quot;               &quot;plotb&quot;           &quot;test_data&quot;      
+## [17] &quot;title&quot;           &quot;train_data&quot;      &quot;variable&quot;        &quot;variable_name&quot;  
+## [21] &quot;variable_string&quot; &quot;x&quot;               &quot;xvar&quot;            &quot;xvariable&quot;      
+## [25] &quot;yvar&quot;            &quot;yvariable&quot;</code></pre>
+<p>It is a caught and signaled error to attempt to unpack an item that
+is not there.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">&#39;train_data&#39;</span>, <span class="st">&#39;calibrate_data&#39;</span>, <span class="st">&#39;test_data&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">unpack</span>(</span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>  <span class="fu">split</span>(d, d<span class="sc">$</span>group),</span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>  train_data <span class="ot">&lt;-</span> train,</span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>  calibrate_data <span class="ot">&lt;-</span> calibrate_misspelled,</span>
+<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a>  test_data <span class="ot">&lt;-</span> test</span>
+<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## Error in write_values_into_env(unpack_environment = unpack_environment, : wrapr::unpack all source names must be in value, missing: &#39;calibrate_misspelled&#39;.</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">ls</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;LEFT_NAME&quot;       &quot;OTHER_SYMBOL&quot;    &quot;X&quot;               &quot;Y&quot;              
+##  [5] &quot;a&quot;               &quot;angle&quot;           &quot;b&quot;               &quot;d&quot;              
+##  [9] &quot;d2&quot;              &quot;df&quot;              &quot;f&quot;               &quot;inputs&quot;         
+## [13] &quot;l&quot;               &quot;plotb&quot;           &quot;title&quot;           &quot;variable&quot;       
+## [17] &quot;variable_name&quot;   &quot;variable_string&quot; &quot;x&quot;               &quot;xvar&quot;           
+## [21] &quot;xvariable&quot;       &quot;yvar&quot;            &quot;yvariable&quot;</code></pre>
+<p>The unpack attempts to be atomic: preferring to unpack all values or
+no values.</p>
+<p>Also, one does not have to unpack all slots.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="fu">unpack</span>(</span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a>  <span class="fu">split</span>(d, d<span class="sc">$</span>group),</span>
+<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a>  train_data <span class="ot">&lt;-</span> train,</span>
+<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a>  test_data <span class="ot">&lt;-</span> test</span>
+<span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a>)</span>
+<span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" tabindex="-1"></a><span class="fu">ls</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;LEFT_NAME&quot;       &quot;OTHER_SYMBOL&quot;    &quot;X&quot;               &quot;Y&quot;              
+##  [5] &quot;a&quot;               &quot;angle&quot;           &quot;b&quot;               &quot;d&quot;              
+##  [9] &quot;d2&quot;              &quot;df&quot;              &quot;f&quot;               &quot;inputs&quot;         
+## [13] &quot;l&quot;               &quot;plotb&quot;           &quot;test_data&quot;       &quot;title&quot;          
+## [17] &quot;train_data&quot;      &quot;variable&quot;        &quot;variable_name&quot;   &quot;variable_string&quot;
+## [21] &quot;x&quot;               &quot;xvar&quot;            &quot;xvariable&quot;       &quot;yvar&quot;           
+## [25] &quot;yvariable&quot;</code></pre>
+<p>We can use a name alone as shorthand for <code>name &lt;- name</code>
+(i.e. unpacking to the same name as in the incoming object).</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">&#39;train_data&#39;</span>, <span class="st">&#39;test_data&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="fu">split</span>(d, d<span class="sc">$</span>group) <span class="sc">%.&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>  to[</span>
+<span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a>     train,</span>
+<span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a>     test</span>
+<span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a>     ]</span>
+<span id="cb39-6"><a href="#cb39-6" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" tabindex="-1"></a><span class="fu">ls</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;LEFT_NAME&quot;       &quot;OTHER_SYMBOL&quot;    &quot;X&quot;               &quot;Y&quot;              
+##  [5] &quot;a&quot;               &quot;angle&quot;           &quot;b&quot;               &quot;d&quot;              
+##  [9] &quot;d2&quot;              &quot;df&quot;              &quot;f&quot;               &quot;inputs&quot;         
+## [13] &quot;l&quot;               &quot;plotb&quot;           &quot;test&quot;            &quot;title&quot;          
+## [17] &quot;train&quot;           &quot;variable&quot;        &quot;variable_name&quot;   &quot;variable_string&quot;
+## [21] &quot;x&quot;               &quot;xvar&quot;            &quot;xvariable&quot;       &quot;yvar&quot;           
+## [25] &quot;yvariable&quot;</code></pre>
+<p>We can also use <code>bquote</code> <code>.()</code> notation to use
+variables to specify where data is coming from.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">&#39;train&#39;</span>, <span class="st">&#39;test&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a>train_source <span class="ot">&lt;-</span> <span class="st">&#39;train&#39;</span></span>
+<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a><span class="fu">split</span>(d, d<span class="sc">$</span>group) <span class="sc">%.&gt;%</span></span>
+<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a>  to[</span>
+<span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a>     train_result <span class="ot">=</span> .(train_source),</span>
+<span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a>     test</span>
+<span id="cb42-7"><a href="#cb42-7" tabindex="-1"></a>     ]</span>
+<span id="cb42-8"><a href="#cb42-8" tabindex="-1"></a></span>
+<span id="cb42-9"><a href="#cb42-9" tabindex="-1"></a><span class="fu">ls</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;LEFT_NAME&quot;       &quot;OTHER_SYMBOL&quot;    &quot;X&quot;               &quot;Y&quot;              
+##  [5] &quot;a&quot;               &quot;angle&quot;           &quot;b&quot;               &quot;d&quot;              
+##  [9] &quot;d2&quot;              &quot;df&quot;              &quot;f&quot;               &quot;inputs&quot;         
+## [13] &quot;l&quot;               &quot;plotb&quot;           &quot;test&quot;            &quot;title&quot;          
+## [17] &quot;train_result&quot;    &quot;train_source&quot;    &quot;variable&quot;        &quot;variable_name&quot;  
+## [21] &quot;variable_string&quot; &quot;x&quot;               &quot;xvar&quot;            &quot;xvariable&quot;      
+## [25] &quot;yvar&quot;            &quot;yvariable&quot;</code></pre>
+<p>In all cases the user explicitly documents the intended data sources
+and data destinations at the place of assignment. This meas a later
+reader of the source code can see what the operation does, without
+having to know values of additional variables.</p>
+<p>Related work includes:</p>
+<ul>
+<li>
+The
+<a href="https://CRAN.R-project.org/package=zeallot"><code>zeallot::%&lt;-%</code></a>
+arrow already supplies excellent positional or ordered unpacking. But we
+feel that style may be more appropriate in the Python world where many
+functions return un-named tuples of results. Python functions tend to
+have positional tuple return values <em>because</em> the Python language
+has had positional tuple unpacking as a core language feature for a very
+long time (thus positional structures have become “Pythonic”). R has not
+emphasized positional unpacking, so R functions tend to return named
+lists or named structures. For named lists or named structures it may
+not be safe to rely on value positions. So I feel it is more “R-like” to
+use named unpacking.
+</li>
+<li>
+<a href="https://github.com/crowding/vadr/blob/master/R/bind.R"><code>vadr::bind</code></a>
+supplies named unpacking, but appears to use a “<code>SOURCE =
+DESTINATION</code>” notation. That is the reverse of a
+“<code>DESTINATION = SOURCE</code>” which is how both R assignments and
+argument binding are already written.
+</li>
+<li>
+<code>base::attach</code>. <code>base::attach</code> adds items to the
+search path with names controlled by the object being attached (instead
+of by the user).
+</li>
+<li>
+<code>base::with()</code>. <code>unpack(list(a = 1, b = 2), x &lt;- a, y
+&lt;- b) </code> works a lot like <code> with(list(a = 1, b = 2), { x
+&lt;&lt;- a; y &lt;&lt;-b })</code>.
+</li>
+<li>
+<a href="https://CRAN.R-project.org/package=tidytidbits"><code>tidytidbits</code></a>
+supplies positional unpacking with a <code>%=%</code> notation.
+</li>
+<li>
+<a href="https://winvector.github.io/wrapr/articles/let.html"><code>wrapr::let()</code></a>.
+<code>wrapr::let()</code> re-maps names during code execution using a
+“<code>TARGET = NEWNAME</code>” target replacement scheme, where
+<code>TARGET</code> acts as if it had the name stored in
+<code>NEWNAME</code> for the duration of the let-block.
+</li>
+</ul>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

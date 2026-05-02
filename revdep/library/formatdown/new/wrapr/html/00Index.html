@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head><title>R: Wrap R Tools for Debugging and Parametric Programming</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body><div class="container">
+<h1> Wrap R Tools for Debugging and Parametric Programming
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]">
+</h1>
+<hr>
+<div style="text-align: center;">
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]"></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]"></a>
+</div><h2>Documentation for package &lsquo;wrapr&rsquo; version 2.1.0</h2>
+
+<ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a></li>
+<li><a href="../doc/index.html">User guides, package vignettes and other documentation</a></li>
+<li><a href="../NEWS.md">Package NEWS</a></li>
+<li><a href="../README.md">Package README</a></li>
+</ul>
+
+<h2>Help Pages</h2>
+
+
+<table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="wrapr-package.html">wrapr-package</a></td>
+<td>wrapr: Wrap R Tools for Debugging and Parametric Programming</td></tr>
+<tr><td style="width: 25%;"><a href="dot_arrow.html">%.%</a></td>
+<td>Pipe operator ("dot arrow", "dot pipe" or "dot arrow pipe").</td></tr>
+<tr><td style="width: 25%;"><a href="dot_arrow.html">%.&gt;%</a></td>
+<td>Pipe operator ("dot arrow", "dot pipe" or "dot arrow pipe").</td></tr>
+<tr><td style="width: 25%;"><a href="reduceexpand.html">%.|%</a></td>
+<td>Use function to reduce or expand arguments.</td></tr>
+<tr><td style="width: 25%;"><a href="named_map_builder.html">%:=%</a></td>
+<td>Named map builder.</td></tr>
+<tr><td style="width: 25%;"><a href="grapes-less-than-s-grapes.html">%&lt;s%</a></td>
+<td>Dot substitution string interpolation.</td></tr>
+<tr><td style="width: 25%;"><a href="dot_arrow.html">%&gt;.%</a></td>
+<td>Pipe operator ("dot arrow", "dot pipe" or "dot arrow pipe").</td></tr>
+<tr><td style="width: 25%;"><a href="coalesce.html">%?%</a></td>
+<td>Coalesce values (NULL/NA on left replaced by values on the right).</td></tr>
+<tr><td style="width: 25%;"><a href="inline_concat.html">%c%</a></td>
+<td>Inline list/array concatenate.</td></tr>
+<tr><td style="width: 25%;"><a href="inline_dot.html">%dot%</a></td>
+<td>Inline dot product.</td></tr>
+<tr><td style="width: 25%;"><a href="grapes-in_block-grapes.html">%in_block%</a></td>
+<td>Inline let-block notation.</td></tr>
+<tr><td style="width: 25%;"><a href="inline_paste0.html">%p%</a></td>
+<td>Inline character paste0.</td></tr>
+<tr><td style="width: 25%;"><a href="inline_qc.html">%qc%</a></td>
+<td>Inline quoting list/array concatenate.</td></tr>
+<tr><td style="width: 25%;"><a href="grapes-s-greater-than-grapes.html">%s&gt;%</a></td>
+<td>Dot substitution string interpolation.</td></tr>
+<tr><td style="width: 25%;"><a href="reduceexpand.html">%|.%</a></td>
+<td>Use function to reduce or expand arguments.</td></tr>
+<tr><td style="width: 25%;"><a href="named_map_builder.html">:=</a></td>
+<td>Named map builder.</td></tr>
+<tr><td style="width: 25%;"><a href="add_name_column.html">add_name_column</a></td>
+<td>Add list name as a column to a list of data.frames.</td></tr>
+<tr><td style="width: 25%;"><a href="apply_left.html">apply_left</a></td>
+<td>S3 dispatch on class of pipe_left_arg.</td></tr>
+<tr><td style="width: 25%;"><a href="apply_left.default.html">apply_left.default</a></td>
+<td>S3 dispatch on class of pipe_left_arg.</td></tr>
+<tr><td style="width: 25%;"><a href="apply_left_default.html">apply_left_default</a></td>
+<td>S3 dispatch on class of pipe_left_arg.</td></tr>
+<tr><td style="width: 25%;"><a href="apply_right.html">apply_right</a></td>
+<td>S3 dispatch on class of pipe_right_argument.</td></tr>
+<tr><td style="width: 25%;"><a href="apply_right.default.html">apply_right.default</a></td>
+<td>Default apply_right implementation.</td></tr>
+<tr><td style="width: 25%;"><a href="apply_right_S4.html">apply_right_S4</a></td>
+<td>S4 dispatch method for apply_right.</td></tr>
+<tr><td style="width: 25%;"><a href="as_named_list.html">as_named_list</a></td>
+<td>Capture named objects as a named list.</td></tr>
+<tr><td style="width: 25%;"><a href="bc.html">bc</a></td>
+<td>Blank Concatenate. Parse argument as a vector of values allowing "blank separators".</td></tr>
+<tr><td style="width: 25%;"><a href="bquote_call_args.html">bquote_call_args</a></td>
+<td>Treat ... argument as bquoted-values.</td></tr>
+<tr><td style="width: 25%;"><a href="bquote_function.html">bquote_function</a></td>
+<td>Adapt a function to use bquote on its arguments.</td></tr>
+<tr><td style="width: 25%;"><a href="buildNameCallback.html">buildNameCallback</a></td>
+<td>Build a custom writeback function that writes state into a user named variable.</td></tr>
+<tr><td style="width: 25%;"><a href="build_frame.html">build_frame</a></td>
+<td>Build a data.frame from the user's description.</td></tr>
+<tr><td style="width: 25%;"><a href="checkColsFormUniqueKeys.html">checkColsFormUniqueKeys</a></td>
+<td>Check that a set of columns form unique keys.</td></tr>
+<tr><td style="width: 25%;"><a href="check_equiv_frames.html">check_equiv_frames</a></td>
+<td>Check two data.frames are equivalent after sorting columns and rows.</td></tr>
+<tr><td style="width: 25%;"><a href="clean_fit_glm.html">clean_fit_glm</a></td>
+<td>Fit a stats::glm without carying back large structures.</td></tr>
+<tr><td style="width: 25%;"><a href="clean_fit_lm.html">clean_fit_lm</a></td>
+<td>Fit a stats::lm without carying back large structures.</td></tr>
+<tr><td style="width: 25%;"><a href="coalesce.html">coalesce</a></td>
+<td>Coalesce values (NULL/NA on left replaced by values on the right).</td></tr>
+<tr><td style="width: 25%;"><a href="DebugFn.html">DebugFn</a></td>
+<td>Capture arguments of exception throwing function call for later debugging.</td></tr>
+<tr><td style="width: 25%;"><a href="DebugFnE.html">DebugFnE</a></td>
+<td>Capture arguments and environment of exception throwing function call for later debugging.</td></tr>
+<tr><td style="width: 25%;"><a href="DebugFnW.html">DebugFnW</a></td>
+<td>Wrap a function for debugging.</td></tr>
+<tr><td style="width: 25%;"><a href="DebugFnWE.html">DebugFnWE</a></td>
+<td>Wrap function to capture arguments and environment of exception throwing function call for later debugging.</td></tr>
+<tr><td style="width: 25%;"><a href="DebugPrintFn.html">DebugPrintFn</a></td>
+<td>Capture arguments of exception throwing function call for later debugging.</td></tr>
+<tr><td style="width: 25%;"><a href="DebugPrintFnE.html">DebugPrintFnE</a></td>
+<td>Capture arguments and environment of exception throwing function call for later debugging.</td></tr>
+<tr><td style="width: 25%;"><a href="defineLambda.html">defineLambda</a></td>
+<td>Define lambda function building function.</td></tr>
+<tr><td style="width: 25%;"><a href="dot_arrow.html">dot_arrow</a></td>
+<td>Pipe operator ("dot arrow", "dot pipe" or "dot arrow pipe").</td></tr>
+<tr><td style="width: 25%;"><a href="draw_frame.html">draw_frame</a></td>
+<td>Render a simple data.frame in build_frame format.</td></tr>
+<tr><td style="width: 25%;"><a href="draw_framec.html">draw_framec</a></td>
+<td>Render a simple data.frame in qchar_frame format.</td></tr>
+<tr><td style="width: 25%;"><a href="evalb.html">evalb</a></td>
+<td>Near 'eval(bquote(expr))' shortcut.</td></tr>
+<tr><td style="width: 25%;"><a href="execute_parallel.html">execute_parallel</a></td>
+<td>Execute f in parallel partitioned by partition_column.</td></tr>
+<tr><td style="width: 25%;"><a href="f..html">f.</a></td>
+<td>Build an anonymous function of dot.</td></tr>
+<tr><td style="width: 25%;"><a href="grepdf.html">grepdf</a></td>
+<td>Grep for column names from a 'data.frame'</td></tr>
+<tr><td style="width: 25%;"><a href="grepv.html">grepv</a></td>
+<td>Return a vector of matches.</td></tr>
+<tr><td style="width: 25%;"><a href="has_no_dup_rows.html">has_no_dup_rows</a></td>
+<td>Check for duplicate rows.</td></tr>
+<tr><td style="width: 25%;"><a href="invert_perm.html">invert_perm</a></td>
+<td>Invert a permutation.</td></tr>
+<tr><td style="width: 25%;"><a href="lambda.html">lambda</a></td>
+<td>Build an anonymous function.</td></tr>
+<tr><td style="width: 25%;"><a href="lapplym.html">lapplym</a></td>
+<td>Memoizing wrapper for lapply.</td></tr>
+<tr><td style="width: 25%;"><a href="let.html">let</a></td>
+<td>Execute expr with name substitutions specified in alias.</td></tr>
+<tr><td style="width: 25%;"><a href="makeFunction_se.html">makeFunction_se</a></td>
+<td>Build an anonymous function.</td></tr>
+<tr><td style="width: 25%;"><a href="mapsyms.html">mapsyms</a></td>
+<td>Map symbol names to referenced values if those values are string scalars (else throw).</td></tr>
+<tr><td style="width: 25%;"><a href="map_to_char.html">map_to_char</a></td>
+<td>format a map.</td></tr>
+<tr><td style="width: 25%;"><a href="map_upper.html">map_upper</a></td>
+<td>Map up-cased symbol names to referenced values if those values are string scalars (else throw).</td></tr>
+<tr><td style="width: 25%;"><a href="match_order.html">match_order</a></td>
+<td>Match one order to another.</td></tr>
+<tr><td style="width: 25%;"><a href="mk_formula.html">mk_formula</a></td>
+<td>Construct a formula.</td></tr>
+<tr><td style="width: 25%;"><a href="mk_tmp_name_source.html">mk_tmp_name_source</a></td>
+<td>Produce a temp name generator with a given prefix.</td></tr>
+<tr><td style="width: 25%;"><a href="named_map_builder.html">named_map_builder</a></td>
+<td>Named map builder.</td></tr>
+<tr><td style="width: 25%;"><a href="orderv.html">orderv</a></td>
+<td>Order by a list of vectors.</td></tr>
+<tr><td style="width: 25%;"><a href="pack.html">pack</a></td>
+<td>Pack values into a named list.</td></tr>
+<tr><td style="width: 25%;"><a href="parLapplyLBm.html">parLapplyLBm</a></td>
+<td>Memoizing wrapper for parLapplyLB</td></tr>
+<tr><td style="width: 25%;"><a href="partition_tables.html">partition_tables</a></td>
+<td>Partition as set of tables into a list.</td></tr>
+<tr><td style="width: 25%;"><a href="pipe_impl.html">pipe_impl</a></td>
+<td>Pipe dispatch implementation.</td></tr>
+<tr><td style="width: 25%;"><a href="psagg.html">psagg</a></td>
+<td>Pseudo aggregator.</td></tr>
+<tr><td style="width: 25%;"><a href="qae.html">qae</a></td>
+<td>Quote assignment expressions (name = expr, name := expr, name %:=% expr).</td></tr>
+<tr><td style="width: 25%;"><a href="qc.html">qc</a></td>
+<td>Quoting version of c() array concatenate.</td></tr>
+<tr><td style="width: 25%;"><a href="qchar_frame.html">qchar_frame</a></td>
+<td>Build a quoted data.frame.</td></tr>
+<tr><td style="width: 25%;"><a href="qe.html">qe</a></td>
+<td>Quote expressions.</td></tr>
+<tr><td style="width: 25%;"><a href="qs.html">qs</a></td>
+<td>Quote argument as a string.</td></tr>
+<tr><td style="width: 25%;"><a href="reduceexpand.html">reduceexpand</a></td>
+<td>Use function to reduce or expand arguments.</td></tr>
+<tr><td style="width: 25%;"><a href="restrictToNameAssignments.html">restrictToNameAssignments</a></td>
+<td>Restrict an alias mapping list to things that look like name assignments</td></tr>
+<tr><td style="width: 25%;"><a href="seqi.html">seqi</a></td>
+<td>Increasing whole-number sequence.</td></tr>
+<tr><td style="width: 25%;"><a href="si.html">si</a></td>
+<td>Dot substitution string interpolation.</td></tr>
+<tr><td style="width: 25%;"><a href="sinterp.html">sinterp</a></td>
+<td>Dot substitution string interpolation.</td></tr>
+<tr><td style="width: 25%;"><a href="sortv.html">sortv</a></td>
+<td>Sort a data.frame.</td></tr>
+<tr><td style="width: 25%;"><a href="split_at_brace_pairs.html">split_at_brace_pairs</a></td>
+<td>Split strings at -pairs.</td></tr>
+<tr><td style="width: 25%;"><a href="stop_if_dot_args.html">stop_if_dot_args</a></td>
+<td>Stop with message if dot_args is a non-trivial list.</td></tr>
+<tr><td style="width: 25%;"><a href="strsplit_capture.html">strsplit_capture</a></td>
+<td>Split a string, keeping separator regions</td></tr>
+<tr><td style="width: 25%;"><a href="sx.html">sx</a></td>
+<td>String eXplode. Parse argument as a vector of string allowing "blank separators".</td></tr>
+<tr><td style="width: 25%;"><a href="to.html">to</a></td>
+<td>Unpack or bind values by names into the calling environment, eager eval (no-dot) variation.</td></tr>
+<tr><td style="width: 25%;"><a href="uniques.html">uniques</a></td>
+<td>Strict version of unique (without ...).</td></tr>
+<tr><td style="width: 25%;"><a href="unpack.html">unpack</a></td>
+<td>Unpack or bind values by names into the calling environment.</td></tr>
+<tr><td style="width: 25%;"><a href="vapplym.html">vapplym</a></td>
+<td>Memoizing wrapper for vapply.</td></tr>
+<tr><td style="width: 25%;"><a href="VectorizeM.html">VectorizeM</a></td>
+<td>Memoizing wrapper to base::Vectorize()</td></tr>
+<tr><td style="width: 25%;"><a href="view.html">view</a></td>
+<td>Invoke a spreadsheet like viewer when appropriate.</td></tr>
+<tr><td style="width: 25%;"><a href="wrapr-package.html">wrapr</a></td>
+<td>wrapr: Wrap R Tools for Debugging and Parametric Programming</td></tr>
+<tr><td style="width: 25%;"><a href="sub-.Unpacker.html">[.Unpacker</a></td>
+<td>Prepare for unpack or bind values into the calling environment.</td></tr>
+<tr><td style="width: 25%;"><a href="subset-.Unpacker.html">[&lt;-.Unpacker</a></td>
+<td>Unpack or bind values into the calling environment.</td></tr>
+</table>
+</div></body></html>

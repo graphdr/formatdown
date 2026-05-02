@@ -1,0 +1,13 @@
+clone_and_merge         Create a local, altered copy of an options
+                        manager
+defaults                Request default option values
+inlist                  Option checkers
+is_setting              Find out if we're setting or getting
+options_manager         Create a new options manager.
+reset                   Reset options to default values
+reset_options           Reset general options in 'options' to factory
+                        defaults.
+reset_par               Reset graphical options in 'par' to factory
+                        defaults.
+settings                Convenient options settings management for R
+stop_if_reserved        Check for reserved option names.

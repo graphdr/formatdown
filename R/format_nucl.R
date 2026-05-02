@@ -43,6 +43,7 @@
 #'         bold, or monospace font face.
 #'
 #' @family format_*
+#' @example man/examples/examples_format_nucl.R
 #' @export
 format_nucl <- function(x,
                         face = "plain",

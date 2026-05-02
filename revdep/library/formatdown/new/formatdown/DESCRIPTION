@@ -1,0 +1,35 @@
+Package: formatdown
+Title: Formatting Numbers in 'rmarkdown' Documents
+Version: 0.1.5
+Language: en-US
+Authors@R: person("Richard", "Layton", email="graphdoctor@gmail.com", role=c("aut", "cre"))
+Description: Provides a small set of tools for formatting numbers in R-markdown 
+    documents. Convert a numerical vector to character strings in power-of-ten 
+    form, decimal form, or measurement-units form; convert symbols for chemical 
+    isotopes from hyphenated form to nuclear form; all are math-delimited for 
+    rendering as inline equations. Can also convert text into math-delimited 
+    text to match the font face and size of math-delimited numbers. Useful for 
+    rendering single numbers in inline R code chunks and for rendering columns 
+    in tables.   
+Depends: R (>= 3.5.0)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: TRUE
+LazyDataCompression: bzip2
+RoxygenNote: 7.3.3
+Roxygen: list(markdown = TRUE)
+Imports: checkmate, data.table, settings, units, wrapr
+Suggests: knitr, rmarkdown, tinytest
+VignetteBuilder: knitr
+URL: https://github.com/graphdr/formatdown/,
+        https://graphdr.github.io/formatdown/,
+        https://CRAN.R-project.org/package=formatdown
+BugReports: https://github.com/graphdr/formatdown/issues
+Config/Needs/website: rmarkdown
+RemoteType: local
+RemoteUrl: C:\Users\layto\Documents\R projects\my packages\formatdown
+NeedsCompilation: no
+Packaged: 2026-05-02 13:51:52 UTC; layto
+Author: Richard Layton [aut, cre]
+Maintainer: Richard Layton <graphdoctor@gmail.com>
+Built: R 4.6.0; ; 2026-05-02 13:51:53 UTC; windows

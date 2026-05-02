@@ -1,0 +1,93 @@
+---
+title: "Let"
+author: "Nina Zumel, John Mount"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Let}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The vignette demonstrates the use of `let` to standardize calls to functions that use non-standard evaluation.  For a more formal description please see [here](https://github.com/WinVector/wrapr/blob/master/extras/wrapr_let.pdf).
+
+For the purposes of this discussion, *standard evaluation* of variables preserves referential transparency: that is, values and references to values behave the same.
+
+```{r}
+x = 5
+print(5 + 1)
+print(x + 1)
+```
+
+Some functions in R use *non-standard evaluation* (NSE) of variables, in order to snoop variable names (for example, `plot`), or to delay or even avoid argument evaluation (for example `library(foobar)` versus `library("foobar")`).
+
+In the case of `plot`, NSE lets `plot` use the variable names as the axis labels.
+
+```{r}
+set.seed(1234)
+xvar = runif(100) - 0.5
+yvar = dnorm(xvar)
+
+plot(xvar, yvar) 
+```
+
+In the case of `library`, non-standard evaluation saves typing a couple of quotes. The dollar sign notation for accessing data frame columns also uses non standard evaluation.
+
+```{r}
+d <- data.frame(x=c(1,NA))
+d$x
+```
+
+Issues arise when you want to use functions that use non-standard evaluation -- for brevity, I'll call these *NSE expressions* --  but you don't know the name of the variable, as might happen when you are calling these expression from within another function. Generally in these situations, you are taking the name of the desired variable from a string. But how do you pass it to the NSE expression?
+
+For this discussion, we will demonstrate `let` to standardize calling `plot` with unknown variables.
+`let` takes two arguments:
+
+ * A list of assignments *symname=varname*, where *symname* is the name used in the NSE expression, and *varname* is the name (as a string) of the desired variable. 
+ * The NSE expression. Enclose a block of multiple expressions in brackets.
+ 
+Here's the `plot` example again.
+
+```{r}
+library("wrapr")
+
+xvariable = "xvar"
+yvariable = "yvar"
+let(
+  c(XVARIABLE=xvariable, YVARIABLE=yvariable),
+  { # since we have the names as strings, we can create a title
+    title = paste(yvariable, "vs", xvariable)
+    plot(XVARIABLE, YVARIABLE, main=title)
+  }
+)
+```
+
+In the above `let()` block we are using the `alias`-convention that we specify substitution target names (in this case `XVARIABLE` and `YVARIABLE`) as upper-case analogues of the substitution name values (in this case `xvariable` and `yvariable`).  This convention is very legible and makes it easy to both use value interfaces (as we did in the title `paste()`) and name-capturing interfaces (`plot()` itself).
+
+## Implementation details
+
+Roughly `wrapr::let(A, B)` behaves like a syntactic sugar for `eval(substitute(B, A))`.
+
+
+```{r}
+a <- 1
+b <- 2
+let(c(z=quote(a)), z+b)
+eval(substitute(z+b, c(z=quote(a))))
+```
+
+However, `wrapr::let()` is actually implemented in terms of a de-parse and safe language token substitution.
+
+`wrapr::let()` was inspired by `gtools::strmacro()` and `base::bquote()`, please
+see [here](https://github.com/WinVector/wrapr/blob/master/extras/bquote.md) for some notes on macro methods in `R`.
+
+
+## More
+
+For more discussion please see:
+
+  * [our video on non-standard evaluation and `let`](https://youtu.be/iKLGxzzm9Hk?list=PLAKBwakacHbQp_Z66asDnjn-0qttTO-o9).
+  * [Standard nonstandard evaluation rules](https://developer.r-project.org/nonstandard-eval.pdf).
+  * [technical article on let](https://github.com/WinVector/wrapr/blob/master/extras/wrapr_let.pdf).
+
+

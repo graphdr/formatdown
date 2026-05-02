@@ -1,0 +1,29 @@
+Package: settings
+Type: Package
+Title: Software Option Settings Manager for R
+Version: 0.2.7
+Author: Mark van der Loo
+Maintainer: Mark van der Loo <mark.vanderloo@gmail.com>
+Description: Provides option settings management that goes
+    beyond R's default 'options' function. With this package, users can define
+    their own option settings manager holding option names, default values and 
+    (if so desired) ranges or sets of allowed option values that will be 
+    automatically checked. Settings can then be retrieved, altered and reset 
+    to defaults with ease. For R programmers and package developers it offers 
+    cloning and merging functionality which allows for conveniently defining 
+    global and local options, possibly in a multilevel options hierarchy. See 
+    the package vignette for some examples concerning functions, S4 classes, 
+    and reference classes. There are convenience functions to reset par() 
+    and options() to their 'factory defaults'.
+URL: https://github.com/markvanderloo/settings
+BugReports: https://github.com/markvanderloo/settings/issues
+License: GPL-3
+VignetteBuilder: knitr
+Imports: grDevices, graphics
+Suggests: knitr, rmarkdown, tinytest
+RoxygenNote: 7.1.1
+NeedsCompilation: no
+Packaged: 2021-05-07 14:50:47 UTC; mark
+Repository: CRAN
+Date/Publication: 2021-05-07 15:50:02 UTC
+Built: R 4.6.0; ; 2026-04-27 10:00:23 UTC; windows

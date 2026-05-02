@@ -1,0 +1,66 @@
+---
+title: "Dot Pipe"
+author: "John Mount"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Dot Pipe}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+[`%.>%` dot arrow pipe](https://winvector.github.io/wrapr/reference/dot_arrow.html) is a strict pipe with intended semantics:
+
+
+>  "`a %.>% b`" is to be treated
+>  as if the user had written "`{ . <- a; b };`"
+>  with "`%.>%`" being treated as left-associative.
+
+That is: `%.>%` does not alter any function arguments that are not explicitly named.  `%.>%` is designed to be explicit and simple.
+
+The following two expressions should be equivalent:
+
+```{r pipe1s}
+library("wrapr")
+
+cos(exp(sin(4)))
+
+4 %.>% sin(.) %.>% exp(.) %.>% cos(.)
+```
+
+The notation is quite powerful as it treats pipe stages as expression parameterized over the variable 
+"`.`".  This means you do not need to introduce functions to express stages.  The following is 
+a valid dot-pipe:
+
+```{r pipe1}
+1:4 %.>% .^2 
+```
+
+The notation is also very regular in that many variations of expression work as expected.  Example:
+
+```{r pipe2}
+5 %.>% sin(.)
+
+5 %.>% base::sin(.)
+```
+
+
+Regularity can be a *big* advantage in teaching and comprehension. Please see ["In Praise of Syntactic Sugar"](https://win-vector.com/2017/07/07/in-praise-of-syntactic-sugar/) for discussion.
+
+The dot arrow pipe has S3/S4 dispatch (please see ["Dot-Pipe: an S3 Extensible Pipe for R"](https://journal.r-project.org/archive/2018/RJ-2018-042/index.html)).
+However as the right-hand side of the pipe is normally held unevaluated, we don't know the type except in special
+cases (such as the rigth-hand side being referred to by a name or variable).  To force the evaluation of a pipe term,
+simply wrap it in .().
+
+A detail of R-style pipes is the right argument is held unevalauted (unless it is a name), so we can't always use the class of the right hand side to dispatch.  To work around this we suggest using `.()` notation, which in the context of the pipe means "evaluate early."  An example is given below:
+
+```{r peager}
+f <- function() { sin }
+
+# returns f() ignoring dot, not what we want
+5 %.>% f()
+
+# evaluates f() early then evaluates result with .-substitution rules
+5 %.>% .(f())
+```
+

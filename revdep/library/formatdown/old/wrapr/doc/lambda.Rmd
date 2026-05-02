@@ -1,0 +1,50 @@
+---
+title: "lambda Function Builder"
+author: "John Mount"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lambda Function Builder}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The [`CRAN`](https://cran.r-project.org) version of the [`R`](https://www.r-project.org) package [`wrapr`](https://CRAN.R-project.org/package=wrapr) package now includes a concise anonymous function constructor: `l()`.
+
+To use it please do the following: attach `wrapr` and ask it to place a definition for `l()` in your environment:
+
+```{r wrapri}
+library("wrapr")
+wrapr::defineLambda(name = "l")
+ls()
+```
+
+Note: throughout this document we are using the letter "`l`" as a stand-in for the Greek letter lambda, as this non-ASCII character can cause formatting problems in some situations.
+
+You can use  `l()` to define functions.  The syntax is: `l(arg [, arg]*, body [, env=env])`.  That
+is we write a  `l()`-call (which you can do by cutting and pasting) and list the desired function arguments and then the function body.  For example the function that squares numbers is:
+
+```{r fsq1}
+l(x, x^2)
+```
+
+We can use such a function to square the first four positive integers as follows:
+
+```{r fsq2}
+sapply(1:4, l(x, x^2))
+```
+
+Dot-pipe style notation does not need the `l()` factory as it treats pipe stages
+as expressions parameterized over the variable "`.`":
+
+```{r fsqp}
+1:4 %.>% { .^2 }
+```
+
+And we can also build functions that take more than one argument as follows:
+
+```{r ft}
+l(x, y, x + 3*y)
+```
+
+

@@ -1,11 +1,12 @@
 Package: formatdown
 Title: Formatting Numbers in 'rmarkdown' Documents
-Version: 0.1.5
+Version: 0.2.0
 Language: en-US
 Authors@R: person("Richard", "Layton", email="graphdoctor@gmail.com", role=c("aut", "cre"))
 Description: Provides a small set of tools for formatting numbers in R-markdown 
     documents. Convert a numerical vector to character strings in power-of-ten 
-    form, decimal form, or measurement-units form; all are math-delimited for 
+    form, decimal form, or measurement-units form; convert symbols for chemical 
+    isotopes from hyphenated form to nuclear form; all are math-delimited for 
     rendering as inline equations. Can also convert text into math-delimited 
     text to match the font face and size of math-delimited numbers. Useful for 
     rendering single numbers in inline R code chunks and for rendering columns 
@@ -23,17 +24,14 @@ Imports:
     settings, 
     units,
     wrapr
-Suggests: 
-    covr,
-    kableExtra, 
-    knitr,
-    markdown,
-    rmarkdown,
-    stringr, 
+Suggests:
+    knitr, 
+    rmarkdown, 
     tinytest
 VignetteBuilder: knitr
 URL: https://github.com/graphdr/formatdown/, 
      https://graphdr.github.io/formatdown/, 
      https://CRAN.R-project.org/package=formatdown
 BugReports: https://github.com/graphdr/formatdown/issues
-Config/Needs/website: rmarkdown
+Config/Needs/website: 
+    rmarkdown

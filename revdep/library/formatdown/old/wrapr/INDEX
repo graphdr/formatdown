@@ -1,0 +1,118 @@
+%<s%                    Dot substitution string interpolation.
+%c%                     Inline list/array concatenate.
+%dot%                   Inline dot product.
+%in_block%              Inline let-block notation.
+%p%                     Inline character paste0.
+%qc%                    Inline quoting list/array concatenate.
+%s>%                    Dot substitution string interpolation.
+DebugFn                 Capture arguments of exception throwing
+                        function call for later debugging.
+DebugFnE                Capture arguments and environment of exception
+                        throwing function call for later debugging.
+DebugFnW                Wrap a function for debugging.
+DebugFnWE               Wrap function to capture arguments and
+                        environment of exception throwing function call
+                        for later debugging.
+DebugPrintFn            Capture arguments of exception throwing
+                        function call for later debugging.
+DebugPrintFnE           Capture arguments and environment of exception
+                        throwing function call for later debugging.
+VectorizeM              Memoizing wrapper to base::Vectorize()
+[.Unpacker              Prepare for unpack or bind values into the
+                        calling environment.
+[<-.Unpacker            Unpack or bind values into the calling
+                        environment.
+add_name_column         Add list name as a column to a list of
+                        data.frames.
+apply_left              S3 dispatch on class of pipe_left_arg.
+apply_left.default      S3 dispatch on class of pipe_left_arg.
+apply_left_default      S3 dispatch on class of pipe_left_arg.
+apply_right             S3 dispatch on class of pipe_right_argument.
+apply_right.default     Default apply_right implementation.
+apply_right_S4          S4 dispatch method for apply_right.
+as_named_list           Capture named objects as a named list.
+bc                      Blank Concatenate. Parse argument as a vector
+                        of values allowing "blank separators".
+bquote_call_args        Treat ... argument as bquoted-values.
+bquote_function         Adapt a function to use bquote on its
+                        arguments.
+buildNameCallback       Build a custom writeback function that writes
+                        state into a user named variable.
+build_frame             Build a data.frame from the user's description.
+checkColsFormUniqueKeys
+                        Check that a set of columns form unique keys.
+check_equiv_frames      Check two data.frames are equivalent after
+                        sorting columns and rows.
+clean_fit_glm           Fit a stats::glm without carying back large
+                        structures.
+clean_fit_lm            Fit a stats::lm without carying back large
+                        structures.
+coalesce                Coalesce values (NULL/NA on left replaced by
+                        values on the right).
+defineLambda            Define lambda function building function.
+dot_arrow               Pipe operator ("dot arrow", "dot pipe" or "dot
+                        arrow pipe").
+draw_frame              Render a simple data.frame in build_frame
+                        format.
+draw_framec             Render a simple data.frame in qchar_frame
+                        format.
+evalb                   Near 'eval(bquote(expr))' shortcut.
+execute_parallel        Execute f in parallel partitioned by
+                        partition_column.
+f.                      Build an anonymous function of dot.
+grepdf                  Grep for column names from a 'data.frame'
+grepv                   Return a vector of matches.
+has_no_dup_rows         Check for duplicate rows.
+invert_perm             Invert a permutation.
+lambda                  Build an anonymous function.
+lapplym                 Memoizing wrapper for lapply.
+let                     Execute expr with name substitutions specified
+                        in alias.
+makeFunction_se         Build an anonymous function.
+map_to_char             format a map.
+map_upper               Map up-cased symbol names to referenced values
+                        if those values are string scalars (else
+                        throw).
+mapsyms                 Map symbol names to referenced values if those
+                        values are string scalars (else throw).
+match_order             Match one order to another.
+mk_formula              Construct a formula.
+mk_tmp_name_source      Produce a temp name generator with a given
+                        prefix.
+named_map_builder       Named map builder.
+orderv                  Order by a list of vectors.
+pack                    Pack values into a named list.
+parLapplyLBm            Memoizing wrapper for parLapplyLB
+partition_tables        Partition as set of tables into a list.
+pipe_impl               Pipe dispatch implementation.
+psagg                   Pseudo aggregator.
+qae                     Quote assignment expressions (name = expr, name
+                        := expr, name %:=% expr).
+qc                      Quoting version of c() array concatenate.
+qchar_frame             Build a quoted data.frame.
+qe                      Quote expressions.
+qs                      Quote argument as a string.
+reduceexpand            Use function to reduce or expand arguments.
+restrictToNameAssignments
+                        Restrict an alias mapping list to things that
+                        look like name assignments
+seqi                    Increasing whole-number sequence.
+si                      Dot substitution string interpolation.
+sinterp                 Dot substitution string interpolation.
+sortv                   Sort a data.frame.
+split_at_brace_pairs    Split strings at -pairs.
+stop_if_dot_args        Stop with message if dot_args is a non-trivial
+                        list.
+strsplit_capture        Split a string, keeping separator regions
+sx                      String eXplode. Parse argument as a vector of
+                        string allowing "blank separators".
+to                      Unpack or bind values by names into the calling
+                        environment, eager eval (no-dot) variation.
+uniques                 Strict version of unique (without ...).
+unpack                  Unpack or bind values by names into the calling
+                        environment.
+vapplym                 Memoizing wrapper for vapply.
+view                    Invoke a spreadsheet like viewer when
+                        appropriate.
+wrapr-package           wrapr: Wrap R Tools for Debugging and
+                        Parametric Programming

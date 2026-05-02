@@ -1,0 +1,18 @@
+version 0.2.7
+- options_manager gained .list argument
+- extended support for NULL option values
+- Added 'rmarkdown' to Suggests, by CRAN request
+- Switched to 'tinytest' test framework
+
+version 0.2.4
+- support for limiting option values
+- option names that were not defined when creating the options manager are now ignored with a warning.
+
+version 0.2.2
+- bugfix: graphs device altered after loading package.
+
+version 0.2.1
+- added reset_par(), reset_options()
+
+version 0.1.0
+- initial CRAN release

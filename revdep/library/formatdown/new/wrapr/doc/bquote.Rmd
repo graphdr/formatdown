@@ -1,0 +1,138 @@
+---
+title: "bquote"
+author: "John Mount"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{bquote}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+It would be nice if [<code>R</code>](https://www.r-project.org) [string-interpolation](https://en.wikipedia.org/wiki/String_interpolation) and [quasi-quotation](https://en.wikipedia.org/wiki/Grave_accent#Use_in_programming) both used the same notation.  They are related concepts. So some commonality of notation would actually be clarifying, and help teach the concepts. We will define both of the above terms, and demonstrate the relation between the two concepts.
+
+
+## String-interpolation
+
+[String-interpolation](https://en.wikipedia.org/wiki/String_interpolation) is the name for substituting value into a string.
+For example:
+
+```{r}
+library("wrapr")
+
+variable <- "angle"
+
+sinterp(
+  'variable name is .(variable)'
+)
+```
+
+Notice the "<code>.(variable)</code>" portion was replaced with the actual variable name "<code>angle</code>".
+For string interpolation we are intentionally using the "<code>.()</code>" notation that Thomas Lumley’s picked in 2003 when he introduced quasi-quotation into <code>R</code> (a different concept than string-interpolation, but the topic of our next section).
+
+String interpolation is a common need, and there are many [<code>R</code>](https://www.r-project.org) packages that supply variations of such functionality:
+
+  * <code>base::sprintf</code>
+  * [<code>R.utils::gstring()</code>](https://CRAN.R-project.org/package=R.utils)
+  * [<code>rprintf::rprintf()</code>](https://CRAN.R-project.org/package=rprintf)
+  * [<code>stringr::str_interp()</code>](https://CRAN.R-project.org/package=stringr)
+  * [<code>glue::glue()</code>](https://CRAN.R-project.org/package=glue)
+  * [<code>wrapr::sinterp()</code>](https://winvector.github.io/wrapr/reference/sinterp.html).
+  
+  
+## Quasi-quotation
+
+A related idea is ["quasi-quotation"](https://en.wikipedia.org/wiki/Grave_accent#Use_in_programming) which substitutes a value into a general expression.  For example:
+
+```{r}
+angle = 1:10
+variable_name <- as.name("angle")
+
+if(requireNamespace("graphics", quietly = TRUE)) {
+  evalb(
+    
+    plot(x = .(-variable_name), 
+         y = sin(.(-variable_name)))
+    
+  )
+}
+```
+
+Notice how in the above plot the actual variable name "<code>angle</code>" was substituted into the <code>graphics::plot()</code> arguments, allowing this name to appear on the axis labels.
+
+We can also use strings in place of names by using the `.(-)` "strip quotes to convert strings to name notation."
+
+```{r}
+angle = 1:10
+variable_string <- "angle"
+
+if(requireNamespace("graphics", quietly = TRUE)) {
+  evalb(
+    
+    plot(x = .(-variable_string), 
+         y = sin(.(-variable_string)))
+    
+  )
+}
+```
+
+<code>evalb()</code> is a very simple function built on top of <code>base::bquote()</code>.
+
+All <code>evalb()</code> does is: call <code>bquote()</code> as intended, with the extension that `.(-x)` is shorthand for `.(as.name(x))`.
+
+And we see the un-executed code with the substitutions performed.
+
+There are many <code>R</code> quasi-quotation systems including:
+
+ * <code>base::bquote()</code>
+ * [<code>gtools::strmacro()</code>](https://CRAN.R-project.org/package=gtools)
+ * [<code>lazyeval</code>](https://CRAN.R-project.org/package=lazyeval)
+ * [<code>wrapr::let()</code>](https://winvector.github.io/wrapr/reference/let.html)
+ * <code>rlang::as_quosure()</code>
+ * [<code>nseval</code>](https://CRAN.R-project.org/package=nseval)
+
+If you don't want to wrap your <code>plot()</code> call in <code>evalb()</code> you can instead pre-adapt the function.  Below we create a new function <code>plotb()</code> that is intended as shorthand for <code>eval(bquote(plot(...)))</code>.
+
+```{r}
+plotb <- bquote_function(graphics::plot)
+
+if(requireNamespace("graphics", quietly = TRUE)) {
+  plotb(x = .(-variable), 
+        y = sin(.(-variable)))
+}
+```
+
+The `wrapr` [dot arrow pipe](https://winvector.github.io/wrapr/reference/dot_arrow.html) also uses the `bquote`-style escape to specify "extra execution".  For example.
+
+```{r}
+f <- function() { 
+  sin
+}
+
+# pipe 5 to the value of f()
+# the .() says to evaluate f() before the
+# piping
+5 %.>% .(f())
+
+# evaluate "f()"" with . = 5
+# not interesting as "f()"" is "dot free" 
+5 %.>% f()
+```
+
+We can annotate any function as "eager eval" as follows.
+
+
+```{r}
+attr(f, 'dotpipe_eager_eval_function') <- TRUE
+
+# now evalutates pipe on f() result.
+5 %.>% f()
+```
+
+
+
+## Conclusion
+
+When string-interpolation and quasi-quotation use the same notation we can teach them quickly as simple related concepts.
+
+

@@ -1,0 +1,119 @@
+---
+title: "wrapr_applicable"
+author: "John Mount, Win-Vector LLC"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{wrapr_applicable}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+`wrapr` includes de-referencing, function evaluation, and a new concept called `"wrapr_applicable"`.  `"wrapr_applicable"` is dispatch by type of right hand side argument scheme.
+
+## Basic `wrapr`
+
+The `wrapr` pipe operators (`%.>%` and `%>.%`) are roughly defined as: `a %>.% b ~ { . <- a; b };`.  This works under the assumption that `b` is an expression with free-instances of "`.`".  A typical use is:
+
+```{r use1}
+library("wrapr")
+
+5 %.>% sin(.)
+```
+
+The above is performed by standard `S3` dispatch on the left argument of an exported generic functions called `apply_left()` and `apply_right()`.  A formal description of `wrapr` piping can be found [here](https://github.com/WinVector/wrapr/blob/master/extras/wrapr_pipe.pdf).
+
+## Dereferencing and function evaluation
+
+`wrapr` works primarily over expressions and "`.`".  `wrapr` does tries to de-reference names found in the right-hand side of pipe stages, and also dispatches functions.  One can also write the following.
+
+```{r nofn}
+5 %.>% sin
+5 %.>% base::sin 
+```
+
+## `"wrapr_applicable"`
+
+Arbitrary objects ask `wrapr` to treat them as special expressions by overriding one or more of `apply_left()` and `apply_right()` for the `S3` class they wish managed.
+
+For example:
+
+```{r sinfn}
+function_reference <- list(f = sin)
+class(function_reference) <- c("wrapr_applicable", "ourclass")
+
+apply_right.ourclass <- function(pipe_left_arg,
+                                 pipe_right_arg,
+                                 pipe_environment,
+                                 left_arg_name,
+                                 pipe_string,
+                                 right_arg_name) {
+  pipe_right_arg$f(pipe_left_arg)
+}
+
+function_reference
+
+5 %.>% function_reference
+
+function_reference$f <- sqrt
+5 %.>% function_reference
+```
+
+The signature arguments work as follows:
+
+  * `pipe_left_arg`: The value moving down the pipeline.
+  * `pipe_right_arg`: The right pipeline operator (essentially "`self`" or "`this`" in object oriented terms, used for `S3` dispatch).
+  * `pipe_environment`: The environment the pipeline is working in (not usually needed).
+  * `left_arg_name`: If the left arguement was passed in by name, what that name was.
+  * `pipe_string`: The name of the pipe operator (not usually needed).
+  * `right_arg_name`: If the right arguement was passed in by name, what that name was.
+
+
+This functionality allows arbitrary objects to directly specify their intended pipeline behavior.
+
+Let's use a debugging function to see the values of all of the arguments.
+
+```{r debug}
+apply_right.ourclass <- function(pipe_left_arg,
+                                 pipe_right_arg,
+                                 pipe_environment,
+                                 left_arg_name,
+                                 pipe_string,
+                                 right_arg_name) {
+  print("pipe_left_arg")
+  print(pipe_left_arg)
+  print("pipe_right_arg")
+  print(pipe_right_arg)
+  print("pipe_environment")
+  print(pipe_environment)
+  print("left_arg_name")
+  print(left_arg_name)
+  print("pipe_string")
+  print(pipe_string)
+  print("right_arg_name")
+  print(right_arg_name)
+  pipe_right_arg$f(pipe_left_arg)
+}
+
+5 %.>% function_reference
+
+a <- 5
+
+a %.>% function_reference
+```
+
+
+
+## Conclusion
+
+`wrapr` values (left-hand sides of pipe expressions) are completely general.
+`wrapr` operators (right-hand sides of pipe expressions) are primarily intended to be expressions that have "`.`" as a free-reference.  `wrapr` can also be used with right-hand sides that are function references or with arbitrary annotated objects.
+
+

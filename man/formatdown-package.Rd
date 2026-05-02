@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Provides a small set of tools for formatting numbers in R-markdown documents. Convert a numerical vector to character strings in power-of-ten form, decimal form, or measurement-units form; all are math-delimited for rendering as inline equations. Can also convert text into math-delimited text to match the font face and size of math-delimited numbers. Useful for rendering single numbers in inline R code chunks and for rendering columns in tables.
+Provides a small set of tools for formatting numbers in R-markdown documents. Convert a numerical vector to character strings in power-of-ten form, decimal form, or measurement-units form; convert symbols for chemical isotopes from hyphenated form to nuclear form; all are math-delimited for rendering as inline equations. Can also convert text into math-delimited text to match the font face and size of math-delimited numbers. Useful for rendering single numbers in inline R code chunks and for rendering columns in tables.
 }
 \seealso{
 Useful links:

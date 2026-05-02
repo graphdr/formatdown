@@ -1,0 +1,287 @@
+---
+title: "Format text"
+vignette: >
+  %\VignetteIndexEntry{Format text}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+output: rmarkdown::html_vignette
+bibliography: ../inst/REFERENCES.bib
+csl: ../inst/information-science-and-technology.csl
+link-citations: yes
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  tidy = TRUE
+)
+
+# to knit "child" Rmd files
+knitr::opts_knit$set(root.dir = "../")
+
+library(formatdown)
+library(data.table)
+library(knitr)
+
+options(
+  datatable.print.nrows = 15,
+  datatable.print.topn = 3,
+  datatable.print.class = TRUE
+)
+```
+
+```{r}
+#| echo: false
+
+# make header table, but scan it and save as png
+
+# Markup <- c("$\\small\\mathtt{\\verb+\\mathrm{...}+}$", "$\\small\\mathtt{\\verb+\\mathit{...}+}$", "$\\small\\mathtt{\\verb+\\mathbf{...}+}$", "$\\small\\mathtt{\\verb+\\mathsf{...}+}$", "$\\small\\mathtt{\\verb+\\mathtt{...}+}$")
+#
+# Style <- c("$\\small\\mathrm{plain}$", "$\\small\\mathit{italic}$", "$\\small\\mathbf{bold}$", "$\\small\\mathsf{sans\\ serif}$", "$\\small\\mathtt{typewriter}$")
+#
+# DT <- data.table(Markup, Style)
+# knitr::kable(DT, align = "l") |>
+#   kableExtra::kable_styling(font_size = 16, position = "left") |>
+#   kableExtra::column_spec(1:2, width = "2in")
+```
+
+![](../man/figures/latex_math_formatting_text_table_2.png){width=70%}    
+
+<br>
+
+Columns of text in a data table will generally not be rendered in the same typeface as produced by `format_numbers()`. The `format_text()` function provides an approach to assigning a matching typeface to such columns.  
+
+
+<br>
+
+*Packages.* &nbsp; If you are writing your own script to follow along, we use the following packages in this vignette. Data frame operations are performed with data.table syntax. Some users may wish to translate the examples to use  base R or dplyr syntax.  
+
+```{r}
+#| echo: true
+#| eval: false
+
+library("formatdown")
+library("data.table")
+library("knitr")
+```
+
+## Markup
+
+We format values as inline math expressions delimited by `$ ... $` or the optional `\( ... \)`. Inside the math delimiters, the text is formatted using math-text macros such as `\mathrm`, `\mathit`, etc. 
+
+For example, the text "Hello world!" is marked up as follows, where the space between words is preserved by a horizontal space macro (`\>`), 
+
+        $\mathrm{Hello\>world!}$
+
+and is rendered in an R markdown document as: $\small\mathrm{Hello\>world!}$. To *program* the markup, however, we enclose the markup in quote marks as a character string, that is, 
+
+        "$\\mathrm{Hello\\>world!}$"
+
+where extra backslashes are necessary to "escape" the backslashes in `\mathrm` and `\>`. When the optional font size argument is assigned, formatdown adds a LaTeX-style sizing macro such as `\small` or `\large`, for example, 
+
+        "$\\small\\mathrm{Hello\\>world!}$", 
+
+where again the markup includes an extra backslash. 
+
+
+
+
+
+
+
+
+
+
+## `format_text()`
+
+Converts a character vector (or a vector coercible to character class) to math-text of the form, 
+
+        "$\\math**{txt}$" 
+ 
+where `txt` is the text to be formatted and  `\\math**` is a font face macro such as `\\mathrm`, `\\mathit`, etc. 
+
+<br>
+
+*Usage.* &nbsp; 
+
+``` r
+format_text(x,
+            face = "plain",
+            ...,
+            size = formatdown_options("size"),
+            delim = formatdown_options("delim"),
+            whitespace = formatdown_options("whitespace"))
+```
+
+- Arguments before the dots do not have to be named if argument order is maintained. 
+- Arguments after the dots (`...`) must be named. 
+- The arguments assigned via `formatdown_options()` can be reset by the user  locally in a function call or globally using `formatdown_options()`. 
+ 
+
+
+<br>
+
+*Examples.*  &nbsp; These examples are shown with default arguments. Arguments are explored more fully starting with the next section. 
+
+```{r}
+# 1. One string
+x <- "Alum 6061"
+format_text(x)
+
+# 2. String vector
+y <- c("Alum 6061", "Carbon steel", "Ni-Cr-Fe alloy")
+format_text(y)
+```
+
+Examples 1 and 2 (in inline code chunks) render as,    
+
+1. `r format_text(x, size = "small")`
+1. `r format_text(y, size = "small")`
+
+
+
+
+
+
+
+
+## Input coercible to character
+
+Illustrating that variables of different classes are coerced to character if possible. Starting with character class, 
+
+```{r}
+# 3. Character class
+x <- c("abc", "def", NA_character_)
+format_text(x)
+```
+
+Example 3 renders as: &nbsp; `r format_text(x, size = "small")`.  
+
+```{r}
+# 4. Numeric class
+x <- c(10, 3E-5, 4.56E+10)
+format_text(x)
+```
+
+Example 4 renders as: &nbsp; `r format_text(x, size = "small")`. 
+
+```{r}
+# 5. Logical class
+x <- TRUE
+format_text(x)
+```
+
+Example 5 renders as: &nbsp; `r format_text(x, size = "small")`. 
+
+```{r}
+# 6. Complex class
+x <- 2 + 3i
+format_text(x)
+```
+
+Example 6 renders as: &nbsp; `r format_text(x, size = "small")`. 
+
+```{r}
+# 7. Date class
+x <- Sys.Date()
+format_text(x)
+```
+
+Example 7 renders as: &nbsp; `r format_text(x, size = "small")`. 
+
+```{r}
+# 8 Factor class
+x <- as.factor(c("low", "med", "high"))
+format_text(x)
+```
+
+Example 8 renders as: &nbsp; `r format_text(x, size = "small")`.  
+
+```{r}
+# 9. NULL class
+x <- NULL
+format_text(x)
+```
+
+Example 9 renders as a zero-length character (no visible output rendered). 
+
+
+
+
+
+## Typeface
+
+Format the same column of text using each of the five possible `face` arguments for comparison. 
+
+```{r}
+# 10. Compare available typefaces
+x <- c("One day", "at a", "time.")
+plain <- format_text(x, face = "plain", size = "small")
+italic <- format_text(x, face = "italic", size = "small")
+bold <- format_text(x, face = "bold", size = "small")
+sans <- format_text(x, face = "sans", size = "small")
+mono <- format_text(x, face = "mono", size = "small")
+DT <- data.table(plain, italic, bold, sans, mono)
+knitr::kable(DT, align = "l", caption = "Example 10.")
+```
+
+One may use the LaTeX-style macro instead of the shorthand argument option. For example, 
+
+```{r}
+# 11. Two equivalent values for argument
+hello_text <- "Hello world!"
+p <- format_text(hello_text, face = "plain")
+q <- format_text(hello_text, face = "\\mathrm")
+
+# Demonstrate equivalence
+all.equal(p, q)
+```
+
+Example 11 renders as:
+
+- From *p*: `r format_text(hello_text, face = "plain", size = "small")`
+- From *q*: `r format_text(hello_text, face = "\\mathrm", size = "small")`
+
+
+
+## Special characters in math mode
+
+The argument of `format_text()` is evaluated within a math-markup. Thus any math syntax in your text, such as an underscore "_" or caret "^", are rendered in math mode, not verbatim. For example, the underscore creates a subscript and the caret creates a superscript, 
+
+```{r}
+# 12. Special characters NOT escaped
+format_text("R_e")
+format_text("m^3")
+```
+
+Example 12 renders as:
+
+- `r format_text("R_e", size = "small")` 
+- `r format_text("m^3", size = "small")`
+
+If we wanted to retain the underscore or caret as characters, we can try to escape the special character or use the LaTeX verbatim function,  
+
+```{r}
+# 13. Special characters escaped
+format_text("R\\_e")
+format_text("m\\verb+^+3")
+```
+
+Example 13 renders as:
+
+- `r format_text("R\\_e", size = "small")`
+- `r format_text("m\\verb+^+3", size = "small")`
+
+## Options
+
+Arguments assigned using `formatdown_options()` are described in the [Global settings](global_settings.html) article. 
+
+
+
+
+
+
+
+
+

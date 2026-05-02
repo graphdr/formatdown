@@ -1,0 +1,9 @@
+package,old,new,delta
+formatdown,0.1.4,0.1.5,*
+backports,1.5.1,1.5.1,
+checkmate,2.3.4,2.3.4,
+data.table,1.18.2.1,1.18.2.1,
+Rcpp,1.1.1-1.1,1.1.1-1.1,
+settings,0.2.7,0.2.7,
+units,1.0-1,1.0-1,
+wrapr,2.1.0,2.1.0,
