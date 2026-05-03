@@ -7,11 +7,12 @@ Formatting Numbers in R Markdown Documents
 
 <!-- badges: start -->
 
-[![](https://www.r-pkg.org/badges/version/formatdown)](https://cran.r-project.org/package=formatdown)
+[![Version
+number](https://www.r-pkg.org/badges/version/formatdown)](https://cran.r-project.org/package=formatdown)
 [![R-CMD-check](https://github.com/graphdr/formatdown/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/graphdr/formatdown/actions/workflows/check-standard.yaml)
-[![Codecov test
-coverage](https://codecov.io/gh/graphdr/formatdown/branch/main/graph/badge.svg)](https://app.codecov.io/gh/graphdr/formatdown?branch=main)
 [![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Codecov test
+coverage](https://codecov.io/gh/graphdr/formatdown/graph/badge.svg)](https://app.codecov.io/gh/graphdr/formatdown)
 <!-- badges: end -->
 
 Provides a small set of tools for formatting numbers in R markdown

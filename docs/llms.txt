@@ -294,5 +294,3 @@ Data sets included with formatdown
 - [formatdown](https://graphdr.github.io/formatdown/articles/formatdown.md):
 - [Global
   settings](https://graphdr.github.io/formatdown/articles/global_settings.md):
-- [convert hyphenated isotopic data to nuclear
-  notation](https://graphdr.github.io/formatdown/articles/style_guide_isotopic_conversion.docx):

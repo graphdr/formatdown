@@ -7,8 +7,7 @@ articles:
   articles/format_text: format_text.html
   formatdown: formatdown.html
   articles/global_settings: global_settings.html
-  style_guide_isotopic_conversion: style_guide_isotopic_conversion.docx
-last_built: 2026-05-02T23:30Z
+last_built: 2026-05-03T15:22Z
 urls:
   reference: https://graphdr.github.io/formatdown/reference
   article: https://graphdr.github.io/formatdown/articles

@@ -25,6 +25,7 @@ Imports:
     units,
     wrapr
 Suggests:
+    covr,
     knitr, 
     rmarkdown, 
     tinytest
