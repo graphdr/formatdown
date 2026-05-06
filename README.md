@@ -11,8 +11,6 @@ Formatting Numbers in R Markdown Documents
 number](https://www.r-pkg.org/badges/version/formatdown)](https://cran.r-project.org/package=formatdown)
 [![R-CMD-check](https://github.com/graphdr/formatdown/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/graphdr/formatdown/actions/workflows/R-CMD-check.yaml)
 [![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![Codecov test
-coverage](https://codecov.io/gh/graphdr/formatdown/graph/badge.svg)](https://app.codecov.io/gh/graphdr/formatdown)
 <!-- badges: end -->
 
 Provides a small set of tools for formatting numbers in R markdown
