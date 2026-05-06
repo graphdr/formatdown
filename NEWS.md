@@ -1,6 +1,6 @@
 # formatdown (development version)
 
-- Currently same as 0.2.0
+- dropped covr github action
 
 # formatdown 0.2.0
 

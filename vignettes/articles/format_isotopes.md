@@ -25,7 +25,7 @@ atomic number *Z*,
 
 $$\mathrm{^{A}E}\ \ \mathrm{or}\ \mathrm{^{A}_{Z}E}$$
 
-For example, carbon-12 (atomic number *Z* = 6), iron-54 (*Z* = 54) and
+For example, carbon-12 (atomic number *Z* = 6), iron-54 (*Z* = 26) and
 uranium-238 (*Z* = 92) are typeset with and without atomic numbers as
 shown in the table at the top of the page. The notation without *Z* is
 the default in formatdown.
@@ -44,7 +44,7 @@ library("knitr")
 ## Markup
 
 We format isotopes as inline math expressions delimited by `$ ... $` or
-the optional `$ ... $`. For example, carbon 12 is marked up as
+the optional `\( ... \)`. For example, carbon 12 is marked up as
 
         $\mathrm{^{12}C}$,
 
@@ -93,12 +93,12 @@ format_nucl(x,
             delim = formatdown_options("delim")) 
 ```
 
-- Arguments before the dots do not have to be named if argument order is
-  maintained. Arguments after the dots (`...`) must be named.
+- Arguments before the dots (`...`) do not have to be named if argument
+  order is maintained.
+- Arguments after the dots (`...`) must be named.
 - The arguments assigned via `formatdown_options()` can be reset by the
   user locally in a function call or globally using
   `formatdown_options()`.
-- Returns a vector
 
 <br>
 
@@ -117,7 +117,7 @@ format_nucl(y)
 #> [1] "$\\mathrm{^{238}U}$"
 ```
 
-Examples 1 and 2 (in inline code chunks) render as,
+Examples 1 and 2, included as inline code chunks, render as,
 
 1.  $\mathrm{^{12}C}$ is the most abundant isotope of carbon.
 
@@ -128,8 +128,9 @@ Examples 1 and 2 (in inline code chunks) render as,
 
 ## Including the atomic numbers
 
-To include the atomic number (automatically obtained from a built-in
-data set), we can set the optional *Z* argument to TRUE.
+To include the atomic number, we set the optional *Z* argument to TRUE.
+`format_nucl()` obtains atomic numbers from the built-in `element_set`
+data by matching the element abbreviation.
 
 <br>
 
@@ -255,11 +256,11 @@ $\mathrm{^{3}_{1}H}$
 
 <br>
 
-**Warning of input errors.**   The data set of isotopes is also used to
-warn of the following input errors:
-
-- hyphenated input symbol fails to match a standard element symbol
-- hyphenated mass number fails to match a known isotope
+**Hyphenated input-error warning.**   Hyphenated inputs are checked by
+comparing them to the values in the `symbol` and `mass-value` columns in
+`element_set`. If the hyphenated input “E-A” contains an error in the
+element abbreviation “E” or the mass number “A”, a warning is issued—but
+the input is still formatted.
 
 *Examples.*  
 
@@ -300,10 +301,16 @@ warning) that the hyphenated input contains errors.
 
 <br>
 
-**Notating a general form.**   That an unrecognized input in hyphenated
-form is still formatted allows us to create a nuclear notation is
-general form. In such a case, we can turn off the warning using the
-`warn` argument.
+**Other input errors.**   Other input errors, such as having no hyphen
+or more than one hyphen in the input, creates an error message and
+nothing is formatted.
+
+<br>
+
+**Notating a general form.**   Because `format_nucl()` will format any
+character string with a single hyphen between two character strings, we
+can use it to typeset the isotope general form such as $\mathrm{^{A}E}$.
+In such a case, we turn off the warning using the `warn` argument.
 
 *Examples.*  
 
